@@ -2,7 +2,6 @@
 It's a versatile and super simple GUI framework for Unity.
 It takes advantage of the native GUI classes, but allows you to work with it in edit mode and to some extent with 3D objects as well.
 It's still in its early stages, but I consider it ready for a beta release.
-I am developing this in tandem with my Deus Ex-based game project [url=http://mrzapp.github.io/vongott/]The Vongott Chronicles[/url]
 
 ### About the C# version
 It's a few versions behind, but we're working on it
