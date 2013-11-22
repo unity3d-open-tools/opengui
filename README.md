@@ -4,6 +4,9 @@ It takes advantage of the native GUI classes, but allows you to work with it in 
 It's still in its early stages, but I consider it ready for a beta release.
 I am developing this in tandem with my Deus Ex-based game project [url=http://mrzapp.github.io/vongott/]The Vongott Chronicles[/url]
 
+### About the C# version
+It's a few versions behind, but we're working on it
+
 ### Why?
 The reason for making this is that I don't have the patience to sit around and wait for the upcoming UI engine (and I don't know whether I'll even want to use it or not), and I find the UI frameworks in the Asset Store bloated and/or expensive. This is a fat-free open source alternative, for those of you who might be interested in that.
 
