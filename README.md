@@ -1,4 +1,4 @@
-### hat is it?
+### What is it?
 It's a versatile and super simple GUI framework for Unity.
 It takes advantage of the native GUI classes, but allows you to work with it in edit mode and to some extent with 3D objects as well.
 It's still in its early stages, but I consider it ready for a beta release.
