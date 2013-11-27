@@ -6,13 +6,19 @@ import System.Linq;
 @CustomEditor ( OGSkin )
 public class OGSkinInspector extends Editor {
 	private var deleteMode : boolean = false;
-	private var selectedStyle : int = -1;
+	private var addMode : boolean = false;
+	private var selectedStyle : int = 0;
+	private var addStyleName : String = "";
+	private var previewStyle : int = 0;
+	private var scrollPos : Vector2;
 	
-	private function GetStyles () : String[] {
+	private function GetStyles ( includeCancel : boolean ) : String[] {
 		var skin : OGSkin = target as OGSkin;
 		var tempList : List.< String > = new List.< String >();
 		
-		tempList.Add ( "<Cancel>" );
+		if ( includeCancel ) {
+			tempList.Add ( "..." );
+		}
 		
 		for ( var style : OGStyle in skin.styles ) {
 			tempList.Add ( style.name );
@@ -21,11 +27,13 @@ public class OGSkinInspector extends Editor {
 		return tempList.ToArray();
 	}
 	
-	private function AddStyle () {
+	private function AddStyle ( n : String ) {
 		var skin : OGSkin = target as OGSkin;
 		var tempList : List.< OGStyle > = new List.< OGStyle > ( skin.styles );
+		var newStyle : OGStyle = new OGStyle ();
+		newStyle.name = n;
 		
-		tempList.Add ( new OGStyle () );
+		tempList.Add ( newStyle );
 		
 		skin.styles = tempList.ToArray();
 	}
@@ -43,51 +51,199 @@ public class OGSkinInspector extends Editor {
 		return a.name.CompareTo ( b.name );
 	}
 	
+	private function CalcBorderLines ( controlRect : Rect, skin : OGSkin ) : Vector3[] {
+		var lines : Vector3[] = new Vector3[8];
+		var width : float = skin.styles[previewStyle].coordinates.width * 2;
+		var height : float = skin.styles[previewStyle].coordinates.height * 2;
+		
+		// Left
+		lines[0] = new Vector3 ( controlRect.x + skin.styles[previewStyle].border.left * width / skin.styles[previewStyle].coordinates.width, controlRect.y, 0 );
+		lines[1] = lines[0] + new Vector3 ( 0, controlRect.height, 0 );
+		
+		// Right
+		lines[2] = new Vector3 ( controlRect.x + width - skin.styles[previewStyle].border.right * width / skin.styles[previewStyle].coordinates.width, controlRect.y, 0 );
+		lines[3] = lines[2] + new Vector3 ( 0, controlRect.height, 0 );
+		
+		// Top
+		lines[4] = new Vector3 ( controlRect.x, controlRect.y + skin.styles[previewStyle].border.top * height / skin.styles[previewStyle].coordinates.height, 0 );
+		lines[5] = lines[4] + new Vector3 ( controlRect.width, 0, 0 );
+		
+		// Bottom
+		lines[6] = new Vector3 ( controlRect.x, controlRect.y + height - skin.styles[previewStyle].border.bottom * height / skin.styles[previewStyle].coordinates.height, 0 );
+		lines[7] = lines[6] + new Vector3 ( controlRect.width, 0, 0 );
+		
+		return lines;
+	}
+	
+	private function SortStyles ( skin : OGSkin ) {
+		var tempList : List.< OGStyle > = new List.< OGStyle > ( skin.styles );
+				
+		tempList.Sort ( CompareNames );
+		
+		skin.styles = tempList.ToArray ();
+	}
+	
 	override function OnInspectorGUI () {		
 		var skin : OGSkin = target as OGSkin;
+		var tempObj : Object;
+				
+		if ( !skin ) { return; }
+		
+		
+		// Atlas
+		EditorGUILayout.LabelField ( "Styles", EditorStyles.boldLabel );
+		
+		//if ( scrollPos.y < 54 ) { scrollPos.y = 54; }
+		
+		scrollPos = EditorGUILayout.BeginScrollView ( scrollPos, GUILayout.Height ( 300 ) );
+		
+		EditorGUILayout.BeginHorizontal();
+		
+		GUILayout.Space ( -5 );
+		
+		EditorGUILayout.BeginVertical();
+		
+		GUILayout.Space ( -54 );
 		
 		DrawDefaultInspector ();
 		
-		if ( !skin ) { return; }
+		EditorGUILayout.EndVertical();
+		
+		EditorGUILayout.EndHorizontal();
 		
 		EditorGUILayout.Space();
 		
-		EditorGUILayout.BeginHorizontal ();
-		
-		// Add Style
-		if ( GUILayout.Button ( "Add style" ) ) {
-			AddStyle ();
-		}
-		
-		// Delete style
+		EditorGUILayout.EndScrollView ();
+																		
+		EditorGUILayout.Space();
+	
+		// Atlas
+		EditorGUILayout.LabelField ( "Atlas", EditorStyles.boldLabel );
+		tempObj = skin.atlas as Object;
+		tempObj = EditorGUILayout.ObjectField ( tempObj, Material, false );
+		skin.atlas = tempObj as Material;
+	
+		EditorGUILayout.Space();
+	
+		// Delete mode
 		if ( deleteMode ) {
-			selectedStyle = EditorGUILayout.Popup ( selectedStyle, GetStyles() );
+			EditorGUILayout.LabelField ( "Delete style", EditorStyles.boldLabel );
+							
+			EditorGUILayout.BeginHorizontal ();
 			
-			if ( selectedStyle == 0 ) {
+			// Select
+			selectedStyle = EditorGUILayout.Popup ( selectedStyle, GetStyles( true ) );
+			
+			// Cancel
+			if ( GUILayout.Button ( "Cancel" ) ) {
 				deleteMode = false;
+			}
 			
-			} else if ( selectedStyle > 1 ) {
+			GUI.backgroundColor = Color.red;
+			if ( GUILayout.Button ( "Delete" ) ) {
 				deleteMode = false;
 				RemoveStyle ( selectedStyle - 1 );
-				
+			}
+			GUI.backgroundColor = Color.white;
+			
+			EditorGUILayout.EndHorizontal ();
+		
+		// Add mode
+		} else if ( addMode ) {
+			EditorGUILayout.LabelField ( "Add style", EditorStyles.boldLabel );
+							
+			EditorGUILayout.BeginHorizontal ();
+			
+			// Select
+			addStyleName = EditorGUILayout.TextField ( addStyleName );
+			
+			// Cancel
+			if ( GUILayout.Button ( "Cancel" ) ) {
+				addMode = false;
 			}
 			
+			GUI.backgroundColor = Color.green;
+			if ( GUILayout.Button ( "Create" ) ) {
+				addMode = false;
+				AddStyle ( addStyleName );
+			}
+			GUI.backgroundColor = Color.white;
+			
+			EditorGUILayout.EndHorizontal ();
+		
+		// Else
 		} else {
+			EditorGUILayout.LabelField ( "Operations", EditorStyles.boldLabel );
+							
+			EditorGUILayout.BeginHorizontal ();
+			
+			// Add Style
+			GUI.backgroundColor = Color.green;
+			if ( GUILayout.Button ( "Add style" ) ) {
+				addStyleName = "";
+				addMode = true;
+			}
+			
+			// Delete style
+			GUI.backgroundColor = Color.red;
 			if ( GUILayout.Button ( "Delete style" ) ) {
-				selectedStyle = -1;
+				selectedStyle = 0;
 				deleteMode = true;
 			}
+			
+			EditorGUILayout.EndHorizontal ();
+		
+			// Manual sort
+			GUI.backgroundColor = Color.gray;
+			if ( GUILayout.Button ( "Sort" ) ) {
+				SortStyles ( skin );
+			}
+			
+			GUI.backgroundColor = Color.white;
 		}
+		
+		EditorGUILayout.Space();
+		
+		if ( skin.atlas == null || skin.styles.Length < 1 || skin.styles[previewStyle] == null || skin.styles[previewStyle].text == null) { return; }
+		
+		// Preview
+		var newCoords : Rect = new Rect (
+			skin.styles[previewStyle].coordinates.x / skin.atlas.mainTexture.width,
+			skin.styles[previewStyle].coordinates.y / skin.atlas.mainTexture.height,
+			skin.styles[previewStyle].coordinates.width / skin.atlas.mainTexture.width,
+			skin.styles[previewStyle].coordinates.height / skin.atlas.mainTexture.height
+		);
+		
+		EditorGUILayout.BeginHorizontal ();
+		
+		EditorGUILayout.LabelField ( "Preview", EditorStyles.boldLabel );
+		previewStyle = EditorGUILayout.Popup ( previewStyle, GetStyles ( false ), GUILayout.Width ( 100 ) );
 		
 		EditorGUILayout.EndHorizontal ();
 		
-		// Manual sort
-		if ( GUILayout.Button ( "Sort" ) ) {
-			var tempList : List.< OGStyle > = new List.< OGStyle > ( skin.styles );
-			
-			tempList.Sort ( CompareNames );
-			
-			skin.styles = tempList.ToArray ();
-		}
+		GUI.color = skin.styles[previewStyle].text.fontColor;
+		EditorGUILayout.LabelField ( "Text color" );
+		GUI.color = Color.white;
+		
+		EditorGUILayout.BeginHorizontal ();
+		
+		EditorGUILayout.Space();
+		
+		var controlRect : Rect = EditorGUILayout.GetControlRect ( false, skin.styles[previewStyle].coordinates.height * 2, GUILayout.Width(skin.styles[previewStyle].coordinates.width * 2));
+		var borderLines : Vector3[] = CalcBorderLines ( controlRect, skin );
+		var previewTex : Texture = skin.atlas.mainTexture;
+		
+		GUI.DrawTextureWithTexCoords ( controlRect, previewTex, newCoords, true );
+				
+		Handles.DrawLine ( borderLines[0], borderLines[1] );
+		Handles.DrawLine ( borderLines[2], borderLines[3] );
+		Handles.DrawLine ( borderLines[4], borderLines[5] );
+		Handles.DrawLine ( borderLines[6], borderLines[7] );
+		
+		EditorGUILayout.Space();
+		
+		EditorGUILayout.EndHorizontal ();
+		
+		EditorGUILayout.Space();
 	}
 }

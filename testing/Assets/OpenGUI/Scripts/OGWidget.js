@@ -221,6 +221,7 @@ public class OGWidget extends MonoBehaviour {
 	public function OnMouseDown () {};
 	public function OnMouseUp () {};
 	public function OnMouseOver () {};
+	public function OnMouseDrag () {};
 	public function OnMouseCancel () {};
 	
 	

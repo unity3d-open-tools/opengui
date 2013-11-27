@@ -114,18 +114,7 @@ class OGDropDown extends OGWidget {
 	
 	override function OnMouseOver () {
 		var l : OGLabel;
-		
-		/* TODO: Fix this glitch: When label is hovered and style is changed, scale changes too
-		if ( CheckMouseOver ( label.drawRct ) ) {
-			label.style = hoverStyle;
-		
-		} else if ( isDown ) {
-			label.style = downStyle;
-		
-		} else {
-			label.style = style;
-		}*/
-		
+				
 		if ( nestedMenuContainer.activeSelf ) {
 			for ( l in nestedMenuContainer.transform.GetComponentsInChildren.<OGLabel>() ) {
 				if ( CheckMouseOver ( l.drawRct ) ) {
@@ -267,6 +256,7 @@ class OGDropDown extends OGWidget {
 				lbl.transform.localPosition = new Vector3 ( 0, i, 0 );
 				lbl.style = style;
 				lbl.text = submenu[i].name;
+				lbl.hidden = true;
 			
 				if ( submenu[i].isDown ) {
 					lbl.text += " >";
@@ -343,14 +333,7 @@ class OGDropDown extends OGWidget {
 			
 			label.pivot.x = pivot.x;
 			label.pivot.y = RelativeY.Top;
-		
-		//	TODO: Fix this glitch: When label is active and style is changed, scale changes too	
-		//	if ( isDown ) {
-		//		label.style = downStyle;
-		//	} else {
-				label.style = style;
-		//	}
-			
+					
 			label.isDrawn = isDrawn;
 			label.hidden = true;			
 		}

@@ -8,12 +8,18 @@ public class OGSlider extends OGWidget {
 	private var background : OGSprite;
 	private var thumb : OGSlicedSprite;
 	
-	override function OnMouseDown () {
-		if ( Input.mousePosition.x > thumb.transform.position.x && sliderValue < 1 ) {
-			sliderValue += 0.1;
-		} else if ( sliderValue > 0 ) {
-			sliderValue -= 0.1;
+	private function RestrictSlider () {
+		sliderValue = System.Math.Round ( sliderValue, 2 );
+		if ( sliderValue < 0 ) { sliderValue = 0; }
+		else if ( sliderValue > 1 ) { sliderValue = 1; }
+	}
+	
+	override function OnMouseDrag () {
+		if ( sliderValue >= 0 && sliderValue <= 1 ) {
+			sliderValue = ( Input.mousePosition.x - 10 - this.transform.position.x ) / this.transform.lossyScale.x;
 		}
+		
+		RestrictSlider ();
 	}
 	
 	override function UpdateWidget ( root : OGRoot ) {
@@ -70,8 +76,6 @@ public class OGSlider extends OGWidget {
 		this.pivot.x = RelativeX.Left;
 		this.pivot.y = RelativeY.Center;
 		
-		sliderValue = System.Math.Round ( sliderValue, 2 );
-		if ( sliderValue < 0 ) { sliderValue = 0; }
-		else if ( sliderValue > 1 ) { sliderValue = 1; }
+		RestrictSlider ();
 	}
 }

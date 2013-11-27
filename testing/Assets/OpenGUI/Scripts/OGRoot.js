@@ -73,7 +73,7 @@ class OGRoot extends MonoBehaviour {
 			}
 		}
 		
-		// Handle mouse click
+		// Click
 		if ( Input.GetMouseButtonDown ( 0 ) ) {
 			var topWidget : OGWidget;
 			
@@ -92,6 +92,7 @@ class OGRoot extends MonoBehaviour {
  			topWidget.OnMouseDown ();
 			downWidget = topWidget;
 		
+		// Release
 		} else if ( Input.GetMouseButtonUp ( 0 ) ) {
 			if ( downWidget ) {
 				if ( downWidget.mouseOver ) {
@@ -103,6 +104,14 @@ class OGRoot extends MonoBehaviour {
 				}
 			
 			}
+		
+		// Dragging
+		} else if ( Input.GetMouseButton ( 0 ) ) {
+			if ( downWidget ) {
+				downWidget.OnMouseDrag ();
+			}
+		
+		// Escape key
 		} else if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
 			if ( downWidget ) {
 				downWidget.OnMouseCancel ();

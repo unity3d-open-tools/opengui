@@ -32,7 +32,7 @@ public class OGStyle {
 }
 
 public class OGSkin extends MonoBehaviour {
-	public var atlas : Material;
+	@HideInInspector public var atlas : Material;
 	
 	public var styles : OGStyle[];
 }
