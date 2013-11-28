@@ -63,7 +63,7 @@
      <Compile Include="Assets\OpenGUI\Scripts\OGTickBox.js" />
      <Compile Include="Assets\OpenGUI\Scripts\OGTween.js" />
      <Compile Include="Assets\OpenGUI\Scripts\OGWidget.js" />
-     <None Include="Assets\OpenGUI\Fonts\Ubuntu\Ubuntu-R.xml" />
+     <None Include="Assets\OpenGUI\Shaders\3DText.shader" />
      <None Include="Assets\OpenGUI\Shaders\UnlitAlphaColored.shader" />
   </ItemGroup>
   <ItemGroup>

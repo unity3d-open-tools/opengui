@@ -4,7 +4,7 @@ import System.Collections.Generic;
 
 @CustomEditor ( OGWidget, true )
 public class OGWidgetInspector extends Editor {
-	private var debug : boolean = false;
+	private var debug : boolean = true;
 	
 	private function GetStyles ( widget : OGWidget ) : String[] {
 		var tempList : List.< String > = new List.< String >();
@@ -105,7 +105,15 @@ public class OGWidgetInspector extends Editor {
 				ddHoverIndex = EditorGUILayout.Popup ( ddHoverIndex, GetStyles ( widget ) );
 				EditorGUILayout.EndHorizontal ();
 				( widget as OGDropDown ).hoverStyle = widget.GetRoot().skin.styles [ ddHoverIndex ];
-			
+
+				// Ticked
+				var ddTickedIndex : int = GetStyleIndex ( widget, ( widget as OGDropDown ).tickedStyle );
+				EditorGUILayout.BeginHorizontal();
+				EditorGUILayout.LabelField ( "'Ticked' style" );
+				ddTickedIndex = EditorGUILayout.Popup ( ddTickedIndex, GetStyles ( widget ) );
+				EditorGUILayout.EndHorizontal ();
+				( widget as OGDropDown ).tickedStyle = widget.GetRoot().skin.styles [ ddTickedIndex ];
+
 			// OGTickBox
 			} else if ( widget.GetComponent(OGTickBox) ) {			
 				// Ticked

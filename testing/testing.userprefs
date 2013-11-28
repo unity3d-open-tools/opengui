@@ -1,16 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\OpenGUI\Scripts\OGTabs.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\OpenGUI\Scripts\OGLabel.js">
     <Files>
-      <File FileName="Assets\OpenGUI\Editor\OGWidgetInspector.js" Line="40" Column="46" />
-      <File FileName="Assets\OpenGUI\Scripts\OGWidget.js" Line="61" Column="28" />
-      <File FileName="Assets\OpenGUI\Scripts\OGButton.js" Line="94" Column="3" />
-      <File FileName="Assets\OpenGUI\Scripts\OGTickBox.js" Line="45" Column="4" />
-      <File FileName="Assets\OpenGUI\Scripts\OGSlider.js" Line="1" Column="1" />
-      <File FileName="Assets\OpenGUI\Scripts\OGRoot.js" Line="60" Column="3" />
-      <File FileName="Assets\OpenGUI\Scripts\OGDropDown.js" Line="28" Column="2" />
-      <File FileName="Assets\OpenGUI\Scripts\OGTabs.js" Line="92" Column="67" />
-      <File FileName="Assets\OpenGUI\Scripts\OGSlicedSprite.js" Line="220" Column="81" />
+      <File FileName="Assets\OpenGUI\Scripts\OGLabel.js" Line="102" Column="862" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

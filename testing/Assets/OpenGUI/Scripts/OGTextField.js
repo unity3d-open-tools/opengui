@@ -21,37 +21,6 @@ public class OGTextField extends OGWidget {
 	private var currentPreset : RegExPreset = RegExPreset.None;
 	private var editor : TextEditor;
 	
-	override function DrawGUI () {
-		if ( !style ) { return; }
-		
-		var x : float = this.transform.position.x + offset.x + scrollOffset.x;
-		var y : float = this.transform.position.y + offset.y + scrollOffset.y;
-		
-		textStyle.font = style.text.font;
-		textStyle.fontSize = style.text.fontSize;
-		textStyle.normal.textColor = style.text.fontColor;
-		textStyle.alignment = style.text.alignment;
-		textStyle.wordWrap = style.text.wordWrap;
-		textStyle.padding = style.text.padding;
-		textStyle.clipping = TextClipping.Clip;
-		
-		GUI.depth = -drawDepth;
-		
-		if ( locked ) {
-			GUI.TextField ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text, maxLength, textStyle );
-			
-		} else {			
-			text = GUI.TextField ( Rect ( x, y, transform.localScale.x, transform.localScale.y ), text, maxLength, textStyle );
-		
-		}
-		
-		editor = GUIUtility.GetStateObject ( TextEditor, GUIUtility.keyboardControl ) as TextEditor;
-		
-		if ( regex != "" && regex != "\\" && regexPreset != RegExPreset.None ) {
-			text = Regex.Replace ( text, "[" + regex + "]", "" );
-		}
-	}
-	
 	override function UpdateWidget ( root : OGRoot ) {
 		// Background		
 		if ( background == null ) {

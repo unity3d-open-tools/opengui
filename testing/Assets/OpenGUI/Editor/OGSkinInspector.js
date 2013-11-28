@@ -90,11 +90,9 @@ public class OGSkinInspector extends Editor {
 		if ( !skin ) { return; }
 		
 		
-		// Atlas
+		// Styles
 		EditorGUILayout.LabelField ( "Styles", EditorStyles.boldLabel );
-		
-		//if ( scrollPos.y < 54 ) { scrollPos.y = 54; }
-		
+				
 		scrollPos = EditorGUILayout.BeginScrollView ( scrollPos, GUILayout.Height ( 300 ) );
 		
 		EditorGUILayout.BeginHorizontal();
@@ -115,6 +113,69 @@ public class OGSkinInspector extends Editor {
 		
 		EditorGUILayout.EndScrollView ();
 																		
+		EditorGUILayout.Space();
+	
+		// ^ Make sure the font indices are not out of bounds
+		for ( var s : OGStyle in skin.styles ) {
+			if ( s.text.fontIndex >= skin.fonts.Length ) {
+				s.text.fontIndex = skin.fonts.Length - 1;
+			
+			} else if ( s.text.fontIndex < 0 ) {
+				s.text.fontIndex = 0;
+			
+			}
+		}
+	
+		// Fonts
+		EditorGUILayout.LabelField ( "Fonts", EditorStyles.boldLabel );
+		var tmpList : List.< Font >;
+		
+		if ( skin.fonts.Length < 1 ) {
+			skin.fonts = new Font[1];
+		}
+		
+		for ( var i : int = 0; i < skin.fonts.Length; i++ ) {
+			EditorGUILayout.BeginHorizontal();
+		
+			EditorGUILayout.LabelField ( i.ToString(), GUILayout.Width ( 30 ) );
+		
+			tempObj = skin.fonts[i] as Object;
+			tempObj = EditorGUILayout.ObjectField ( tempObj, Font, false );
+			skin.fonts[i] = tempObj as Font;
+		
+			GUI.backgroundColor = Color.red;
+			if ( GUILayout.Button ( "x", GUILayout.Width ( 30 ), GUILayout.Height ( 14 ) ) ) {
+				tmpList = new List.< Font > ( skin.fonts );
+				
+				tmpList.RemoveAt ( i );
+				
+				skin.fonts = tmpList.ToArray ();
+			}
+			GUI.backgroundColor = Color.white;
+		
+			EditorGUILayout.EndHorizontal();
+		}
+		
+		EditorGUILayout.BeginHorizontal();
+		
+		GUI.backgroundColor = Color.green;
+		if ( GUILayout.Button ( "+", GUILayout.Width ( 20 ), GUILayout.Height ( 14 ) ) ) {
+			tmpList = new List.< Font > ( skin.fonts );
+			
+			tmpList.Add ( null );
+			
+			skin.fonts = tmpList.ToArray ();
+		}
+		GUI.backgroundColor = Color.white;
+		
+		GUILayout.Space( 10 );
+		
+		GUI.color = new Color ( 0.7, 0.7, 0.7, 1.0 );
+		EditorGUILayout.LabelField ( "You can set widget fonts by their index value" );
+		GUI.color = Color.white;
+	
+		EditorGUILayout.EndHorizontal();
+	
 		EditorGUILayout.Space();
 	
 		// Atlas
@@ -195,7 +256,7 @@ public class OGSkinInspector extends Editor {
 		
 			// Manual sort
 			GUI.backgroundColor = Color.gray;
-			if ( GUILayout.Button ( "Sort" ) ) {
+			if ( GUILayout.Button ( "Sort styles" ) ) {
 				SortStyles ( skin );
 			}
 			

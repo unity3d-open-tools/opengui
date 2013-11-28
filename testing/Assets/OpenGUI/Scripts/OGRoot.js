@@ -6,26 +6,34 @@ import System.Collections.Generic;
 class OGRoot extends MonoBehaviour {
 	public static var instance : OGRoot;
 	
+	public var blankMaterial : Material;
 	public var skin : OGSkin;
 	public var currentPage : OGPage;
+	@HideInInspector public var unicode : Dictionary.< int, int >[];
 	
 	private var widgets : OGWidget[];
+	private var labels : OGLabel[];
 	private var mouseOver : List.< OGWidget > = new List.< OGWidget > ();
 	private var downWidget : OGWidget;
 	
 	public static function GetInstance () {
 		return instance;
 	}
-	
+
+	public function ReloadFonts () {
+		unicode = new Dictionary.< int, int > [ skin.fonts.Length ];
+	}
+
 	public function OnPostRender () {
 		if ( widgets != null ) {
 			GL.PushMatrix();
-			skin.atlas.SetPass(0);
 			GL.LoadOrtho();
+			
 			GL.Begin(GL.QUADS);
+			skin.atlas.SetPass(0);
 			
 			for ( var w : OGWidget in widgets ) {
-				if ( w == null ) { continue; }
+				if ( w == null || w.GetComponent ( OGLabel ) ) { continue; }
 				
 				if ( w.isDrawn ) {
 					w.DrawGL ();
@@ -33,19 +41,23 @@ class OGRoot extends MonoBehaviour {
 			}
 			
 			GL.End ();
-			GL.PopMatrix();
-		}
-	}
-	
-	public function OnGUI () {
-		if ( widgets != null ) {
-			for ( var w : OGWidget in widgets ) {
-				if ( w == null ) { continue; }
-				
-				if ( w.isDrawn ) {
-					w.DrawGUI ();
+			
+			for ( var f : int = 0; f < skin.fonts.Length; f++ ) {
+				GL.Begin(GL.QUADS);
+				skin.fonts[f].material.SetPass(0);
+
+				for ( var l : OGLabel in labels ) {
+					if ( l == null || l.style.text.fontIndex != f ) { continue; }
+					
+					if ( l.isDrawn ) {
+						l.DrawGL ();
+					}
 				}
+				
+				GL.End ();
 			}
+			
+			GL.PopMatrix();
 		}
 	}
 	
@@ -57,10 +69,30 @@ class OGRoot extends MonoBehaviour {
 		if ( instance == null ) {
 			instance = this;
 		}
+		
+		// Index font unicode
+		if ( unicode == null || unicode.Length != skin.fonts.Length ) {
+			ReloadFonts ();
+		}
+		
+		for ( var i : int = 0; i < skin.fonts.Length; i++ ) {
+			if ( unicode[i] == null ) {
+				unicode[i] = new Dictionary.< int, int >();
 				
+				for ( var c : int = 0; c < skin.fonts[i].characterInfo.Length; c++ ) {
+					if ( unicode[i].ContainsKey ( skin.fonts[i].characterInfo[c].index ) ) {
+						unicode[i][skin.fonts[i].characterInfo[c].index] = c;
+					} else {
+						unicode[i].Add ( skin.fonts[i].characterInfo[c].index, c );
+					}
+				}
+			}
+		}
+					
 		mouseOver.Clear ();
 	
 		widgets = currentPage.gameObject.GetComponentsInChildren.<OGWidget>();
+		labels = currentPage.gameObject.GetComponentsInChildren.<OGLabel>();
 		
 		for ( var w : OGWidget in widgets ) {
 			if ( w == null ) { continue; }

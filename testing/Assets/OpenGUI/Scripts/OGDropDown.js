@@ -27,6 +27,7 @@ class OGDropDown extends OGWidget {
 	
 	@HideInInspector public var downStyle : OGStyle;
 	@HideInInspector public var hoverStyle : OGStyle;
+	@HideInInspector public var tickedStyle : OGStyle;
 	
 	public var isDown = false;
 	private var submenuContainer : GameObject;
@@ -49,10 +50,13 @@ class OGDropDown extends OGWidget {
 		} else {
 			if ( item.tickable && item.GetType() == DropDownItemNested && ( item as DropDownItemNested ).tickOverrides && currentNestedMenu != null ) {
 				for ( var i : DropDownItemNested in currentNestedMenu ) {
-					i.isTicked = false;
+					if ( i == item ) {
+						item.isTicked = true;
+					} else {
+						i.isTicked = false;
+					}
 				}
 				
-				item.isTicked = true;
 				
 			} else if ( item.tickable ) {
 				item.isTicked = !item.isTicked;
@@ -113,21 +117,30 @@ class OGDropDown extends OGWidget {
 	}
 	
 	override function OnMouseOver () {
-		var l : OGLabel;
-				
+		var i : int;
+		var l : OGLabel;		
+
 		if ( nestedMenuContainer.activeSelf ) {
-			for ( l in nestedMenuContainer.transform.GetComponentsInChildren.<OGLabel>() ) {
+			for ( i = 0; i < nestedMenuContainer.transform.childCount; i++ ) {
+				l = nestedMenuContainer.transform.GetChild(i).GetComponent(OGLabel);
+				
 				if ( CheckMouseOver ( l.drawRct ) ) {
 					l.style = hoverStyle;
+				} else if ( currentNestedMenu[i].isTicked ) {
+					l.style = tickedStyle;       
 				} else {
 					l.style = style;
 				}
 			}
 		}
 		
-		for ( l in submenuContainer.transform.GetComponentsInChildren.<OGLabel>() ) {
+		for ( i = 0; i < submenuContainer.transform.childCount; i++ ) {
+			l = submenuContainer.transform.GetChild(i).GetComponent(OGLabel);
+			
 			if ( CheckMouseOver ( l.drawRct ) ) {
 				l.style = hoverStyle;
+			} else if ( submenu[i].isTicked ) {
+				l.style = tickedStyle;       
 			} else {
 				l.style = style;
 			}
@@ -148,7 +161,6 @@ class OGDropDown extends OGWidget {
 	
 	override function UpdateWidget ( root : OGRoot ) {
 		var i : int;
-		var tempList : List.< OGLabel >;
 		var lbl : OGLabel;
 		
 		// Nested menu container
@@ -167,8 +179,6 @@ class OGDropDown extends OGWidget {
 				DestroyImmediate ( nestedMenuContainer.transform.GetChild(i).gameObject );
 			}
 			
-			tempList = new List.< OGLabel > ();
-			
 			for ( i = 0; i < currentNestedMenu.Length; i++ ) {
 				if ( nestedMenuContainer.transform.Find ( currentNestedMenu[i].name ) ) {
 					lbl = nestedMenuContainer.transform.Find ( currentNestedMenu[i].name ).GetComponent ( OGLabel );
@@ -180,8 +190,6 @@ class OGDropDown extends OGWidget {
 				lbl.transform.localScale = Vector3.one;
 				lbl.transform.localEulerAngles = Vector3.zero;
 				lbl.transform.localPosition = new Vector3 ( 0, i, 0 );
-				lbl.style = style;
-				lbl.text = currentNestedMenu[i].name;
 			}
 		
 		} else if ( currentNestedMenu != null ) {
@@ -193,12 +201,14 @@ class OGDropDown extends OGWidget {
 				lbl.transform.localScale = Vector3.one;
 				lbl.transform.localEulerAngles = Vector3.zero;
 				lbl.transform.localPosition = new Vector3 ( 0, i, 0 );
-				lbl.style = style;
 				lbl.text = currentNestedMenu[i].name;
 			
 				if ( currentNestedMenu[i].isTicked ) {
-					lbl.text += " ✓";
+					lbl.style = tickedStyle;
+				} else {
+					lbl.style = style;
 				}
+			
 			}
 		
 		} else {
@@ -228,8 +238,6 @@ class OGDropDown extends OGWidget {
 				DestroyImmediate ( submenuContainer.transform.GetChild(i).gameObject );
 			}
 			
-			tempList = new List.< OGLabel > ();
-			
 			for ( i = 0; i < submenu.Length; i++ ) {
 				if ( submenuContainer.transform.Find ( submenu[i].name ) ) {
 					lbl = submenuContainer.transform.Find ( submenu[i].name ).GetComponent ( OGLabel );	
@@ -241,8 +249,6 @@ class OGDropDown extends OGWidget {
 				lbl.transform.localScale = Vector3.one;
 				lbl.transform.localEulerAngles = Vector3.zero;
 				lbl.transform.localPosition = new Vector3 ( 0, i, 0 );
-				lbl.style = style;
-				lbl.text = submenu[i].name;
 			}
 		
 		} else if ( submenu != null ) {
@@ -254,18 +260,19 @@ class OGDropDown extends OGWidget {
 				lbl.transform.localScale = Vector3.one;
 				lbl.transform.localEulerAngles = Vector3.zero;
 				lbl.transform.localPosition = new Vector3 ( 0, i, 0 );
-				lbl.style = style;
 				lbl.text = submenu[i].name;
 				lbl.hidden = true;
 			
 				if ( submenu[i].isDown ) {
 					lbl.text += " >";
+					lbl.style = style;
 				
 				} else if ( submenu[i].nestedMenu != null && submenu[i].nestedMenu.Length > 0 ) {
 					lbl.text += " :";
+					lbl.style = style;
 				
 				} else if ( submenu[i].isTicked ) {
-					lbl.text += " ✓";
+					lbl.style = tickedStyle;
 				}
 			}
 		
@@ -325,7 +332,7 @@ class OGDropDown extends OGWidget {
 		} else {
 			label.text = title;
 			
-			var labelSize : Vector2 = label.textStyle.CalcSize ( GUIContent ( label.text ) );
+			var labelSize : Vector2 = label.labelSize;
 			
 			label.transform.localScale = new Vector3 ( labelSize.x / this.transform.lossyScale.x, 1, 1 );
 			label.transform.localEulerAngles = Vector3.zero;

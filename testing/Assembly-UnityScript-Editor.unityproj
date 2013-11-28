@@ -46,9 +46,10 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\OpenGUI\Editor\OGRootInspector.js" />
      <Compile Include="Assets\OpenGUI\Editor\OGSkinInspector.js" />
      <Compile Include="Assets\OpenGUI\Editor\OGWidgetInspector.js" />
-     <None Include="Assets\OpenGUI\Fonts\Ubuntu\Ubuntu-R.xml" />
+     <None Include="Assets\OpenGUI\Shaders\3DText.shader" />
      <None Include="Assets\OpenGUI\Shaders\UnlitAlphaColored.shader" />
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:\Program Files (x86)\Unity\Editor\Data\Managed\UnityEditor.Graphs.dll</HintPath>

@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Plugins\iTween.cs" />
-     <None Include="Assets\OpenGUI\Fonts\Ubuntu\Ubuntu-R.xml" />
+     <None Include="Assets\OpenGUI\Shaders\3DText.shader" />
      <None Include="Assets\OpenGUI\Shaders\UnlitAlphaColored.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

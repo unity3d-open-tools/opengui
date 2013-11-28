@@ -14,7 +14,7 @@ public class OGRectOffset {
 }
 
 public class OGTextStyle {
-	public var font : Font;
+	public var fontIndex : int = 0;
 	public var fontSize : int = 12;
 	public var fontColor : Color = Color.white;
 	public var shadowSize : int = 0;
@@ -33,6 +33,6 @@ public class OGStyle {
 
 public class OGSkin extends MonoBehaviour {
 	@HideInInspector public var atlas : Material;
-	
-	public var styles : OGStyle[];
+	@HideInInspector public var fonts : Font[];
+	public var styles : OGStyle[];	
 }
