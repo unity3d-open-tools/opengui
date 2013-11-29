@@ -44,6 +44,11 @@ class OGRoot extends MonoBehaviour {
 			
 			for ( var f : int = 0; f < skin.fonts.Length; f++ ) {
 				GL.Begin(GL.QUADS);
+				
+				if ( skin.fontShader != null ) {
+					skin.fonts[f].material.shader = skin.fontShader;
+				}
+				
 				skin.fonts[f].material.SetPass(0);
 
 				for ( var l : OGLabel in labels ) {

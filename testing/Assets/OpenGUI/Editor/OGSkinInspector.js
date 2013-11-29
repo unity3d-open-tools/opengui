@@ -177,6 +177,14 @@ public class OGSkinInspector extends Editor {
 		EditorGUILayout.EndHorizontal();
 	
 		EditorGUILayout.Space();
+		
+		// Font shader
+		EditorGUILayout.LabelField ( "Font shader", EditorStyles.boldLabel );
+		tempObj = skin.fontShader as Object;
+		tempObj = EditorGUILayout.ObjectField ( tempObj, Shader, false );
+		skin.fontShader = tempObj as Shader;
+
+		EditorGUILayout.Space();
 	
 		// Atlas
 		EditorGUILayout.LabelField ( "Atlas", EditorStyles.boldLabel );

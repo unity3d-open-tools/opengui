@@ -34,5 +34,6 @@ public class OGStyle {
 public class OGSkin extends MonoBehaviour {
 	@HideInInspector public var atlas : Material;
 	@HideInInspector public var fonts : Font[];
+	@HideInInspector public var fontShader : Shader;
 	public var styles : OGStyle[];	
 }

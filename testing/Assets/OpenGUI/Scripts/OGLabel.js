@@ -82,28 +82,41 @@ public class OGLabel extends OGWidget {
 			var size : float = alteredFontSize / 48.0;
 			var vert : Rect = new Rect ( (c.vert.x/Screen.width)*size, (c.vert.y/Screen.height)*size, (c.vert.width/Screen.width)*size, (c.vert.height/Screen.height)*size );
 			var fontOffset : Vector2 = CalcFontOffset ( vert );
-	
+			var uvs : Vector2[] = new Vector2[4];
+
 			if ( c.vert.height > tallestGlyph ) { tallestGlyph = c.vert.height; }
 
 			if ( shadowOffset ) {
-				fontOffset.x += style.text.shadowSize / Screen.width;
-				fontOffset.y += style.text.shadowSize / Screen.height;
+				fontOffset.x += style.text.shadowSize;
+				fontOffset.y += style.text.shadowSize;
 			}
 
+			// Rotation
+			if ( c.flipped ) {
+				uvs[0] = new Vector2 ( c.uv.x, c.uv.y + c.uv.height );
+				uvs[1] = new Vector2 ( c.uv.x + c.uv.width, c.uv.y + c.uv.height );
+				uvs[2] = new Vector2 ( c.uv.x + c.uv.width, c.uv.y );
+				uvs[3] = new Vector2 ( c.uv.x, c.uv.y );
+			} else {
+				uvs[0] = new Vector2 ( c.uv.x, c.uv.y );
+				uvs[1] = new Vector2 ( c.uv.x, c.uv.y + c.uv.height );
+				uvs[2] = new Vector2 ( c.uv.x + c.uv.width, c.uv.y + c.uv.height );
+				uvs[3] = new Vector2 ( c.uv.x + c.uv.width, c.uv.y );
+			}		
+			
 			// Bottom Left
-			GL.TexCoord2 ( c.uv.x, c.uv.y );
+			GL.TexCoord2 ( uvs[0].x, uvs[0].y );
 			GL.Vertex3 ( fontOffset.x + drawRct.x + advance, fontOffset.y + drawRct.y, drawDepth );
 			
 			// Top left
-			GL.TexCoord2 ( c.uv.x, c.uv.y + c.uv.height );
+			GL.TexCoord2 ( uvs[1].x, uvs[1].y );
 			GL.Vertex3 ( fontOffset.x + drawRct.x + advance, fontOffset.y + drawRct.y - vert.height, drawDepth );
 			
 			// Top right
-			GL.TexCoord2 ( c.uv.x + c.uv.width, c.uv.y + c.uv.height );
+			GL.TexCoord2 ( uvs[2].x, uvs[2].y );
 			GL.Vertex3 ( fontOffset.x + drawRct.x + advance + vert.width, fontOffset.y + drawRct.y - vert.height, drawDepth );
-			
 			// Bottom right
-			GL.TexCoord2 ( c.uv.x + c.uv.width, c.uv.y );
+			GL.TexCoord2 ( uvs[3].x, uvs[3].y );
 			GL.Vertex3 ( fontOffset.x + drawRct.x + advance + vert.width, fontOffset.y + drawRct.y, drawDepth );
 		
 			advance += ( (c.width+1) * size ) / Screen.width;
