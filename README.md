@@ -2,7 +2,7 @@
 It's a versatile and super simple GUI framework for Unity.
 It takes advantage of the native GUI classes, but allows you to work with it in edit mode and to some extent with 3D objects as well.
 It's still in its early stages, but I consider it ready for a beta release.
-I am developing this in tandem with my Deus Ex-based game project [url=http://mrzapp.github.io/vongott/]The Vongott Chronicles[/url]
+I am developing this in tandem with my Deus Ex-based game project <a href="http://mrzapp.github.io/vongott/">The Vongott Chronicles</a>
 
 ### Why?
 The reason for making this is that I don't have the patience to sit around and wait for the upcoming UI engine (and I don't know whether I'll even want to use it or not), and I find the UI frameworks in the Asset Store bloated and/or expensive. This is a fat-free open source alternative, for those of you who might be interested in that.
@@ -17,9 +17,12 @@ The draw order, scale and position of the widget classes are inherited from the 
 - Super simple, no bloat
 - Sensibly managed and easy to use
 - Built-in page manager
-- Implements [url=http://itween.pixelplacement.com/index.php]iTween[/url] by Bob Berkebile
+- Implements <a hreaf="http://itween.pixelplacement.com/index.php">iTween</a> by Bob Berkebile
 - MouseOver detection
 - Free & Open Source!
 
 ### Contribution
 Any help, including feature requests and bug fixes, is much appreciated :)
+
+### License
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">OpenGUI</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">mrzapp</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/mrzapp/opengui" rel="dct:source">https://github.com/mrzapp/opengui</a>.
