@@ -23,6 +23,7 @@ public class OGTextStyle {
 	public var wordWrap : boolean = true;
 	public var padding : RectOffset;
 	public var lineHeight : float = 1.5;
+	public var spacing : float = 1.0;
 }
 
 public class OGStyle {

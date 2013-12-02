@@ -16,6 +16,7 @@ public class OGLabel extends OGWidget {
 			uv = new Vector2[4];
 			vert = new Rect ( ( info.vert.x / Screen.width ) * relativeSize, ( info.vert.y / Screen.height ) * relativeSize, ( info.vert.width / Screen.width ) * relativeSize, ( info.vert.height / Screen.height ) * relativeSize );
 			width = ( ( info.width + 1 ) * relativeSize ) / Screen.width;
+			position.y = vert.height + vert.y;
 
 			if ( info.flipped ) {
 				uv[0] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
@@ -58,6 +59,7 @@ public class OGLabel extends OGWidget {
 	private var drawCharacters : Glyph[];
 	private var drawWords : Word[];
 	private var lineHeight : float;
+	private var spacing : float;
 /*
 	private function CalcFontOffset ( vert : Rect ) : Vector2 {
 		var o : Vector2 = Vector2.zero;
@@ -136,6 +138,7 @@ public class OGLabel extends OGWidget {
 		var unicodeDictionary : Dictionary.< int, int > = root.unicode [ style.text.fontIndex ];
 
 		var tallestGlyph : float = 0;
+		var widestGlyph : float = 0;
 		var lines : int = 0;
 		var wordAdvance : float = 0;
 		
@@ -151,24 +154,33 @@ public class OGLabel extends OGWidget {
 				if ( unicodeDictionary.ContainsKey ( unicodeIndex ) ) {
 					var glyph : Glyph = new Glyph ( characterInfo [ unicodeDictionary [ unicodeIndex ] ], fontSize / 72.0 );
 
-					if ( glyph.info.vert.height * glyph.relativeSize < tallestGlyph ) {
+					if ( -glyph.info.vert.height * glyph.relativeSize > tallestGlyph ) {
 						tallestGlyph = -glyph.info.vert.height * glyph.relativeSize;
+					}
+
+					if ( glyph.info.vert.width * glyph.relativeSize > widestGlyph ) {
+						widestGlyph = glyph.info.vert.width * glyph.relativeSize;
 					}
 
 					word.Add ( glyph );
 				}
 			}
 
-			if ( wordAdvance > drawRct.width ) {
+			if ( wordAdvance + word.width + spacing > drawRct.width - style.text.padding.left / Screen.width ) {
 				lines++;
 				wordAdvance = 0;
 			}
 
 			word.position.x = wordAdvance;
-			word.position.y = lines * lineHeight;
+			word.position.y = -lines * lineHeight;
+			
+			wordList.Add ( word );
+
+			wordAdvance += word.width + spacing;
 		}
 
 		lineHeight = ( tallestGlyph * style.text.lineHeight ) / Screen.height;
+		spacing = ( widestGlyph / 2 * style.text.spacing ) / Screen.width;		
 
 		drawWords = wordList.ToArray ();
 	}
@@ -180,27 +192,30 @@ public class OGLabel extends OGWidget {
 	private function DrawWords ( shadowOffset : float ) {
 		for ( var word : Word in drawWords ) {
 			for ( var glyph : Glyph in word.glyphs ) {
+				var x : float = drawRct.x + word.position.x + glyph.position.x + shadowOffset;
+				var y : float = drawRct.y + word.position.y + glyph.position.y + shadowOffset + drawScl.y;
+
 				// Bottom Left
 				GL.TexCoord2 ( glyph.uv[0].x, glyph.uv[0].y );
-				GL.Vertex3 ( drawRct.x + word.position.x + glyph.position.x + shadowOffset, drawRct.y + word.position.y + shadowOffset, drawDepth );
+				GL.Vertex3 ( x, y, drawDepth );
 				
 				// Top left
 				GL.TexCoord2 ( glyph.uv[1].x, glyph.uv[1].y );
-				GL.Vertex3 ( drawRct.x + word.position.x + glyph.position.x + shadowOffset, drawRct.y + word.position.y + glyph.vert.height + shadowOffset, drawDepth );
+				GL.Vertex3 ( x, y - glyph.vert.height, drawDepth );
 				
 				// Top right
 				GL.TexCoord2 ( glyph.uv[2].x, glyph.uv[2].y );
-				GL.Vertex3 ( drawRct.x + word.position.x + glyph.position.x + shadowOffset + glyph.vert.width, drawRct.y + word.position.y + glyph.vert.height + shadowOffset, drawDepth );
+				GL.Vertex3 ( x + glyph.vert.width, y - glyph.vert.height, drawDepth );
 			
 				// Bottom right
 				GL.TexCoord2 ( glyph.uv[3].x, glyph.uv[3].y );
-				GL.Vertex3 ( drawRct.x + word.position.x + glyph.position.x + shadowOffset + glyph.vert.width, drawRct.y + word.position.y + shadowOffset, drawDepth );
+				GL.Vertex3 ( x + glyph.vert.width, y, drawDepth );
 			}
 		}
 	}
 			
 	override function DrawGL () {
-		if ( drawRct == null || drawCharacters == null ) { return; }
+		if ( drawRct == null || drawWords == null ) { return; }
 		
 		if ( style.text.shadowSize > 0 ) {
 			GL.Color ( style.text.shadowColor );
