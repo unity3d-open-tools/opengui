@@ -39,18 +39,35 @@ public class OGWidgetInspector extends Editor {
 		if ( widget.hidden && !debug ) {
 			EditorGUILayout.LabelField ( "This widget is not supposed to be changed manually," );
 			EditorGUILayout.LabelField ( "please refer to the root widget." );
+
+			if ( GUILayout.Button ( "Turn on debug mode" ) ) {
+				debug = true;
+			}
 			
 		} else {
+			if ( widget.hidden ) {
+				EditorGUILayout.BeginHorizontal();
+				GUI.color = Color.red;
+				EditorGUILayout.LabelField ( "[HIDDEN]", EditorStyles.boldLabel, GUILayout.Width ( 100 ) );
+				GUI.color = Color.white;
+				if ( GUILayout.Button ( "Turn off debug mode" ) ) {
+					debug = false;
+				}
+				EditorGUILayout.EndHorizontal();
+
+				EditorGUILayout.Space();
+			}
+			
 			DrawDefaultInspector ();
 			
 			EditorGUILayout.Space();
 			
-			var selectedIndex : int = GetStyleIndex ( widget, widget.style );		
+			var wdStyleIndex : int = GetStyleIndex ( widget, widget.style );		
 			EditorGUILayout.BeginHorizontal();
 			EditorGUILayout.LabelField ( "Style" );
-			selectedIndex = EditorGUILayout.Popup ( selectedIndex, GetStyles ( widget ) );
+			wdStyleIndex = EditorGUILayout.Popup ( wdStyleIndex, GetStyles ( widget ) );
 			EditorGUILayout.EndHorizontal ();
-			widget.style = widget.GetRoot().skin.styles [ selectedIndex ];
+			widget.style = widget.GetRoot().skin.styles [ wdStyleIndex ];
 		
 			// OGButton
 			if ( widget.GetComponent(OGButton) ) {			

@@ -90,8 +90,6 @@ class OGPopUp extends OGWidget {
 				lbl.transform.localScale = Vector3.one;
 				lbl.transform.localEulerAngles = Vector3.zero;
 				lbl.transform.localPosition = new Vector3 ( 0, i, 0 );
-				lbl.style = style;
-				lbl.text = options[i];
 			}
 		
 		} else {
@@ -102,6 +100,7 @@ class OGPopUp extends OGWidget {
 				l.transform.localScale = Vector3.one;
 				l.transform.localEulerAngles = Vector3.zero;
 				l.transform.localPosition = new Vector3 ( 0, o, 0 );
+				l.hidden = true;
 				l.style = style;
 				l.text = options[o];
 			}

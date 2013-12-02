@@ -43,6 +43,8 @@ class OGRoot extends MonoBehaviour {
 			GL.End ();
 			
 			for ( var f : int = 0; f < skin.fonts.Length; f++ ) {
+				if ( skin.fonts[0] == null ) { continue; }
+				
 				GL.Begin(GL.QUADS);
 				
 				if ( skin.fontShader != null ) {
