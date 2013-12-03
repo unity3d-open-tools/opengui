@@ -106,7 +106,7 @@ public class OGTabs extends OGWidget {
 		}
 	}
 	
-	override function UpdateWidget ( root : OGRoot ) {
+	override function UpdateWidget () {
 		if ( tabs == null ) { return; }
 		
 		if ( this.transform.childCount == 0 ) {

@@ -12,7 +12,7 @@ public class OGTexture extends OGWidget {
 	var repeatTexture : Vector2;
 	var maintainRatio : XorY;
 	
-	override function UpdateWidget ( root : OGRoot ) {
+	override function UpdateWidget () {
 		if ( mainTexture ) {
 			if ( mainTexture.wrapMode != TextureWrapMode.Repeat ) {
 				mainTexture.wrapMode = TextureWrapMode.Repeat;

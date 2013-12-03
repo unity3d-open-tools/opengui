@@ -22,7 +22,7 @@ public class OGSlider extends OGWidget {
 		RestrictSlider ();
 	}
 	
-	override function UpdateWidget ( root : OGRoot ) {
+	override function UpdateWidget () {
 		// Background		
 		if ( background == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSprite ) ) {

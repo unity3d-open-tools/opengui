@@ -104,8 +104,9 @@ class OGRoot extends MonoBehaviour {
 		for ( var w : OGWidget in widgets ) {
 			if ( w == null ) { continue; }
 			
-			w.Recalculate ( this );
-			w.UpdateWidget ( this );
+			w.root = this;			
+			w.Recalculate ();
+			w.UpdateWidget ();
 		
 			if ( w.mouseOver ) {
 				mouseOver.Add ( w );

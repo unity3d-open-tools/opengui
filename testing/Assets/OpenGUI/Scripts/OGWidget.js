@@ -86,7 +86,7 @@ public class OGWidget extends MonoBehaviour {
 	}
 		
 	// Scale (based on screen size)
-	private function RecalcScale () : Vector3 {
+	public function RecalcScale () : Vector3 {
 		CalcStretch ();
 		
 		var newScl : Vector3 = this.transform.lossyScale;
@@ -194,10 +194,8 @@ public class OGWidget extends MonoBehaviour {
 	}
 	
 	// Apply all calculations
-	public function Recalculate ( rootObj : OGRoot ) {
+	public function Recalculate () {
 		if ( !style ) { return; }
-		
-		root = rootObj;
 		
 		drawScl = RecalcScale ();
 		drawPos = RecalcPosition ();
@@ -229,8 +227,7 @@ public class OGWidget extends MonoBehaviour {
 	//////////////////
 	// Update
 	//////////////////
-	public function UpdateWidget ( root : OGRoot ) {} 
-	public function UpdateWidget () { UpdateWidget ( null ); } 
+	public function UpdateWidget () {} 
 	
 	
 	//////////////////

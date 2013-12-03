@@ -34,9 +34,14 @@ public class OGScrollView extends OGWidget {
 		return -outBounds.x > w.transform.lossyScale.x || outBounds.x > w.transform.lossyScale.x || -outBounds.y > w.transform.lossyScale.y || outBounds.y > w.transform.lossyScale.y;
 	}
 
-	override function UpdateWidget ( root : OGRoot ) {
-		scrollWindow.x = this.transform.lossyScale.x;
-		scrollWindow.y = this.transform.lossyScale.y;
+	override function UpdateWidget () {
+		if ( stretch.width != ScreenSize.None ) {
+			scrollWindow.x = RecalcScale().x * Screen.width;
+		}
+
+		if ( stretch.height != ScreenSize.None ) {
+			scrollWindow.y = RecalcScale().y * Screen.height;
+		}
 	
 		this.transform.localScale = Vector3.one;
 		

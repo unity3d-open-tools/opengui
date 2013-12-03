@@ -24,7 +24,7 @@ public class OGTickBox extends OGWidget {
 		OGRoot.GetInstance().ReleaseWidget ();
 	}
 	
-	override function UpdateWidget ( root : OGRoot ) {
+	override function UpdateWidget () {
 		// Background		
 		if ( background == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSlicedSprite ) ) {

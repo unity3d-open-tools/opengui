@@ -177,8 +177,10 @@ public class OGWidgetInspector extends Editor {
 				( target as OGWidget ).UpdateWidget();
 				EditorUtility.SetDirty ( target );
 			}
-			
+		
+			// Automatic update	
 			if ( GUI.changed ) {
+				( target as OGWidget ).UpdateWidget();
 				EditorUtility.SetDirty ( target );
 			}
 		}

@@ -21,7 +21,7 @@ public class OGTextField extends OGWidget {
 	private var currentPreset : RegExPreset = RegExPreset.None;
 	private var editor : TextEditor;
 	
-	override function UpdateWidget ( root : OGRoot ) {
+	override function UpdateWidget () {
 		// Background		
 		if ( background == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSlicedSprite ) ) {

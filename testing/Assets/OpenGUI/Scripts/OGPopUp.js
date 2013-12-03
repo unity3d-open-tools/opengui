@@ -66,7 +66,7 @@ class OGPopUp extends OGWidget {
 		OGRoot.GetInstance().ReleaseWidget ();
 	}
 	
-	override function UpdateWidget ( root : OGRoot ) {
+	override function UpdateWidget () {
 		if ( !optionLabels && !this.transform.Find("Options") ) {
 			optionLabels = new GameObject ( "Options" );
 			optionLabels.transform.parent = this.transform;

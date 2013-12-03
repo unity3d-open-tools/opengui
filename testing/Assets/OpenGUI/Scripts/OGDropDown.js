@@ -159,7 +159,7 @@ class OGDropDown extends OGWidget {
 		OGRoot.GetInstance().ReleaseWidget ();
 	}
 	
-	override function UpdateWidget ( root : OGRoot ) {
+	override function UpdateWidget () {
 		var i : int;
 		var lbl : OGLabel;
 		

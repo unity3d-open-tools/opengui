@@ -110,7 +110,7 @@ public class OGLabel extends OGWidget {
 	/////////////////
 	// Update
 	/////////////////
-	override function UpdateWidget ( root : OGRoot ) {
+	override function UpdateWidget () {
 		if ( root == null || root.skin == null ) { return; }		
 
 		if ( !overrideFontSize && style != null ) {
