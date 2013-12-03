@@ -6,7 +6,8 @@ public class OGSprite extends OGWidget {
 	//////////////////
 	override function DrawGL () {
 		if ( drawCrd == null || drawRct == null ) { return; }
-		
+	
+		// Bottom Left	
 		GL.TexCoord2 ( drawCrd.x, drawCrd.y );
 		GL.Vertex3 ( drawRct.x, drawRct.y, drawDepth );
 		

@@ -106,7 +106,8 @@ public class OGWidget extends MonoBehaviour {
 		
 		newPos += offset;
 		newPos += scrollOffset;
-		
+		scrollOffset = Vector3.zero;	
+	
 		newPos.y += this.transform.lossyScale.y;
 								
 		newPos.x = newPos.x / Screen.width;
@@ -205,6 +206,7 @@ public class OGWidget extends MonoBehaviour {
 			
 		drawRct = new Rect ( drawPos.x, drawPos.y, drawScl.x, drawScl.y );
 	}	
+
 	
 	//////////////////
 	// Returns

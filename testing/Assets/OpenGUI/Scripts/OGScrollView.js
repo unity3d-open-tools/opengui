@@ -29,8 +29,6 @@ public class OGScrollView extends OGWidget {
 	}
 
 	private function IsOutOfBounds ( w : OGWidget ) {
-		//return GetBounds ( w ) != Vector2.zero;
-	
 		var outBounds : Vector2 = GetBounds ( w );
 	
 		return -outBounds.x > w.transform.lossyScale.x || outBounds.x > w.transform.lossyScale.x || -outBounds.y > w.transform.lossyScale.y || outBounds.y > w.transform.lossyScale.y;

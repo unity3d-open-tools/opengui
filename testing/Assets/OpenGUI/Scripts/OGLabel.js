@@ -30,6 +30,24 @@ public class OGLabel extends OGWidget {
 				uv[3] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y );
 			}		
 		}
+
+		public function Draw ( x : float, y : float, z : float ) {
+			// Bottom Left
+			GL.TexCoord2 ( uv[0].x, uv[0].y );
+			GL.Vertex3 ( position.x + x, position.y + y, z );
+			
+			// Top left
+			GL.TexCoord2 ( uv[1].x, uv[1].y );
+			GL.Vertex3 ( position.x + x, position.y + y - vert.height, z );
+			
+			// Top right
+			GL.TexCoord2 ( uv[2].x, uv[2].y );
+			GL.Vertex3 ( position.x + x + vert.width, position.y + y - vert.height, z );
+		
+			// Bottom right
+			GL.TexCoord2 ( uv[3].x, uv[3].y );
+			GL.Vertex3 ( position.x + x + vert.width, position.y + y, z );
+		}
 	}
 	
 	public class Word {
@@ -45,7 +63,35 @@ public class OGLabel extends OGWidget {
 			glyphs.Add ( glyph );
 			glyph.position.x = width;
 			width += glyph.width;
-		}		
+		}	
+
+		public function Draw ( x : float, y : float, z : float ) {
+			for ( var g : Glyph in glyphs ) {
+				g.Draw ( position.x + x, position.y + y, z );
+			}
+		}
+	}
+
+	public class Line {
+		public var words : List.< Word >;
+		public var width : float;	
+		public var position : Vector2;
+
+		function Line () {
+			words = new List.< Word > ();
+		}
+
+		public function Add ( word : Word, spacing : float ) {
+			words.Add ( word );
+			word.position.x = width + spacing;
+			width += word.width + spacing;
+		}
+
+		public function Draw ( x : float, y : float, z : float ) {
+			for ( var w : Word in words ) {
+				w.Draw ( position.x + x, position.y + y, z );
+			}
+		}
 	}
 
 	public var text : String;
@@ -56,76 +102,17 @@ public class OGLabel extends OGWidget {
 
 	@HideInInspector public var textStyle : GUIStyle = new GUIStyle();
 
-	private var drawCharacters : Glyph[];
-	private var drawWords : Word[];
+	private var drawLines : Line[];
 	private var lineHeight : float;
 	private var spacing : float;
-/*
-	private function CalcFontOffset ( vert : Rect ) : Vector2 {
-		var o : Vector2 = Vector2.zero;
-		var xMin : float = ( style.text.padding.left * 1.0 ) / Screen.width;
-		var xMid : float = drawRct.width / 2 + vert.x + vert.width;
-		var xMax : float = drawRct.width + vert.x + vert.width - ( labelSize.x + ( style.text.padding.right * 1.0 ) ) / Screen.width;
-		var yMin : float = drawRct.height + vert.y + vert.height - ( style.text.padding.top * 1.0 ) / Screen.height;
-		var yMid : float = drawRct.height / 2 + vert.y + vert.height + ( labelSize.y / 2 ) / Screen.height + lineHeight / 2;
-		var yMax : float = ( style.text.padding.bottom * 1.0 ) / Screen.height;
-		
-		switch ( alignment ) {
-			case TextAnchor.UpperLeft:
-				o.x = xMin; 
-				o.y = yMin;
-				break;
-			
-			case TextAnchor.UpperCenter:
-				o.x = xMid; 
-				o.y = yMin; 
-				break;
-			
-			case TextAnchor.UpperRight:
-				o.x = xMax; 
-				o.y = yMin; 
-				break;
-			
-			case TextAnchor.MiddleRight:
-				o.x = xMax; 
-				o.y = yMid; 
-				break;
-			
-			case TextAnchor.MiddleCenter:
-				o.x = xMid; 
-				o.y = yMid; 
-				break;
-
-			case TextAnchor.LowerRight:
-				o.x = xMax; 
-				o.y = yMax; 
-				break;
-			
-			case TextAnchor.LowerCenter:
-				o.x = xMid; 
-				o.y = yMax; 
-				break;
-
-			case TextAnchor.LowerLeft:
-				o.x = xMin; 
-				o.y = yMax; 
-				break;
-
-			case TextAnchor.MiddleLeft:
-				o.x = xMin; 
-				o.y = yMid; 
-				break;	
-				
-		}
-		
-		return o;
-	}
 	
-*/	
+
 	/////////////////
 	// Update
 	/////////////////
 	override function UpdateWidget ( root : OGRoot ) {
+		if ( root == null || root.skin == null ) { return; }		
+
 		if ( !overrideFontSize && style != null ) {
 			fontSize = style.text.fontSize;
 		}
@@ -139,11 +126,13 @@ public class OGLabel extends OGWidget {
 
 		var tallestGlyph : float = 0;
 		var widestGlyph : float = 0;
-		var lines : int = 0;
-		var wordAdvance : float = 0;
-		
+		var lineCount : int = 0;
+
+		var lineList : List.< Line > = new List.< Line >();	
 		var wordList : List.< Word > = new List.< Word >();
 		var strings : String[] = text.Split ( " "[0] );
+
+		lineList.Add ( new Line () );
 
 		for ( var s : int = 0; s < strings.Length; s++ ) {
 			var word : Word = new Word ();
@@ -166,65 +155,86 @@ public class OGLabel extends OGWidget {
 				}
 			}
 
-			if ( wordAdvance + word.width + spacing > drawRct.width - style.text.padding.left / Screen.width ) {
-				lines++;
-				wordAdvance = 0;
+			if ( lineList[lineCount].width + word.width + spacing > drawRct.width - style.text.padding.left / Screen.width ) {
+				lineCount++;
+				lineList.Add ( new Line () );
 			}
 
-			word.position.x = wordAdvance;
-			word.position.y = -lines * lineHeight;
-			
-			wordList.Add ( word );
+			lineList[lineCount].Add ( word, spacing );
+		
+			// Position
+			var x : float = drawRct.x;
+			var y : float = drawRct.y + drawRct.height;
+			var leftPadding : float = style.text.padding.left * 1.0 / Screen.width;
+			var rightPadding : float = style.text.padding.right * 1.0 / Screen.width;
+			var topPadding : float = style.text.padding.top * 1.0 / Screen.height;
+			var bottomPadding : float = style.text.padding.bottom * 1.0 / Screen.height;				
+			var line : Line = lineList[lineCount];
 
-			wordAdvance += word.width + spacing;
+			// Calculate offset for alignment
+			switch ( alignment ) {
+				case TextAnchor.UpperLeft:
+					x += leftPadding;
+					y -= topPadding; 
+					break;
+
+				case TextAnchor.MiddleLeft:
+					x += leftPadding;
+					y -= drawRct.height / 2 - ( lineHeight / 2 ) * ( lineCount + 1 ); 
+					break;
+
+				case TextAnchor.LowerLeft:
+					x += leftPadding;
+					y -= drawRct.height - bottomPadding;
+					break;
+
+				case TextAnchor.UpperCenter:
+					x += drawRct.width / 2 - line.width / 2;
+					y -= topPadding; 
+					break;
+
+				case TextAnchor.MiddleCenter:
+					x += drawRct.width / 2 - line.width / 2;
+					y -= drawRct.height / 2 - ( lineHeight / 2 ) * ( lineCount + 1 ); 
+					break;
+
+				case TextAnchor.LowerCenter:
+					x += drawRct.width / 2 - line.width / 2;
+					y -= drawRct.height - bottomPadding;
+					break;
+			}
+
+			line.position.x = x;
+			line.position.y = y - lineHeight * lineCount;
 		}
 
 		lineHeight = ( tallestGlyph * style.text.lineHeight ) / Screen.height;
 		spacing = ( widestGlyph / 2 * style.text.spacing ) / Screen.width;		
 
-		drawWords = wordList.ToArray ();
+		drawLines = lineList.ToArray ();
 	}
 	
 
 	//////////////////
 	// Draw
 	//////////////////	
-	private function DrawWords ( shadowOffset : float ) {
-		for ( var word : Word in drawWords ) {
-			for ( var glyph : Glyph in word.glyphs ) {
-				var x : float = drawRct.x + word.position.x + glyph.position.x + shadowOffset;
-				var y : float = drawRct.y + word.position.y + glyph.position.y + shadowOffset + drawScl.y;
-
-				// Bottom Left
-				GL.TexCoord2 ( glyph.uv[0].x, glyph.uv[0].y );
-				GL.Vertex3 ( x, y, drawDepth );
-				
-				// Top left
-				GL.TexCoord2 ( glyph.uv[1].x, glyph.uv[1].y );
-				GL.Vertex3 ( x, y - glyph.vert.height, drawDepth );
-				
-				// Top right
-				GL.TexCoord2 ( glyph.uv[2].x, glyph.uv[2].y );
-				GL.Vertex3 ( x + glyph.vert.width, y - glyph.vert.height, drawDepth );
-			
-				// Bottom right
-				GL.TexCoord2 ( glyph.uv[3].x, glyph.uv[3].y );
-				GL.Vertex3 ( x + glyph.vert.width, y, drawDepth );
-			}
+	private function DrawLines ( shadowOffset : float ) {
+		for ( var line : Line in drawLines ) {	
+			line.Draw ( shadowOffset, shadowOffset, drawDepth );
 		}
 	}
 			
 	override function DrawGL () {
-		if ( drawRct == null || drawWords == null ) { return; }
+		if ( drawRct == null || drawLines == null ) { return; }
 		
 		if ( style.text.shadowSize > 0 ) {
 			GL.Color ( style.text.shadowColor );
-			DrawWords ( style.text.shadowSize );
+			DrawLines ( style.text.shadowSize );
 		}	
 	
 		GL.Color ( style.text.fontColor );
 		
-		DrawWords ( 0 );
+		DrawLines ( 0 );
 
 		GL.Color ( Color.white );
 	}

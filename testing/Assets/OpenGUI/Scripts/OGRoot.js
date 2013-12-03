@@ -54,7 +54,7 @@ class OGRoot extends MonoBehaviour {
 				skin.fonts[f].material.SetPass(0);
 
 				for ( var l : OGLabel in labels ) {
-					if ( l == null || l.style.text.fontIndex != f ) { continue; }
+					if ( l == null || l.style == null || l.style.text.fontIndex != f ) { continue; }
 					
 					if ( l.isDrawn ) {
 						l.DrawGL ();
