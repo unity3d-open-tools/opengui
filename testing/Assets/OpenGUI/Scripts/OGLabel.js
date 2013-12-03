@@ -162,6 +162,14 @@ public class OGLabel extends OGWidget {
 
 			lineList[lineCount].Add ( word, spacing );
 		
+		}
+
+		lineHeight = ( tallestGlyph * style.text.lineHeight ) / Screen.height;
+		spacing = ( widestGlyph / 2 * style.text.spacing ) / Screen.width;		
+
+		drawLines = lineList.ToArray ();
+		
+		for ( var l : int = 0; l < drawLines.Length; l++ ) {
 			// Position
 			var x : float = drawRct.x;
 			var y : float = drawRct.y + drawRct.height;
@@ -169,7 +177,7 @@ public class OGLabel extends OGWidget {
 			var rightPadding : float = style.text.padding.right * 1.0 / Screen.width;
 			var topPadding : float = style.text.padding.top * 1.0 / Screen.height;
 			var bottomPadding : float = style.text.padding.bottom * 1.0 / Screen.height;				
-			var line : Line = lineList[lineCount];
+			var line : Line = drawLines[l];
 
 			// Calculate offset for alignment
 			switch ( alignment ) {
@@ -180,12 +188,12 @@ public class OGLabel extends OGWidget {
 
 				case TextAnchor.MiddleLeft:
 					x += leftPadding;
-					y -= drawRct.height / 2 - ( lineHeight / 2 ) * ( lineCount + 1 ); 
+					y -= drawRct.height / 2 - ( lineHeight / 2 ) * drawLines.Length; 
 					break;
 
 				case TextAnchor.LowerLeft:
 					x += leftPadding;
-					y -= drawRct.height - bottomPadding;
+					y -= drawRct.height - bottomPadding - lineHeight * drawLines.Length;
 					break;
 
 				case TextAnchor.UpperCenter:
@@ -195,23 +203,37 @@ public class OGLabel extends OGWidget {
 
 				case TextAnchor.MiddleCenter:
 					x += drawRct.width / 2 - line.width / 2;
-					y -= drawRct.height / 2 - ( lineHeight / 2 ) * ( lineCount + 1 ); 
+					y -= drawRct.height / 2 - ( lineHeight / 2 ) * ( drawLines.Length ); 
 					break;
 
 				case TextAnchor.LowerCenter:
 					x += drawRct.width / 2 - line.width / 2;
-					y -= drawRct.height - bottomPadding;
+					y -= drawRct.height - bottomPadding - lineHeight * drawLines.Length;
+					break;
+
+				case TextAnchor.UpperRight:
+					x += drawRct.width - line.width;
+					y -= topPadding; 
+					break;
+
+				case TextAnchor.MiddleRight:
+					x += drawRct.width - line.width;
+					y -= drawRct.height / 2 - ( lineHeight / 2 ) * ( drawLines.Length ); 
+					break;
+
+				case TextAnchor.LowerRight:
+					x += drawRct.width - line.width;
+					y -= drawRct.height - bottomPadding - lineHeight * drawLines.Length;
 					break;
 			}
 
 			line.position.x = x;
-			line.position.y = y - lineHeight * lineCount;
+			if ( l > 0 ) {
+				line.position.y = drawLines[l-1].position.y - lineHeight;
+			} else {
+				line.position.y = y;
+			}
 		}
-
-		lineHeight = ( tallestGlyph * style.text.lineHeight ) / Screen.height;
-		spacing = ( widestGlyph / 2 * style.text.spacing ) / Screen.width;		
-
-		drawLines = lineList.ToArray ();
 	}
 	
 

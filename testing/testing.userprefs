@@ -1,8 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\OpenGUI\Scripts\OGLabel.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/OpenGUI/Scripts/OGLabel.js">
     <Files>
-      <File FileName="Assets\OpenGUI\Scripts\OGLabel.js" Line="102" Column="862" />
+      <File FileName="Assets/OpenGUI/Scripts/OGLabel.js" Line="139" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
