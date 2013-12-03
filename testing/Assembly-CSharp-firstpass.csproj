@@ -47,8 +47,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Plugins\iTween.cs" />
-     <None Include="Assets\OpenGUI\Shaders\3DText.shader" />
      <None Include="Assets\OpenGUI\Shaders\UnlitAlphaColored.shader" />
+     <None Include="Assets\OpenGUI\Shaders\3DText.shader" />
+     <None Include="Assets\OpenGUI\Shaders\Test.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

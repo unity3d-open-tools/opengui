@@ -56,6 +56,7 @@ public class OGWidget extends MonoBehaviour {
 	@HideInInspector public var mouseOver : boolean = false;
 	@HideInInspector public var scrollOffset : Vector3;
 	@HideInInspector public var offset : Vector3;
+	@HideInInspector public var clipping : Vector2;
 	@HideInInspector public var hidden : boolean = false;
 	@HideInInspector public var root : OGRoot;
 	

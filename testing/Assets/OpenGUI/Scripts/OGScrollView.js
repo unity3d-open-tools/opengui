@@ -74,7 +74,7 @@ public class OGScrollView extends OGWidget {
 			if ( w != this ) {
 				w.scrollOffset = new Vector3 ( padding.x + scrollPosition.x, padding.y + scrollPosition.y, 0 );
 				w.drawDepth -= drawDepth;
-			
+				w.clipping = GetBounds ( w );		
 				w.isDrawn = !IsOutOfBounds ( w );
 			}
 		}

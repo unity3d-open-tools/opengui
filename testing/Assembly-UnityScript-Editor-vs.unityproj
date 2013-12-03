@@ -49,8 +49,9 @@
      <Compile Include="Assets\OpenGUI\Editor\OGRootInspector.js" />
      <Compile Include="Assets\OpenGUI\Editor\OGSkinInspector.js" />
      <Compile Include="Assets\OpenGUI\Editor\OGWidgetInspector.js" />
-     <None Include="Assets\OpenGUI\Shaders\3DText.shader" />
      <None Include="Assets\OpenGUI\Shaders\UnlitAlphaColored.shader" />
+     <None Include="Assets\OpenGUI\Shaders\3DText.shader" />
+     <None Include="Assets\OpenGUI\Shaders\Test.shader" />
  <Reference Include="Library\ScriptAssemblies\Assembly-UnityScript">
  <HintPath>Library\ScriptAssemblies\Assembly-UnityScript.dll</HintPath>
  </Reference>
