@@ -5,33 +5,32 @@ public class OGScrollView extends OGWidget {
 	public var scrollPosition : Vector2;
 	public var padding : Vector2 = new Vector2 ( 10, 10 );
 
-	private function GetBounds ( w : OGWidget ) : Vector2 {
-		var outside : Vector2 = Vector2.zero;
+	private function GetBounds ( w : OGWidget ) : Vector4 {
+		var outside : Vector4 = Vector4.zero;
 		
 		var xMin : float = w.transform.position.x + w.scrollOffset.x;
 		var xMax : float = w.transform.position.x + w.scrollOffset.x + w.transform.lossyScale.x;
 		var yMin : float = w.transform.position.y + w.scrollOffset.y;
 		var yMax : float = w.transform.position.y + w.scrollOffset.y + w.transform.lossyScale.y;
-		
-		if ( yMin < this.transform.position.y ) {
-			outside.y = yMin - this.transform.position.y;
+
+		if ( yMin < this.transform.position.y + padding.y ) {
+			outside.z = this.transform.position.y - yMin;
 		} else if ( yMax > this.transform.position.y + scrollWindow.y ) {
-			outside.y = yMax - this.transform.position.y + scrollWindow.y;
+			outside.w = yMax - ( this.transform.position.y + scrollWindow.y );
 		}
 		
 		if ( xMin < this.transform.position.x ) {
 			outside.x = xMin - this.transform.position.x;
 		} else if ( xMax > this.transform.position.x + scrollWindow.x ) {
-			outside.x = xMax - this.transform.position.x + scrollWindow.x;
+			outside.y = xMax - this.transform.position.x + scrollWindow.x;
 		}
 		
 		return outside;
 	}
 
 	private function IsOutOfBounds ( w : OGWidget ) {
-		var outBounds : Vector2 = GetBounds ( w );
-	
-		return -outBounds.x > w.transform.lossyScale.x || outBounds.x > w.transform.lossyScale.x || -outBounds.y > w.transform.lossyScale.y || outBounds.y > w.transform.lossyScale.y;
+		var outBounds : Vector4 = GetBounds ( w );
+		return outBounds.z >= w.transform.lossyScale.y || outBounds.w > w.transform.lossyScale.y;
 	}
 
 	override function UpdateWidget () {
@@ -65,7 +64,7 @@ public class OGScrollView extends OGWidget {
 			
 			}
 			
-			if ( scrollPosition.y + amount.y > 0 || scrollPosition.x + amount.x > 0 ) { return; }
+			//if ( scrollPosition.y + amount.y > 0 || scrollPosition.x + amount.x > 0 ) { return; }
 			
 			scrollPosition += amount;
 		}

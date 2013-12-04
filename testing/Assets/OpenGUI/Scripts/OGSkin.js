@@ -38,4 +38,8 @@ public class OGSkin extends MonoBehaviour {
 	@HideInInspector public var fonts : Font[];
 	@HideInInspector public var fontShader : Shader;
 	public var styles : OGStyle[];	
+
+	public function GetAtlas () : Material {
+		return Instantiate ( atlas );
+	}
 }

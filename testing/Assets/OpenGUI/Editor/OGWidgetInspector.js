@@ -4,7 +4,7 @@ import System.Collections.Generic;
 
 @CustomEditor ( OGWidget, true )
 public class OGWidgetInspector extends Editor {
-	private var debug : boolean = true;
+	public static var debug : boolean = true;
 	
 	private function GetStyles ( widget : OGWidget ) : String[] {
 		var tempList : List.< String > = new List.< String >();
@@ -37,23 +37,24 @@ public class OGWidgetInspector extends Editor {
 		
 		// Check for hidden widgets
 		if ( widget.hidden && !debug ) {
-			EditorGUILayout.LabelField ( "This widget is not supposed to be changed manually," );
-			EditorGUILayout.LabelField ( "please refer to the root widget." );
-
+			GUI.backgroundColor = Color.red;
 			if ( GUILayout.Button ( "Turn on debug mode" ) ) {
 				debug = true;
 			}
+			GUI.backgroundColor = Color.white;
 			
+			EditorGUILayout.Space ();
+
+			EditorGUILayout.LabelField ( "This widget is not supposed to be changed manually," );
+			EditorGUILayout.LabelField ( "please refer to the root widget." );
+
 		} else {
 			if ( widget.hidden ) {
-				EditorGUILayout.BeginHorizontal();
-				GUI.color = Color.red;
-				EditorGUILayout.LabelField ( "[HIDDEN]", EditorStyles.boldLabel, GUILayout.Width ( 100 ) );
-				GUI.color = Color.white;
+				GUI.backgroundColor = Color.green;
 				if ( GUILayout.Button ( "Turn off debug mode" ) ) {
 					debug = false;
 				}
-				EditorGUILayout.EndHorizontal();
+				GUI.backgroundColor = Color.white;
 
 				EditorGUILayout.Space();
 			}

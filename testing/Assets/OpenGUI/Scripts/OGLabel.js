@@ -242,7 +242,12 @@ public class OGLabel extends OGWidget {
 	//////////////////	
 	private function DrawLines ( shadowOffset : float ) {
 		for ( var line : Line in drawLines ) {	
-			line.Draw ( shadowOffset, shadowOffset, drawDepth );
+			var yMin : float = ( drawRct.y + drawRct.height - line.position.y ) * Screen.height;
+			var yMax : float = ( drawRct.y - line.position.y ) * Screen.height - lineHeight;
+
+			if ( yMin > clipping.z && yMax < clipping.w ) {
+				line.Draw ( shadowOffset, shadowOffset, drawDepth );
+			}
 		}
 	}
 			

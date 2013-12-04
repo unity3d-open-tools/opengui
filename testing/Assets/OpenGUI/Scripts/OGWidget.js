@@ -56,7 +56,7 @@ public class OGWidget extends MonoBehaviour {
 	@HideInInspector public var mouseOver : boolean = false;
 	@HideInInspector public var scrollOffset : Vector3;
 	@HideInInspector public var offset : Vector3;
-	@HideInInspector public var clipping : Vector2;
+	public var clipping : Vector4;
 	@HideInInspector public var hidden : boolean = false;
 	@HideInInspector public var root : OGRoot;
 	
@@ -78,11 +78,15 @@ public class OGWidget extends MonoBehaviour {
 	
 	// Coordinates (based on texture size)
 	private function RecalcCoords ( coords : Rect ) : Rect {
+		coords.height -= clipping.z;
+		coords.height -= clipping.w;
+		coords.y += clipping.w;
+
 		coords.x /= 256;
 		coords.y /= 144;
 		coords.width /= 256;
 		coords.height /= 144;
-		
+
 		return coords;
 	}
 		
@@ -92,6 +96,13 @@ public class OGWidget extends MonoBehaviour {
 		
 		var newScl : Vector3 = this.transform.lossyScale;
 		
+		if ( !this.GetComponent(OGLabel) ) {
+			newScl.x -= clipping.y;
+			newScl.y -= clipping.z;
+
+			newScl.y -= clipping.w;
+		}
+
 		newScl.x = newScl.x / Screen.width;
 		newScl.y = newScl.y / Screen.height;
 		
@@ -107,10 +118,15 @@ public class OGWidget extends MonoBehaviour {
 		
 		newPos += offset;
 		newPos += scrollOffset;
-		scrollOffset = Vector3.zero;	
-	
+		
 		newPos.y += this.transform.lossyScale.y;
 								
+		newPos.x += clipping.x;
+		
+		if ( !this.GetComponent(OGLabel) ) {
+			newPos.y -= clipping.w;
+		}
+
 		newPos.x = newPos.x / Screen.width;
 		newPos.y = ( Screen.height - newPos.y ) / Screen.height;
 		
@@ -204,6 +220,9 @@ public class OGWidget extends MonoBehaviour {
 		drawDepth = -this.transform.position.z;
 			
 		drawRct = new Rect ( drawPos.x, drawPos.y, drawScl.x, drawScl.y );
+		
+		//clipping = Vector4.zero;
+		scrollOffset = Vector3.zero;	
 	}	
 
 	
