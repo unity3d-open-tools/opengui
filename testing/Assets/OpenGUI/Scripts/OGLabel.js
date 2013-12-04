@@ -31,22 +31,33 @@ public class OGLabel extends OGWidget {
 			}		
 		}
 
-		public function Draw ( x : float, y : float, z : float ) {
+		public function Draw ( x : float, y : float, z : float, clipRct : Rect ) {
+			var shouldClip : boolean = clipRct.width > 0 && clipRct.height > 0;
+
+			var leftClip : float = shouldClip ? Mathf.Clamp ( clipRct.x - ( position.x + x ), 0, 1 ) : 0;
+		       	var leftClipRange : float = shouldClip ? Mathf.Clamp ( leftClip - vert.width, 0, 1 ) : 0;
+			var rightClip : float = shouldClip ? Mathf.Clamp ( ( position.x + x + width ) - ( clipRct.x + clipRct.width ), 0, 1 ) : 0;
+		       	var rightClipRange : float = shouldClip ? Mathf.Clamp ( rightClip - vert.width, 0, 1 ) : 0;
+			var bottomClip : float = shouldClip ? Mathf.Clamp ( clipRct.y - ( position.y + y ), 0, 1 ) : 0;
+			var bottomClipRange : float = shouldClip ? Mathf.Clamp ( bottomClip + vert.height, 0, 1 ) : 0;
+			var topClip : float = shouldClip ? Mathf.Clamp ( ( position.y + y - vert.height ) - ( clipRct.y + clipRct.height ), 0, 1 ) : 0;
+			var topClipRange : float = shouldClip ? Mathf.Clamp ( topClip + vert.height, 0, 1 ) : 0;
+
 			// Bottom Left
 			GL.TexCoord2 ( uv[0].x, uv[0].y );
-			GL.Vertex3 ( position.x + x, position.y + y, z );
+			GL.Vertex3 ( position.x + x + leftClip - rightClipRange, position.y + y + bottomClip - topClipRange, z );
 			
 			// Top left
 			GL.TexCoord2 ( uv[1].x, uv[1].y );
-			GL.Vertex3 ( position.x + x, position.y + y - vert.height, z );
-			
+			GL.Vertex3 ( position.x + x + leftClip - rightClipRange, position.y + y - vert.height + bottomClipRange - topClip, z );
+
 			// Top right
 			GL.TexCoord2 ( uv[2].x, uv[2].y );
-			GL.Vertex3 ( position.x + x + vert.width, position.y + y - vert.height, z );
+			GL.Vertex3 ( position.x + x + vert.width + leftClipRange - rightClip, position.y + y - vert.height + bottomClipRange - topClip, z );
 		
 			// Bottom right
 			GL.TexCoord2 ( uv[3].x, uv[3].y );
-			GL.Vertex3 ( position.x + x + vert.width, position.y + y, z );
+			GL.Vertex3 ( position.x + x + vert.width + leftClipRange - rightClip, position.y + y + bottomClip - topClipRange, z );
 		}
 	}
 	
@@ -65,9 +76,9 @@ public class OGLabel extends OGWidget {
 			width += glyph.width;
 		}	
 
-		public function Draw ( x : float, y : float, z : float ) {
+		public function Draw ( x : float, y : float, z : float, clipRct : Rect ) {
 			for ( var g : Glyph in glyphs ) {
-				g.Draw ( position.x + x, position.y + y, z );
+				g.Draw ( position.x + x, position.y + y, z, clipRct );
 			}
 		}
 	}
@@ -87,9 +98,9 @@ public class OGLabel extends OGWidget {
 			width += word.width + spacing;
 		}
 
-		public function Draw ( x : float, y : float, z : float ) {
+		public function Draw ( x : float, y : float, z : float, clipRct : Rect ) {
 			for ( var w : Word in words ) {
-				w.Draw ( position.x + x, position.y + y, z );
+				w.Draw ( position.x + x, position.y + y, z, clipRct );
 			}
 		}
 	}
@@ -242,12 +253,7 @@ public class OGLabel extends OGWidget {
 	//////////////////	
 	private function DrawLines ( shadowOffset : float ) {
 		for ( var line : Line in drawLines ) {	
-			var yMin : float = ( drawRct.y + drawRct.height - line.position.y ) * Screen.height;
-			var yMax : float = ( drawRct.y - line.position.y ) * Screen.height - lineHeight;
-
-			if ( yMin > clipping.z && yMax < clipping.w ) {
-				line.Draw ( shadowOffset, shadowOffset, drawDepth );
-			}
+			line.Draw ( shadowOffset, shadowOffset, drawDepth, clipRct );
 		}
 	}
 			

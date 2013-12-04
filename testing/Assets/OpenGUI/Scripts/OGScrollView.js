@@ -4,34 +4,7 @@ public class OGScrollView extends OGWidget {
 	public var scrollWindow : Vector2;
 	public var scrollPosition : Vector2;
 	public var padding : Vector2 = new Vector2 ( 10, 10 );
-
-	private function GetBounds ( w : OGWidget ) : Vector4 {
-		var outside : Vector4 = Vector4.zero;
-		
-		var xMin : float = w.transform.position.x + w.scrollOffset.x;
-		var xMax : float = w.transform.position.x + w.scrollOffset.x + w.transform.lossyScale.x;
-		var yMin : float = w.transform.position.y + w.scrollOffset.y;
-		var yMax : float = w.transform.position.y + w.scrollOffset.y + w.transform.lossyScale.y;
-
-		if ( yMin < this.transform.position.y + padding.y ) {
-			outside.z = this.transform.position.y - yMin;
-		} else if ( yMax > this.transform.position.y + scrollWindow.y ) {
-			outside.w = yMax - ( this.transform.position.y + scrollWindow.y );
-		}
-		
-		if ( xMin < this.transform.position.x ) {
-			outside.x = xMin - this.transform.position.x;
-		} else if ( xMax > this.transform.position.x + scrollWindow.x ) {
-			outside.y = xMax - this.transform.position.x + scrollWindow.x;
-		}
-		
-		return outside;
-	}
-
-	private function IsOutOfBounds ( w : OGWidget ) {
-		var outBounds : Vector4 = GetBounds ( w );
-		return outBounds.z >= w.transform.lossyScale.y || outBounds.w > w.transform.lossyScale.y;
-	}
+	public var elasticity : float = 2;
 
 	override function UpdateWidget () {
 		if ( stretch.width != ScreenSize.None ) {
@@ -58,25 +31,39 @@ public class OGScrollView extends OGWidget {
 			} else if ( scroll < 0 ) {
 				amount.y = -20;
 			
+			// Drag	
 			} else if ( Input.GetMouseButton ( 2 ) ) {
 				amount.x = Mathf.Floor ( drag.x * 20 );
 				amount.y = -Mathf.Floor ( drag.y * 20 );
-			
 			}
 			
-			//if ( scrollPosition.y + amount.y > 0 || scrollPosition.x + amount.x > 0 ) { return; }
-			
-			scrollPosition += amount;
+			if ( scrollPosition.x + amount.x < padding.x * elasticity ) {
+				scrollPosition.x += amount.x;
+			}	
+
+			if ( scrollPosition.y + amount.y < padding.x * elasticity ) {
+				scrollPosition.y += amount.y;
+			}	
 		}
 		
 		for ( var w : OGWidget in this.gameObject.GetComponentsInChildren.<OGWidget>() ) {
 			if ( w != this ) {
 				w.scrollOffset = new Vector3 ( padding.x + scrollPosition.x, padding.y + scrollPosition.y, 0 );
 				w.drawDepth -= drawDepth;
-				w.clipping = GetBounds ( w );		
-				w.isDrawn = !IsOutOfBounds ( w );
+				w.clipRct = drawRct;
 			}
 		}
+
+		// Snap back
+		if ( !Input.GetMouseButton ( 2 ) ) {
+			if ( scrollPosition.y > 0 ) {
+				scrollPosition.y = Mathf.Lerp ( scrollPosition.y, 0, Time.deltaTime * padding.y );
+			}
+			
+			if ( scrollPosition.x > 0 ) {
+				scrollPosition.x = Mathf.Lerp ( scrollPosition.x, 0, Time.deltaTime * padding.x );
+			}
+		}	
 	}
 	
 	override function DrawGL () {

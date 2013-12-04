@@ -18,8 +18,7 @@ Shader "GUI/Alpha Sliced" {
 
 		Pass {
 			CGPROGRAM
-// Upgrade NOTE: excluded shader from DX11 and Xbox360; has structs without semantics (struct v2f members wpos)
-#pragma exclude_renderers d3d11 xbox360
+				#pragma exclude_renderers d3d11 xbox360
 				#pragma vertex vert
 				#pragma fragment frag
 				#include "UnityCG.cginc"

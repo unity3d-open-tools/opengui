@@ -218,7 +218,7 @@ public class OGSlicedSprite extends OGWidget {
 	//////////////////
 	override function DrawGL () {
 		if ( drawCrd == null || drawRct == null || drawBrd == null || pixelBrd == null ) { return; }
-		
+
 		DrawTopLeftCorner ();
 		DrawTopPanel ();
 		DrawTopRightCorner ();

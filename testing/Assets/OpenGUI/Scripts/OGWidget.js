@@ -52,6 +52,7 @@ public class OGWidget extends MonoBehaviour {
 	@HideInInspector public var drawScl : Vector3;
 	@HideInInspector public var drawCrd : Rect;
 	@HideInInspector public var drawRct : Rect;
+	@HideInInspector public var clipRct : Rect;
 	@HideInInspector public var drawDepth : float;
 	@HideInInspector public var mouseOver : boolean = false;
 	@HideInInspector public var scrollOffset : Vector3;
@@ -78,10 +79,6 @@ public class OGWidget extends MonoBehaviour {
 	
 	// Coordinates (based on texture size)
 	private function RecalcCoords ( coords : Rect ) : Rect {
-		coords.height -= clipping.z;
-		coords.height -= clipping.w;
-		coords.y += clipping.w;
-
 		coords.x /= 256;
 		coords.y /= 144;
 		coords.width /= 256;
@@ -96,13 +93,6 @@ public class OGWidget extends MonoBehaviour {
 		
 		var newScl : Vector3 = this.transform.lossyScale;
 		
-		if ( !this.GetComponent(OGLabel) ) {
-			newScl.x -= clipping.y;
-			newScl.y -= clipping.z;
-
-			newScl.y -= clipping.w;
-		}
-
 		newScl.x = newScl.x / Screen.width;
 		newScl.y = newScl.y / Screen.height;
 		
@@ -123,10 +113,6 @@ public class OGWidget extends MonoBehaviour {
 								
 		newPos.x += clipping.x;
 		
-		if ( !this.GetComponent(OGLabel) ) {
-			newPos.y -= clipping.w;
-		}
-
 		newPos.x = newPos.x / Screen.width;
 		newPos.y = ( Screen.height - newPos.y ) / Screen.height;
 		
@@ -210,6 +196,26 @@ public class OGWidget extends MonoBehaviour {
 		}
 	}
 	
+	// Calculate clipping
+	private function CalcClipping () {
+		var shouldClip : boolean = clipRct.width > 0 && clipRct.height > 0 && !this.GetComponent(OGLabel);
+
+		if ( shouldClip ) {
+			var leftClip : float = Mathf.Clamp ( clipRct.x - drawRct.x, 0, 1 );
+			var rightClip : float = Mathf.Clamp ( ( drawRct.x + drawRct.width ) - ( clipRct.x + clipRct.width ), 0, 1 );
+			var bottomClip : float = Mathf.Clamp ( clipRct.y - drawRct.y, 0, 1 );
+			var topClip : float = Mathf.Clamp ( ( drawRct.y + drawRct.height ) - ( clipRct.y + clipRct.height ), 0, 1 );
+		
+			drawRct.x = drawRct.x + leftClip - rightClip;
+			drawRct.width = drawRct.width - leftClip - rightClip;	
+			drawRct.y = drawRct.y + bottomClip;
+			drawRct.height = drawRct.height - topClip - bottomClip;	
+		
+			isDrawn = ( drawRct.height >= 0 && drawRct.width >= 0 );
+		}
+	}
+	
+	
 	// Apply all calculations
 	public function Recalculate () {
 		if ( !style ) { return; }
@@ -220,8 +226,8 @@ public class OGWidget extends MonoBehaviour {
 		drawDepth = -this.transform.position.z;
 			
 		drawRct = new Rect ( drawPos.x, drawPos.y, drawScl.x, drawScl.y );
-		
-		//clipping = Vector4.zero;
+		CalcClipping ();	
+
 		scrollOffset = Vector3.zero;	
 	}	
 
