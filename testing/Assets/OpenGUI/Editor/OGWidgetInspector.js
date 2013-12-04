@@ -169,6 +169,7 @@ public class OGWidgetInspector extends Editor {
 				taDownIndex = EditorGUILayout.Popup ( taDownIndex, GetStyles ( widget ) );
 				EditorGUILayout.EndHorizontal ();
 				( widget as OGTabs ).downStyle = widget.GetRoot().skin.styles [ taDownIndex ];
+				 
 			}
 			
 			EditorGUILayout.Space();

@@ -6,6 +6,8 @@ public class OGScrollView extends OGWidget {
 	public var padding : Vector2 = new Vector2 ( 10, 10 );
 	public var elasticity : float = 2;
 
+	private var dragging : boolean = false;
+
 	override function UpdateWidget () {
 		if ( stretch.width != ScreenSize.None ) {
 			scrollWindow.x = RecalcScale().x * Screen.width;
@@ -14,48 +16,45 @@ public class OGScrollView extends OGWidget {
 		if ( stretch.height != ScreenSize.None ) {
 			scrollWindow.y = RecalcScale().y * Screen.height;
 		}
-	
+
+		// Reset scale	
 		this.transform.localScale = Vector3.one;
 		
-		var scroll : float = Input.GetAxis ( "Mouse ScrollWheel" );
+		// Scrolling
 		var drag : Vector2;
+		var amount : Vector2;
 		drag.x = Input.GetAxis ( "Mouse X" ); 
 		drag.y = Input.GetAxis ( "Mouse Y" );
-		
+	
+		// ^ Scroll wheel	
 		if ( CheckMouseOver ( drawRct ) ) {
-			var amount : Vector2;
-			
+			var scroll : float = Input.GetAxis ( "Mouse ScrollWheel" );
+
 			if ( scroll > 0 ) {
 				amount.y = 20;
 			
 			} else if ( scroll < 0 ) {
 				amount.y = -20;
-			
-			// Drag	
-			} else if ( Input.GetMouseButton ( 2 ) ) {
+			}	
+		
+			if ( Input.GetMouseButtonDown ( 2 ) ) {
+				dragging = true;
+			}
+		}
+		
+		// ^ Drag
+		if ( dragging ) { 	
+			if ( Input.GetMouseButton ( 2 ) ) {
 				amount.x = Mathf.Floor ( drag.x * 20 );
 				amount.y = -Mathf.Floor ( drag.y * 20 );
 			}
 			
-			if ( scrollPosition.x + amount.x < padding.x * elasticity ) {
-				scrollPosition.x += amount.x;
-			}	
-
-			if ( scrollPosition.y + amount.y < padding.x * elasticity ) {
-				scrollPosition.y += amount.y;
-			}	
-		}
-		
-		for ( var w : OGWidget in this.gameObject.GetComponentsInChildren.<OGWidget>() ) {
-			if ( w != this ) {
-				w.scrollOffset = new Vector3 ( padding.x + scrollPosition.x, padding.y + scrollPosition.y, 0 );
-				w.drawDepth -= drawDepth;
-				w.clipRct = drawRct;
+			if ( Input.GetMouseButtonUp ( 2 ) ) {
+				dragging = false;
 			}
-		}
-
-		// Snap back
-		if ( !Input.GetMouseButton ( 2 ) ) {
+		
+		// ^ Snap back
+		} else {
 			if ( scrollPosition.y > 0 ) {
 				scrollPosition.y = Mathf.Lerp ( scrollPosition.y, 0, Time.deltaTime * padding.y );
 			}
@@ -64,6 +63,26 @@ public class OGScrollView extends OGWidget {
 				scrollPosition.x = Mathf.Lerp ( scrollPosition.x, 0, Time.deltaTime * padding.x );
 			}
 		}	
+
+		// ^ Elasticity
+		if ( scrollPosition.x + amount.x < padding.x * elasticity ) {
+			scrollPosition.x += amount.x / Mathf.Clamp ( scrollPosition.x, 1, padding.x * elasticity );
+		}
+
+		if ( scrollPosition.y + amount.y < padding.x * elasticity ) {
+			scrollPosition.y += amount.y / Mathf.Clamp ( scrollPosition.y, 1, padding.y * elasticity );;
+		}	
+		
+		
+		// Update all widgets
+		for ( var w : OGWidget in this.gameObject.GetComponentsInChildren.<OGWidget>() ) {
+			if ( w != this ) {
+				w.scrollOffset = new Vector3 ( padding.x + scrollPosition.x, padding.y + scrollPosition.y, 0 );
+				w.drawDepth -= drawDepth;
+				w.clipRct = drawRct;
+			}
+		}
+
 	}
 	
 	override function DrawGL () {
