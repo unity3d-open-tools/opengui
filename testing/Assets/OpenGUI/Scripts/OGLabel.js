@@ -141,16 +141,23 @@ public class OGLabel extends OGWidget {
 
 		var lineList : List.< Line > = new List.< Line >();	
 		var wordList : List.< Word > = new List.< Word >();
-		var strings : String[] = text.Split ( " "[0] );
+		var displayedText = text.Replace ( "\\n", " \\n" );
+		var strings : String[] = displayedText.Split ( " "[0] );
 
 		lineList.Add ( new Line () );
 
 		for ( var s : int = 0; s < strings.Length; s++ ) {
 			var word : Word = new Word ();
-			
+			var linebreak : boolean = false;
+
+			if ( strings[s].Contains ( "\\n" ) ) {
+				strings[s] = strings[s].Replace ( "\\n", "" );
+				linebreak = true;
+			}
+
 			for ( var i : int = 0; i < strings[s].Length; i++ ) {
 				var unicodeIndex : int = strings[s][i];
-				
+			
 				if ( unicodeDictionary.ContainsKey ( unicodeIndex ) ) {
 					var glyph : Glyph = new Glyph ( characterInfo [ unicodeDictionary [ unicodeIndex ] ], fontSize / 72.0 );
 
@@ -166,7 +173,11 @@ public class OGLabel extends OGWidget {
 				}
 			}
 
-			if ( lineList[lineCount].width + word.width + spacing > drawRct.width - style.text.padding.left / Screen.width ) {
+			if ( !linebreak ) {
+				linebreak = lineList[lineCount].width + word.width + spacing > drawRct.width - style.text.padding.left / Screen.width;
+			}
+
+			if ( linebreak ) {
 				lineCount++;
 				lineList.Add ( new Line () );
 			}
