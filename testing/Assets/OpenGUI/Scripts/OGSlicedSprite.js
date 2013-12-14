@@ -1,21 +1,16 @@
 ﻿#pragma strict
 
 public class OGSlicedSprite extends OGWidget {
-	private var drawBrd : OGRectOffset;
-	private var pixelBrd : OGRectOffset;
+	private var drawBrd : OGSlicedSpriteOffset;
+	private var pixelBrd : OGSlicedSpriteOffset;
 
 
 	//////////////////
 	// Calculations
 	//////////////////
 	// Border (based on texture size)
-	private function RecalcBorder ( border : OGRectOffset ) : OGRectOffset {
-		return new OGRectOffset ( border.left / 256, border.right / 256, border.top / 144, border.bottom / 144 );
-	}
-	
-	// Pixel border (based on screen size)
-	private function RecalcPixelBorder ( border : OGRectOffset ) : OGRectOffset {
-		return new OGRectOffset ( border.left / Screen.width, border.right / Screen.width, border.top / Screen.height, border.bottom / Screen.height );
+	private function RecalcBorder ( border : OGSlicedSpriteOffset ) : OGSlicedSpriteOffset {
+		return new OGSlicedSpriteOffset ( border.left / root.texWidth, border.right / root.texWidth, border.top / root.texHeight, border.bottom / root.texHeight );
 	}
 
 
@@ -204,12 +199,16 @@ public class OGSlicedSprite extends OGWidget {
 	
 	//////////////////
 	// Update
-	//////////////////
+	//////////////////	
 	override function UpdateWidget () {
-		if ( style != null ) {
-			drawBrd = RecalcBorder ( style.border );
-			pixelBrd = RecalcPixelBorder ( style.border );
+		selectable = false;
+		
+		if ( styles.basic != null ) {
+			drawBrd = RecalcBorder ( styles.basic.border );
+			pixelBrd = styles.basic.border;
 		}
+	
+		mouseRct = drawRct;
 	}
 	
 	

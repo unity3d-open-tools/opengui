@@ -1,21 +1,31 @@
 ﻿#pragma strict
 
 public class OGScrollView extends OGWidget {
-	public var scrollWindow : Vector2;
-	public var scrollPosition : Vector2;
+	public var size : Vector2;
+	public var position : Vector2;
 	public var padding : Vector2 = new Vector2 ( 10, 10 );
+	public var canDrag : boolean = true;
 	public var elasticity : float = 2;
 
+	// TODO: Deprecate
+	@HideInInspector public var scrollLength : float = 0;
+	@HideInInspector public var scrollWidth : float = 0;
+	@HideInInspector public var viewHeight : float = 0;
+	@HideInInspector public var inset : float = 0;
+
 	private var dragging : boolean = false;
+	private var widgets : OGWidget[];
 
 	override function UpdateWidget () {
 		if ( stretch.width != ScreenSize.None ) {
-			scrollWindow.x = RecalcScale().x * Screen.width;
+			size.x = RecalcScale().x;
 		}
 
 		if ( stretch.height != ScreenSize.None ) {
-			scrollWindow.y = RecalcScale().y * Screen.height;
+			size.y = RecalcScale().y;
 		}
+
+		mouseRct = drawRct;
 
 		// Reset scale	
 		this.transform.localScale = Vector3.one;
@@ -27,7 +37,7 @@ public class OGScrollView extends OGWidget {
 		drag.y = Input.GetAxis ( "Mouse Y" );
 	
 		// ^ Scroll wheel	
-		if ( CheckMouseOver ( drawRct ) ) {
+		if ( CheckMouseOver () ) {
 			var scroll : float = Input.GetAxis ( "Mouse ScrollWheel" );
 
 			if ( scroll > 0 ) {
@@ -37,7 +47,7 @@ public class OGScrollView extends OGWidget {
 				amount.y = -20;
 			}	
 		
-			if ( Input.GetMouseButtonDown ( 2 ) ) {
+			if ( Input.GetMouseButtonDown ( 2 ) && canDrag ) {
 				dragging = true;
 			}
 		}
@@ -52,50 +62,55 @@ public class OGScrollView extends OGWidget {
 			if ( Input.GetMouseButtonUp ( 2 ) ) {
 				dragging = false;
 			}
-		
+	
 		// ^ Snap back
 		} else {
-			if ( scrollPosition.y > 0 ) {
-				scrollPosition.y = Mathf.Lerp ( scrollPosition.y, 0, Time.deltaTime * padding.y );
+			if ( position.y > 0 ) {
+				position.y = Mathf.Lerp ( position.y, 0, Time.deltaTime * padding.y );
 			}
 			
-			if ( scrollPosition.x > 0 ) {
-				scrollPosition.x = Mathf.Lerp ( scrollPosition.x, 0, Time.deltaTime * padding.x );
+			if ( position.x > 0 ) {
+				position.x = Mathf.Lerp ( position.x, 0, Time.deltaTime * padding.x );
 			}
 		}	
 
 		// ^ Elasticity
-		if ( scrollPosition.x + amount.x < padding.x * elasticity ) {
-			scrollPosition.x += amount.x / Mathf.Clamp ( scrollPosition.x, 1, padding.x * elasticity );
+		if ( position.x + amount.x < padding.x * elasticity ) {
+			position.x += amount.x / Mathf.Clamp ( position.x, 1, padding.x * elasticity );
 		}
 
-		if ( scrollPosition.y + amount.y < padding.x * elasticity ) {
-			scrollPosition.y += amount.y / Mathf.Clamp ( scrollPosition.y, 1, padding.y * elasticity );;
+		if ( position.y + amount.y < padding.x * elasticity ) {
+			position.y += amount.y / Mathf.Clamp ( position.y, 1, padding.y * elasticity );;
 		}	
 		
 		
 		// Update all widgets
-		for ( var w : OGWidget in this.gameObject.GetComponentsInChildren.<OGWidget>() ) {
-			if ( w != this ) {
-				w.scrollOffset = new Vector3 ( padding.x + scrollPosition.x, padding.y + scrollPosition.y, 0 );
-				w.drawDepth -= drawDepth;
-				w.clipRct = drawRct;
-			}
+		if ( !widgets || widgets.Length != this.gameObject.GetComponentsInChildren.<OGWidget>().Length ) {
+			widgets = this.gameObject.GetComponentsInChildren.<OGWidget>();
 		}
 
+		for ( var i : int = 0; i < widgets.Length; i++ ) {
+			var w : OGWidget = widgets[i];
+			
+			if ( w != this ) {
+				w.scrollOffset = new Vector3 ( padding.x + position.x, padding.y + position.y, 0 );
+				w.clipRct = drawRct;
+				w.Recalculate();
+			}
+		}
 	}
 	
 	override function DrawGL () {
 		GL.TexCoord2 ( drawCrd.x, drawCrd.y );
-		GL.Vertex3 ( drawRct.x, drawRct.y, -this.transform.position.z );
+		GL.Vertex3 ( drawRct.x, drawRct.y, drawDepth - 10 );
 		
 		GL.TexCoord2 ( drawCrd.x, drawCrd.y + drawCrd.height );
-		GL.Vertex3 ( drawRct.x, drawRct.y + drawRct.height, -this.transform.position.z );
+		GL.Vertex3 ( drawRct.x, drawRct.y + drawRct.height, drawDepth - 10 );
 		
 		GL.TexCoord2 ( drawCrd.x + drawCrd.width, drawCrd.y + drawCrd.height );
-		GL.Vertex3 ( drawRct.x + drawRct.width, drawRct.y + drawRct.height, -this.transform.position.z );
+		GL.Vertex3 ( drawRct.x + drawRct.width, drawRct.y + drawRct.height, drawDepth - 10 );
 		
 		GL.TexCoord2 ( drawCrd.x + drawCrd.width, drawCrd.y );
-		GL.Vertex3 ( drawRct.x + drawRct.width, drawRct.y, -this.transform.position.z );
+		GL.Vertex3 ( drawRct.x + drawRct.width, drawRct.y, drawDepth - 10 );
 	}
 }

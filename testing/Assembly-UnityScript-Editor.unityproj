@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\OpenGUI\Editor\OGPageInspector.js" />
      <Compile Include="Assets\OpenGUI\Editor\OGRootInspector.js" />
      <Compile Include="Assets\OpenGUI\Editor\OGSkinInspector.js" />
      <Compile Include="Assets\OpenGUI\Editor\OGWidgetInspector.js" />

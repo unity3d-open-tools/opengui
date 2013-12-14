@@ -4,27 +4,31 @@ public class OGTickBox extends OGWidget {
 	public var text : String;
 	public var isTicked : boolean;
 	
-	@HideInInspector public var tickedStyle : OGStyle;
-	@HideInInspector public var hoverStyle : OGStyle;
+	// TODO: Deprecate
+	@HideInInspector public var isChecked : boolean;
 	
 	private var background : OGSlicedSprite;
 	private var label : OGLabel;
 	
 	override function OnMouseOver () {
-		label.style = hoverStyle;
+		label.styles.basic = styles.hover;
 	}
 	
 	override function OnMouseCancel () {
-		label.style = style;
+		label.styles.basic = styles.basic;
 	}
 	
 	override function OnMouseDown () {
 		isTicked = !isTicked;
 		
 		OGRoot.GetInstance().ReleaseWidget ();
+		SetDirty ();
 	}
 	
 	override function UpdateWidget () {
+		// TODO: Deprecate
+		isChecked = isTicked;
+	
 		// Background		
 		if ( background == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSlicedSprite ) ) {
@@ -33,7 +37,7 @@ public class OGTickBox extends OGWidget {
 			} else {			
 				var newSprite : OGSlicedSprite = new GameObject ( "SlicedSprite", OGSlicedSprite ).GetComponent ( OGSlicedSprite );
 				newSprite.transform.parent = this.transform;
-				newSprite.style = this.style;
+				newSprite.styles.basic = this.styles.basic;
 			}
 		
 		} else {
@@ -45,12 +49,12 @@ public class OGTickBox extends OGWidget {
 			background.hidden = true;
 		
 			if ( isTicked ) {
-				background.style = tickedStyle;
+				background.styles.basic = styles.ticked;
 			} else {
-				background.style = style;
+				background.styles.basic = styles.basic;
 			}
 		
-			mouseOver = CheckMouseOver ( background.drawRct );
+			mouseRct = background.drawRct;
 		}
 		
 		// Label
@@ -62,7 +66,7 @@ public class OGTickBox extends OGWidget {
 				var newLabel : OGLabel = new GameObject ( "Label", OGLabel ).GetComponent ( OGLabel );
 				newLabel.transform.parent = this.transform;
 				newLabel.text = text;
-				newLabel.style = this.style;
+				newLabel.styles.basic = this.styles.basic;
 			}
 		
 		} else {
@@ -71,7 +75,7 @@ public class OGTickBox extends OGWidget {
 			label.transform.localEulerAngles = Vector3.zero;
 			label.transform.localPosition = Vector3.zero;
 			
-			label.style = this.style;
+			label.styles.basic = this.styles.basic;
 			
 			label.isDrawn = isDrawn;
 			label.hidden = true;

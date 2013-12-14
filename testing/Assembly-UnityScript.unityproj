@@ -47,8 +47,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\OpenGUI\Scripts\OGButton.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGButton3D.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGCameraWindow.js" />
      <Compile Include="Assets\OpenGUI\Scripts\OGDropDown.js" />
      <Compile Include="Assets\OpenGUI\Scripts\OGLabel.js" />
+     <Compile Include="Assets\OpenGUI\Scripts\OGListItem.js" />
      <Compile Include="Assets\OpenGUI\Scripts\OGPage.js" />
      <Compile Include="Assets\OpenGUI\Scripts\OGPopUp.js" />
      <Compile Include="Assets\OpenGUI\Scripts\OGRoot.js" />
@@ -63,6 +66,8 @@
      <Compile Include="Assets\OpenGUI\Scripts\OGTickBox.js" />
      <Compile Include="Assets\OpenGUI\Scripts\OGTween.js" />
      <Compile Include="Assets\OpenGUI\Scripts\OGWidget.js" />
+     <Compile Include="Assets\OpenGUI\Tools\OGArrangeInCircle.js" />
+     <Compile Include="Assets\OpenGUI\Tools\OGScaleToCamera.js" />
      <None Include="Assets\OpenGUI\Shaders\UnlitAlphaColored.shader" />
      <None Include="Assets\OpenGUI\Shaders\3DText.shader" />
      <None Include="Assets\OpenGUI\Shaders\UnlitClipped.shader" />

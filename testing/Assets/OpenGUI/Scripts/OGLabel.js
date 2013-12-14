@@ -14,8 +14,8 @@ public class OGLabel extends OGWidget {
 			this.info = info;
 			this.relativeSize = relativeSize;
 			uv = new Vector2[4];
-			vert = new Rect ( ( info.vert.x / Screen.width ) * relativeSize, ( info.vert.y / Screen.height ) * relativeSize, ( info.vert.width / Screen.width ) * relativeSize, ( info.vert.height / Screen.height ) * relativeSize );
-			width = ( ( info.width + 1 ) * relativeSize ) / Screen.width;
+			vert = new Rect ( info.vert.x * relativeSize, info.vert.y * relativeSize, info.vert.width * relativeSize, info.vert.height * relativeSize );
+			width = ( ( info.width + 1 ) * relativeSize );
 			position.y = vert.height + vert.y;
 
 			if ( info.flipped ) {
@@ -34,30 +34,50 @@ public class OGLabel extends OGWidget {
 		public function Draw ( x : float, y : float, z : float, clipRct : Rect ) {
 			var shouldClip : boolean = clipRct.width > 0 && clipRct.height > 0;
 
-			var leftClip : float = shouldClip ? Mathf.Clamp ( clipRct.x - ( position.x + x ), 0, 1 ) : 0;
-		       	var leftClipRange : float = shouldClip ? Mathf.Clamp ( leftClip - vert.width, 0, 1 ) : 0;
-			var rightClip : float = shouldClip ? Mathf.Clamp ( ( position.x + x + width ) - ( clipRct.x + clipRct.width ), 0, 1 ) : 0;
-		       	var rightClipRange : float = shouldClip ? Mathf.Clamp ( rightClip - vert.width, 0, 1 ) : 0;
-			var bottomClip : float = shouldClip ? Mathf.Clamp ( clipRct.y - ( position.y + y ), 0, 1 ) : 0;
-			var bottomClipRange : float = shouldClip ? Mathf.Clamp ( bottomClip + vert.height, 0, 1 ) : 0;
-			var topClip : float = shouldClip ? Mathf.Clamp ( ( position.y + y - vert.height ) - ( clipRct.y + clipRct.height ), 0, 1 ) : 0;
-			var topClipRange : float = shouldClip ? Mathf.Clamp ( topClip + vert.height, 0, 1 ) : 0;
+			if ( shouldClip ) {  
+				var leftClip : float = shouldClip ? Mathf.Clamp ( clipRct.x - ( position.x + x ), 0, 1 ) : 0;
+				var leftClipRange : float = shouldClip ? Mathf.Clamp ( leftClip - vert.width, 0, 1 ) : 0;
+				var rightClip : float = shouldClip ? Mathf.Clamp ( ( position.x + x + width ) - ( clipRct.x + clipRct.width ), 0, 1 ) : 0;
+				var rightClipRange : float = shouldClip ? Mathf.Clamp ( rightClip - vert.width, 0, 1 ) : 0;
+				var bottomClip : float = shouldClip ? Mathf.Clamp ( clipRct.y - ( position.y + y ), 0, 1 ) : 0;
+				var bottomClipRange : float = shouldClip ? Mathf.Clamp ( bottomClip + vert.height, 0, 1 ) : 0;
+				var topClip : float = shouldClip ? Mathf.Clamp ( ( position.y + y - vert.height ) - ( clipRct.y + clipRct.height ), 0, 1 ) : 0;
+				var topClipRange : float = shouldClip ? Mathf.Clamp ( topClip + vert.height, 0, 1 ) : 0;
 
-			// Bottom Left
-			GL.TexCoord2 ( uv[0].x, uv[0].y );
-			GL.Vertex3 ( position.x + x + leftClip - rightClipRange, position.y + y + bottomClip - topClipRange, z );
+				// Bottom Left
+				GL.TexCoord2 ( uv[0].x, uv[0].y );
+				GL.Vertex3 ( position.x + x + leftClip - rightClipRange, position.y + y + bottomClip - topClipRange, z );
+				
+				// Top left
+				GL.TexCoord2 ( uv[1].x, uv[1].y );
+				GL.Vertex3 ( position.x + x + leftClip - rightClipRange, position.y + y - vert.height + bottomClipRange - topClip, z );
+
+				// Top right
+				GL.TexCoord2 ( uv[2].x, uv[2].y );
+				GL.Vertex3 ( position.x + x + vert.width + leftClipRange - rightClip, position.y + y - vert.height + bottomClipRange - topClip, z );
 			
-			// Top left
-			GL.TexCoord2 ( uv[1].x, uv[1].y );
-			GL.Vertex3 ( position.x + x + leftClip - rightClipRange, position.y + y - vert.height + bottomClipRange - topClip, z );
+				// Bottom right
+				GL.TexCoord2 ( uv[3].x, uv[3].y );
+				GL.Vertex3 ( position.x + x + vert.width + leftClipRange - rightClip, position.y + y + bottomClip - topClipRange, z );
+			
+			} else {
+				// Bottom Left
+				GL.TexCoord2 ( uv[0].x, uv[0].y );
+				GL.Vertex3 ( position.x + x, position.y + y, z );
+				
+				// Top left
+				GL.TexCoord2 ( uv[1].x, uv[1].y );
+				GL.Vertex3 ( position.x + x, position.y + y - vert.height, z );
 
-			// Top right
-			GL.TexCoord2 ( uv[2].x, uv[2].y );
-			GL.Vertex3 ( position.x + x + vert.width + leftClipRange - rightClip, position.y + y - vert.height + bottomClipRange - topClip, z );
+				// Top right
+				GL.TexCoord2 ( uv[2].x, uv[2].y );
+				GL.Vertex3 ( position.x + x + vert.width, position.y + y - vert.height, z );
+			
+				// Bottom right
+				GL.TexCoord2 ( uv[3].x, uv[3].y );
+				GL.Vertex3 ( position.x + x + vert.width, position.y + y, z );
 		
-			// Bottom right
-			GL.TexCoord2 ( uv[3].x, uv[3].y );
-			GL.Vertex3 ( position.x + x + vert.width + leftClipRange - rightClip, position.y + y + bottomClip - topClipRange, z );
+			}
 		}
 	}
 	
@@ -77,8 +97,8 @@ public class OGLabel extends OGWidget {
 		}	
 
 		public function Draw ( x : float, y : float, z : float, clipRct : Rect ) {
-			for ( var g : Glyph in glyphs ) {
-				g.Draw ( position.x + x, position.y + y, z, clipRct );
+			for ( var i : int = 0; i < glyphs.Count; i++ ) {
+				glyphs[i].Draw ( position.x + x, position.y + y, z, clipRct );
 			}
 		}
 	}
@@ -99,61 +119,65 @@ public class OGLabel extends OGWidget {
 		}
 
 		public function Draw ( x : float, y : float, z : float, clipRct : Rect ) {
-			for ( var w : Word in words ) {
-				w.Draw ( position.x + x, position.y + y, z, clipRct );
+			for ( var i : int = 0; i < words.Count; i++ ) {
+				words[i].Draw ( position.x + x, position.y + y, z, clipRct );
 			}
 		}
 	}
 
-	public var text : String;
+	public var text : String = "";
 	public var overrideFontSize : boolean = false;
 	public var fontSize : int;
 	public var overrideAlignment : boolean = false;
 	public var alignment : TextAnchor;
 
-	@HideInInspector public var textStyle : GUIStyle = new GUIStyle();
-
-	private var drawLines : Line[];
+	@HideInInspector public var lineWidth : float = 0;
+	@HideInInspector public var drawLines : Line[];
+	
 	private var lineHeight : float;
 	private var spacing : float;
-	
+	private var oldString : String = "";
+
 
 	/////////////////
 	// Update
 	/////////////////
+	function Update () {
+		if ( oldString != text ) {
+			SetDirty();
+			oldString = text;
+		}
+	}	
+	
 	override function UpdateWidget () {
-		if ( root == null || root.skin == null ) { return; }		
+		selectable = false;
 
-		if ( !overrideFontSize && style != null ) {
-			fontSize = style.text.fontSize;
+		if ( styles.basic == null ) { return; }
+
+		if ( !overrideFontSize ) {
+			fontSize = styles.basic.text.fontSize;
 		}
 
-		if ( !overrideAlignment && style != null ) {
-			alignment = style.text.alignment;
+		if ( !overrideAlignment ) {
+			alignment = styles.basic.text.alignment;
 		}
 
-		var characterInfo : CharacterInfo[] = root.skin.fonts [ style.text.fontIndex ].characterInfo;
-		var unicodeDictionary : Dictionary.< int, int > = root.unicode [ style.text.fontIndex ];
+		var characterInfo : CharacterInfo[] = root.skin.fonts [ styles.basic.text.fontIndex ].characterInfo;
+		var unicodeDictionary : Dictionary.< int, int > = root.GetUnicode ( styles.basic.text.fontIndex );
 
 		var tallestGlyph : float = 0;
 		var widestGlyph : float = 0;
 		var lineCount : int = 0;
+		var widestLine : float = 0;
 
 		var lineList : List.< Line > = new List.< Line >();	
-		var wordList : List.< Word > = new List.< Word >();
-		var displayedText = text.Replace ( "\\n", " \\n" );
+		var displayedText = text.Replace ( "\n", " \n" );
 		var strings : String[] = displayedText.Split ( " "[0] );
 
 		lineList.Add ( new Line () );
 
 		for ( var s : int = 0; s < strings.Length; s++ ) {
 			var word : Word = new Word ();
-			var linebreak : boolean = false;
-
-			if ( strings[s].Contains ( "\\n" ) ) {
-				strings[s] = strings[s].Replace ( "\\n", "" );
-				linebreak = true;
-			}
 
 			for ( var i : int = 0; i < strings[s].Length; i++ ) {
 				var unicodeIndex : int = strings[s][i];
@@ -173,32 +197,39 @@ public class OGLabel extends OGWidget {
 				}
 			}
 
-			if ( !linebreak ) {
-				linebreak = lineList[lineCount].width + word.width + spacing > drawRct.width - style.text.padding.left / Screen.width;
+			if ( styles.basic.text.wordWrap ) {
+				 if ( lineList[lineCount].width + word.width + spacing > drawRct.width - styles.basic.text.padding.left ) {
+					lineCount++;
+					lineList.Add ( new Line () );
+				 }
 			}
 
-			if ( linebreak ) {
+			if ( strings[s].Contains ( "\n" ) ) {
 				lineCount++;
 				lineList.Add ( new Line () );
 			}
 
 			lineList[lineCount].Add ( word, spacing );
-		
+			
+			if ( widestLine < lineList[lineCount].width ) {
+				widestLine = lineList[lineCount].width;
+			}
 		}
 
-		lineHeight = ( tallestGlyph * style.text.lineHeight ) / Screen.height;
-		spacing = ( widestGlyph / 2 * style.text.spacing ) / Screen.width;		
+		lineWidth = widestLine;
+		lineHeight = styles.basic.text.fontSize * styles.basic.text.lineHeight;
+		spacing = widestGlyph / 2 * styles.basic.text.spacing;		
 
 		drawLines = lineList.ToArray ();
 		
 		for ( var l : int = 0; l < drawLines.Length; l++ ) {
 			// Position
-			var x : float = drawRct.x;
-			var y : float = drawRct.y + drawRct.height;
-			var leftPadding : float = style.text.padding.left * 1.0 / Screen.width;
-			var rightPadding : float = style.text.padding.right * 1.0 / Screen.width;
-			var topPadding : float = style.text.padding.top * 1.0 / Screen.height;
-			var bottomPadding : float = style.text.padding.bottom * 1.0 / Screen.height;				
+			var x : float = 0;
+			var y : float = 0;
+			var leftPadding : float = styles.basic.text.padding.left;
+			var rightPadding : float = styles.basic.text.padding.right;
+			var topPadding : float = styles.basic.text.padding.top;
+			var bottomPadding : float = styles.basic.text.padding.bottom;				
 			var line : Line = drawLines[l];
 
 			// Calculate offset for alignment
@@ -263,20 +294,21 @@ public class OGLabel extends OGWidget {
 	// Draw
 	//////////////////	
 	private function DrawLines ( shadowOffset : float ) {
-		for ( var line : Line in drawLines ) {	
-			line.Draw ( shadowOffset, shadowOffset, drawDepth, clipRct );
+		for ( var i : int = 0; i < drawLines.Length; i++ ) {	
+			drawLines[i].Draw ( drawRct.x + shadowOffset, drawRct.y + drawRct.height + shadowOffset, drawDepth, clipRct );
 		}
 	}
 			
 	override function DrawGL () {
 		if ( drawRct == null || drawLines == null ) { return; }
 		
-		if ( style.text.shadowSize > 0 ) {
-			GL.Color ( style.text.shadowColor );
-			DrawLines ( style.text.shadowSize );
-		}	
+		/*
+		if ( styles.basic.text.shadowSize > 0 ) {
+			GL.Color ( styles.basic.text.shadowColor );
+			DrawLines ( styles.basic.text.shadowSize );
+		}*/	
 	
-		GL.Color ( style.text.fontColor );
+		GL.Color ( styles.basic.text.fontColor );
 		
 		DrawLines ( 0 );
 

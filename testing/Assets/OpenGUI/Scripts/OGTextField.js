@@ -14,15 +14,16 @@ public class OGTextField extends OGWidget {
 	public var maxLength : int = 30;
 	public var regex : String;
 	public var regexPreset : RegExPreset;
-	
+
 	@HideInInspector public var cursorStyle : OGStyle;
 	
 	private var background : OGSlicedSprite;
 	private var label : OGLabel;
+	private var cursor : OGSprite;
 	private var currentPreset : RegExPreset = RegExPreset.None;
 	private var listening : boolean = false;
-	private var cursorPosition : int = 0;
-	private var displayedText : String;
+	private var cursorPosition : Vector2;
+	private var selectCursorPosition : Vector2;
 	private var bypassDuration : float = 0.5;
 	private var bypassTimer : float = 0;
 
@@ -34,19 +35,48 @@ public class OGTextField extends OGWidget {
 		listening = false;
 	}
 
-	private function CheckBypass ( callback : Function ) {
-		if ( bypassTimer >= bypassDuration || bypassDuration <= 0 ) {
-			bypassDuration /= 2;
-			bypassTimer = 0;
-			callback ();
+	public function OnGUI () {
+		if ( listening && isDrawn ) {
+			//GUI.color = new Color ( 0, 0, 0, 0 );
 
-		} else {
-			bypassTimer += Time.deltaTime;
-					
+			var invertedRct : Rect = drawRct;
+			invertedRct.y = Screen.height - invertedRct.y - invertedRct.height;
+			text = GUI.TextArea ( invertedRct, text );
+
+			var controlID : int = GUIUtility.GetControlID(drawRct.GetHashCode(), FocusType.Keyboard);
+			var editor : TextEditor = GUIUtility.GetStateObject(typeof(TextEditor), controlID -1 ) as TextEditor;
+		
+			cursorPosition = new Vector2 ( editor.graphicalCursorPos.x / this.transform.localScale.x, ( editor.graphicalCursorPos.y - 2 ) / this.transform.localScale.y );
+			
+			//GUI.color = new Color ( 1, 1, 1, 1 );
 		}
 	}
 
 	override function UpdateWidget () {
+		// Cursor
+		if ( cursor == null ) {
+			if ( this.gameObject.GetComponentInChildren ( OGSprite ) ) {
+				cursor = this.gameObject.GetComponentInChildren ( OGSprite );
+				
+			} else {				
+				var newCursor : OGSprite = new GameObject ( "Sprite", OGSprite ).GetComponent ( OGSprite );
+				newCursor.transform.parent = this.transform;
+				newCursor.styles.basic = this.styles.thumb;
+				cursor = newCursor;
+			}
+
+			SetDirty ();
+		
+		} else {
+			cursor.transform.localScale = new Vector3 ( 1.5 / this.transform.localScale.x, ( styles.basic.text.fontSize + 4 ) / this.transform.localScale.y, 1 );
+			cursor.transform.localEulerAngles = Vector3.zero;
+			cursor.transform.localPosition = new Vector3 ( cursorPosition.x, cursorPosition.y, 0 );
+			
+			cursor.isDrawn = isDrawn && listening;
+			cursor.hidden = true;
+			cursor.styles.basic = this.styles.thumb;
+		}
+		
 		// Label
 		if ( label == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGLabel ) ) {
@@ -56,16 +86,18 @@ public class OGTextField extends OGWidget {
 				var newLabel : OGLabel = new GameObject ( "Label", OGLabel ).GetComponent ( OGLabel );
 				newLabel.transform.parent = this.transform;
 				newLabel.text = text;
-				newLabel.style = this.style;
+				newLabel.styles.basic = this.styles.basic;
 			}
+
+			SetDirty ();
 		
 		} else {
-			label.text = displayedText;
+			label.text = text;
 			label.transform.localScale = Vector3.one;
 			label.transform.localEulerAngles = Vector3.zero;
 			label.transform.localPosition = Vector3.zero;
 			
-			label.isDrawn = isDrawn;
+			label.isDrawn = isDrawn && !listening;
 			label.hidden = true;
 		}
 		
@@ -77,19 +109,21 @@ public class OGTextField extends OGWidget {
 			} else {			
 				var newSprite : OGSlicedSprite = new GameObject ( "SlicedSprite", OGSlicedSprite ).GetComponent ( OGSlicedSprite );
 				newSprite.transform.parent = this.transform;
-				newSprite.style = this.style;
+				newSprite.styles.basic = this.styles.basic;
 			}
-		
+	
+			SetDirty ();
+
 		} else {
 			background.transform.localScale = Vector3.one;
 			background.transform.localEulerAngles = Vector3.zero;
-			background.transform.localPosition = Vector3.zero;
+			background.transform.localPosition = new Vector3 ( 0, 0, 1 );
 		
-			background.style = this.style;
+			background.styles.basic = this.styles.basic;
 			background.isDrawn = isDrawn;
 			background.hidden = true;
 		
-			mouseOver = CheckMouseOver ( background.drawRct );
+			mouseRct = background.drawRct;
 		}
 				
 		// Regex
@@ -113,137 +147,9 @@ public class OGTextField extends OGWidget {
 				
 			}
 		}
-
-		// Listen for input
+	
 		if ( listening ) {
-			// Specific keys
-			if ( Input.GetKey ( KeyCode.LeftArrow ) && cursorPosition > 0 ) {
-				CheckBypass ( function () {
-					cursorPosition--;
-
-					if ( cursorPosition > 0 && cursorPosition < text.Length && text[cursorPosition-1] == "\\" && text[cursorPosition] == "n" ) {
-						cursorPosition--;
-					}
-				} );
-			
-			} else if ( Input.GetKey ( KeyCode.RightArrow ) && cursorPosition < text.Length ) {
-				CheckBypass ( function () {
-					cursorPosition++;
-
-					if ( text[cursorPosition-1] == "\\" && text[cursorPosition] == "n" ) {
-						cursorPosition++;
-					}
-				} );
-			
-			} else if ( Input.GetKey ( KeyCode.DownArrow ) || Input.GetKey ( KeyCode.UpArrow ) ) {
-				CheckBypass ( function () {
-					var allLines : String[] = text.Split ( "\\n"[0] );
-					var cursorLine : int = 0;
-					var charCount : int = 0;
-					var charNextLine : int = 0;	
-					var charPreviousLine : int = 0;
-
-					for ( var i : int = 0; i < allLines.Length; i++ ) {
-						charCount += allLines[i].Length + 1;
-					       
-						if ( cursorPosition < charCount ) {
-							cursorLine = i;
-
-							var beginning : int = charCount - ( allLines[i].Length + 1 );
-							var inset : int = cursorPosition - beginning;
-							
-							if ( cursorLine < allLines.Length - 1 ) {
-								if ( allLines[i+1].Length < inset ) {
-									charNextLine = charCount + allLines[i+1].Length;
-								} else {
-									charNextLine = charCount + inset;
-								}
-							}
-
-							if ( cursorLine > 0 ) {
-								if ( allLines[i-1].Length < inset ) {
-									charPreviousLine = beginning - 1;
-								} else {	
-									charPreviousLine = beginning - ( allLines[i-1].Length + 1 ) + inset;
-								}
-							}						
-
-							break;
-						}	
-					}
-
-					if ( Input.GetKey ( KeyCode.DownArrow ) && allLines.Length - 1 > cursorLine  ) {
-						cursorPosition = charNextLine;
-						
-						if ( text[cursorPosition-1] == "\\" && text[cursorPosition] == "n" ) {
-							cursorPosition++;
-						}
-					
-					} else if ( Input.GetKey ( KeyCode.UpArrow ) && cursorLine > 0  ) {
-						cursorPosition = charPreviousLine;
-					
-						if ( cursorPosition > 0 && cursorPosition < text.Length && text[cursorPosition-1] == "\\" && text[cursorPosition] == "n" ) {
-							cursorPosition--;
-						}
-					}
-				} );
-
-			} else if ( Input.GetKey ( KeyCode.Backspace ) ) {
-				CheckBypass ( function () {
-					if ( text.Length > 0 && cursorPosition > 0 ) {
-						var goBack : int = 1;
-						
-						if ( text[cursorPosition-2] == "\\" && text[cursorPosition-1] == "n" ) {
-							goBack = 2;
-						}
-
-						text = text.Substring ( 0, cursorPosition - goBack ) + text.Substring ( cursorPosition, text.Length - cursorPosition );	
-						cursorPosition -= goBack;
-					}
-				} );
-
-			} else if ( Input.GetKey ( KeyCode.Delete ) ) {
-				CheckBypass ( function () {
-					if ( text.Length > 0 && cursorPosition < text.Length ) {
-						var goForward : int = 1;
-						
-						if ( text[cursorPosition] == "\\" && text[cursorPosition+1] == "n" ) {
-							goForward = 2;
-						}
-
-						text = text.Substring ( 0, cursorPosition ) + text.Substring ( cursorPosition + goForward, text.Length - ( cursorPosition + goForward ) );	
-					}
-				} );
-			
-			} else if ( Input.GetKeyDown ( KeyCode.Return ) || Input.GetKeyDown ( KeyCode.KeypadEnter ) ) {
-				text = text.Substring ( 0, cursorPosition ) + "\\n" + text.Substring ( cursorPosition, text.Length - cursorPosition );
-				cursorPosition += 2;
-			
-			} else {
-				bypassDuration = 0.5;
-				bypassTimer = bypassDuration;
-					
-			}
-
-			// Input string
-			for ( var c : char in Input.inputString ) {
-				if ( c != "\b"[0] && c != "\r"[0] && c != "\n"[0] ) {
-					text = text.Substring ( 0, cursorPosition ) + c + text.Substring ( cursorPosition, text.Length - cursorPosition );
-					cursorPosition++;
-				}
-			}
-
-			// Cursor display
-			if ( text.Length > 0 ) {
-				displayedText = text.Substring ( 0, cursorPosition ) + "|" + text.Substring ( cursorPosition, text.Length - cursorPosition );
-			} else {
-				cursorPosition = 0;
-				displayedText = "|";
-			}
-		
-		} else {
-			displayedText = text;
-
+			SetDirty ();
 		}
 	}
 }

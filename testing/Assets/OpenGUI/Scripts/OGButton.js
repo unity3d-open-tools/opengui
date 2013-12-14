@@ -1,50 +1,94 @@
 ﻿#pragma strict
 
 class OGButton extends OGWidget {
-	public var text : String;
+	public var hiddenString : String;
+	public var text : String = "";
 	public var target : GameObject;
 	public var message : String;
+	public var argument : String;
 	public var func : Function;
-	
-	@HideInInspector public var downStyle : OGStyle;
-	@HideInInspector public var hoverStyle : OGStyle;
-	
+	public var enableImage : boolean = false;
+	public var imageScale : float = 1;
+	public var imageOffset : Vector2 = Vector2.zero;
+
 	private var background : OGSlicedSprite;
 	private var label : OGLabel;
+	private var image : OGSprite;
+	private var isDown : boolean = false;
+
 	
+	////////////////////
+	// Interact
+	////////////////////
 	override function OnMouseUp () {
-		label.style = style;
-		background.style = style;
-		
 		if ( func ) {
 			func ();
 				
 		} else if ( target != null && !String.IsNullOrEmpty ( message ) ) {
-			target.SendMessage ( message );
-		
+			if ( !String.IsNullOrEmpty ( argument ) ) {
+				target.SendMessage ( message, argument );
+			} else {	
+				target.SendMessage ( message, this );
+			}
+
 		} else {
 			Debug.LogWarning ( "OGButton '" + this.gameObject.name + "' | Target/message missing!" );
 		
 		}
-	}
-	
-	override function OnMouseOver () {
-	
+
+		OnMouseCancel ();
 	}
 	
 	override function OnMouseCancel () {
-		label.style = style;
-		background.style = style;
-		
+		isDown = false;
 		OGRoot.GetInstance().ReleaseWidget ();
+		SetDirty();
 	}
 	
 	override function OnMouseDown () {
-		label.style = downStyle;
-		background.style = downStyle;
+		isDown = true;
+		SetDirty();
+	}
+	
+
+	////////////////////
+	// Update
+	////////////////////
+	function OnEnable () {
+		selectable = true;	
 	}
 	
 	override function UpdateWidget () {
+		// Image
+		if ( image == null ) {
+			if ( this.gameObject.GetComponentInChildren ( OGSprite ) ) {
+				image = this.gameObject.GetComponentInChildren ( OGSprite );
+			
+			} else {
+				var newImage : OGSprite = new GameObject ( "Sprite", OGSprite ).GetComponent ( OGSprite );
+				newImage.transform.parent = this.transform;
+				image = newImage;
+			}
+
+			SetDirty ();
+			return;
+		
+		} else {
+			if ( enableImage ) {
+				image.transform.localScale = new Vector3 ( image.styles.basic.coordinates.width / this.transform.localScale.x, image.styles.basic.coordinates.height / this.transform.localScale.y, 1 ) * imageScale;
+				image.transform.localPosition = new Vector3 ( 0.5 + imageOffset.x, 0.5 + imageOffset.y, 0 );
+				image.transform.localEulerAngles = Vector3.zero;
+
+				image.styles.basic = this.styles.thumb;
+				image.pivot.x = RelativeX.Center;
+				image.pivot.y = RelativeY.Center;
+				image.hidden = true;
+			}
+
+			image.isDrawn = enableImage;
+
+		}
+		
 		// Background		
 		if ( background == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSlicedSprite ) ) {
@@ -53,9 +97,13 @@ class OGButton extends OGWidget {
 			} else {			
 				var newSprite : OGSlicedSprite = new GameObject ( "SlicedSprite", OGSlicedSprite ).GetComponent ( OGSlicedSprite );
 				newSprite.transform.parent = this.transform;
-				newSprite.style = this.style;
+				newSprite.styles.basic = this.styles.basic;
+				background = newSprite;
 			}
 		
+			SetDirty ();
+			return;
+
 		} else {
 			background.transform.localScale = Vector3.one;
 			background.transform.localEulerAngles = Vector3.zero;
@@ -63,7 +111,8 @@ class OGButton extends OGWidget {
 		
 			background.isDrawn = isDrawn;
 			background.hidden = true;
-			mouseOver = CheckMouseOver ( background.drawRct );
+			background.pivot = this.pivot;
+			mouseRct = background.drawRct;
 		}
 		
 		// Label
@@ -75,9 +124,12 @@ class OGButton extends OGWidget {
 				var newLabel : OGLabel = new GameObject ( "Label", OGLabel ).GetComponent ( OGLabel );
 				newLabel.transform.parent = this.transform;
 				newLabel.text = text;
-				newLabel.style = this.style;
+				newLabel.styles.basic = this.styles.basic;
 			}
 		
+			SetDirty ();
+			return;
+
 		} else {
 			label.text = text;
 			label.transform.localScale = Vector3.one;
@@ -86,10 +138,16 @@ class OGButton extends OGWidget {
 			
 			label.isDrawn = isDrawn;
 			label.hidden = true;
+			label.pivot = this.pivot;
 		}
-				
-		if ( mouseOver ) {
-			OnMouseOver ();
+		
+		// Styles
+		if ( isDown ) {
+			label.styles.basic = this.styles.active;
+			background.styles.basic = this.styles.active;
+		} else {	
+			label.styles.basic = this.styles.basic;
+			background.styles.basic = this.styles.basic;
 		}
 	}
 }

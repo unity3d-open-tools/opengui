@@ -6,40 +6,44 @@ public class OGTexture extends OGWidget {
 		Y
 	}
 	
-	var mainTexture : Texture2D;
-	var scale : ScaleMode;
-	var alphaBlend : boolean = true;
-	var repeatTexture : Vector2;
-	var maintainRatio : XorY;
+	public var mainTexture : Texture2D;
+	
+	// TODO: Deprecate
+	@HideInInspector public var image : Texture2D;
+	@HideInInspector public var scale : ScaleMode;
+	@HideInInspector public var alphaBlend : boolean = true;
+	@HideInInspector public var repeatTexture : Vector2;
+	@HideInInspector public var maintainRatio : XorY;
 	
 	override function UpdateWidget () {
+		// TODO: Deprecate
+		if ( image ) { mainTexture = image; }
+		
 		if ( mainTexture ) {
 			if ( mainTexture.wrapMode != TextureWrapMode.Repeat ) {
 				mainTexture.wrapMode = TextureWrapMode.Repeat;
 			}
 		}
+		
 	}
+
+	override function DrawGL () {
+		if ( drawCrd == null || drawRct == null ) { return; }
 	
-	override function DrawGUI () {
-		if ( mainTexture ) {						
-			var x : float = this.transform.position.x + offset.x + scrollOffset.x;
-			var y : float = this.transform.position.y + offset.y + scrollOffset.y;
-			
-			if ( repeatTexture.x > 0 || repeatTexture.y > 0 ) {
-				if ( maintainRatio == XorY.X ) {
-					var ratioX : float = transform.localScale.y / transform.localScale.x;
-					
-					repeatTexture.y = repeatTexture.x * ratioX;
-				} else if ( maintainRatio == XorY.Y ) {
-					var ratioY : float = transform.localScale.x / transform.localScale.y;
-					
-					repeatTexture.x = repeatTexture.y * ratioY;
-				}
-				
-				GUI.DrawTextureWithTexCoords ( Rect ( x, y, transform.lossyScale.x, transform.lossyScale.y ), mainTexture, Rect ( 0, 0, repeatTexture.x, repeatTexture.y ), alphaBlend );
-			} else {
-				GUI.DrawTexture ( Rect ( x, y, transform.lossyScale.x, transform.lossyScale.y ), mainTexture, scale, alphaBlend, 0.0 );
-			}
-		}
+		// Bottom Left	
+		GL.TexCoord2 ( drawCrd.x, drawCrd.y );
+		GL.Vertex3 ( drawRct.x, drawRct.y, drawDepth );
+		
+		// Top left
+		GL.TexCoord2 ( drawCrd.x, drawCrd.y + drawCrd.height );
+		GL.Vertex3 ( drawRct.x, drawRct.y + drawRct.height, drawDepth );
+		
+		// Top right
+		GL.TexCoord2 ( drawCrd.x + drawCrd.width, drawCrd.y + drawCrd.height );
+		GL.Vertex3 ( drawRct.x + drawRct.width, drawRct.y + drawRct.height, drawDepth );
+		
+		// Bottom right
+		GL.TexCoord2 ( drawCrd.x + drawCrd.width, drawCrd.y );
+		GL.Vertex3 ( drawRct.x + drawRct.width, drawRct.y, drawDepth );
 	}
 }
