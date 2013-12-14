@@ -21,6 +21,8 @@ public class OGSlider extends OGWidget {
 	}
 	
 	override function UpdateWidget () {
+		selectable = true;
+		
 		// Background		
 		if ( background == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSprite ) ) {

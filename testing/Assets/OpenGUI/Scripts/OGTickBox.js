@@ -26,6 +26,8 @@ public class OGTickBox extends OGWidget {
 	}
 	
 	override function UpdateWidget () {
+		selectable = true;
+		
 		// TODO: Deprecate
 		isChecked = isTicked;
 	

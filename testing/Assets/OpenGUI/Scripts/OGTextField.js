@@ -53,6 +53,8 @@ public class OGTextField extends OGWidget {
 	}
 
 	override function UpdateWidget () {
+		selectable = true;
+		
 		// Cursor
 		if ( cursor == null ) {
 			if ( this.gameObject.GetComponentInChildren ( OGSprite ) ) {
