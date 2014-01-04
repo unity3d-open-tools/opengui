@@ -19,10 +19,10 @@ public class OGLabel extends OGWidget {
 			position.y = vert.height + vert.y;
 
 			if ( info.flipped ) {
-				uv[0] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
-				uv[1] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
-				uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y );
-				uv[3] = new Vector2 ( info.uv.x, info.uv.y );
+				uv[3] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
+				uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
+				uv[1] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y );
+				uv[0] = new Vector2 ( info.uv.x, info.uv.y );
 			} else {
 				uv[0] = new Vector2 ( info.uv.x, info.uv.y );
 				uv[1] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
