@@ -153,6 +153,17 @@ public class OGLabel extends OGWidget {
 	/////////////////
 	// Update
 	/////////////////
+	public function set content ( value : Object ) {
+		var newStr : String = value as String;
+		
+		if ( newStr != null ) {
+			text = newStr;
+			SetDirty ();
+		} else {
+			Debug.LogWarning ( "OGLabel | Content cannot be of type '" + value.GetType() + "'" );
+		}
+	}
+	
 	override function UpdateWidget () {
 		if ( styles.basic == null ) { return; }
 
