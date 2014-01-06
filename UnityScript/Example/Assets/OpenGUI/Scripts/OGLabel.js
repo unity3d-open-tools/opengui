@@ -153,6 +153,12 @@ public class OGLabel extends OGWidget {
 	/////////////////
 	// Update
 	/////////////////
+	public function set content ( value : Object ) {
+		text = value as String;
+	
+		SetDirty ();
+	}
+	
 	override function UpdateWidget () {
 		if ( styles.basic == null ) { return; }
 
