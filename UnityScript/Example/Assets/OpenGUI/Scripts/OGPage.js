@@ -13,6 +13,8 @@ public class OGPage extends MonoBehaviour {
 			
 			w.clipRct = new Rect ( 0, 0, 0, 0 );
 		}
+
+		OGRoot.GetInstance().SetDirty();
 	}
 
 	public function ResetStyles () {

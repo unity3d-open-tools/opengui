@@ -241,7 +241,7 @@ public class OGWidget extends MonoBehaviour {
 	// Pivot (based on object size)
 	private function CalcPivot () {
 		switch ( pivot.y ) {
-			case RelativeY.Top:
+			case RelativeY.Top: case RelativeY.None:
 				offset.y = 0;
 				break;
 								
@@ -263,7 +263,7 @@ public class OGWidget extends MonoBehaviour {
 				offset.x = -this.transform.lossyScale.x/2;
 				break;
 			
-			case RelativeX.Left:	
+			case RelativeX.Left: case RelativeX.None:
 				offset.x = 0;
 				break;
 		}

@@ -392,9 +392,9 @@ class OGRoot extends MonoBehaviour {
 			if ( !onlyPositions ) {
 				w.root = this;			
 				w.UpdateWidget ();
-				w.Recalculate ();
 			}
 			
+			w.Recalculate ();
 		}
 		
 		// Is mouse over anything?
