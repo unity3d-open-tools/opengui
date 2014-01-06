@@ -1,12 +1,14 @@
 ﻿#pragma strict
 
 public enum RelativeX {
+	None,
 	Left,
 	Center,
 	Right
 }
 	
 public enum RelativeY {
+	None,
 	Top,
 	Center,
 	Bottom

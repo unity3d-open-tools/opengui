@@ -1,12 +1,14 @@
 ﻿#pragma strict
 
 public enum RelativeX {
+	None,
 	Left,
 	Center,
 	Right
 }
 	
 public enum RelativeY {
+	None,
 	Top,
 	Center,
 	Bottom
@@ -217,13 +219,17 @@ public class OGWidget extends MonoBehaviour {
 		
 		var newPos : Vector3 = this.transform.position;
 		
-		if ( anchor.x == RelativeX.Center ) {
+		if ( anchor.x == RelativeX.Left ) {
+			newPos.x = anchor.xOffset;
+		} else if ( anchor.x == RelativeX.Center ) {
 			newPos.x = ( Screen.width / 2 ) + anchor.xOffset;
 		} else if ( anchor.x == RelativeX.Right ) {
 			newPos.x = Screen.width + anchor.xOffset;
 		}
 		
-		if ( anchor.y == RelativeY.Center ) {
+		if ( anchor.y == RelativeY.Top ) {
+			newPos.y = anchor.yOffset;
+		} else if ( anchor.y == RelativeY.Center ) {
 			newPos.y = ( Screen.height / 2 ) + anchor.yOffset;
 		} else if ( anchor.y == RelativeY.Bottom ) {
 			newPos.y = Screen.height + anchor.yOffset;
