@@ -1,8 +1,5 @@
 ### What is it?
-It's a versatile and super simple GUI framework for Unity.
-It takes advantage of the native GUI classes, but allows you to work with it in edit mode and to some extent with 3D objects as well.
-It's still in its early stages, but I consider it ready for a beta release.
-I am developing this in tandem with my Deus Ex-based game project <a href="http://mrzapp.github.io/vongott/">The Vongott Chronicles</a>
+It's a GUI framework for Unity that aims to keep things as simple as possible while keeping draw calls to an absolute minimum. I am developing this in tandem with my Deus Ex-based game project <a href="http://mrzapp.github.io/vongott/">The Vongott Chronicles</a>
 
 ### Version 1.0
 The upcoming version of OpenGUI will deprecate the use of OnGUI draw calls and move towards the low-level GL API. It's well under way, but still in the works. If you want to test it out, check out the "testing" project in this repo.
