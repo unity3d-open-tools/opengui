@@ -16,6 +16,10 @@ public class OGPageInspector extends Editor {
 			page.ResetStyles (); 
 		}
 		
+		if ( GUILayout.Button ( "Clear clipping" ) ) {
+			page.ClearClipping (); 
+		}
+				
 		GUI.backgroundColor = Color.green;
 		if ( OGRoot.GetInstance().currentPage == page ) {
 			if ( GUILayout.Button ( "Update", GUILayout.Height(30) ) ) {
