@@ -43,10 +43,10 @@ public class OGWidget extends MonoBehaviour {
 	}
 	
 	public class Anchor {		
-		public var x : RelativeX = RelativeX.Left;
+		public var x : RelativeX = RelativeX.None;
 		public var xOffset : float = 0.0;
 		
-		public var y : RelativeY = RelativeY.Top;
+		public var y : RelativeY = RelativeY.None;
 		public var yOffset : float = 0.0;
 	}
 
