@@ -246,6 +246,7 @@ public class OGLabel extends OGWidget {
 			var line : Line = drawLines[l];
 
 			// Calculate offset for alignment
+			// TODO: Figure out why 0.4 * line height centers the lines better than 0.5
 			switch ( alignment ) {
 				case TextAnchor.UpperLeft:
 					x += leftPadding;
@@ -254,7 +255,7 @@ public class OGLabel extends OGWidget {
 
 				case TextAnchor.MiddleLeft:
 					x += leftPadding;
-					y -= drawRct.height / 2 - ( lineHeight / 2 ) * drawLines.Length; 
+					y -= drawRct.height / 2 - ( lineHeight * 0.4 ) * drawLines.Length; 
 					break;
 
 				case TextAnchor.LowerLeft:
@@ -269,7 +270,7 @@ public class OGLabel extends OGWidget {
 
 				case TextAnchor.MiddleCenter:
 					x += drawRct.width / 2 - line.width / 2;
-					y -= drawRct.height / 2 - ( lineHeight / 2 ) * ( drawLines.Length ); 
+					y -= drawRct.height / 2 - ( lineHeight * 0.4 ) * ( drawLines.Length ); 
 					break;
 
 				case TextAnchor.LowerCenter:
@@ -284,7 +285,7 @@ public class OGLabel extends OGWidget {
 
 				case TextAnchor.MiddleRight:
 					x += drawRct.width - line.width;
-					y -= drawRct.height / 2 - ( lineHeight / 2 ) * ( drawLines.Length ); 
+					y -= drawRct.height / 2 - ( lineHeight * 0.4 ) * ( drawLines.Length ); 
 					break;
 
 				case TextAnchor.LowerRight:

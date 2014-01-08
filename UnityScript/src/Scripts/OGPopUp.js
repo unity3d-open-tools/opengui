@@ -5,12 +5,11 @@
 class OGPopUp extends OGWidget {	
 	public var title : String = "";
 	public var options : String[];
+	public var selectedOption : String;
 	public var target : GameObject;
 	public var message : String;
 	public var passSelectedOption : boolean = false;
 	public var isUp = false;
-	
-	@HideInInspector public var selectedOption : String;
 	
 	private var background : OGSlicedSprite;
 	private var label : OGLabel;
