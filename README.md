@@ -2,7 +2,10 @@
 It's a GUI framework for Unity that aims to keep things as simple as possible while keeping draw calls to an absolute minimum. I am developing this in tandem with my Deus Ex-based game project <a href="http://mrzapp.github.io/vongott/">The Vongott Chronicles</a>
 
 ### Version 1.0
-The upcoming version of OpenGUI will deprecate the use of OnGUI draw calls and move towards the low-level GL API. It's well under way, but still in the works. If you want to test it out, check out the "testing" project in this repo.
+The next big version will deprecate OnGUI drawcalls and move towards the low-level GL API. While this does produce less draw calls, it requires a much move involved level of development, so it'll be a while before we get there. You can check out the example project in the UnityScript folder.
+
+### C# version
+The current C# is of the older, more stable build. It's currently more memory efficient per-widget, but the infrastructure is fairly clunky, and draw calls easily rocket into the several hundreds.
 
 ### Why?
 The reason for making this is that I don't have the patience to sit around and wait for the upcoming UI engine (and I don't know whether I'll even want to use it or not), and I find the UI frameworks in the Asset Store bloated and/or expensive. This is a fat-free open source alternative, for those of you who might be interested in that.
