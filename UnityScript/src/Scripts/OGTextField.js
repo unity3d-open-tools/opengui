@@ -14,7 +14,7 @@ public class OGTextField extends OGWidget {
 	public var maxLength : int = 30;
 	public var regex : String;
 	public var regexPreset : RegExPreset;
-	public var padding : Vector2 = new Vector2 ( 10, 10 );
+	public var padding : Vector2 = new Vector2 ( 0, 0 );
 
 	@HideInInspector public var cursorStyle : OGStyle;
 	
@@ -167,6 +167,8 @@ public class OGTextField extends OGWidget {
 		label.text = text;
 	
 		label.clipRct = background.drawRct;
+
+		mouseRct = background.drawRct;
 
 		// ^ Regex presets
 		if ( regexPreset != currentPreset ) {

@@ -108,7 +108,7 @@ class OGRoot extends MonoBehaviour {
 
 			// Draw quads
 			GL.Begin(GL.QUADS);
-			skin.atlas.SetPass(0);
+			OGDrawHelper.SetPass(skin.atlas);
 			
 			for ( i = 0; i < widgets.Length; i++ ) {
 				w = widgets[i];
@@ -132,7 +132,7 @@ class OGRoot extends MonoBehaviour {
 					skin.fonts[i].material.shader = skin.fontShader;
 				}
 				
-				skin.fonts[i].material.SetPass(0);
+				OGDrawHelper.SetPass ( skin.fonts[i].material );
 
 				for ( o = 0; o < labels.Length; o++ ) {
 					w = labels[o];

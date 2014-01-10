@@ -132,14 +132,7 @@ public class OGWidget extends MonoBehaviour {
 			coords.y = 0;
 			coords.width = 1;
 			coords.height = 1;
-
-		} else if ( root ) {
-			coords.x /= root.texWidth;
-			coords.y /= root.texHeight;
-			coords.width /= root.texWidth;
-			coords.height /= root.texHeight;
 		}
-
 
 		return coords;
 	}

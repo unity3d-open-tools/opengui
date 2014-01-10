@@ -25,7 +25,7 @@ public class OGScrollView extends OGWidget {
 		for ( var i : int = 0; i < widgets.Length; i++ ) {
 			var w : OGWidget = widgets[i];
 			
-			if ( w != this ) {
+			if ( w != null && w != this ) {
 				w.scrollOffset = new Vector3 ( padding.x + position.x, padding.y + position.y, 0 );
 				w.clipRct = drawRct;
 				w.anchor.x = RelativeX.None;
@@ -141,16 +141,6 @@ public class OGScrollView extends OGWidget {
 	}
 	
 	override function DrawGL () {
-		GL.TexCoord2 ( drawCrd.x, drawCrd.y );
-		GL.Vertex3 ( drawRct.x, drawRct.y, drawDepth - 10 );
-		
-		GL.TexCoord2 ( drawCrd.x, drawCrd.y + drawCrd.height );
-		GL.Vertex3 ( drawRct.x, drawRct.y + drawRct.height, drawDepth - 10 );
-		
-		GL.TexCoord2 ( drawCrd.x + drawCrd.width, drawCrd.y + drawCrd.height );
-		GL.Vertex3 ( drawRct.x + drawRct.width, drawRct.y + drawRct.height, drawDepth - 10 );
-		
-		GL.TexCoord2 ( drawCrd.x + drawCrd.width, drawCrd.y );
-		GL.Vertex3 ( drawRct.x + drawRct.width, drawRct.y, drawDepth - 10 );
+		OGDrawHelper.DrawSprite ( drawRct, drawCrd, drawDepth - 10 );
 	}
 }

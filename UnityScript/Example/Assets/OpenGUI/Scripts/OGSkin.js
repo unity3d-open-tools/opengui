@@ -11,6 +11,14 @@ public class OGSlicedSpriteOffset {
 		top = t;
 		bottom = b;
 	}
+
+	public function get horizontal () : float {
+		return left + right;
+	}
+
+	public function get vertical () : float {
+		return top + bottom;
+	}
 }
 
 public class OGTextStyle {
