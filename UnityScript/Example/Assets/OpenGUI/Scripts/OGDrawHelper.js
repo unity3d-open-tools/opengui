@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+import System.Collections.Generic;
+
 public class OGDrawHelper {
 	private static var texSize : Vector2;
 	
@@ -17,6 +19,47 @@ public class OGDrawHelper {
 	//////////////////
 	// Label
 	//////////////////
+	// Get next line
+	private static function GetNextLine ( string : String, start : int, glyphs : Queue.< CharacterInfo >, font : Font, size : float, spacing : float, length : float, maxLength : float ) : int {
+		var lastSpace : int = 0;
+		var info : CharacterInfo;
+		
+		length = 0;
+
+		// Parse remaining string, populate glyph queue
+		for ( var c : int = start; c < string.Length; c++ ) {
+			// This character is a space
+			if ( string[c] == " "[0] ) {
+				info = new CharacterInfo ();
+				info.index = -1;
+				glyphs.Enqueue ( info );
+				
+				length += size * spacing;
+				lastSpace = c;
+				
+			// This character is a regular glyph
+			} else if ( font.GetCharacterInfo ( string[c], info ) ) {
+				glyphs.Enqueue ( info );
+
+				length += ( info.vert.width * size ) * spacing;
+
+			// This character is a carriage return	
+			} else if ( string[c] == "\n"[0] ) {
+				return c;
+
+			}
+			
+			// The line length has exceeded the border
+			if ( length >= maxLength ) {
+				return lastSpace;
+			}
+
+		}
+
+		// The string has ended
+		return -1;
+	}
+	
 	// Label
 	public static function DrawLabel ( rect : Rect, depth : float, string : String, font : Font, spacing : float, lineHeight : float, intSize : int, alignment : TextAnchor ) {
 		var lines : String[] = string.Split ( "\n"[0] );
@@ -26,10 +69,12 @@ public class OGDrawHelper {
 		var middle : float = ( rect.height / 2 ) + ( lines.Length * ( intSize * lineHeight ) ) / 2;
 		var center : float = rect.width / 2;
 		var bottom : float = lines.Length * ( intSize * lineHeight );
-		var space : float;
-		var info : CharacterInfo;
 		var anchor : Vector2;
-		var length : float = 0;
+		var space : float = ( intSize / 4 ) * spacing;
+		var glyphs : Queue.< CharacterInfo > = new Queue.< CharacterInfo >();
+		var nextLineStart : int = 0;
+		var lineWidth : float = 0;
+		var info : CharacterInfo;
 
 		switch ( alignment ) {
 			case TextAnchor.UpperLeft:
@@ -72,66 +117,59 @@ public class OGDrawHelper {
 				break;
 		}
 
-		var words : String[] = string.Split ( " "[0] );
+		// First run (in acse there are no line breaks, and the line is within the rect borders)
+		nextLineStart = GetNextLine ( string, nextLineStart, glyphs, font, size, spacing, lineWidth, rect.width );
+
+		// Draw glyphs
+		for ( var g : int = 0; g < glyphs.Count; g++ ) {
+			// Draw glyph
+			info = glyphs.Dequeue();
 		
-		for ( var w : int = 0; w < words.Length; w++ ) {
-			// Draw word
-			for ( var g : int = 0; g < words[w].Length; g++ ) {
-				// Draw glyph
-				if ( font.GetCharacterInfo ( words[w][g], info ) ) {
-					var vert : Rect = new Rect ( info.vert.x * size, info.vert.y * size, info.vert.width * size, info.vert.height * size );
-					var uv : Vector2[] = new Vector2[4];
-					
-					if ( info.flipped ) {
-						uv[3] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
-						uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
-						uv[1] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y );
-						uv[0] = new Vector2 ( info.uv.x, info.uv.y );
-					} else {
-						uv[0] = new Vector2 ( info.uv.x, info.uv.y );
-						uv[1] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
-						uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
-						uv[3] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y );
-					}		
-
-					// Quad corners
-					var gLeft : float = anchor.x + vert.x + rect.x + advance.x;
-					var gRight : float = anchor.x + vert.x + rect.x + advance.x + vert.width;
-					var gBottom : float = anchor.y + vert.height + vert.y + rect.y + advance.y;
-					var gTop : float = anchor.y + vert.height + vert.y + rect.y + advance.y - vert.height;
-				
-					// Bottom Left
-					GL.TexCoord2 ( uv[0].x, uv[0].y );
-					GL.Vertex3 ( gLeft, gBottom, depth );
-					
-					// Top left
-					GL.TexCoord2 ( uv[1].x, uv[1].y );
-					GL.Vertex3 ( gLeft, gTop, depth );
-
-					// Top right
-					GL.TexCoord2 ( uv[2].x, uv[2].y );
-					GL.Vertex3 ( gRight, gTop, depth );
-				
-					// Bottom right
-					GL.TexCoord2 ( uv[3].x, uv[3].y );
-					GL.Vertex3 ( gRight, gBottom, depth );
-
-					advance.x += vert.width * spacing;
-				
-				} else if ( words[w][g] == "\n"[0] ) {
-					advance.x = 0;
-					advance.y -= intSize * lineHeight;
-
-				}
+			if ( info == null ) {
+				continue;
+			} else if ( info.index == -1 ) {
+				advance.x += space;
+				continue;
 			}
+
+			var vert : Rect = new Rect ( info.vert.x * size, info.vert.y * size, info.vert.width * size, info.vert.height * size );
+			var uv : Vector2[] = new Vector2[4];
 			
-			// Spacing between words
-			advance.x += ( intSize / 4 ) * spacing;
+			if ( info.flipped ) {
+				uv[3] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
+				uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
+				uv[1] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y );
+				uv[0] = new Vector2 ( info.uv.x, info.uv.y );
+			} else {
+				uv[0] = new Vector2 ( info.uv.x, info.uv.y );
+				uv[1] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
+				uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
+				uv[3] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y );
+			}		
 
-			if ( advance.x >= rect.width ) {
-				advance.x = 0;
-				advance.y -= intSize * lineHeight;
-			}
+			// Quad corners
+			var gLeft : float = anchor.x + vert.x + rect.x + advance.x;
+			var gRight : float = anchor.x + vert.x + rect.x + advance.x + vert.width;
+			var gBottom : float = anchor.y + vert.height + vert.y + rect.y + advance.y;
+			var gTop : float = anchor.y + vert.height + vert.y + rect.y + advance.y - vert.height;
+		
+			// Bottom Left
+			GL.TexCoord2 ( uv[0].x, uv[0].y );
+			GL.Vertex3 ( gLeft, gBottom, depth );
+			
+			// Top left
+			GL.TexCoord2 ( uv[1].x, uv[1].y );
+			GL.Vertex3 ( gLeft, gTop, depth );
+
+			// Top right
+			GL.TexCoord2 ( uv[2].x, uv[2].y );
+			GL.Vertex3 ( gRight, gTop, depth );
+		
+			// Bottom right
+			GL.TexCoord2 ( uv[3].x, uv[3].y );
+			GL.Vertex3 ( gRight, gBottom, depth );
+
+			advance.x += vert.width * spacing;
 		}
 		
 	}
