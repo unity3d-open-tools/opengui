@@ -12,9 +12,6 @@ class OGPopUp extends OGWidget {
 	public var passSelectedOption : boolean = false;
 	public var isUp = false;
 	
-	private var background : OGSlicedSprite;
-	private var label : OGLabel;
-	private var optionLabels : GameObject;
 	private var timeStamp : float;
 	
 	

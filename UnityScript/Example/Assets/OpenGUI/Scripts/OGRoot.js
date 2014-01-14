@@ -396,6 +396,11 @@ class OGRoot extends MonoBehaviour {
 			}
 			
 			w.Recalculate ();
+
+			// Cleanup from previous OpenGUI versions
+			if ( w.hidden ) {
+				DestroyImmediate ( w.gameObject );
+			}
 		}
 		
 		// Is mouse over anything?

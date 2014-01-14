@@ -28,10 +28,12 @@ public class OGDrawHelper {
 		var lines : String[] = string.Split ( "\n"[0] );
 		var size : float = ( style.fontSize * 1.0 ) / 72;
 		var advance : Vector2;
-		var top : float = rect.height;
+		var left : float = style.padding.left;
+		var right : float = rect.width - style.padding.right;
+		var top : float = rect.height - style.padding.top;
 		var middle : float = ( rect.height / 2 ) + ( lines.Length * ( style.fontSize * style.lineHeight ) ) / 2;
 		var center : float = rect.width / 2;
-		var bottom : float = lines.Length * ( style.fontSize * style.lineHeight );
+		var bottom : float = lines.Length * ( style.fontSize * style.lineHeight ) + style.padding.bottom;
 		var anchor : Vector2;
 		var space : float = ( style.fontSize / 4 ) * style.spacing;
 		var glyphs : Queue.< CharacterInfo > = new Queue.< CharacterInfo >();
@@ -43,14 +45,17 @@ public class OGDrawHelper {
 
 		switch ( style.alignment ) {
 			case TextAnchor.UpperLeft:
+				anchor.x = left;
 				anchor.y = top;
 				break;
 
 			case TextAnchor.MiddleLeft:
+				anchor.x = left;
 				anchor.y = middle;
 				break;
 
 			case TextAnchor.LowerLeft:
+				anchor.x = left;
 				anchor.y = bottom;
 				break;
 			
@@ -95,7 +100,7 @@ public class OGDrawHelper {
 			// ^ Parse remaining string, populate glyph queue
 			for ( var c : int = nextLineStart; c < string.Length; c++ ) {
 				// The line width has exceeded the border
-				if ( lineWidth >= rect.width ) {
+				if ( lineWidth >= right ) {
 					thisLineEnd = lastSpace - nextLineStart;
 					nextLineStart = lastSpace;
 					break;
@@ -136,8 +141,6 @@ public class OGDrawHelper {
 			// Alignment advance adjustments
 			if ( anchor.x == center ) {
 				advance.x -= lineWidth / 2;
-			} else if ( anchor.x == 0 ) {
-				advance.x += style.padding.left;
 			}
 
 			// Draw glyphs

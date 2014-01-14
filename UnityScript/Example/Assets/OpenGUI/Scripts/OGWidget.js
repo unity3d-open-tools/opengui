@@ -335,7 +335,6 @@ public class OGWidget extends MonoBehaviour {
 	public function UpdateWidget () {} 
 	public function GetDefaultStyles () {
 		GetRoot().skin.GetDefaultStyles ( this );
-		Build ();
 	}
 	public function SetDirty () {
 		if ( GetRoot() ) {
