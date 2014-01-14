@@ -46,13 +46,9 @@ public class OGLabel extends OGWidget {
 	//////////////////
 	// Draw
 	//////////////////	
-	override function DrawGL () {
+	override function DrawText () {
 		if ( drawRct == null ) { return; }
 		
-		GL.Color ( styles.basic.text.fontColor );
-		
-		OGDrawHelper.DrawLabel ( drawRct, drawDepth, text, root.skin.fonts [ styles.basic.text.fontIndex ], 1.25, 1.25, fontSize, alignment );
-
-		GL.Color ( Color.white );
+		OGDrawHelper.DrawLabel ( drawRct, text, styles.basic.text, drawDepth );
 	}
 }

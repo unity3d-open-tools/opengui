@@ -106,23 +106,24 @@ class OGRoot extends MonoBehaviour {
 			GL.PushMatrix();
 			GL.LoadPixelMatrix ();
 
-			// Draw quads
+			// Draw skin
 			GL.Begin(GL.QUADS);
 			OGDrawHelper.SetPass(skin.atlas);
 			
 			for ( i = 0; i < widgets.Length; i++ ) {
 				w = widgets[i];
 				
-				if ( w == null || w.GetType() == OGLabel || w.GetType() == OGTexture ) { continue; }
+				if ( w == null || w.GetType() == OGTexture ) { continue; }
 				
 				if ( w.isDrawn && w.drawRct.height > 0 && w.drawRct.width > 0 ) {
 					w.DrawGL ();
+					w.DrawSkin ();
 				}
 			}
 			
 			GL.End ();
 			
-			// Draw labels
+			// Draw text
 			for ( i = 0; i < skin.fonts.Length; i++ ) {
 				if ( skin.fonts[0] == null ) { continue; }
 				
@@ -134,11 +135,11 @@ class OGRoot extends MonoBehaviour {
 				
 				OGDrawHelper.SetPass ( skin.fonts[i].material );
 
-				for ( o = 0; o < labels.Length; o++ ) {
-					w = labels[o];
+				for ( o = 0; o < widgets.Length; o++ ) {
+					w = widgets[o];
 					
 					if ( w != null && w.styles.basic != null && w.styles.basic.text.fontIndex == i && w.isDrawn ) {
-						w.DrawGL ();
+						w.DrawText ();
 					}
 				}
 				

@@ -23,6 +23,7 @@ public class OGSlicedSpriteOffset {
 
 public class OGTextStyle {
 	public var fontIndex : int = 0;
+	public var font : Font;
 	public var fontSize : int = 12;
 	public var fontColor : Color = Color.white;
 	public var shadowSize : int = 0;
@@ -30,8 +31,8 @@ public class OGTextStyle {
 	public var alignment : TextAnchor;
 	public var wordWrap : boolean = true;
 	public var padding : RectOffset;
-	public var lineHeight : float = 1.5;
-	public var spacing : float = 1.0;
+	public var lineHeight : float = 1.25;
+	public var spacing : float = 1.25;
 }
 
 public class OGStyle {

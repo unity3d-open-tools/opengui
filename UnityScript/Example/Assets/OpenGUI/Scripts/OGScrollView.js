@@ -140,7 +140,7 @@ public class OGScrollView extends OGWidget {
 		UpdateChildren ();
 	}
 	
-	override function DrawGL () {
+	override function DrawSkin () {
 		OGDrawHelper.DrawSprite ( drawRct, drawCrd, drawDepth - 10 );
 	}
 }

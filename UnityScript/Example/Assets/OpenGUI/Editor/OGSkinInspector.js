@@ -276,6 +276,7 @@ public class OGSkinInspector extends Editor {
 			
 			}
 			s.text.fontIndex = EditorGUILayout.Popup ( s.text.fontIndex, GetFonts ( skin ));
+			s.text.font = skin.fonts[s.text.fontIndex];
 			EditorGUILayout.EndHorizontal();
 			
 			// ^^ Size

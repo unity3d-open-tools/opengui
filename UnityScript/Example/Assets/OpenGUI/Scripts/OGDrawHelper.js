@@ -19,64 +19,29 @@ public class OGDrawHelper {
 	//////////////////
 	// Label
 	//////////////////
-	// Get next line
-	private static function GetNextLine ( string : String, start : int, glyphs : Queue.< CharacterInfo >, font : Font, size : float, spacing : float, length : float, maxLength : float ) : int {
-		var lastSpace : int = 0;
-		var info : CharacterInfo;
-		
-		length = 0;
-
-		// Parse remaining string, populate glyph queue
-		for ( var c : int = start; c < string.Length; c++ ) {
-			// This character is a space
-			if ( string[c] == " "[0] ) {
-				info = new CharacterInfo ();
-				info.index = -1;
-				glyphs.Enqueue ( info );
-				
-				length += size * spacing;
-				lastSpace = c;
-				
-			// This character is a regular glyph
-			} else if ( font.GetCharacterInfo ( string[c], info ) ) {
-				glyphs.Enqueue ( info );
-
-				length += ( info.vert.width * size ) * spacing;
-
-			// This character is a carriage return	
-			} else if ( string[c] == "\n"[0] ) {
-				return c;
-
-			}
-			
-			// The line length has exceeded the border
-			if ( length >= maxLength ) {
-				return lastSpace;
-			}
-
+	// Draw
+	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float ) {
+		if ( style.font == null ) {
+			return;
 		}
-
-		// The string has ended
-		return -1;
-	}
-	
-	// Label
-	public static function DrawLabel ( rect : Rect, depth : float, string : String, font : Font, spacing : float, lineHeight : float, intSize : int, alignment : TextAnchor ) {
+		
 		var lines : String[] = string.Split ( "\n"[0] );
-		var size : float = ( intSize * 1.0 ) / 72;
+		var size : float = ( style.fontSize * 1.0 ) / 72;
 		var advance : Vector2;
 		var top : float = rect.height;
-		var middle : float = ( rect.height / 2 ) + ( lines.Length * ( intSize * lineHeight ) ) / 2;
+		var middle : float = ( rect.height / 2 ) + ( lines.Length * ( style.fontSize * style.lineHeight ) ) / 2;
 		var center : float = rect.width / 2;
-		var bottom : float = lines.Length * ( intSize * lineHeight );
+		var bottom : float = lines.Length * ( style.fontSize * style.lineHeight );
 		var anchor : Vector2;
-		var space : float = ( intSize / 4 ) * spacing;
+		var space : float = ( style.fontSize / 4 ) * style.spacing;
 		var glyphs : Queue.< CharacterInfo > = new Queue.< CharacterInfo >();
+		var thisLineEnd : int = 0;
 		var nextLineStart : int = 0;
 		var lineWidth : float = 0;
 		var info : CharacterInfo;
+		var emergencyBrake : int = 0;
 
-		switch ( alignment ) {
+		switch ( style.alignment ) {
 			case TextAnchor.UpperLeft:
 				anchor.y = top;
 				break;
@@ -117,61 +82,137 @@ public class OGDrawHelper {
 				break;
 		}
 
-		// First run (in acse there are no line breaks, and the line is within the rect borders)
-		nextLineStart = GetNextLine ( string, nextLineStart, glyphs, font, size, spacing, lineWidth, rect.width );
-
-		// Draw glyphs
-		for ( var g : int = 0; g < glyphs.Count; g++ ) {
-			// Draw glyph
-			info = glyphs.Dequeue();
+		// Draw all glyphs
 		
-			if ( info == null ) {
-				continue;
-			} else if ( info.index == -1 ) {
-				advance.x += space;
-				continue;
+		GL.Color ( style.fontColor );
+		
+		while ( nextLineStart != -1 ) {
+			// Get next line
+			thisLineEnd = 0;
+			var lastSpace : int = 0;
+			lineWidth = 0;
+			
+			// ^ Parse remaining string, populate glyph queue
+			for ( var c : int = nextLineStart; c < string.Length; c++ ) {
+				// The line width has exceeded the border
+				if ( lineWidth >= rect.width ) {
+					thisLineEnd = lastSpace - nextLineStart;
+					nextLineStart = lastSpace;
+					break;
+
+				// This character is a space
+				} else if ( string[c] == " "[0] && c != nextLineStart ) {
+					info = new CharacterInfo ();
+					info.index = -1;
+					glyphs.Enqueue ( info );
+					
+					lineWidth += size * style.spacing;
+					lastSpace = c;
+					
+				// This character is a regular glyph
+				} else if ( style.font.GetCharacterInfo ( string[c], info ) ) {
+					glyphs.Enqueue ( info );
+
+					lineWidth += ( info.vert.width * size ) * style.spacing;
+
+				// This character is a carriage return	
+				} else if ( string[c] == "\n"[0] && c != nextLineStart ) {
+					nextLineStart = c++;
+					break;
+
+				}
+				
+			}
+			
+			if ( c >= string.Length - 1 ) {
+				// ^ The string has ended
+				nextLineStart = -1;
 			}
 
-			var vert : Rect = new Rect ( info.vert.x * size, info.vert.y * size, info.vert.width * size, info.vert.height * size );
-			var uv : Vector2[] = new Vector2[4];
+			if ( thisLineEnd == 0 ) {
+				thisLineEnd = glyphs.Count;
+			}
+
+			// Alignment advance adjustments
+			if ( anchor.x == center ) {
+				advance.x -= lineWidth / 2;
+			} else if ( anchor.x == 0 ) {
+				advance.x += style.padding.left;
+			}
+
+			// Draw glyphs
+			for ( var g : int = 0; g < thisLineEnd; g++ ) {
+				// Draw glyph
+				if ( glyphs.Count > 0 ) {
+					info = glyphs.Dequeue();
+				} else {
+					continue;
+				}
+
+				if ( info == null ) {
+					continue;
+				} else if ( info.index == -1 ) {
+					advance.x += space;
+					continue;
+				}
+
+				var vert : Rect = new Rect ( info.vert.x * size, info.vert.y * size, info.vert.width * size, info.vert.height * size );
+				var uv : Vector2[] = new Vector2[4];
+				
+				if ( info.flipped ) {
+					uv[3] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
+					uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
+					uv[1] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y );
+					uv[0] = new Vector2 ( info.uv.x, info.uv.y );
+				} else {
+					uv[0] = new Vector2 ( info.uv.x, info.uv.y );
+					uv[1] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
+					uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
+					uv[3] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y );
+				}		
+
+				// Quad corners
+				var gLeft : float = anchor.x + vert.x + rect.x + advance.x;
+				var gRight : float = anchor.x + vert.x + rect.x + advance.x + vert.width;
+				var gBottom : float = anchor.y + vert.height + vert.y + rect.y + advance.y;
+				var gTop : float = anchor.y + vert.height + vert.y + rect.y + advance.y - vert.height;
 			
-			if ( info.flipped ) {
-				uv[3] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
-				uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
-				uv[1] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y );
-				uv[0] = new Vector2 ( info.uv.x, info.uv.y );
+				// Bottom Left
+				GL.TexCoord2 ( uv[0].x, uv[0].y );
+				GL.Vertex3 ( gLeft, gBottom, depth );
+				
+				// Top left
+				GL.TexCoord2 ( uv[1].x, uv[1].y );
+				GL.Vertex3 ( gLeft, gTop, depth );
+
+				// Top right
+				GL.TexCoord2 ( uv[2].x, uv[2].y );
+				GL.Vertex3 ( gRight, gTop, depth );
+			
+				// Bottom right
+				GL.TexCoord2 ( uv[3].x, uv[3].y );
+				GL.Vertex3 ( gRight, gBottom, depth );
+
+				advance.x += vert.width * style.spacing;
+			}
+
+			// Next line
+			advance.y -= style.fontSize * style.lineHeight;
+			advance.x = 0;
+			if ( glyphs.Count > 0 ) {
+				glyphs.Clear ();
+			}
+
+			// Emergency
+			if ( emergencyBrake > 10 ) {
+				return;
 			} else {
-				uv[0] = new Vector2 ( info.uv.x, info.uv.y );
-				uv[1] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
-				uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
-				uv[3] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y );
-			}		
-
-			// Quad corners
-			var gLeft : float = anchor.x + vert.x + rect.x + advance.x;
-			var gRight : float = anchor.x + vert.x + rect.x + advance.x + vert.width;
-			var gBottom : float = anchor.y + vert.height + vert.y + rect.y + advance.y;
-			var gTop : float = anchor.y + vert.height + vert.y + rect.y + advance.y - vert.height;
-		
-			// Bottom Left
-			GL.TexCoord2 ( uv[0].x, uv[0].y );
-			GL.Vertex3 ( gLeft, gBottom, depth );
-			
-			// Top left
-			GL.TexCoord2 ( uv[1].x, uv[1].y );
-			GL.Vertex3 ( gLeft, gTop, depth );
-
-			// Top right
-			GL.TexCoord2 ( uv[2].x, uv[2].y );
-			GL.Vertex3 ( gRight, gTop, depth );
-		
-			// Bottom right
-			GL.TexCoord2 ( uv[3].x, uv[3].y );
-			GL.Vertex3 ( gRight, gBottom, depth );
-
-			advance.x += vert.width * spacing;
+				emergencyBrake++;
+			}
 		}
 		
+		GL.Color ( Color.white );
+	
 	}
 
 

@@ -6,6 +6,7 @@ class OGPopUp extends OGWidget {
 	public var title : String = "";
 	public var options : String[];
 	public var selectedOption : String;
+	@HideInInspector public var selectedIndex : int;
 	public var target : GameObject;
 	public var message : String;
 	public var passSelectedOption : boolean = false;
@@ -20,36 +21,30 @@ class OGPopUp extends OGWidget {
 	////////////////////
 	// Options
 	////////////////////
-	private function ToggleUp ( state : boolean ) {
-		isUp = state;
-
-		if ( state ) {
-			label.styles.basic = styles.active;
-			background.styles.basic = styles.active;
-			background.transform.localScale = new Vector3 ( 1, optionLabels.transform.childCount+1.1, 1 );
-		} else {
-			label.styles.basic = styles.basic;
-			background.styles.basic = styles.basic;
-			background.transform.localScale = Vector3.one;
-		}
-		
-		SetDrawn ( isDrawn );
+	private function GetOptionRect ( i : int ) : Rect {
+		return new Rect ( drawRct.x, drawRct.y - ( ( 1 + i ) * drawRct.height ), drawRct.width, drawRct.height );
 	}
-		
+	
+	private function GetOptionStyle ( i : int ) : OGStyle {
+		return ( CheckMouseOver ( GetOptionRect ( i ) ) ) ? styles.hover : styles.basic;
+	}
+
 	private function GetMouseOverOption () : int {
-		for ( var i : int = 0; i < optionLabels.transform.childCount; i++ ) {
-			if ( CheckMouseOver ( optionLabels.transform.GetChild(i).GetComponent(OGLabel).drawRct ) ) {
+		for ( var i : int = 0; i < options.Length; i++ ) {
+			if ( CheckMouseOver ( GetOptionRect ( i ) ) ) {
 				return i;
 			}
 		}
 		
 		return -1;
 	}
-	
+
+	private function GetExpandedRect () : Rect {
+		return new Rect ( drawRct.x, drawRct.y - options.Length * drawRct.height, drawRct.width, drawRct.height * ( options.Length + 1 ) );
+	}
+
 	public function SetOptions ( list : String[] ) {
 		options = list;
-		
-		Build ();
 	}
 
 	
@@ -58,13 +53,14 @@ class OGPopUp extends OGWidget {
 	////////////////////
 	override function OnMouseUp () {
 		var mouseOverOption : int = GetMouseOverOption ();
-		
+	
 		if ( Time.time - timeStamp > 0.5 || mouseOverOption != -1 ) {
 			OnMouseCancel ();
 		}
 		
 		if ( mouseOverOption != -1 ) {
 			selectedOption = options[mouseOverOption];
+			selectedIndex = mouseOverOption;
 
 			if ( target != null && !String.IsNullOrEmpty ( message ) ) {
 				if ( passSelectedOption ) {
@@ -74,40 +70,20 @@ class OGPopUp extends OGWidget {
 				}
 			}	
 		
-			ToggleUp ( false );
+			isUp = false;
 		}
-		
-		SetDrawn ( isDrawn );
 	}
 	
 	override function OnMouseDown () {
 		if ( !isUp && GetMouseOverOption() == -1 ) {		
-			ToggleUp ( true );
+			isUp = true;
 			timeStamp = Time.time;
-		}
-		
-		SetDrawn ( isDrawn );
-	}
-	
-	override function OnMouseOver () {
-		if ( isUp ) {
-			for ( l in optionLabels.transform.GetComponentsInChildren.<OGLabel>() ) {
-				if ( CheckMouseOver ( l.drawRct ) ) {
-					l.styles.basic = styles.hover;
-				} else {
-					l.styles.basic = styles.basic;
-				}
-			}
 		}
 	}
 	
 	override function OnMouseCancel () {
 		isUp = false;
 		
-		ToggleUp ( false );
-
-		SetDrawn ( isDrawn );
-
 		OGRoot.GetInstance().ReleaseWidget ();
 	}
 
@@ -117,116 +93,16 @@ class OGPopUp extends OGWidget {
 	////////////////////
 	override function SetDrawn ( drawn : boolean ) {
 		isDrawn = drawn;
-	
-		for ( var i : int = 0; i < optionLabels.transform.childCount; i++ ) {
-			var lbl : OGLabel = optionLabels.transform.GetChild(i).GetComponent(OGLabel);
-			lbl.isDrawn = isDrawn && isUp;
-		}
-
-		background.isDrawn = isDrawn;
-		label.isDrawn = isDrawn;
-	
-		SetDirty ();
 	}
 
 
 	////////////////////
-	// Build
+	// Clean up
 	////////////////////
-	override function Build () {
-		isSelectable = true;
-		
-		var i : int = 0;
-		var lbl : OGLabel;
-
-		// Option labels container
-		if ( !optionLabels && !this.transform.Find("Options") ) {
-			optionLabels = new GameObject ( "Options" );
-			optionLabels.transform.parent = this.transform;
-			optionLabels.transform.localPosition = new Vector3 ( 0, 1, 0 );
-			optionLabels.transform.localScale = Vector3.one;
-			optionLabels.transform.localEulerAngles = Vector3.zero;
-
-		} else if ( !optionLabels ) {
-			optionLabels = this.transform.Find("Options").gameObject;
+	override function ClearChildren () {
+		for ( var i : int = 0; i < transform.childCount; i++ ) {
+			DestroyImmediate ( transform.GetChild ( i ).gameObject );
 		}
-
-		// Option labels
-		if ( options == null ) {
-			options = new String[0];
-		}
-		
-		// ^ Edit existing or create new ones
-		for ( i = 0; i < options.Length; i++ ) {
-			if ( i < optionLabels.transform.childCount ) {
-				lbl = optionLabels.transform.GetChild(i).GetComponent(OGLabel);
-			} else {
-				lbl = new GameObject ( options[i], OGLabel ).GetComponent(OGLabel);
-				lbl.transform.parent = optionLabels.transform;
-			}
-			
-			lbl.text = options[i];
-			lbl.transform.localScale = Vector3.one;
-			lbl.transform.localEulerAngles = Vector3.zero;
-			lbl.transform.localPosition = new Vector3 ( 0, i, 0 );
-			lbl.hidden = true;
-			lbl.styles.basic = this.styles.basic;
-			lbl.anchor.x = RelativeX.None;
-			lbl.anchor.y = RelativeY.None;
-		}	
-		
-		// ^ Destroy remaining
-		if ( optionLabels.transform.childCount > options.Length ) {
-			for ( i = options.Length; i < optionLabels.transform.childCount; i++ ) {
-				DestroyImmediate ( optionLabels.transform.GetChild(i).gameObject );
-			}	
-		}
-
-		// Background	
-		if ( background == null ) {
-			if ( this.transform.Find("SlicedSprite") ) {
-				background = this.transform.Find("SlicedSprite").GetComponent ( OGSlicedSprite );
-				
-			} else {			
-				var newSprite : OGSlicedSprite = new GameObject ( "SlicedSprite", OGSlicedSprite ).GetComponent ( OGSlicedSprite );
-				newSprite.transform.parent = this.transform;
-				background = newSprite;
-			}
-		}
-					
-		background.transform.localEulerAngles = Vector3.zero;
-		background.transform.localPosition = new Vector3 ( 0, 0, 1 );
-		
-		background.pivot.x = pivot.x;
-		background.pivot.y = RelativeY.Top;
-		background.hidden = true;
-
-		// Title label		
-		if ( label == null ) {
-			if ( this.transform.Find("Label") ) {
-				label = this.transform.Find("Label").GetComponent(OGLabel);
-				
-			} else {				
-				var newLabel : OGLabel = new GameObject ( "Label", OGLabel ).GetComponent ( OGLabel );
-				newLabel.transform.parent = this.transform;
-				label = newLabel;
-			}
-		}
-		
-		label.transform.localScale = Vector3.one;
-		label.transform.localEulerAngles = Vector3.zero;
-		label.transform.localPosition = Vector3.zero;
-		
-		label.pivot.x = pivot.x;
-		label.pivot.y = RelativeY.Top;
-		
-		label.hidden = true;
-
-		// Set styles
-		ToggleUp ( isUp );
-
-		// Set drawn
-		SetDrawn ( isDrawn );
 	}
 
 
@@ -234,20 +110,39 @@ class OGPopUp extends OGWidget {
 	// Update
 	////////////////////
 	override function UpdateWidget () {
-		// Null check
-		if ( !optionLabels || !label || !background || optionLabels.transform.childCount != options.Length ) {
-			Build ();
-		}
-
+		isSelectable = true;
+		
 		// Mouse
-		mouseRct = background.drawRct;
-
-		// Update data
-		if ( String.IsNullOrEmpty ( selectedOption ) ) {
-			label.text = title;
+		if ( isUp ) {
+			mouseRct = GetExpandedRect ();
 		} else {
-			label.text = selectedOption;
+			mouseRct = drawRct;
 		}
-			
+	}
+
+
+	///////////////////
+	// Draw
+	///////////////////
+	override function DrawSkin () {
+		if ( isUp ) {
+			OGDrawHelper.DrawSlicedSprite ( GetExpandedRect(), styles.active.coordinates, styles.active.border, drawDepth );
+		} else {
+			OGDrawHelper.DrawSlicedSprite ( drawRct, styles.basic.coordinates, styles.basic.border, drawDepth );
+		}
+	}	
+	
+	override function DrawText () {
+		if ( isUp ) {
+			OGDrawHelper.DrawLabel ( drawRct, title, styles.basic.text, drawDepth );
+
+			for ( var i : int = 0; i < options.Length; i++ ) {
+				OGDrawHelper.DrawLabel ( GetOptionRect ( i ), options[i], GetOptionStyle ( i ).text, drawDepth );
+			}
+		} else if ( !String.IsNullOrEmpty ( selectedOption ) ) {
+			OGDrawHelper.DrawLabel ( drawRct, selectedOption, styles.basic.text, drawDepth );
+		} else {
+			OGDrawHelper.DrawLabel ( drawRct, title, styles.basic.text, drawDepth );
+		}
 	}
 }

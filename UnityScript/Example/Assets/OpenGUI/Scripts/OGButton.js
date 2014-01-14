@@ -68,75 +68,25 @@ class OGButton extends OGWidget {
 
 
 	////////////////////
-	// Build
+	// Clean up from previous OpenGUI structure ( sorry! )
 	////////////////////
-	override function Build () {
+	override function ClearChildren () {
 		isSelectable = true;
 		
 		// Image
-		if ( image == null ) {
-			if ( this.gameObject.GetComponentInChildren ( OGSprite ) ) {
-				image = this.gameObject.GetComponentInChildren ( OGSprite );
-			
-			} else {
-				var newImage : OGSprite = new GameObject ( "Sprite", OGSprite ).GetComponent ( OGSprite );
-				newImage.transform.parent = this.transform;
-				image = newImage;
-			}
-		}
-		
-		if ( enableImage ) {
-			image.transform.localScale = new Vector3 ( image.styles.basic.coordinates.width / this.transform.localScale.x, image.styles.basic.coordinates.height / this.transform.localScale.y, 1 ) * imageScale;
-			image.transform.localPosition = new Vector3 ( 0.5 + imageOffset.x, 0.5 + imageOffset.y, 0 );
-			image.transform.localEulerAngles = Vector3.zero;
-
-			image.styles.basic = this.styles.thumb;
-			image.pivot.x = RelativeX.Center;
-			image.pivot.y = RelativeY.Center;
-			image.hidden = true;
+		if ( image != null ) {	
+			DestroyImmediate ( image.gameObject );
 		}
 
-		image.isDrawn = isDrawn && enableImage;
-		
 		// Background		
-		if ( background == null ) {
-			if ( this.gameObject.GetComponentInChildren ( OGSlicedSprite ) ) {
-				background = this.gameObject.GetComponentInChildren ( OGSlicedSprite );
-				
-			} else {			
-				var newSprite : OGSlicedSprite = new GameObject ( "SlicedSprite", OGSlicedSprite ).GetComponent ( OGSlicedSprite );
-				newSprite.transform.parent = this.transform;
-				background = newSprite;
-			}
-		}
-		
-		background.transform.localScale = Vector3.one;
-		background.transform.localEulerAngles = Vector3.zero;
-		background.transform.localPosition = Vector3.zero;
-	
-		background.isDrawn = isDrawn;
-		background.hidden = true;
-		background.pivot = this.pivot;
-		
-		// Label
-		if ( label == null ) {
-			if ( this.gameObject.GetComponentInChildren ( OGLabel ) ) {
-				label = this.gameObject.GetComponentInChildren ( OGLabel );
-				
-			} else {				
-				var newLabel : OGLabel = new GameObject ( "Label", OGLabel ).GetComponent ( OGLabel );
-				newLabel.transform.parent = this.transform;
-				label = newLabel;
-			}
+		if ( background != null ) {
+			DestroyImmediate ( background.gameObject );
 		}
 
-		label.transform.localScale = Vector3.one;
-		label.transform.localEulerAngles = Vector3.zero;
-		label.transform.localPosition = Vector3.zero;
-		
-		label.isDrawn = isDrawn;
-		label.hidden = true;
-		label.pivot = this.pivot;
+		// Label
+		if ( label != null ) {
+			DestroyImmediate ( label.gameObject );
+		}
 	}
 
 
@@ -145,23 +95,26 @@ class OGButton extends OGWidget {
 	////////////////////
 	override function UpdateWidget () {
 		// Null check
-		if ( !image || !label || !background ) {
-			Build ();
+		if ( image != null || label != null || background != null ) {
+			ClearChildren ();
 		}	
-		
-		// Mouse
-		mouseRct = background.drawRct;
-		
-		// Update data
-		label.text = text;
-
+	
 		// Styles
-		if ( isDown ) {
-			label.styles.basic = this.styles.active;
-			background.styles.basic = this.styles.active;
-		} else {	
-			label.styles.basic = this.styles.basic;
-			background.styles.basic = this.styles.basic;
-		}
+		currentStyle = isDown ? styles.active : styles.basic;
+
+		// Mouse
+		mouseRct = drawRct;
+	}
+
+	
+	////////////////////
+	// Draw
+	////////////////////
+	override function DrawSkin () {
+		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle.coordinates, currentStyle.border, drawDepth );
+	}
+
+	override function DrawText () {
+		OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth );
 	}
 }

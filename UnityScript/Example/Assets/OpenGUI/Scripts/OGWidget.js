@@ -59,6 +59,7 @@ public class OGWidget extends MonoBehaviour {
 	public var stretch : Stretch = new Stretch();
 	
 	@HideInInspector public var styles : OGWidgetStyles = new OGWidgetStyles();
+	@HideInInspector public var currentStyle : OGStyle;
 	@HideInInspector public var drawCrd : Rect;
 	@HideInInspector public var drawRct : Rect;
 	@HideInInspector public var clipRct : Rect;
@@ -324,6 +325,7 @@ public class OGWidget extends MonoBehaviour {
 	//////////////////
 	// Update
 	//////////////////
+	public function ClearChildren () {}
 	public function Start () { SetDirty(); }
 	public function OnEnable () { SetDirty(); }
 	public function OnDisable () { SetDirty(); }
@@ -345,4 +347,6 @@ public class OGWidget extends MonoBehaviour {
 	// Draw
 	//////////////////
 	public function DrawGL () {}
+	public function DrawSkin () {}
+	public function DrawText () {}
 }
