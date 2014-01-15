@@ -325,22 +325,11 @@ public class OGWidget extends MonoBehaviour {
 	//////////////////
 	// Update
 	//////////////////
-	public function ClearChildren () {}
-	public function Start () { SetDirty(); }
-	public function OnEnable () { SetDirty(); }
-	public function OnDisable () { SetDirty(); }
-	public function OnDestroy () { SetDirty(); }
-	public function Build () {}
-	public function SetDrawn ( drawn : boolean ) {}
 	public function UpdateWidget () {} 
 	public function GetDefaultStyles () {
 		GetRoot().skin.GetDefaultStyles ( this );
 	}
-	public function SetDirty () {
-		if ( GetRoot() ) {
-			GetRoot().SetDirty();
-		}
-	}
+
 
 	//////////////////
 	// Draw

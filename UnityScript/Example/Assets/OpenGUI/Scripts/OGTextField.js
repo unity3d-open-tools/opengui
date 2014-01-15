@@ -30,14 +30,10 @@ public class OGTextField extends OGWidget {
 	//////////////////
 	override function OnMouseDown () {
 		listening = true;
-	
-		SetDirty ();
 	}
 
 	override function OnMouseCancel () {
 		listening = false;
-
-		SetDirty ();
 	}
 
 

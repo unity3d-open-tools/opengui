@@ -10,10 +10,7 @@ class OGButton extends OGWidget {
 	public var enableImage : boolean = false;
 	public var imageScale : float = 1;
 	public var imageOffset : Vector2 = Vector2.zero;
-
-	private var background : OGSlicedSprite;
-	private var label : OGLabel;
-	private var image : OGSprite;
+	
 	private var isDown : boolean = false;
 
 	
@@ -42,63 +39,17 @@ class OGButton extends OGWidget {
 	override function OnMouseCancel () {
 		isDown = false;
 		OGRoot.GetInstance().ReleaseWidget ();
-		SetDirty();
 	}
 	
 	override function OnMouseDown () {
 		isDown = true;
-		SetDirty();
 	}
 	
-	
-	////////////////////
-	// Set drawn
-	////////////////////
-	override function SetDrawn ( drawn : boolean ) {
-		if ( !image || !label || !background ) {
-			Build ();
-		}	
-		
-		isDrawn = drawn;
-	
-		image.isDrawn = isDrawn && enableImage;
-		background.isDrawn = isDrawn;
-		label.isDrawn = isDrawn;
-	}
-
-
-	////////////////////
-	// Clean up from previous OpenGUI structure ( sorry! )
-	////////////////////
-	override function ClearChildren () {
-		isSelectable = true;
-		
-		// Image
-		if ( image != null ) {	
-			DestroyImmediate ( image.gameObject );
-		}
-
-		// Background		
-		if ( background != null ) {
-			DestroyImmediate ( background.gameObject );
-		}
-
-		// Label
-		if ( label != null ) {
-			DestroyImmediate ( label.gameObject );
-		}
-	}
-
 
 	////////////////////
 	// Update
 	////////////////////
 	override function UpdateWidget () {
-		// Null check
-		if ( image != null || label != null || background != null ) {
-			ClearChildren ();
-		}	
-	
 		// Styles
 		currentStyle = isDown ? styles.active : styles.basic;
 

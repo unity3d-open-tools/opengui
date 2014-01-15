@@ -38,8 +38,6 @@ public class OGSlider extends OGWidget {
 				sliderLabel.text = sliderValue.ToString() + suffix;
 			}	
 		}
-
-		SetDirty ();
 	}
 
 	override function OnMouseCancel () {

@@ -9,25 +9,13 @@ public class OGProgressBar extends OGWidget {
 		
 		this.value = value;
 		value = Mathf.Clamp ( value, 0, 1 );
-
-		SetDirty();
 	}
 
 	private function GetThumbRect () : Rect {
 		return new Rect ( drawRct.x + padding.x, drawRct.y + padding.y, ( drawRct.width - ( padding.x * 2 ) ) * value, drawRct.height - ( padding.y*2 ) );
 	}
-		
-	
-	/////////////////
-	// Clean up
-	/////////////////
-	override function ClearChildren () {
-		for ( var i : int = 0; i < transform.childCount; i++ ) {
-			DestroyImmediate ( transform.GetChild ( i ).gameObject );
-		}
-	}
 
-	
+
 	/////////////////
 	// Draw
 	/////////////////
@@ -37,13 +25,5 @@ public class OGProgressBar extends OGWidget {
 
 		// Thumb
 		OGDrawHelper.DrawSprite ( GetThumbRect (), styles.thumb.coordinates, drawDepth ); 
-	}
-
-
-	/////////////////
-	// Update
-	/////////////////
-	override function UpdateWidget () {
-		// Update data
 	}
 }

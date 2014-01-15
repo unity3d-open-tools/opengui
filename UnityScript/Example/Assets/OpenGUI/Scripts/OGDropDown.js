@@ -22,7 +22,7 @@ class OGDropDown extends OGWidget {
 	// Vars
 	public var title : String;
 	public var target : GameObject;
-	public var padding : RectOffset;
+	public var nestedOffset : float = -4;
 	public var submenu : DropDownItemRoot[];
 	public var isDown : boolean = false;
 
@@ -37,13 +37,32 @@ class OGDropDown extends OGWidget {
 	// Interaction
 	////////////////////
 	override function OnMouseUp () {
-		CheckTicked ();
+		if ( isDown ) {
+			// Is the mouse over any nested menu items?
+			if ( activeNestedMenu != -1 ) {
+				for ( var n : int = 0; n < submenu[activeNestedMenu].nestedMenu.Length; n++ ) {
+					if ( CheckMouseOver ( GetNestedItemRect ( n ) ) ) {
+						SelectNestedItem ( n );
+						return;
+					}
+				}
+			}
+			
+			// Is the mouse over any root menu items?
+			for ( var s : int = 0; s < submenu.Length; s++ ) {
+				if ( CheckMouseOver ( GetRootItemRect ( s ) ) ) {
+					SelectRootItem ( s );
+					return;
+				}
+			}
 
-		isDown = !isDown;
-		SetSelectedItem ( -1 );
-		activeNestedMenu = -1;
+			// Nope, exit
+			Exit ();
 
-		SetDrawn ( isDrawn );
+		} else {
+			isDown = true;
+		
+		}
 	}
 
 	override function OnMouseCancel () {
@@ -52,48 +71,14 @@ class OGDropDown extends OGWidget {
 
 	// Exit
 	private function Exit () {
-		if ( isDown ) {
-			isDown = false;
-			SetSelectedItem ( -1 );
+		isDown = false;
+		activeNestedMenu = -1;
 
-			SetDrawn ( isDrawn );
-		}
-	}
-
-	// Check ticked
-	private function CheckTicked () {
-		var i : int = 0;
-		var o : int = 0;
-		var btn : OGListItem;
-
-		for ( i = 0; i < container.transform.childCount; i++ ) {
-			btn = container.transform.GetChild(i).Find("Button").GetComponent(OGListItem);
-			btn.isTicked = submenu[i].isTicked;
-			var nested : Transform = container.transform.GetChild(i).Find("NestedMenu");
-			for ( o = 0; o < nested.childCount; o++ ) {
-				btn = nested.GetChild(o).GetComponent(OGListItem);
-				btn.isTicked = submenu[i].nestedMenu[o].isTicked;
-			}
-		}
-	}
-
-	// Set selected item
-	private function SetSelectedItem ( i : int ) {
-		var o : int = 0;
-		
-		for ( o = 0; o < container.transform.childCount; o++ ) {
-			var entry : Transform = container.transform.GetChild(o);
-			entry.Find("Button").GetComponent(OGListItem).selected = o == i;
-			
-			for ( var k = 0; k < entry.Find("NestedMenu").childCount; k++ ) {
-				entry.Find("NestedMenu").GetChild(k).GetComponent(OGListItem).selected = false;
-			}
-		}
+		GetRoot().ReleaseWidget ();
 	}
 
 	// Menu item
-	public function SelectItem ( n : String ) {
-		var i : int = int.Parse ( n );
+	public function SelectRootItem ( i : int ) {
 		var item : DropDownItemRoot = submenu[i];
 		
 		if ( !String.IsNullOrEmpty ( item.message ) ) {
@@ -102,275 +87,97 @@ class OGDropDown extends OGWidget {
 		
 		if ( item.tickable ) {
 			item.isTicked = !item.isTicked;
-			container.transform.GetChild(i).Find("Button").GetComponent(OGListItem).isTicked = item.isTicked;
-		}
-	}
-
-	public function HoverItem ( n : String ) {
-		var i : int = int.Parse ( n );
-
-		SetSelectedItem ( i );
-
-		if ( submenu[i].nestedMenu.Length > 0 ) {
-			activeNestedMenu = i;
-		} else {
 			activeNestedMenu = -1;
-		}
+
+		} else if ( item.nestedMenu.Length > 0 ) {
+			if ( activeNestedMenu == i ) {
+				activeNestedMenu = -1;
+			} else {
+				activeNestedMenu = i;
+			}
+
+		} else {
+			Exit ();
 		
-		SetDrawn ( isDrawn );
+		}
 	}
 
 	// Nested item
-	public function SelectNestedItem ( n : String ) {
+	public function SelectNestedItem ( i : int ) {
 		if ( activeNestedMenu < 0 ) { 
 			Debug.LogWarning ( "OGDropDown | Nested menu out of bounds!" );
 			return;
 		}
 		
-		var i : int = int.Parse ( n );
 		var item : DropDownItemNested = submenu[activeNestedMenu].nestedMenu[i];
-		var nested : Transform = container.transform.GetChild(activeNestedMenu).Find("NestedMenu");
 
 		if ( item.tickable ) {
 			if ( item.tickOverrides ) {
 				for ( var o : int = 0; o < submenu[activeNestedMenu].nestedMenu.Length; o++ ) {
 					submenu[activeNestedMenu].nestedMenu[o].isTicked = o == i;
-					nested.GetChild(o).GetComponent(OGListItem).isTicked = o == i;
 				}
 			} else {
 				item.isTicked = !item.isTicked;
-				nested.GetChild(i).GetComponent(OGListItem).isTicked = item.isTicked;
 			}
+		} else {
+			Exit ();
 		}
 
 		if ( !String.IsNullOrEmpty ( item.message ) ) {
 			target.SendMessage ( item.message );
 		}
 	}
-	
-	
+
+
 	////////////////////
-	// Set drawn
+	// Rects
 	////////////////////
-	override function SetDrawn ( drawn : boolean ) {
-		var i : int = 0;
-		var o : int = 0;
-		var lbl : OGLabel;
-		
-		isDrawn = drawn;
-		
-		label.isDrawn = isDrawn;	
-		background.isDrawn = isDown && isDrawn;			
-	
-		// Submenu
-		for ( i = 0; i < container.transform.childCount; i++ ) {
-			var entry : Transform = container.transform.GetChild(i);
-			var button : OGListItem = entry.Find("Button").GetComponent(OGListItem);	
-			button.SetDrawn ( isDrawn && isDown );
-
-			// Nested
-			var nested : Transform = entry.Find("NestedMenu");
-			var thisActive : boolean = i == activeNestedMenu;
-			for ( o = 0; o < nested.childCount; o++ ) {
-				var btn : OGListItem = nested.GetChild(o).GetComponent(OGListItem);
-				btn.SetDrawn ( isDrawn && isDown && thisActive );	
-			}
-
-			var bg : OGSlicedSprite = entry.Find("Background").GetComponent(OGSlicedSprite);	
-			bg.isDrawn = isDrawn && isDown && thisActive;
-		}
-
-		SetDirty ();
+	private function GetRootBackgroundRect () {
+		return new Rect ( drawRct.x, drawRct.y - submenu.Length * drawRct.height, drawRct.width, drawRct.height * submenu.Length ); 
 	}
 
+	private function GetNestedBackgroundRect () {
+		return new Rect ( drawRct.x + drawRct.width + nestedOffset, drawRct.y - ( 2 + activeNestedMenu ) * drawRct.height, drawRct.width, drawRct.height * submenu[activeNestedMenu].nestedMenu.Length );
+	}
+
+	private function GetRootItemRect ( i : int ) {
+		return new Rect ( drawRct.x, drawRct.y - ( ( 1 + i ) * drawRct.height ), drawRct.width, drawRct.height );
+	}
+
+	private function GetNestedItemRect ( i : int ) {
+		return new Rect ( drawRct.x + drawRct.width + nestedOffset, drawRct.y - ( 1 + activeNestedMenu ) * drawRct.height - ( i * drawRct.height ), drawRct.width, drawRct.height );
+	}
+
+	private function GetTickRect ( i : int, isRoot : boolean ) : Rect {
+		if ( isRoot ) {
+			return new Rect ( drawRct.x + drawRct.width - drawRct.height - styles.ticked.text.padding.right, drawRct.y - ( ( 1 + i ) * drawRct.height ), drawRct.height, drawRct.height );
+		} else {
+			return new Rect ( drawRct.x + ( drawRct.width * 2 ) - drawRct.height - styles.ticked.text.padding.right + nestedOffset, drawRct.y - ( ( 1 + activeNestedMenu + i ) * drawRct.height ), drawRct.height, drawRct.height );
+		}
+	}
 	
+
 	////////////////////
-	// Build 
+	// Style
 	////////////////////
-	override function Build () {
-		isSelectable = true;
-		
-		var i : int = 0;
-		var o : int = 0;
-
-		// Submenu container
-		if ( !container && !FindChild("Submenu") ) {
-			container = new GameObject ( "Submenu" );
-			container.transform.parent = this.transform;
-		
-		} else if ( container == null ) {
-			container = FindChild("Submenu");
+	private function GetRootItemStyle ( i : int ) : OGStyle {
+		if ( CheckMouseOver ( GetRootItemRect ( i ) ) ) {
+			return styles.hover;
+		} else if ( submenu[i].isTicked ) {
+			return styles.ticked;
+		} else {
+			return styles.basic;
 		}
+	}
 
-		container.transform.localPosition = new Vector3 ( 0, 1 + (padding.top*2)/this.transform.localScale.y, 0 );
-		container.transform.localScale = Vector3.one;
-		container.transform.localEulerAngles = Vector3.zero;
-		
-		// Submenu
-		if ( submenu == null ) {
-			submenu = new DropDownItemRoot[0];
+	private function GetNestedItemStyle ( i : int ) : OGStyle {
+		if ( CheckMouseOver ( GetNestedItemRect ( i ) ) ) {
+			return styles.hover;
+		} else if ( submenu[activeNestedMenu].nestedMenu[i].isTicked ) {
+			return styles.ticked;
+		} else {
+			return styles.basic;
 		}
-		
-		// ^ Edit existing or create new ones
-		for ( i = 0; i < submenu.Length; i++ ) {
-			// Entry container
-			var entry : Transform;
-
-			if ( i < container.transform.childCount ) {
-				entry = container.transform.GetChild(i);
-			} else {
-				entry = new GameObject ( i + ": " + submenu[i].name ).transform;
-				entry.parent = container.transform;
-			}
-
-			entry.gameObject.name = i + ": " + submenu[i].name;
-			entry.localPosition = new Vector3 ( 0, i, 0 );
-			entry.localEulerAngles = Vector3.zero;
-			entry.localScale = Vector3.one;
-
-			// Entry button
-			var button : OGListItem;
-
-			if ( entry.Find("Button") ) {
-				button = entry.Find("Button").GetComponent(OGListItem);
-			} else {
-				button = new GameObject ( "Button", OGListItem ).GetComponent(OGListItem);
-				button.transform.parent = entry;
-			}
-
-			button.transform.localPosition = new Vector3 ( padding.left/this.transform.localScale.x, 0, 2 );
-			button.transform.localScale = new Vector3 ( 1-(padding.left+padding.right)/this.transform.localScale.x, 1, 1 );
-			button.transform.localEulerAngles = Vector3.zero;
-			
-			button.text = submenu[i].name;
-			button.target = this.gameObject;
-			button.message = "SelectItem";
-			button.hoverMessage = "HoverItem";
-			button.argument = i.ToString();
-			button.hidden = true;
-			button.styles.basic = this.styles.active;
-			button.styles.active = this.styles.hover;
-			button.styles.ticked = this.styles.ticked;
-
-			// Nested menu container
-			var nested : Transform;
-
-			if ( entry.Find("NestedMenu") ) {
-				nested = entry.Find("NestedMenu").transform;
-			} else {
-				nested = new GameObject ( "NestedMenu" ).transform;
-				nested.parent = entry;
-			}
-
-			nested.localPosition = new Vector3 ( 1 - (padding.right*2)/this.transform.localScale.x, 0, 0 );
-			nested.localScale = Vector3.one;
-			nested.localEulerAngles = Vector3.zero;
-
-			// Submenu
-			// ^ Edit existing or create new ones
-			for ( o = 0; o < submenu[i].nestedMenu.Length; o++ ) {
-				var btn : OGListItem;
-				var nestedItem : DropDownItemNested = submenu[i].nestedMenu[o];
-
-				if ( o < nested.childCount ) {
-					btn = nested.GetChild(o).GetComponent(OGListItem);
-				} else {
-					btn = new GameObject ( "", OGListItem ).GetComponent(OGListItem);
-					btn.transform.parent = nested;
-				}
-
-				btn.gameObject.name = o + ": " + nestedItem.name;
-				btn.text = nestedItem.name;
-				btn.target = this.gameObject;
-				btn.message = "SelectNestedItem";
-				btn.argument = o.ToString();
-				btn.hidden = true;
-				btn.styles.basic = this.styles.active;
-				btn.styles.active = this.styles.hover;
-				btn.styles.ticked = this.styles.ticked;
-
-				btn.transform.localPosition = new Vector3 ( padding.left/this.transform.localScale.x, o, 0 );
-				btn.transform.localScale = new Vector3 ( 1-(padding.left+padding.right)/this.transform.localScale.x, 1, 1 );
-				btn.transform.localEulerAngles = Vector3.zero;
-			}
-
-			// ^ Destroy remaining
-			if ( nested.childCount > submenu[i].nestedMenu.Length ) {
-				for ( o = submenu[i].nestedMenu.Length; o < nested.childCount; o++ ) {
-					DestroyImmediate ( nested.GetChild(o).gameObject );
-				}
-			}
-
-			// Nested background
-			var bg : OGSlicedSprite;
-
-			if ( entry.Find("Background") ) {
-				bg = entry.Find("Background").GetComponent(OGSlicedSprite);
-			} else {
-				bg = new GameObject ( "Background", OGSlicedSprite ).GetComponent(OGSlicedSprite);
-				bg.transform.parent = entry;
-			}
-
-			bg.styles.basic = this.styles.basic;
-			bg.transform.localPosition = new Vector3 ( 1 - (padding.right*2)/this.transform.localScale.x, -padding.top/this.transform.localScale.y, 1 );
-			if ( nested.childCount < 1 ) {
-				bg.transform.localScale = Vector3.one;
-			} else {
-				bg.transform.localScale = new Vector3 ( 1, nested.childCount + (padding.top+padding.bottom)/this.transform.localScale.y, 1 );
-			}
-			bg.transform.localEulerAngles = Vector3.zero;
-			bg.hidden = true;
-		}
-
-		// ^ Destroy remaining
-		if ( container.transform.childCount > submenu.Length ) {
-			for ( i = submenu.Length; i < container.transform.childCount; i++ ) {
-				DestroyImmediate ( container.transform.GetChild(i).gameObject );
-			}
-		}
-
-		// Background
-		if ( background == null ) {
-			if ( this.transform.Find( "SlicedSprite" ) ) {
-				background = this.transform.Find( "SlicedSprite" ).GetComponent(OGSlicedSprite);
-				
-			} else {			
-				var newSprite : OGSlicedSprite = new GameObject ( "SlicedSprite", OGSlicedSprite ).GetComponent ( OGSlicedSprite );
-				newSprite.transform.parent = this.transform;
-				background = newSprite;
-			}
-		}
-			
-		
-		background.hidden = true;
-		background.styles.basic = this.styles.basic;
-		background.transform.localPosition = new Vector3 ( 0, 1 + padding.top/this.transform.localScale.y, 3 );
-		background.transform.localEulerAngles = Vector3.zero;
-		background.transform.localScale = new Vector3 ( 1, container.transform.childCount + (padding.top+padding.bottom)/this.transform.localScale.y, 1 );
-		
-		// Label
-		if ( label == null ) {
-			if ( this.gameObject.GetComponentInChildren ( OGLabel ) ) {
-				label = this.gameObject.GetComponentInChildren ( OGLabel );
-				
-			} else {				
-				var newLabel : OGLabel = new GameObject ( "Label", OGLabel ).GetComponent ( OGLabel );
-				newLabel.transform.parent = this.transform;
-				label = newLabel;
-			}
-		}
-
-		label.text = title;
-		label.styles.basic = this.styles.basic;		
-		
-		label.transform.localScale = new Vector3 ( ( label.lineWidth + label.styles.basic.text.padding.left + label.styles.basic.text.padding.right + 5 ) / this.transform.lossyScale.x, 1, 1 );
-		label.transform.localEulerAngles = Vector3.zero;
-		label.transform.localPosition = Vector3.zero;
-		
-		label.hidden = true;
-
-		// Set drawn
-		SetDrawn ( isDrawn );
 	}
 
 
@@ -378,13 +185,60 @@ class OGDropDown extends OGWidget {
 	// Update
 	////////////////////
 	override function UpdateWidget () {
-		// Null check
-		if ( !background || !label || !container ) {
-			Build ();
-			return;
-		}
-
 		// Mouse
-		mouseRct = label.drawRct;
+		if ( isDown ) {
+			if ( activeNestedMenu != -1 ) {
+				mouseRct = CombineRects ( GetRootBackgroundRect(), GetNestedBackgroundRect() );
+			} else {
+				mouseRct = GetRootBackgroundRect ();
+			}
+		} else {
+			mouseRct = drawRct;
+		}
+	}
+	
+	
+	////////////////////
+	// Draw
+	////////////////////
+	override function DrawSkin () {
+		if ( isDown ) {
+			OGDrawHelper.DrawSlicedSprite ( GetRootBackgroundRect (), styles.basic.coordinates, styles.basic.border, drawDepth );
+		
+			if ( activeNestedMenu != -1 ) {
+				OGDrawHelper.DrawSlicedSprite ( GetNestedBackgroundRect (), styles.basic.coordinates, styles.basic.border, drawDepth );
+			}
+		
+			// Draw tick boxes
+			for ( var s : int = 0; s < submenu.Length; s++ ) {
+				if ( submenu[s].isTicked ) {
+					OGDrawHelper.DrawSprite ( GetTickRect ( s, true ), styles.ticked.coordinates, drawDepth );
+				}
+			}
+
+			if ( activeNestedMenu != -1 ) {
+				for ( var n : int = 0; n < submenu[activeNestedMenu].nestedMenu.Length; n++ ) {
+					if ( submenu[activeNestedMenu].nestedMenu[n].isTicked ) {
+						OGDrawHelper.DrawSprite ( GetTickRect ( n, false ), styles.ticked.coordinates, drawDepth );
+					}
+				}
+			}
+		}
+	}	
+
+	override function DrawText () {
+		OGDrawHelper.DrawLabel ( drawRct, title, styles.basic.text, drawDepth );
+
+		if ( isDown ) {
+			for ( var s : int = 0; s < submenu.Length; s++ ) {
+				OGDrawHelper.DrawLabel ( GetRootItemRect ( s ), submenu[s].name, GetRootItemStyle ( s ).text, drawDepth );
+			}
+
+			if ( activeNestedMenu != -1 ) {
+				for ( var n : int = 0; n < submenu[activeNestedMenu].nestedMenu.Length; n++ ) {
+					OGDrawHelper.DrawLabel ( GetNestedItemRect ( n ), submenu[activeNestedMenu].nestedMenu[n].name, GetNestedItemStyle ( n ).text, drawDepth );
+				}
+			}
+		}
 	}
 }

@@ -17,31 +17,20 @@ public class OGLabel extends OGWidget {
 	/////////////////
 	// Update
 	/////////////////
-	public function set content ( value : Object ) {
-		var newStr : String = value as String;
-		
-		if ( newStr != null ) {
-			text = newStr;
-			SetDirty ();
-		} else {
-			Debug.LogWarning ( "OGLabel | Content cannot be of type '" + value.GetType() + "'" );
-		}
-	}
-	
 	override function UpdateWidget () {
-		if ( styles.basic == null ) { return; }
+		currentStyle = styles.basic;
 
 		if ( !overrideFontSize ) {
-			fontSize = styles.basic.text.fontSize;
+			fontSize = currentStyle.text.fontSize;
 		}
 
 		if ( !overrideAlignment ) {
-			alignment = styles.basic.text.alignment;
+			alignment = currentStyle.text.alignment;
 		}
 
 		mouseRct = drawRct;
 	}
-	
+
 
 	//////////////////
 	// Draw
@@ -49,6 +38,6 @@ public class OGLabel extends OGWidget {
 	override function DrawText () {
 		if ( drawRct == null ) { return; }
 		
-		OGDrawHelper.DrawLabel ( drawRct, text, styles.basic.text, drawDepth );
+		OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, fontSize, alignment, drawDepth );
 	}
 }

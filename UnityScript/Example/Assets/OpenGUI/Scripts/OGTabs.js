@@ -9,6 +9,19 @@ public class OGTabs extends OGWidget {
 	public var activeTab : int;
 	public var tabs : List.<Tab> = new List.<Tab>();
 	
+	private function GetTabRect ( i : int ) : Rect {
+		var tabWidth : float = drawRct.width / tabs.Count;
+		return new Rect ( drawRct.x + ( i * tabWidth ), drawRct.y, tabWidth, drawRct.height );
+	}
+
+	private function GetTabStyle ( i : int ) : OGStyle {
+		return ( i == activeTab ) ? styles.active : styles.basic;
+	}
+
+	
+	//////////////////
+	// Management
+	//////////////////
 	public function AddTab ( tabName : String, tabObject : GameObject, switchTo : boolean ) {
 		var newTab : Tab = new Tab ();
 
@@ -27,27 +40,6 @@ public class OGTabs extends OGWidget {
 	public function ClearTabs () {
 		tabs.Clear ();
 		activeTab = -1;
-	}
-
-	private function GetTabRect ( i : int ) : Rect {
-		var tabWidth : float = drawRct.width / tabs.Count;
-		return new Rect ( drawRct.x + ( i * tabWidth ), drawRct.y, tabWidth, drawRct.height );
-	}
-
-	private function GetTabStyle ( i : int ) : OGStyle {
-		return ( i == activeTab ) ? styles.active : styles.basic;
-	}
-
-
-	//////////////////
-	// Clear children
-	//////////////////
-	override function ClearChildren () {
-		if ( this.transform.childCount > 0 ) {
-			for ( var i : int = 0; i < this.transform.childCount; i++ ) {
-				DestroyImmediate ( this.transform.GetChild(i).gameObject );
-			}
-		}
 	}
 
 	public function SetActiveTab ( n : String ) {
@@ -89,7 +81,7 @@ public class OGTabs extends OGWidget {
 		// Update data
 		if ( activeTab >= tabs.Count && tabs.Count > 0 ) {
 			SetActiveTab ( tabs.Count - 1 );
-	 	} 
+	 	}
 	}
 
 	

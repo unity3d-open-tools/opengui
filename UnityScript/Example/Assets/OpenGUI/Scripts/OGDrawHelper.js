@@ -21,21 +21,25 @@ public class OGDrawHelper {
 	//////////////////
 	// Draw
 	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float ) {
+		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth );
+	}
+	
+	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float ) {
 		if ( style.font == null ) {
 			return;
 		}
 		
 		var lines : String[] = string.Split ( "\n"[0] );
-		var size : float = ( style.fontSize * 1.0 ) / 72;
+		var size : float = ( intSize * 1.0 ) / 72;
 		var advance : Vector2;
 		var left : float = style.padding.left;
 		var right : float = rect.width - style.padding.right;
 		var top : float = rect.height - style.padding.top;
-		var middle : float = ( rect.height / 2 ) + ( lines.Length * ( style.fontSize * style.lineHeight ) ) / 2;
+		var middle : float = ( rect.height / 2 ) + ( lines.Length * ( intSize * style.lineHeight ) ) / 2;
 		var center : float = rect.width / 2;
-		var bottom : float = lines.Length * ( style.fontSize * style.lineHeight ) + style.padding.bottom;
+		var bottom : float = lines.Length * ( intSize * style.lineHeight ) + style.padding.bottom;
 		var anchor : Vector2;
-		var space : float = ( style.fontSize / 4 ) * style.spacing;
+		var space : float = ( intSize / 4 ) * style.spacing;
 		var glyphs : Queue.< CharacterInfo > = new Queue.< CharacterInfo >();
 		var thisLineEnd : int = 0;
 		var nextLineStart : int = 0;
@@ -43,7 +47,7 @@ public class OGDrawHelper {
 		var info : CharacterInfo;
 		var emergencyBrake : int = 0;
 
-		switch ( style.alignment ) {
+		switch ( alignment ) {
 			case TextAnchor.UpperLeft:
 				anchor.x = left;
 				anchor.y = top;
@@ -88,7 +92,6 @@ public class OGDrawHelper {
 		}
 
 		// Draw all glyphs
-		
 		GL.Color ( style.fontColor );
 		
 		while ( nextLineStart != -1 ) {
@@ -200,7 +203,7 @@ public class OGDrawHelper {
 			}
 
 			// Next line
-			advance.y -= style.fontSize * style.lineHeight;
+			advance.y -= intSize * style.lineHeight;
 			advance.x = 0;
 			if ( glyphs.Count > 0 ) {
 				glyphs.Clear ();

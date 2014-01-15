@@ -29,8 +29,6 @@ class OGRoot extends MonoBehaviour {
 
 	private var dirtyCounter : int = 0;
 	private var widgets : OGWidget[];
-	private var labels : OGLabel[];
-	private var textures : OGTexture[];
 	private var mouseOver : List.< OGWidget > = new List.< OGWidget > ();
 	private var downWidget : OGWidget;
 	private var screenRect : Rect;
@@ -98,7 +96,7 @@ class OGRoot extends MonoBehaviour {
 	}
 
 	public function OnPostRender () {
-		if ( widgets != null && labels != null ) {
+		if ( widgets != null ) {
 			var i : int = 0;
 			var o : int = 0;
 			var w : OGWidget;
@@ -113,10 +111,9 @@ class OGRoot extends MonoBehaviour {
 			for ( i = 0; i < widgets.Length; i++ ) {
 				w = widgets[i];
 				
-				if ( w == null || w.GetType() == OGTexture ) { continue; }
+				if ( w == null ) { continue; }
 				
-				if ( w.isDrawn && w.drawRct.height > 0 && w.drawRct.width > 0 ) {
-					w.DrawGL ();
+				if ( w.gameObject.activeSelf && w.isDrawn && w.drawRct.height > 0 && w.drawRct.width > 0 ) {
 					w.DrawSkin ();
 				}
 			}
@@ -138,7 +135,7 @@ class OGRoot extends MonoBehaviour {
 				for ( o = 0; o < widgets.Length; o++ ) {
 					w = widgets[o];
 					
-					if ( w != null && w.styles.basic != null && w.styles.basic.text.fontIndex == i && w.isDrawn ) {
+					if ( w != null && w.styles.basic.text.fontIndex == i && w.isDrawn && w.gameObject.activeSelf ) {
 						w.DrawText ();
 					}
 				}
@@ -173,15 +170,11 @@ class OGRoot extends MonoBehaviour {
 
 			
 			// Draw textures
-			if ( textures != null && textures.Length > 0 && textureMaterials.Length == textures.Length ) {
-				for ( i = 0; i < textures.Length; i++ ) {	
-					if ( textures[i].isDrawn && textures[i].mainTexture != null ) {
-						GL.Begin(GL.QUADS);
-						textureMaterials[i].mainTexture = textures[i].mainTexture;
-						textureMaterials[i].SetPass(0);
-						textures[i].DrawGL();
-						GL.End();
-					}
+			for ( i = 0; i < widgets.Length; i++ ) {	
+				w = widgets[i];
+				
+				if ( w != null && w.gameObject.activeSelf && w.isDrawn ) {
+					w.DrawGL();
 				}
 			}
 
@@ -243,16 +236,6 @@ class OGRoot extends MonoBehaviour {
 			UpdateWidgets ( true );
 
 		}
-		
-		// Update textures
-		if ( ( textureMaterials == null || textureMaterials.Length != textures.Length ) && skin != null && skin.atlas != null ) {
-			textureMaterials = new Material[textures.Length];
-
-			for ( var i : int = 0; i < textureMaterials.Length; i++ ) {
-				textureMaterials[i] = new Material ( skin.atlas.shader );
-			}
-		}
-
 	}
 
 	public function UpdateMouse () {
@@ -367,17 +350,13 @@ class OGRoot extends MonoBehaviour {
 		
 		mouseOver.Clear ();
 		
-		if ( !onlyPositions ) {
-			// Index font unicode
-			if ( unicode == null || unicode.Length != skin.fonts.Length ) {
-				ReloadFonts ();
-			}
-		
-			// Update widget lists	
-			widgets = currentPage.gameObject.GetComponentsInChildren.<OGWidget>();
-			labels = currentPage.gameObject.GetComponentsInChildren.<OGLabel>();
-			textures = currentPage.gameObject.GetComponentsInChildren.<OGTexture>();
+		// Index font unicode
+		if ( unicode == null || unicode.Length != skin.fonts.Length ) {
+			ReloadFonts ();
 		}
+		
+		// Update widget lists	
+		widgets = currentPage.gameObject.GetComponentsInChildren.<OGWidget>();
 
 		for ( var i : int = 0; i < widgets.Length; i++ ) {
 			var w : OGWidget = widgets[i];
@@ -390,11 +369,8 @@ class OGRoot extends MonoBehaviour {
 				mouseOver.Add ( w );
 			}
 			
-			if ( !onlyPositions ) {
-				w.root = this;			
-				w.UpdateWidget ();
-			}
-			
+			w.root = this;			
+			w.UpdateWidget ();
 			w.Recalculate ();
 
 			// Cleanup from previous OpenGUI versions

@@ -86,24 +86,6 @@ class OGPopUp extends OGWidget {
 
 
 	////////////////////
-	// Set drawn
-	////////////////////
-	override function SetDrawn ( drawn : boolean ) {
-		isDrawn = drawn;
-	}
-
-
-	////////////////////
-	// Clean up
-	////////////////////
-	override function ClearChildren () {
-		for ( var i : int = 0; i < transform.childCount; i++ ) {
-			DestroyImmediate ( transform.GetChild ( i ).gameObject );
-		}
-	}
-
-
-	////////////////////
 	// Update
 	////////////////////
 	override function UpdateWidget () {
