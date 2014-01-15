@@ -6,13 +6,13 @@ public class OGSprite extends OGWidget {
 	//////////////////
 	// Draw
 	//////////////////
-	override function DrawGL () {
+	override function DrawSkin () {
 		if ( drawCrd == null || drawRct == null ) { return; }
 		
 		if ( tile.x != 1 || tile.y != 1 ) {
-			OGDrawHelper.DrawTiledSprite ( drawRct, drawCrd, drawDepth, tile.x, tile.y );
+			OGDrawHelper.DrawTiledSprite ( drawRct, styles.basic.coordinates, drawDepth, tile.x, tile.y );
 		} else {
-			OGDrawHelper.DrawSprite ( drawRct, drawCrd, drawDepth );
+			OGDrawHelper.DrawSprite ( drawRct, styles.basic.coordinates, drawDepth );
 		}
 	}
 

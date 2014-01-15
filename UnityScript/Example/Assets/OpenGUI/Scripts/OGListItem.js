@@ -69,11 +69,15 @@ class OGListItem extends OGWidget {
 			Select ();
 		}
 	}
-	
+
+
 	//////////////////
 	// Update
 	//////////////////
 	override function UpdateWidget () {
+		// Persistent vars
+		isSelectable = true;
+
 		// Mouse
 		mouseRct = drawRct;
 

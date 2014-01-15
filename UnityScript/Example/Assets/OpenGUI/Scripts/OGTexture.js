@@ -11,7 +11,7 @@ public class OGTexture extends OGWidget {
 	}
 
 	override function DrawGL () {
-		if ( drawCrd == null || drawRct == null ) { return; }
+		if ( drawCrd == null || drawRct == null || mainTexture == null ) { return; }
 	
 		if ( material == null ) {
 			material = new Material ( GetRoot().skin.atlas.shader );

@@ -25,7 +25,7 @@ public class OGDrawHelper {
 	}
 	
 	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float ) {
-		if ( style.font == null ) {
+		if ( style.font == null || String.IsNullOrEmpty ( string ) || rect.xMin > Screen.width || rect.xMax < 0 || rect.yMax < 0 || rect.yMin > Screen.height ) {
 			return;
 		}
 		
@@ -79,14 +79,17 @@ public class OGDrawHelper {
 				break;
 			
 			case TextAnchor.UpperRight:
+				anchor.x = right;
 				anchor.y = top;
 				break;
 
 			case TextAnchor.MiddleRight:
+				anchor.x = right;
 				anchor.y = middle;
 				break;
 
 			case TextAnchor.LowerRight:
+				anchor.x = right;
 				anchor.y = bottom;
 				break;
 		}
@@ -144,6 +147,8 @@ public class OGDrawHelper {
 			// Alignment advance adjustments
 			if ( anchor.x == center ) {
 				advance.x -= lineWidth / 2;
+			} else if ( anchor.x== right ) {
+				advance.x -= lineWidth;
 			}
 
 			// Draw glyphs
@@ -227,6 +232,10 @@ public class OGDrawHelper {
 	//////////////////
 	// Regular
 	public static function DrawSprite ( rect : Rect, uvRect : Rect, depth : float ) {
+		if ( rect.xMin > Screen.width || rect.xMax < 0 || rect.yMax < 0 || rect.yMin > Screen.height ) {
+			return;
+		}
+		
 		uvRect.x /= texSize.x;
 		uvRect.y /= texSize.y;
 		uvRect.width /= texSize.x;

@@ -64,6 +64,9 @@ public class OGTextField extends OGWidget {
 	// Update
 	////////////////////
 	override function UpdateWidget () {
+		// Persistent vars
+		isSelectable = true;
+
 		// Update data
 		mouseRct = drawRct;
 

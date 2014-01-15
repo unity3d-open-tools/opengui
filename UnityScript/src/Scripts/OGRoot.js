@@ -135,8 +135,10 @@ class OGRoot extends MonoBehaviour {
 				for ( o = 0; o < widgets.Length; o++ ) {
 					w = widgets[o];
 					
-					if ( w != null && w.styles.basic.text.fontIndex == i && w.isDrawn && w.gameObject.activeSelf ) {
-						w.DrawText ();
+					if ( w != null && w.isDrawn && w.gameObject.activeSelf ) {
+						if ( w.styles.basic != null && w.styles.basic.text.fontIndex == i ) {
+							w.DrawText ();
+						}
 					}
 				}
 				
@@ -243,13 +245,6 @@ class OGRoot extends MonoBehaviour {
 		
 		var i : int = 0;
 		var w : OGWidget;
-
-		// Update mouse-over widgets
-		for ( i = 0; i < mouseOver.Count; i++ ) {
-			if ( mouseOver[i] != null ) {
-				mouseOver[i].UpdateWidget ();
-			}
-		}
 
 		// Click
 		if ( Input.GetMouseButtonDown ( 0 ) || Input.GetMouseButtonDown ( 2 ) ) {

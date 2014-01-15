@@ -58,6 +58,9 @@ class OGButton extends OGWidget {
 	// Update
 	////////////////////
 	override function UpdateWidget () {
+		// Persistent vars
+		isSelectable = true;
+
 		// Styles
 		currentStyle = isDown ? styles.active : styles.basic;
 
