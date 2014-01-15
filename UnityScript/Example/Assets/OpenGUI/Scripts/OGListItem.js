@@ -10,9 +10,6 @@ class OGListItem extends OGWidget {
 	public var hoverMessage : String;
 	public var argument : String;
 
-	private var background : OGSprite;
-	private var label : OGLabel;
-
 
 	//////////////////
 	// Interaction
@@ -78,7 +75,7 @@ class OGListItem extends OGWidget {
 	//////////////////
 	override function UpdateWidget () {
 		// Mouse
-		mouseRct = background.drawRct;
+		mouseRct = drawRct;
 
 		// Update data
 		if ( disabled ) {

@@ -10,9 +10,6 @@ class OGListItem extends OGWidget {
 	public var hoverMessage : String;
 	public var argument : String;
 
-	private var background : OGSprite;
-	private var label : OGLabel;
-
 
 	//////////////////
 	// Interaction
@@ -40,8 +37,6 @@ class OGListItem extends OGWidget {
 				}
 			}
 		}
-		
-		SetDirty ();		
 	}
 
 	private function Action () {
@@ -67,8 +62,6 @@ class OGListItem extends OGWidget {
 
 	override function OnMouseUp () {
 		Action ();
-
-		SetDirty ();
 	}
 
 	override function OnMouseOver () {
@@ -76,92 +69,35 @@ class OGListItem extends OGWidget {
 			Select ();
 		}
 	}
-
-	
-	//////////////////
-	// Set drawn
-	//////////////////
-	override function SetDrawn ( drawn : boolean ) {
-		if ( !background || !label ) {
-			Build ();
-		}
-		
-		isDrawn = drawn;
-
-		background.isDrawn = isDrawn;
-		label.isDrawn = isDrawn;
-	}
-
-	
-	//////////////////
-	// Build
-	//////////////////
-	override function Build () {
-		isSelectable = true;
-
-		// Background		
-		if ( background == null ) {
-			if ( this.gameObject.GetComponentInChildren ( OGSprite ) ) {
-				background = this.gameObject.GetComponentInChildren ( OGSprite );
-			} else {			
-				var newSprite : OGSprite = new GameObject ( "Sprite", OGSprite ).GetComponent ( OGSprite );
-				newSprite.transform.parent = this.transform;
-				background = newSprite;	
-			}
-		}
-
-		background.transform.localScale = Vector3.one;
-		background.transform.localEulerAngles = Vector3.zero;
-		background.transform.localPosition = Vector3.zero;
-	
-		background.hidden = true;
-		
-		// Label
-		if ( label == null ) {
-			if ( this.gameObject.GetComponentInChildren ( OGLabel ) ) {
-				label = this.gameObject.GetComponentInChildren ( OGLabel );
-			} else {				
-				var newLabel : OGLabel = new GameObject ( "Label", OGLabel ).GetComponent ( OGLabel );
-				newLabel.transform.parent = this.transform;
-				label = newLabel;
-			}
-		}
-
-		label.transform.localScale = Vector3.one;
-		label.transform.localEulerAngles = Vector3.zero;
-		label.transform.localPosition = Vector3.zero;
-		
-		label.hidden = true;
-	}
-
 	
 	//////////////////
 	// Update
 	//////////////////
 	override function UpdateWidget () {
-		if ( !background || !label ) {
-			Build ();
-		}
-
 		// Mouse
-		mouseRct = background.drawRct;
+		mouseRct = drawRct;
 
 		// Update data
-		label.text = text;
-		
 		if ( disabled ) {
-			background.styles.basic = this.styles.disabled;
-			label.styles.basic = this.styles.disabled;
+			currentStyle = this.styles.disabled;
 		} else if ( isTicked ) {
-			background.styles.basic = this.styles.ticked;
-			label.styles.basic = this.styles.ticked;
+			currentStyle = this.styles.ticked;
 		} else if ( selected ) {
-			background.styles.basic = this.styles.active;
-			label.styles.basic = this.styles.active;
+			currentStyle = this.styles.active;
 		} else {
-			background.styles.basic = this.styles.basic;
-			label.styles.basic = this.styles.basic;
+			currentStyle = this.styles.basic;
 		}
 
+	}
+
+	//////////////////
+	// Draw
+	//////////////////
+	override function DrawSkin () {
+		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle.coordinates, currentStyle.border, drawDepth );
+	}
+
+	override function DrawText () {
+		OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth );
 	}
 }

@@ -9,6 +9,10 @@ public class OGTabs extends OGWidget {
 	public var activeTab : int;
 	public var tabs : List.<Tab> = new List.<Tab>();
 	
+	
+	//////////////////
+	// Rects
+	//////////////////
 	private function GetTabRect ( i : int ) : Rect {
 		var tabWidth : float = drawRct.width / tabs.Count;
 		return new Rect ( drawRct.x + ( i * tabWidth ), drawRct.y, tabWidth, drawRct.height );

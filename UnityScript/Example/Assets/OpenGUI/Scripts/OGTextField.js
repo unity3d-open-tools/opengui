@@ -17,9 +17,6 @@ public class OGTextField extends OGWidget {
 
 	@HideInInspector public var cursorStyle : OGStyle;
 	
-	private var background : OGSlicedSprite;
-	private var label : OGLabel;
-	private var cursor : OGSprite;
 	private var currentPreset : RegExPreset = RegExPreset.None;
 	private var listening : boolean = false;
 	private var cursorPosition : Vector2;

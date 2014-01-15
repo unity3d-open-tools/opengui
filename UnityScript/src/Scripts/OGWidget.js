@@ -59,9 +59,9 @@ public class OGWidget extends MonoBehaviour {
 	public var stretch : Stretch = new Stretch();
 	
 	@HideInInspector public var styles : OGWidgetStyles = new OGWidgetStyles();
+	@HideInInspector public var currentStyle : OGStyle;
 	@HideInInspector public var drawCrd : Rect;
 	@HideInInspector public var drawRct : Rect;
-	@HideInInspector public var clipRct : Rect;
 	@HideInInspector public var mouseRct : Rect;
 	@HideInInspector public var drawDepth : float;
 	@HideInInspector public var scrollOffset : Vector3;
@@ -74,9 +74,6 @@ public class OGWidget extends MonoBehaviour {
 	@HideInInspector public var isDirty : boolean = false;
 	@HideInInspector public var inScrollView : boolean = false;
 	@HideInInspector public var root : OGRoot;
-	
-	// TODO: Deprecate
-	@HideInInspector public var styleName : String;
 	
 	
 	//////////////////
@@ -132,14 +129,7 @@ public class OGWidget extends MonoBehaviour {
 			coords.y = 0;
 			coords.width = 1;
 			coords.height = 1;
-
-		} else if ( root ) {
-			coords.x /= root.texWidth;
-			coords.y /= root.texHeight;
-			coords.width /= root.texWidth;
-			coords.height /= root.texHeight;
 		}
-
 
 		return coords;
 	}
@@ -269,26 +259,6 @@ public class OGWidget extends MonoBehaviour {
 		}
 	}
 	
-	// Calculate clipping
-	public function CalcClipping ( tempRct : Rect ) {
-		var shouldClip : boolean = clipRct.width > 0 && clipRct.height > 0;
-
-		if ( shouldClip ) {
-			var clipTop : float = (clipRct.y+clipRct.height) - (tempRct.y+tempRct.height);
-			var clipRight : float = (clipRct.x+clipRct.width) - (tempRct.x+tempRct.width);
-			var clipBottom : float = tempRct.y - clipRct.y;
-			var clipLeft : float = tempRct.x - clipRct.x;
-			
-			if ( clipTop < 0 ) { tempRct.height += clipTop; }
-			if ( clipRight < 0 ) { tempRct.width += clipRight; }
-			if ( clipBottom < 0 ) { tempRct.y -= clipBottom; tempRct.height += clipBottom; }
-			if ( clipLeft < 0 ) { tempRct.x -= clipLeft; tempRct.width +=clipLeft; }
-		}
-
-		return tempRct;
-	}
-	
-	
 	// Apply all calculations
 	public function Recalculate () {
 		if ( !styles.basic ) { return; }
@@ -299,9 +269,6 @@ public class OGWidget extends MonoBehaviour {
 		drawDepth = -this.transform.position.z;
 			
 		var tempRct : Rect = new Rect ( drawPos.x, drawPos.y, drawScl.x, drawScl.y );
-		if ( this.GetType() != OGLabel ) {
-			tempRct = CalcClipping ( tempRct );	
-		}
 		drawRct = tempRct;
 	}	
 
@@ -331,25 +298,16 @@ public class OGWidget extends MonoBehaviour {
 	//////////////////
 	// Update
 	//////////////////
-	public function Start () { SetDirty(); }
-	public function OnEnable () { SetDirty(); }
-	public function OnDisable () { SetDirty(); }
-	public function OnDestroy () { SetDirty(); }
-	public function Build () {}
-	public function SetDrawn ( drawn : boolean ) {}
 	public function UpdateWidget () {} 
 	public function GetDefaultStyles () {
 		GetRoot().skin.GetDefaultStyles ( this );
-		Build ();
 	}
-	public function SetDirty () {
-		if ( GetRoot() ) {
-			GetRoot().SetDirty();
-		}
-	}
+
 
 	//////////////////
 	// Draw
 	//////////////////
 	public function DrawGL () {}
+	public function DrawSkin () {}
+	public function DrawText () {}
 }

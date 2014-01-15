@@ -22,13 +22,10 @@ class OGDropDown extends OGWidget {
 	// Vars
 	public var title : String;
 	public var target : GameObject;
-	public var nestedOffset : float = -4;
+	public var nestedOffset : float = -10;
 	public var submenu : DropDownItemRoot[];
 	public var isDown : boolean = false;
 
-	private var container : GameObject;
-	private var background : OGSlicedSprite;
-	private var label : OGLabel;
 	private var activeNestedMenu : int = -1;
 	private var timeStamp : float;
 	

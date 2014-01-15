@@ -15,6 +15,14 @@ class OGButton extends OGWidget {
 
 	
 	////////////////////
+	// Rects
+	////////////////////
+	private function GetImageRect () : Rect {
+		return new Rect ( drawRct.x + ( drawRct.width / 2 ) - ( ( drawRct.width * imageScale ) / 2 ) + imageOffset.x, drawRct.y + ( drawRct.height / 2 ) - ( ( drawRct.height * imageScale ) / 2 ) - imageOffset.y, drawRct.width * imageScale, drawRct.height * imageScale );
+	}
+
+
+	////////////////////
 	// Interact
 	////////////////////
 	override function OnMouseUp () {
@@ -63,6 +71,10 @@ class OGButton extends OGWidget {
 	////////////////////
 	override function DrawSkin () {
 		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle.coordinates, currentStyle.border, drawDepth );
+
+		if ( enableImage ) {
+			OGDrawHelper.DrawSprite ( GetImageRect(), styles.thumb.coordinates, drawDepth );
+		}
 	}
 
 	override function DrawText () {
