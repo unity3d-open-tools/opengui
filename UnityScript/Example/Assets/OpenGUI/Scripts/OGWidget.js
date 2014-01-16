@@ -58,6 +58,7 @@ public class OGWidget extends MonoBehaviour {
 	public var pivot : Pivot = new Pivot();
 	public var anchor : Anchor = new Anchor();	
 	public var stretch : Stretch = new Stretch();
+	public var clipTo : OGScrollView;
 	
 	@HideInInspector public var styles : OGWidgetStyles = new OGWidgetStyles();
 	@HideInInspector public var currentStyle : OGStyle;
@@ -72,7 +73,6 @@ public class OGWidget extends MonoBehaviour {
 	@HideInInspector public var hidden : boolean = false;
 	@HideInInspector public var outOfBounds : boolean = false;
 	@HideInInspector public var isDirty : boolean = false;
-	@HideInInspector public var inScrollView : boolean = false;
 	@HideInInspector public var root : OGRoot;
 	
 	

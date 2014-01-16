@@ -21,12 +21,38 @@ public class OGDrawHelper {
 	//////////////////
 	// Draw
 	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float ) {
-		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth );
+		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, null );
+	}
+		
+	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float, clipping : OGWidget ) {
+		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, clipping );
 	}
 	
 	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float ) {
-		if ( style.font == null || String.IsNullOrEmpty ( string ) || rect.xMin > Screen.width || rect.xMax < 0 || rect.yMax < 0 || rect.yMin > Screen.height ) {
+		DrawLabel ( rect, string, style, intSize, alignment, depth, null );
+	}
+		
+	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float, clipping : OGWidget ) {
+		// Check font
+		if ( style.font == null ) {
 			return;
+		}
+
+		// Check string
+		if ( String.IsNullOrEmpty ( string ) ) {
+			return;
+		}
+
+		// Check screen
+		if ( rect.xMin > Screen.width || rect.xMax < 0 || rect.yMax < 0 || rect.yMin > Screen.height ) {
+			return;
+		}
+		
+		// Check clipping
+		if ( clipping != null ) {
+			if ( rect.xMin > clipping.drawRct.xMax || rect.xMax < clipping.drawRct.xMin || rect.yMax < clipping.drawRct.yMin || rect.yMin > clipping.drawRct.yMax ) {
+				return;
+			}
 		}
 		
 		var lines : String[] = string.Split ( "\n"[0] );
@@ -177,7 +203,20 @@ public class OGDrawHelper {
 				var gRight : float = anchor.x + vert.x + rect.x + advance.x + vert.width;
 				var gBottom : float = anchor.y + vert.height + vert.y + rect.y + advance.y;
 				var gTop : float = anchor.y + vert.height + vert.y + rect.y + advance.y - vert.height;
-			
+		
+				// Clipping
+				if ( clipping != null ) {
+					if ( gLeft < clipping.drawRct.xMin ) { gLeft = clipping.drawRct.xMin; }
+					if ( gRight > clipping.drawRct.xMax ) { gRight = clipping.drawRct.xMax; }
+					if ( gBottom < clipping.drawRct.yMin ) { gBottom = clipping.drawRct.yMin; }
+					if ( gTop > clipping.drawRct.yMax ) { gTop = clipping.drawRct.yMax; }
+
+					// If the sides overlap, the glyph shouldn't be drawn
+					if ( gLeft >= gRight || gBottom >= gTop ) {
+						continue;
+					}
+				}
+
 				// Bottom Left
 				GL.TexCoord2 ( uv[0].x, uv[0].y );
 				GL.Vertex3 ( gLeft, gBottom, depth );
@@ -203,6 +242,7 @@ public class OGDrawHelper {
 
 			// Emergency
 			if ( emergencyBrake > 10 ) {
+				Debug.Log ( "SCREECH!" );
 				return;
 			} else {
 				emergencyBrake++;
@@ -219,8 +259,31 @@ public class OGDrawHelper {
 	//////////////////
 	// Regular
 	public static function DrawSprite ( rect : Rect, uvRect : Rect, depth : float ) {
+		DrawSprite ( rect, uvRect, depth, null );
+	}
+		
+	public static function DrawSprite ( rect : Rect, uvRect : Rect, depth : float, clipping : OGWidget ) {
+		// Check screen
 		if ( rect.xMin > Screen.width || rect.xMax < 0 || rect.yMax < 0 || rect.yMin > Screen.height ) {
 			return;
+		}
+				
+		// Quad corners
+		var left : float = rect.x;
+		var right : float = rect.x + rect.width;
+		var bottom : float = rect.y;
+		var top : float = rect.y + rect.height;
+		
+		// Check clipping
+		if ( clipping != null ) {
+			if ( rect.xMin > clipping.drawRct.xMax || rect.xMax < clipping.drawRct.xMin || rect.yMax < clipping.drawRct.yMin || rect.yMin > clipping.drawRct.yMax ) {
+				return;
+			} else {
+				if ( left < clipping.drawRct.xMin ) { left = clipping.drawRct.xMin; }
+				if ( right > clipping.drawRct.xMax ) { right = clipping.drawRct.xMax; }
+				if ( bottom < clipping.drawRct.yMin ) { bottom = clipping.drawRct.yMin; }
+				if ( top > clipping.drawRct.yMax ) { top = clipping.drawRct.yMax; }
+			}
 		}
 		
 		uvRect.x /= texSize.x;
@@ -230,38 +293,46 @@ public class OGDrawHelper {
 
 		// Bottom Left	
 		GL.TexCoord2 ( uvRect.x, uvRect.y );
-		GL.Vertex3 ( rect.x, rect.y, depth );
+		GL.Vertex3 ( left, bottom, depth );
 		
 		// Top left
 		GL.TexCoord2 ( uvRect.x, uvRect.y + uvRect.height );
-		GL.Vertex3 ( rect.x, rect.y + rect.height, depth );
+		GL.Vertex3 ( left, top, depth );
 		
 		// Top right
 		GL.TexCoord2 ( uvRect.x + uvRect.width, uvRect.y + uvRect.height );
-		GL.Vertex3 ( rect.x + rect.width, rect.y + rect.height, depth );
+		GL.Vertex3 ( right, top, depth );
 		
 		// Bottom right
 		GL.TexCoord2 ( uvRect.x + uvRect.width, uvRect.y );
-		GL.Vertex3 ( rect.x + rect.width, rect.y, depth );
+		GL.Vertex3 ( right, bottom, depth );
 	}
 
 	// Tiled
 	public static function DrawTiledSprite ( rect : Rect, uvRect : Rect, depth : float, tileX : float, tileY : float ) {
+		DrawTiledSprite ( rect, uvRect, depth, tileX, tileY, null );
+	}
+		
+	public static function DrawTiledSprite ( rect : Rect, uvRect : Rect, depth : float, tileX : float, tileY : float, clipping : OGWidget ) {
 		for ( var x : int = 0; x < tileX; x++ ) {
 			for ( var y : int = 0; y < tileY; y++ ) {
 				var newScale : Vector2 = new Vector2 ( rect.width / tileX, rect.height / tileY );
 				var newPosition : Vector2 = new Vector2 ( rect.x + x * newScale.x, rect.y + y * newScale.y );
 
-				DrawSprite ( new Rect ( newPosition.x, newPosition.y, newScale.x, newScale.y ), uvRect, depth );
+				DrawSprite ( new Rect ( newPosition.x, newPosition.y, newScale.x, newScale.y ), uvRect, depth, clipping );
 			}
 		}
 	}
 
 	// Sliced
 	public static function DrawSlicedSprite ( rect : Rect, uvRect : Rect, border : OGSlicedSpriteOffset, depth : float ) {
+		DrawSlicedSprite ( rect, uvRect, border, depth, null );
+	}
+
+	public static function DrawSlicedSprite ( rect : Rect, uvRect : Rect, border : OGSlicedSpriteOffset, depth : float, clipping : OGWidget ) {
 		// If no border is defined, draw a regular sprite
 		if ( border.left == 0 && border.right == 0 && border.top == 0 && border.bottom == 0 ) {
-			DrawSprite ( rect, uvRect, depth );
+			DrawSprite ( rect, uvRect, depth, clipping );
 
 		// Draw all corners, panels and the center	
 		} else {
@@ -269,63 +340,72 @@ public class OGDrawHelper {
 			DrawSprite (
 				new Rect ( rect.x, rect.y, border.left, border.bottom ),
 				new Rect ( uvRect.x, uvRect.y, border.left, border.bottom ),
-				depth
+				depth,
+				clipping
 			);
 		
 			// Left panel
 			DrawSprite (
 				new Rect ( rect.x, rect.y + border.bottom, border.left, rect.height - border.bottom - border.top ),
 				new Rect ( uvRect.x, uvRect.y + border.bottom, border.left, uvRect.height - border.top - border.bottom ),
-				depth
+				depth,
+				clipping
 			);
 
 			// Top left corner
 			DrawSprite (
 				new Rect ( rect.x, rect.y + rect.height - border.top, border.left, border.top ),
 				new Rect ( uvRect.x, uvRect.y + uvRect.height - border.top, border.left, border.top ),
-				depth
+				depth,
+				clipping
 			);
 
 			// Top panel
 			DrawSprite (
 				new Rect ( rect.x + border.left, rect.y + rect.height - border.top, rect.width - border.horizontal, border.top ),
 				new Rect ( uvRect.x + border.left, uvRect.y + uvRect.height - border.top, uvRect.width - border.horizontal, border.top ),
-				depth
+				depth,
+				clipping
 			);
 			
 			// Top right corner
 			DrawSprite (
 				new Rect ( rect.x + rect.width - border.right, rect.y + rect.height - border.top, border.right, border.top ),
 				new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y + uvRect.height - border.top, border.right, border.top ),
-				depth
+				depth,
+				clipping
 			);
 			
 			// Right panel
 			DrawSprite (
 				new Rect ( rect.x + rect.width - border.right, rect.y + border.bottom, border.right, rect.height - border.vertical ),
 				new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y + border.bottom, border.right, uvRect.height - border.vertical ),
-				depth
+				depth,
+				clipping
 			);
 
 			// Bottom left corner
 			DrawSprite (
 				new Rect ( rect.x + rect.width - border.right, rect.y, border.right, border.bottom ),
 				new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y, border.right, border.bottom ),
-				depth
+				depth,
+				clipping
 			);
 			
 			// Top panel
 			DrawSprite (
 				new Rect ( rect.x + border.left, rect.y, rect.width - border.horizontal, border.bottom ),
 				new Rect ( uvRect.x + border.left, uvRect.y, uvRect.width - border.horizontal, border.bottom ),
-				depth
+				depth,
+				clipping
 			);
 			
 			// Center
 			DrawSprite (
 				new Rect ( rect.x + border.left, rect.y + border.bottom, rect.width - border.right - border.left, rect.height - border.bottom - border.top ),
 				new Rect ( uvRect.x + border.left, uvRect.y + border.bottom, uvRect.width - border.right - border.left, uvRect.height - border.bottom - border.top ),
-				depth
+				depth,
+				clipping
 			);
 		}
 	}

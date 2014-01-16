@@ -29,6 +29,7 @@ public class OGScrollView extends OGWidget {
 				w.scrollOffset = new Vector3 ( padding.x + position.x, padding.y + position.y, 0 );
 				w.anchor.x = RelativeX.None;
 				w.anchor.y = RelativeY.None;
+				w.clipTo = this;
 			}
 		}
 	}

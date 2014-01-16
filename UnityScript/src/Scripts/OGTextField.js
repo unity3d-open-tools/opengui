@@ -22,6 +22,7 @@ public class OGTextField extends OGWidget {
 	private var cursorPosition : Vector2;
 	private var selectCursorPosition : Vector2;
 
+
 	//////////////////
 	// Interaction
 	//////////////////
@@ -102,6 +103,6 @@ public class OGTextField extends OGWidget {
 	}
 
 	override function DrawText () {
-		OGDrawHelper.DrawLabel ( drawRct, text, styles.basic.text, drawDepth );
+		OGDrawHelper.DrawLabel ( drawRct, text, styles.basic.text, drawDepth, this );
 	}
 }

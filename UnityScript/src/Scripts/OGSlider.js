@@ -63,9 +63,9 @@ public class OGSlider extends OGWidget {
 	////////////////	
 	override function DrawSkin () {
 		// Background
-		OGDrawHelper.DrawSprite ( GetBackgroundRect(), styles.basic.coordinates, drawDepth );
+		OGDrawHelper.DrawSprite ( GetBackgroundRect(), styles.basic.coordinates, drawDepth, clipTo );
 	
 		// Thumb
-		OGDrawHelper.DrawSlicedSprite ( GetThumbRect(), styles.thumb.coordinates, styles.thumb.border, drawDepth );
+		OGDrawHelper.DrawSlicedSprite ( GetThumbRect(), styles.thumb.coordinates, styles.thumb.border, drawDepth, clipTo );
 	}
 }

@@ -94,13 +94,13 @@ public class OGTabs extends OGWidget {
 	//////////////////
 	override function DrawSkin () {
 		for ( var i : int = 0; i < tabs.Count; i++ ) {
-			OGDrawHelper.DrawSlicedSprite ( GetTabRect(i), GetTabStyle(i).coordinates, GetTabStyle(i).border, drawDepth );
+			OGDrawHelper.DrawSlicedSprite ( GetTabRect(i), GetTabStyle(i).coordinates, GetTabStyle(i).border, drawDepth, clipTo );
 		}
 	}
 
 	override function DrawText () {
 		for ( var i : int = 0; i < tabs.Count; i++ ) {
-			OGDrawHelper.DrawLabel ( GetTabRect(i), tabs[i].title, GetTabStyle(i).text, drawDepth );
+			OGDrawHelper.DrawLabel ( GetTabRect(i), tabs[i].title, GetTabStyle(i).text, drawDepth, clipTo );
 		}
 	}
 }

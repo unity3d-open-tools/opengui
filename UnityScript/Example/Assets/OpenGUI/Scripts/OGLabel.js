@@ -38,6 +38,6 @@ public class OGLabel extends OGWidget {
 	override function DrawText () {
 		if ( drawRct == null ) { return; }
 		
-		OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, fontSize, alignment, drawDepth );
+		OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, fontSize, alignment, drawDepth, clipTo );
 	}
 }
