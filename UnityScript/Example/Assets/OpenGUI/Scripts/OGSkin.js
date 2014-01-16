@@ -1,4 +1,13 @@
 ﻿#pragma strict
+public enum OGStyleType {
+	Basic,
+	Hover,
+	Active,
+	Ticked,
+	Thumb,
+	Disabled
+}
+
 public class OGSlicedSpriteOffset {
 	public var top : float;
 	public var bottom : float;
@@ -50,75 +59,75 @@ public class OGWidgetStyles {
 	public var thumb : OGStyle;
 	public var disabled : OGStyle;
 
-	public static function IsStyleUsed ( styleName : String, widgetName : String ) : boolean {
-		if ( styleName == "Basic" ) { return true; }
-		if ( styleName == "Disabled" ) { return true; }
+	public static function IsStyleUsed ( styleType : OGStyleType, widgetName : String ) : boolean {
+		if ( styleType == OGStyleType.Basic ) { return true; }
+		if ( styleType == OGStyleType.Disabled ) { return true; }
 		
 		switch ( widgetName ) {
-			case "OGButton": case "OGPopUp":
-				if ( styleName == "Active" ) { return true; }
-				if ( styleName == "Hover" ) { return true; }
-				if ( styleName == "Thumb" ) { return true; }
+			case "OGButton":
+				if ( styleType == OGStyleType.Active ) { return true; }
+				if ( styleType == OGStyleType.Hover ) { return true; }
+				if ( styleType == OGStyleType.Thumb ) { return true; }
+				break;
+				
+			case "OGPopUp":
+				if ( styleType == OGStyleType.Active ) { return true; }
+				if ( styleType == OGStyleType.Hover ) { return true; }
 				break;
 
 			case "OGDropDown":
-				if ( styleName == "Active" ) { return true; }
-				if ( styleName == "Hover" ) { return true; }
-				if ( styleName == "Ticked" ) { return true; }
+				if ( styleType == OGStyleType.Active ) { return true; }
+				if ( styleType == OGStyleType.Hover ) { return true; }
+				if ( styleType == OGStyleType.Ticked ) { return true; }
 				break;
 
 			case "OGTickBox":
-				if ( styleName == "Hover" ) { return true; }
-				if ( styleName == "Ticked" ) { return true; }
+				if ( styleType == OGStyleType.Hover ) { return true; }
+				if ( styleType == OGStyleType.Ticked ) { return true; }
 				break;
 
 			case "OGSlider": case "OGTextField": case "OGProgressBar":
-				if ( styleName == "Thumb" ) { return true; }
+				if ( styleType == OGStyleType.Thumb ) { return true; }
 				break;
 
 			case "OGTabs":
-				if ( styleName == "Active" ) { return true; }
+				if ( styleType == OGStyleType.Active ) { return true; }
 				break;
 			
 			case "OGListItem":
-				if ( styleName == "Active" ) { return true; }
-				if ( styleName == "Ticked" ) { return true; }
+				if ( styleType == OGStyleType.Active ) { return true; }
+				if ( styleType == OGStyleType.Ticked ) { return true; }
 				break;
 		}
 
 		return false;
 	}
 
-	public static function GetNames() : String[] {
-		var names : String[] = [ "Basic", "Active", "Hover", "Ticked", "Thumb", "Disabled" ];
-		return names;
-	}
-
-	public function GetStyle ( str : String ) {
+	public function GetStyle ( typ : OGStyleType ) {
 		var result : OGStyle;
 		
-		switch ( str ) {
-			case "Basic":
+		switch ( typ ) {
+			case OGStyleType.Basic:
 				result = basic;
 				break;
 
-			case "Hover":
+			case OGStyleType.Hover:
 				result = hover;
 				break;
 
-			case "Active":
+			case OGStyleType.Active:
 				result = active;
 				break;
 
-			case "Ticked":
+			case OGStyleType.Ticked:
 				result = ticked;
 				break;
 
-			case "Thumb":
+			case OGStyleType.Thumb:
 				result = thumb;
 				break;
 
-			case "Disabled":
+			case OGStyleType.Disabled:
 				result = disabled;
 				break;	
 		}
@@ -126,29 +135,29 @@ public class OGWidgetStyles {
 		return result;
 	}
 
-	public function SetStyle ( str : String, stl : OGStyle ) {
-		switch ( str ) {
-			case "Basic":
+	public function SetStyle ( typ : OGStyleType, stl : OGStyle ) {
+		switch ( typ ) {
+			case OGStyleType.Basic:
 				basic = stl;
 				break;
 
-			case "Hover":
+			case OGStyleType.Hover:
 				hover = stl;
 				break;
 
-			case "Active":
+			case OGStyleType.Active:
 				active = stl;
 				break;
 
-			case "Ticked":
+			case OGStyleType.Ticked:
 				ticked = stl;
 				break;
 
-			case "Thumb":
+			case OGStyleType.Thumb:
 				thumb = stl;
 				break;
 			
-			case "Disabled":
+			case OGStyleType.Disabled:
 				disabled = stl;
 				break;	
 		}

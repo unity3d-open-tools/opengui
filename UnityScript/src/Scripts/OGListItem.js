@@ -2,7 +2,7 @@
 
 class OGListItem extends OGWidget {
 	public var text : String = "";
-	public var selected : boolean = false;
+	public var isSelected : boolean = false;
 	public var isTicked : boolean = false;
 	public var object : Object;
 	public var target : GameObject;
@@ -15,11 +15,11 @@ class OGListItem extends OGWidget {
 	// Interaction
 	//////////////////
 	private function Select () {
-		selected = true;
+		isSelected = true;
 
 		for ( var li : OGListItem in this.transform.parent.GetComponentsInChildren.<OGListItem>() ) {
 			if ( li != this ) {
-				li.selected = false;
+				li.isSelected = false;
 			}
 		}
 
@@ -56,16 +56,29 @@ class OGListItem extends OGWidget {
 		}
 	}
 
-	override function OnMouseCancel () {
-		OGRoot.GetInstance().ReleaseWidget ();
+	private function Tick () {
+		isTicked = true;
+
+		for ( var li : OGListItem in this.transform.parent.GetComponentsInChildren.<OGListItem>() ) {
+			if ( li != this ) {
+				li.isTicked = false;
+			}
+		}
 	}
 
-	override function OnMouseUp () {
-		Action ();
+	override function OnMouseCancel () {
+		isSelected = false;
+	}
+
+	override function OnMouseDown () {
+		if ( !isDisabled ) {
+			Action ();
+			Tick ();
+		}
 	}
 
 	override function OnMouseOver () {
-		if ( !selected ) {
+		if ( !isSelected && !isDisabled  ) {
 			Select ();
 		}
 	}
@@ -81,13 +94,16 @@ class OGListItem extends OGWidget {
 		// Mouse
 		mouseRct = drawRct;
 
+		// ^ Cancel check
+		if ( !CheckMouseOver ( mouseRct ) ) { OnMouseCancel(); }
+		
 		// Update data
-		if ( disabled ) {
+		if ( isDisabled ) {
 			currentStyle = this.styles.disabled;
+		} else if ( isSelected ) {
+			currentStyle = this.styles.active;
 		} else if ( isTicked ) {
 			currentStyle = this.styles.ticked;
-		} else if ( selected ) {
-			currentStyle = this.styles.active;
 		} else {
 			currentStyle = this.styles.basic;
 		}

@@ -6,13 +6,21 @@ import System.Linq;
 @CustomEditor ( OGSkin )
 public class OGSkinInspector extends Editor {
 	private var deleteMode : boolean = false;
-	private var setDefaultsMode : boolean = false;
 	private var addMode : boolean = false;
 	private var selectedStyle : int = 0;
 	private var addStyleName : String = "";
 	
-	public static var currentStyle : int = 0;
+	private static var currentStyle : int = 0;
+	private static var setDefaultsMode : boolean = false;
 	
+	public static function SetCurrentStyle ( i : int ) {
+		currentStyle = i;
+	}
+
+	public static function SetDefaultsMode () {
+		setDefaultsMode = true;
+	}
+
 	private function GetStyles ( includeCancel : boolean ) : String[] {
 		var skin : OGSkin = target as OGSkin;
 		var tempList : List.< String > = new List.< String >();
@@ -38,7 +46,7 @@ public class OGSkinInspector extends Editor {
 		
 		skin.styles = tempList.ToArray();
 	
-		SortStyles ( skin );
+		SortStyles ( skin, newStyle );
 	}
 	
 	private function RemoveStyle ( i : int ) {
@@ -118,12 +126,18 @@ public class OGSkinInspector extends Editor {
 		return tempList.ToArray();
 	}
 
-	private function SortStyles ( skin : OGSkin ) {
+	private function SortStyles ( skin : OGSkin, focus : OGStyle ) {
 		var tempList : List.< OGStyle > = new List.< OGStyle > ( skin.styles );
 				
 		tempList.Sort ( CompareNames );
 		
 		skin.styles = tempList.ToArray ();
+
+		for ( var i : int = 0; i < skin.styles.Length; i++ ) {
+			if ( skin.styles[i] == focus ) {
+				currentStyle = i;
+			}
+		}
 	}
 	
 	override function OnInspectorGUI () {		
@@ -135,7 +149,12 @@ public class OGSkinInspector extends Editor {
 		if ( setDefaultsMode ) {
 			EditorGUILayout.BeginHorizontal ();
 
-			EditorGUILayout.LabelField ( "Set defaults", EditorStyles.boldLabel );
+			EditorGUILayout.BeginVertical ();
+
+			EditorGUILayout.LabelField ( "Manage defaults", EditorStyles.boldLabel );
+			EditorGUILayout.LabelField ( "Here you can set the default styles for all widget types" );
+
+			EditorGUILayout.EndVertical ();
 
 			// Reset
 			GUI.backgroundColor = Color.red;
@@ -143,11 +162,17 @@ public class OGSkinInspector extends Editor {
 				skin.ResetDefaults ();
 			}
 			
-			GUI.backgroundColor = Color.white;
-
 			EditorGUILayout.EndHorizontal ();
+			
+			GUILayout.Space ( 10 );
+			
+			// Back
+			GUI.backgroundColor = Color.white;
+			if ( GUILayout.Button ( "Back to inspector", GUILayout.Height ( 30 ) ) ) {
+				setDefaultsMode = false;
+			}
 
-			GUILayout.Space ( 30 );
+			GUILayout.Space ( 10 );
 
 			for ( var sr : OGStyleReference in skin.defaults ) {
 				if ( !sr || !sr.type || !sr.styles ) { 
@@ -160,19 +185,17 @@ public class OGSkinInspector extends Editor {
 
 				EditorGUILayout.BeginVertical ();
 
-				var names : String[] = OGWidgetStyles.GetNames();
-
-				for ( var k : int = 0; k < names.Length; k++ ) {
-					if ( OGWidgetStyles.IsStyleUsed ( names[k], sr.type ) ) {
-						var stateName : String = names[k];
-						var style : OGStyle = sr.styles.GetStyle ( names[k] );
+				for ( var styleType : OGStyleType in System.Enum.GetValues(OGStyleType) as OGStyleType[] ) {
+					if ( OGWidgetStyles.IsStyleUsed ( styleType, sr.type ) ) {
+						var stateName : String = styleType.ToString();
+						var style : OGStyle = sr.styles.GetStyle ( styleType );
 						var styleIndex : int = GetStyleIndex ( skin, style );		
 						
 						EditorGUILayout.BeginHorizontal();
 						EditorGUILayout.LabelField ( stateName, GUILayout.Width ( 80 ) );
 						styleIndex = EditorGUILayout.Popup ( styleIndex, GetStyles ( skin ) );
 						EditorGUILayout.EndHorizontal ();
-						sr.styles.SetStyle ( names[k], skin.styles [ styleIndex ] );
+						sr.styles.SetStyle ( styleType, skin.styles [ styleIndex ] );
 					}
 				}
 
@@ -185,7 +208,7 @@ public class OGSkinInspector extends Editor {
 
 			// Back
 			GUI.backgroundColor = Color.white;
-			if ( GUILayout.Button ( "Back", GUILayout.Height ( 30 ) ) ) {
+			if ( GUILayout.Button ( "Back to inspector", GUILayout.Height ( 30 ) ) ) {
 				setDefaultsMode = false;
 			}
 
@@ -228,19 +251,19 @@ public class OGSkinInspector extends Editor {
 			
 			// ^ Name
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Name" );
+			EditorGUILayout.LabelField ( "Name", GUILayout.Width ( 100 ) );
 			s.name = EditorGUILayout.TextField ( s.name );
 			EditorGUILayout.EndHorizontal();
 
 			// ^ Coordinates
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Coordinates" );
+			EditorGUILayout.LabelField ( "Coordinates", GUILayout.Width ( 100 ) );
 			s.coordinates = EditorGUILayout.RectField ( s.coordinates );
 			EditorGUILayout.EndHorizontal();
 
 			// ^ Border
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Border" );
+			EditorGUILayout.LabelField ( "Border", GUILayout.Width ( 100 ) );
 
 			EditorGUILayout.BeginVertical();
 			EditorGUILayout.BeginHorizontal();
@@ -267,7 +290,7 @@ public class OGSkinInspector extends Editor {
 			
 			// ^^ Font
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Font" );
+			EditorGUILayout.LabelField ( "Font", GUILayout.Width ( 100 ) );
 			if ( s.text.fontIndex >= skin.fonts.Length ) {
 				s.text.fontIndex = skin.fonts.Length - 1;
 			
@@ -281,42 +304,42 @@ public class OGSkinInspector extends Editor {
 			
 			// ^^ Size
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Size" );
+			EditorGUILayout.LabelField ( "Size", GUILayout.Width ( 100 ) );
 			s.text.fontSize = EditorGUILayout.IntField ( s.text.fontSize );
 			EditorGUILayout.EndHorizontal();
 
 			// ^^ Colour
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Colour" );
+			EditorGUILayout.LabelField ( "Colour", GUILayout.Width ( 100 ) );
 			s.text.fontColor = EditorGUILayout.ColorField ( s.text.fontColor );
 			EditorGUILayout.EndHorizontal();
 			
 			// ^^ Shadow
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Shadow offset" );
+			EditorGUILayout.LabelField ( "Shadow offset", GUILayout.Width ( 100 ) );
 			s.text.shadowSize = EditorGUILayout.IntField ( s.text.shadowSize );
 			EditorGUILayout.EndHorizontal();
 
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Shadow colour" );
+			EditorGUILayout.LabelField ( "Shadow colour", GUILayout.Width ( 100 ) );
 			s.text.shadowColor = EditorGUILayout.ColorField ( s.text.shadowColor );
 			EditorGUILayout.EndHorizontal();
 
 			// ^^ Alignment
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Alignment" );
+			EditorGUILayout.LabelField ( "Alignment", GUILayout.Width ( 100 ) );
 			s.text.alignment = EditorGUILayout.Popup ( s.text.alignment, GetAnchors ());
 			EditorGUILayout.EndHorizontal();
 			
 			// ^^ Word wrap
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Word wrap" );
+			EditorGUILayout.LabelField ( "Word wrap", GUILayout.Width ( 100 ) );
 			s.text.wordWrap = EditorGUILayout.Toggle ( s.text.wordWrap );
 			EditorGUILayout.EndHorizontal();
 			
 			// ^^ Padding
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Padding" );
+			EditorGUILayout.LabelField ( "Padding", GUILayout.Width ( 100 ) );
 
 			EditorGUILayout.BeginVertical();
 			EditorGUILayout.BeginHorizontal();
@@ -340,13 +363,13 @@ public class OGSkinInspector extends Editor {
 
 			// ^^ Line height
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Line height" );
+			EditorGUILayout.LabelField ( "Line height", GUILayout.Width ( 100 ) );
 			s.text.lineHeight = EditorGUILayout.FloatField ( s.text.lineHeight );
 			EditorGUILayout.EndHorizontal();
 			
 			// ^^ spacing
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Spacing" );
+			EditorGUILayout.LabelField ( "Spacing", GUILayout.Width ( 100 ) );
 			s.text.spacing = EditorGUILayout.FloatField ( s.text.spacing );
 			EditorGUILayout.EndHorizontal();
 
@@ -484,7 +507,7 @@ public class OGSkinInspector extends Editor {
 			
 				// Set defaults
 				GUI.backgroundColor = Color.white;
-				if ( GUILayout.Button ( "Set defaults", GUILayout.Height ( 30 ) ) ) {
+				if ( GUILayout.Button ( "Manage defaults", GUILayout.Height ( 30 ) ) ) {
 					setDefaultsMode = true;
 				}
 				

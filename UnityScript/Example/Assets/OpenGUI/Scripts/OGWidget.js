@@ -51,6 +51,7 @@ public class OGWidget extends MonoBehaviour {
 	}
 
 	public var isDrawn : boolean = true;
+	public var isDisabled : boolean = false;
 	public var isSelectable : boolean = false;
 	public var isDraggable : boolean = false;
 	public var resetAfterDrag : boolean = false;
@@ -69,7 +70,6 @@ public class OGWidget extends MonoBehaviour {
 	@HideInInspector public var dragOrigPos : Vector3;
 	@HideInInspector public var offset : Vector3;
 	@HideInInspector public var hidden : boolean = false;
-	@HideInInspector public var disabled : boolean = false;
 	@HideInInspector public var outOfBounds : boolean = false;
 	@HideInInspector public var isDirty : boolean = false;
 	@HideInInspector public var inScrollView : boolean = false;

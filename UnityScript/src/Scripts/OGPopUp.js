@@ -1,7 +1,5 @@
 #pragma strict
 
-@script AddComponentMenu ("OpenGUI/PopUp")
-
 class OGPopUp extends OGWidget {	
 	public var title : String = "";
 	public var options : String[];

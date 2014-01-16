@@ -33,16 +33,16 @@ public class OGDrawHelper {
 		var size : float = ( intSize * 1.0 ) / 72;
 		var advance : Vector2;
 		var left : float = style.padding.left;
-		var right : float = rect.width - style.padding.right;
+		var right : float = rect.width - style.padding.right - style.padding.left;
 		var top : float = rect.height - style.padding.top;
 		var middle : float = ( rect.height / 2 ) + ( lines.Length * ( intSize * style.lineHeight ) ) / 2;
-		var center : float = rect.width / 2;
+		var center : float = style.padding.left + right / 2;
 		var bottom : float = lines.Length * ( intSize * style.lineHeight ) + style.padding.bottom;
 		var anchor : Vector2;
 		var space : float = ( intSize / 4 ) * style.spacing;
-		var glyphs : Queue.< CharacterInfo > = new Queue.< CharacterInfo >();
-		var thisLineEnd : int = 0;
 		var nextLineStart : int = 0;
+		var thisLineStart : int = 0;
+		var lastSpace : int = 0;
 		var lineWidth : float = 0;
 		var info : CharacterInfo;
 		var emergencyBrake : int = 0;
@@ -97,76 +97,66 @@ public class OGDrawHelper {
 		// Draw all glyphs
 		GL.Color ( style.fontColor );
 		
-		while ( nextLineStart != -1 ) {
+		while ( nextLineStart != string.Length ) {
 			// Get next line
-			thisLineEnd = 0;
-			var lastSpace : int = 0;
+			lastSpace = 0;
 			lineWidth = 0;
-			
-			// ^ Parse remaining string, populate glyph queue
-			for ( var c : int = nextLineStart; c < string.Length; c++ ) {
-				// The line width has exceeded the border
-				if ( lineWidth >= right ) {
-					thisLineEnd = lastSpace - nextLineStart;
-					nextLineStart = lastSpace;
-					break;
+			thisLineStart = nextLineStart;
 
+			// ^ Parse remaining string, set start and end integers
+			for ( var c : int = thisLineStart; c < string.Length; c++ ) {
 				// This character is a space
-				} else if ( string[c] == " "[0] && c != nextLineStart ) {
-					info = new CharacterInfo ();
-					info.index = -1;
-					glyphs.Enqueue ( info );
-					
-					lineWidth += size * style.spacing;
+				if ( string[c] == " "[0] ) {
+					if ( lineWidth < right ) {
+						lineWidth += space;
+					}
+
 					lastSpace = c;
 					
 				// This character is a regular glyph
 				} else if ( style.font.GetCharacterInfo ( string[c], info ) ) {
-					glyphs.Enqueue ( info );
-
-					lineWidth += ( info.vert.width * size ) * style.spacing;
+					if ( lineWidth < right ) {
+						lineWidth += ( info.vert.width * size ) * style.spacing;
+					}
 
 				// This character is a carriage return	
-				} else if ( string[c] == "\n"[0] && c != nextLineStart ) {
-					nextLineStart = c++;
+				} else if ( string[c] == "\n"[0] ) {
+					nextLineStart = c + 1;
 					break;
 
 				}
 				
+				// The line width has exceeded the border
+				if ( lineWidth >= right ) {
+					nextLineStart = lastSpace + 1;
+					break;
+				}
 			}
 			
+			// The string has ended
 			if ( c >= string.Length - 1 ) {
-				// ^ The string has ended
-				nextLineStart = -1;
-			}
-
-			if ( thisLineEnd == 0 ) {
-				thisLineEnd = glyphs.Count;
+				nextLineStart = string.Length;
 			}
 
 			// Alignment advance adjustments
 			if ( anchor.x == center ) {
 				advance.x -= lineWidth / 2;
-			} else if ( anchor.x== right ) {
+			} else if ( anchor.x == right ) {
 				advance.x -= lineWidth;
 			}
 
 			// Draw glyphs
-			for ( var g : int = 0; g < thisLineEnd; g++ ) {
+			for ( var g : int = thisLineStart; g < nextLineStart; g++ ) {
 				// Draw glyph
-				if ( glyphs.Count > 0 ) {
-					info = glyphs.Dequeue();
-				} else {
+				if ( !style.font.GetCharacterInfo ( string[g], info ) ) {
 					continue;
 				}
-
-				if ( info == null ) {
-					continue;
-				} else if ( info.index == -1 ) {
+				
+				if ( string[g] == " "[0] ) {
 					advance.x += space;
 					continue;
 				}
-
+					
 				var vert : Rect = new Rect ( info.vert.x * size, info.vert.y * size, info.vert.width * size, info.vert.height * size );
 				var uv : Vector2[] = new Vector2[4];
 				
@@ -210,9 +200,6 @@ public class OGDrawHelper {
 			// Next line
 			advance.y -= intSize * style.lineHeight;
 			advance.x = 0;
-			if ( glyphs.Count > 0 ) {
-				glyphs.Clear ();
-			}
 
 			// Emergency
 			if ( emergencyBrake > 10 ) {
@@ -272,67 +259,74 @@ public class OGDrawHelper {
 
 	// Sliced
 	public static function DrawSlicedSprite ( rect : Rect, uvRect : Rect, border : OGSlicedSpriteOffset, depth : float ) {
-		// Bottom left corner
-		DrawSprite (
-			new Rect ( rect.x, rect.y, border.left, border.bottom ),
-			new Rect ( uvRect.x, uvRect.y, border.left, border.bottom ),
-			depth
-		);
-	
-		// Left panel
-		DrawSprite (
-			new Rect ( rect.x, rect.y + border.bottom, border.left, rect.height - border.bottom - border.top ),
-			new Rect ( uvRect.x, uvRect.y + border.bottom, border.left, uvRect.height - border.top - border.bottom ),
-			depth
-		);
+		// If no border is defined, draw a regular sprite
+		if ( border.left == 0 && border.right == 0 && border.top == 0 && border.bottom == 0 ) {
+			DrawSprite ( rect, uvRect, depth );
 
-		// Top left corner
-		DrawSprite (
-			new Rect ( rect.x, rect.y + rect.height - border.top, border.left, border.top ),
-			new Rect ( uvRect.x, uvRect.y + uvRect.height - border.top, border.left, border.top ),
-			depth
-		);
+		// Draw all corners, panels and the center	
+		} else {
+			// Bottom left corner
+			DrawSprite (
+				new Rect ( rect.x, rect.y, border.left, border.bottom ),
+				new Rect ( uvRect.x, uvRect.y, border.left, border.bottom ),
+				depth
+			);
+		
+			// Left panel
+			DrawSprite (
+				new Rect ( rect.x, rect.y + border.bottom, border.left, rect.height - border.bottom - border.top ),
+				new Rect ( uvRect.x, uvRect.y + border.bottom, border.left, uvRect.height - border.top - border.bottom ),
+				depth
+			);
 
-		// Top panel
-		DrawSprite (
-			new Rect ( rect.x + border.left, rect.y + rect.height - border.top, rect.width - border.horizontal, border.top ),
-			new Rect ( uvRect.x + border.left, uvRect.y + uvRect.height - border.top, uvRect.width - border.horizontal, border.top ),
-			depth
-		);
-		
-		// Top right corner
-		DrawSprite (
-			new Rect ( rect.x + rect.width - border.right, rect.y + rect.height - border.top, border.right, border.top ),
-			new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y + uvRect.height - border.top, border.right, border.top ),
-			depth
-		);
-		
-		// Right panel
-		DrawSprite (
-			new Rect ( rect.x + rect.width - border.right, rect.y + border.bottom, border.right, rect.height - border.vertical ),
-			new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y + border.bottom, border.right, uvRect.height - border.vertical ),
-			depth
-		);
+			// Top left corner
+			DrawSprite (
+				new Rect ( rect.x, rect.y + rect.height - border.top, border.left, border.top ),
+				new Rect ( uvRect.x, uvRect.y + uvRect.height - border.top, border.left, border.top ),
+				depth
+			);
 
-		// Bottom left corner
-		DrawSprite (
-			new Rect ( rect.x + rect.width - border.right, rect.y, border.right, border.bottom ),
-			new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y, border.right, border.bottom ),
-			depth
-		);
-		
-		// Top panel
-		DrawSprite (
-			new Rect ( rect.x + border.left, rect.y, rect.width - border.horizontal, border.bottom ),
-			new Rect ( uvRect.x + border.left, uvRect.y, uvRect.width - border.horizontal, border.bottom ),
-			depth
-		);
-		
-		// Center
-		DrawSprite (
-			new Rect ( rect.x + border.left, rect.y + border.bottom, rect.width - border.right - border.left, rect.height - border.bottom - border.top ),
-			new Rect ( uvRect.x + border.left, uvRect.y + border.bottom, uvRect.width - border.right - border.left, uvRect.height - border.bottom - border.top ),
-			depth
-		);
+			// Top panel
+			DrawSprite (
+				new Rect ( rect.x + border.left, rect.y + rect.height - border.top, rect.width - border.horizontal, border.top ),
+				new Rect ( uvRect.x + border.left, uvRect.y + uvRect.height - border.top, uvRect.width - border.horizontal, border.top ),
+				depth
+			);
+			
+			// Top right corner
+			DrawSprite (
+				new Rect ( rect.x + rect.width - border.right, rect.y + rect.height - border.top, border.right, border.top ),
+				new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y + uvRect.height - border.top, border.right, border.top ),
+				depth
+			);
+			
+			// Right panel
+			DrawSprite (
+				new Rect ( rect.x + rect.width - border.right, rect.y + border.bottom, border.right, rect.height - border.vertical ),
+				new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y + border.bottom, border.right, uvRect.height - border.vertical ),
+				depth
+			);
+
+			// Bottom left corner
+			DrawSprite (
+				new Rect ( rect.x + rect.width - border.right, rect.y, border.right, border.bottom ),
+				new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y, border.right, border.bottom ),
+				depth
+			);
+			
+			// Top panel
+			DrawSprite (
+				new Rect ( rect.x + border.left, rect.y, rect.width - border.horizontal, border.bottom ),
+				new Rect ( uvRect.x + border.left, uvRect.y, uvRect.width - border.horizontal, border.bottom ),
+				depth
+			);
+			
+			// Center
+			DrawSprite (
+				new Rect ( rect.x + border.left, rect.y + border.bottom, rect.width - border.right - border.left, rect.height - border.bottom - border.top ),
+				new Rect ( uvRect.x + border.left, uvRect.y + border.bottom, uvRect.width - border.right - border.left, uvRect.height - border.bottom - border.top ),
+				depth
+			);
+		}
 	}
 }

@@ -85,7 +85,7 @@ MonoBehaviour:
       right: 0
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -113,7 +113,7 @@ MonoBehaviour:
       right: 4
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
       shadowSize: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
       right: 4
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
       shadowSize: 0
@@ -169,7 +169,7 @@ MonoBehaviour:
       right: 0
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -197,7 +197,7 @@ MonoBehaviour:
       right: 0
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -225,7 +225,7 @@ MonoBehaviour:
       right: 4
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
       shadowSize: 0
@@ -253,7 +253,7 @@ MonoBehaviour:
       right: 0
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: .588235319, g: .588235319, b: .588235319, a: 1}
       shadowSize: 0
@@ -281,7 +281,7 @@ MonoBehaviour:
       right: 0
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: .191176474, g: .191176474, b: .191176474, a: 1}
       shadowSize: 0
@@ -309,7 +309,7 @@ MonoBehaviour:
       right: 0
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: .316176474, g: .632150173, b: 1, a: 1}
       shadowSize: 0
@@ -337,7 +337,7 @@ MonoBehaviour:
       right: 0
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -365,7 +365,7 @@ MonoBehaviour:
       right: 0
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: .338235319, g: .338235319, b: .338235319, a: 1}
       shadowSize: 0
@@ -393,7 +393,7 @@ MonoBehaviour:
       right: 12
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
       shadowSize: 0
@@ -421,7 +421,7 @@ MonoBehaviour:
       right: 3
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: .588235319, g: .588235319, b: .588235319, a: 1}
       shadowSize: 0
@@ -449,7 +449,7 @@ MonoBehaviour:
       right: 3
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -477,7 +477,7 @@ MonoBehaviour:
       right: 0
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -505,7 +505,7 @@ MonoBehaviour:
       right: 0
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -533,7 +533,7 @@ MonoBehaviour:
       right: 0
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -561,7 +561,7 @@ MonoBehaviour:
       right: 0
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -589,7 +589,7 @@ MonoBehaviour:
       right: 4
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
       shadowSize: 0
@@ -630,7 +630,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25.25
+      spacing: 1.25
   - name: TextBody
     coordinates:
       serializedVersion: 2
@@ -658,7 +658,7 @@ MonoBehaviour:
         m_Top: 0
         m_Bottom: 0
       lineHeight: 1.25
-      spacing: 1.25.25
+      spacing: 1.25
   - name: TextField
     coordinates:
       serializedVersion: 2
@@ -673,7 +673,7 @@ MonoBehaviour:
       right: 4
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -701,7 +701,7 @@ MonoBehaviour:
       right: 0
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -729,7 +729,7 @@ MonoBehaviour:
       right: 0
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: .142733544, g: .484488755, b: .882352948, a: 1}
       shadowSize: 0
@@ -757,7 +757,7 @@ MonoBehaviour:
       right: 0
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
       shadowSize: 0
@@ -785,7 +785,7 @@ MonoBehaviour:
       right: 0
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -813,7 +813,7 @@ MonoBehaviour:
       right: 0
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
       shadowSize: 0
@@ -845,7 +845,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0
@@ -874,7 +874,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0
@@ -903,7 +903,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
           shadowSize: 0
@@ -932,7 +932,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -961,7 +961,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -990,7 +990,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1021,7 +1021,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0
@@ -1050,7 +1050,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: .191176474, g: .191176474, b: .191176474, a: 1}
           shadowSize: 0
@@ -1068,18 +1068,18 @@ MonoBehaviour:
         name: DropDownActive
         coordinates:
           serializedVersion: 2
-          x: 96
+          x: 128
           y: 32
           width: 32
           height: 32
         border:
-          top: 4
-          bottom: 4
-          left: 4
-          right: 4
+          top: 0
+          bottom: 0
+          left: 0
+          right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: .588235319, g: .588235319, b: .588235319, a: 1}
           shadowSize: 0
@@ -1098,17 +1098,17 @@ MonoBehaviour:
         coordinates:
           serializedVersion: 2
           x: 0
-          y: 0
+          y: 64
           width: 32
           height: 32
         border:
-          top: 4
-          bottom: 4
-          left: 4
-          right: 4
+          top: 0
+          bottom: 0
+          left: 0
+          right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: .316176474, g: .632150173, b: 1, a: 1}
           shadowSize: 0
@@ -1137,7 +1137,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1166,7 +1166,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1197,7 +1197,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 2
@@ -1226,7 +1226,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1255,7 +1255,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1284,7 +1284,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1313,7 +1313,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1342,7 +1342,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1373,7 +1373,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1402,7 +1402,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1431,7 +1431,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: .338235319, g: .338235319, b: .338235319, a: 1}
           shadowSize: 0
@@ -1460,7 +1460,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1489,7 +1489,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1518,7 +1518,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1549,7 +1549,7 @@ MonoBehaviour:
           right: 12
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0
@@ -1578,7 +1578,7 @@ MonoBehaviour:
           right: 3
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1607,7 +1607,7 @@ MonoBehaviour:
           right: 3
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: .588235319, g: .588235319, b: .588235319, a: 1}
           shadowSize: 0
@@ -1636,7 +1636,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1665,7 +1665,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1694,7 +1694,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1725,7 +1725,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1754,7 +1754,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1783,7 +1783,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1812,7 +1812,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1841,7 +1841,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1870,7 +1870,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1901,7 +1901,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1930,7 +1930,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1959,7 +1959,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -1988,7 +1988,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2017,7 +2017,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2046,7 +2046,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2077,7 +2077,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0
@@ -2106,7 +2106,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2135,7 +2135,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0
@@ -2164,7 +2164,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2193,7 +2193,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2222,7 +2222,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2253,7 +2253,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2282,7 +2282,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2311,7 +2311,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2340,7 +2340,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2369,7 +2369,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2398,7 +2398,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2429,7 +2429,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0
@@ -2458,7 +2458,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2487,7 +2487,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2516,7 +2516,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0
@@ -2545,7 +2545,7 @@ MonoBehaviour:
           right: 0
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
@@ -2574,7 +2574,7 @@ MonoBehaviour:
           right: 4
         text:
           fontIndex: 0
-          font: {fileID: 0}
+          font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0

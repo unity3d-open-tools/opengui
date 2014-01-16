@@ -46,7 +46,7 @@ class OGButton extends OGWidget {
 	
 	override function OnMouseCancel () {
 		isDown = false;
-		OGRoot.GetInstance().ReleaseWidget ();
+		GetRoot().ReleaseWidget ();
 	}
 	
 	override function OnMouseDown () {

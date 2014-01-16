@@ -4,8 +4,6 @@ import System.Collections.Generic;
 
 @CustomEditor ( OGWidget, true )
 public class OGWidgetInspector extends Editor {
-	public static var debug : boolean = false;
-	
 	private function GetStyles ( widget : OGWidget ) : String[] {
 		var tempList : List.< String > = new List.< String >();
 		
@@ -36,29 +34,15 @@ public class OGWidgetInspector extends Editor {
 		if ( !widget || !widget.GetRoot() ) { return; }
 		
 		// Check for hidden widgets
-		if ( widget.hidden && !debug ) {
-			GUI.backgroundColor = Color.red;
-			if ( GUILayout.Button ( "Turn on debug mode" ) ) {
-				debug = true;
-			}
-			GUI.backgroundColor = Color.white;
+		if ( widget.hidden ) {
+			EditorGUILayout.LabelField ( "This widget is rubbish that somehow didn't get deleted." );
 			
-			EditorGUILayout.Space ();
-
-			EditorGUILayout.LabelField ( "This widget is not supposed to be changed manually," );
-			EditorGUILayout.LabelField ( "please refer to the root widget." );
+			// Kill!
+			if ( GUILayout.Button ( "Fix" ) ) {
+				DestroyImmediate ( target as GameObject );
+			}
 
 		} else {
-			if ( widget.hidden ) {
-				GUI.backgroundColor = Color.green;
-				if ( GUILayout.Button ( "Turn off debug mode" ) ) {
-					debug = false;
-				}
-				GUI.backgroundColor = Color.white;
-
-				EditorGUILayout.Space();
-			}
-		
 			// Default inspector
 			DrawDefaultInspector ();
 			
@@ -66,28 +50,44 @@ public class OGWidgetInspector extends Editor {
 	
 			EditorGUILayout.LabelField ( "Style", EditorStyles.boldLabel );
 
-			var names : String [] = OGWidgetStyles.GetNames ();
-
-			for ( var k : int = 0; k < names.Length; k++ ) {
-				if ( OGWidgetStyles.IsStyleUsed ( names[k], widget.GetType().ToString() ) ) {
+			for ( var styleType : OGStyleType in System.Enum.GetValues ( OGStyleType ) as OGStyleType[] ) {
+				if ( OGWidgetStyles.IsStyleUsed ( styleType, widget.GetType().ToString() ) ) {
 					// Styles
-					var wdStyle : OGStyle = widget.styles.GetStyle ( names[k] ); 
+					var wdStyle : OGStyle = widget.styles.GetStyle ( styleType ); 
 					var wdStyleIndex : int = GetStyleIndex ( widget, wdStyle );		
 					EditorGUILayout.BeginHorizontal();
-					EditorGUILayout.LabelField ( names[k] );
+					
+					EditorGUILayout.LabelField ( styleType.ToString() );
+					
 					wdStyleIndex = EditorGUILayout.Popup ( wdStyleIndex, GetStyles ( widget ) );
+					widget.styles.SetStyle ( styleType, widget.GetRoot().skin.styles [ wdStyleIndex ] );
+				
+					// ^ Edit
+					if ( GUILayout.Button ( "Edit", GUILayout.Width ( 40 ) ) ) {
+						Selection.activeObject = widget.GetRoot().skin;
+						OGSkinInspector.SetCurrentStyle ( wdStyleIndex );
+					}
+					
 					EditorGUILayout.EndHorizontal ();
-					widget.styles.SetStyle ( names[k], widget.GetRoot().skin.styles [ wdStyleIndex ] );
 				}	
 			}
 
-
 			EditorGUILayout.Space();
 			
-			// Reset style	
-			if ( GUILayout.Button ( "Reset style" ) ) {
+			EditorGUILayout.BeginHorizontal();
+
+			// Get defaults	
+			if ( GUILayout.Button ( "Get default styles" ) ) {
 				( target as OGWidget ).GetDefaultStyles();
 			}
+			
+			// ^ Edit
+			if ( GUILayout.Button ( "Edit", GUILayout.Width ( 40 ) ) ) {
+				Selection.activeObject = widget.GetRoot().skin;
+				OGSkinInspector.SetDefaultsMode();
+			}
+
+			EditorGUILayout.EndHorizontal ();
 		}
 	}
 }
