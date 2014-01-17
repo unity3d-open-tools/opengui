@@ -16,9 +16,9 @@ public class OGTextField extends OGWidget {
 	public var regexPreset : RegExPreset;
 
 	@HideInInspector public var cursorStyle : OGStyle;
+	@HideInInspector public var listening : boolean = false;
 	
 	private var currentPreset : RegExPreset = RegExPreset.None;
-	private var listening : boolean = false;
 	private var cursorPosition : Vector2;
 	private var selectCursorPosition : Vector2;
 

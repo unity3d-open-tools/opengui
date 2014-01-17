@@ -10,7 +10,7 @@ public class OGSkinInspector extends Editor {
 	private var uvMode : boolean = false;
 	private var uvScrollPosition : Vector2;
 	private var addStyleName : String = "";
-	
+
 	private static var currentStyle : int = 0;
 	private static var setDefaultsMode : boolean = false;
 	private static var selectedStyle : int = 0;
@@ -255,7 +255,7 @@ public class OGSkinInspector extends Editor {
 			EditorGUILayout.LabelField ( "Edit widget UV coordinates" );
 			
 			EditorGUILayout.Space ();
-			
+		
 			// Atlas
 			var uvAtlasTex : Texture = skin.atlas.mainTexture;
 			var uvCoords : Rect = new Rect (
@@ -265,8 +265,16 @@ public class OGSkinInspector extends Editor {
 				s.coordinates.height / uvAtlasTex.height
 			);
 
-			s.coordinates = EditorGUILayout.RectField ( s.coordinates );
+			s.coordinates.x = Mathf.Floor ( s.coordinates.x );
+			s.coordinates.y = Mathf.Floor ( s.coordinates.y );
+			s.coordinates.width = Mathf.Floor ( s.coordinates.width );
+			s.coordinates.height = Mathf.Floor ( s.coordinates.height );
 			
+			s.coordinates.x = Mathf.Clamp ( s.coordinates.x, 0, uvAtlasTex.width - s.coordinates.width );
+			s.coordinates.y = Mathf.Clamp ( s.coordinates.y, 0, uvAtlasTex.height - s.coordinates.height );
+			
+			s.coordinates = EditorGUILayout.RectField ( s.coordinates );
+
 			EditorGUILayout.Space ();
 
 			uvScrollPosition = GUILayout.BeginScrollView ( uvScrollPosition, GUILayout.Height ( uvAtlasTex.height + 20 ) );
