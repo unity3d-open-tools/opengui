@@ -7,11 +7,13 @@ import System.Linq;
 public class OGSkinInspector extends Editor {
 	private var deleteMode : boolean = false;
 	private var addMode : boolean = false;
-	private var selectedStyle : int = 0;
+	private var uvMode : boolean = false;
+	private var uvScrollPosition : Vector2;
 	private var addStyleName : String = "";
 	
 	private static var currentStyle : int = 0;
 	private static var setDefaultsMode : boolean = false;
+	private static var selectedStyle : int = 0;
 	
 	public static function SetCurrentStyle ( i : int ) {
 		currentStyle = i;
@@ -86,6 +88,32 @@ public class OGSkinInspector extends Editor {
 		return lines;
 	}
 	
+	private function CalcUVBorderLines ( controlRect : Rect, style : OGStyle, atlas : Texture ) : Vector3[] {
+		var lines : Vector3[] = new Vector3[8];
+		var width : float = style.coordinates.width;
+		var height : float = style.coordinates.height;
+		var x : float = controlRect.x + style.coordinates.x;
+		var y : float = controlRect.y + atlas.height - style.coordinates.y;
+		
+		// Left
+		lines[0] = new Vector3 ( x, y, 0 );
+		lines[1] = lines[0] - new Vector3 ( 0, height, 0 );
+		
+		// Right
+		lines[2] = new Vector3 ( x + width, y, 0 );
+		lines[3] = lines[2] - new Vector3 ( 0, height, 0 );
+		
+		// Top
+		lines[4] = new Vector3 ( x, y - height, 0 );
+		lines[5] = lines[4] + new Vector3 ( width, 0, 0 );
+		
+		// Bottom
+		lines[6] = new Vector3 ( x, y, 0 );
+		lines[7] = lines[6] + new Vector3 ( width, 0, 0 );
+		
+		return lines;
+	}
+
 	private function GetStyleIndex ( skin : OGSkin, style : OGStyle ) : int {
 		if ( skin && style ) {
 			for ( var i : int = 0; i < skin.styles.Length; i++ ) {
@@ -142,19 +170,24 @@ public class OGSkinInspector extends Editor {
 	
 	override function OnInspectorGUI () {		
 		var skin : OGSkin = target as OGSkin;
+		
+		// Break if null	
+		if ( skin.atlas == null || skin.styles.Length < 1 || skin.styles[currentStyle] == null || skin.styles[currentStyle].text == null) { return; }
+	
+		if ( currentStyle >= skin.styles.Length ) {
+			currentStyle = skin.styles.Length - 1;
+		}
+
 		var tempObj : Object;
+		var s : OGStyle = skin.styles[currentStyle];
 				
 		if ( !skin ) { return; }
-		
+	
+		// Set defaults	
 		if ( setDefaultsMode ) {
 			EditorGUILayout.BeginHorizontal ();
 
-			EditorGUILayout.BeginVertical ();
-
 			EditorGUILayout.LabelField ( "Manage defaults", EditorStyles.boldLabel );
-			EditorGUILayout.LabelField ( "Here you can set the default styles for all widget types" );
-
-			EditorGUILayout.EndVertical ();
 
 			// Reset
 			GUI.backgroundColor = Color.red;
@@ -163,6 +196,8 @@ public class OGSkinInspector extends Editor {
 			}
 			
 			EditorGUILayout.EndHorizontal ();
+			
+			EditorGUILayout.LabelField ( "Set the default widget styles" );
 			
 			GUILayout.Space ( 10 );
 			
@@ -179,10 +214,8 @@ public class OGSkinInspector extends Editor {
 					continue;
 				}
 				
-				EditorGUILayout.BeginHorizontal ();
-				
 				EditorGUILayout.LabelField ( sr.type, EditorStyles.boldLabel, GUILayout.Width ( 100 ) );
-
+				
 				EditorGUILayout.BeginVertical ();
 
 				for ( var styleType : OGStyleType in System.Enum.GetValues(OGStyleType) as OGStyleType[] ) {
@@ -201,9 +234,7 @@ public class OGSkinInspector extends Editor {
 
 				EditorGUILayout.EndVertical ();
 
-				EditorGUILayout.EndHorizontal ();
-
-				EditorGUILayout.Space ();
+				GUILayout.Space ( 20 );
 			}
 
 			// Back
@@ -212,18 +243,65 @@ public class OGSkinInspector extends Editor {
 				setDefaultsMode = false;
 			}
 
-
-		} else {	
-			// Break if null	
-			if ( skin.atlas == null || skin.styles.Length < 1 || skin.styles[currentStyle] == null || skin.styles[currentStyle].text == null) { return; }
+		// Adjust UV
+		} else if ( uvMode ) {
+			EditorGUILayout.BeginHorizontal ();
+			EditorGUILayout.LabelField ( "Style", EditorStyles.boldLabel, GUILayout.Width ( 50 ) );
+			currentStyle = EditorGUILayout.Popup ( currentStyle, GetStyles ( false ), GUILayout.Width ( 100 ));
+			EditorGUILayout.EndHorizontal ();
 			
+			EditorGUILayout.Space ();
+			
+			EditorGUILayout.LabelField ( "Edit widget UV coordinates" );
+			
+			EditorGUILayout.Space ();
+			
+			// Atlas
+			var uvAtlasTex : Texture = skin.atlas.mainTexture;
+			var uvCoords : Rect = new Rect (
+				s.coordinates.x / uvAtlasTex.width,
+				s.coordinates.y / uvAtlasTex.height,
+				s.coordinates.width / uvAtlasTex.width,
+				s.coordinates.height / uvAtlasTex.height
+			);
+
+			s.coordinates = EditorGUILayout.RectField ( s.coordinates );
+			
+			EditorGUILayout.Space ();
+
+			uvScrollPosition = GUILayout.BeginScrollView ( uvScrollPosition, GUILayout.Height ( uvAtlasTex.height + 20 ) );
+			
+			var uvControlRect : Rect = EditorGUILayout.GetControlRect ( false, uvAtlasTex.height, GUILayout.Width ( uvAtlasTex.width ) );
+			var uvBorderLines : Vector3[] = CalcUVBorderLines ( uvControlRect, s, uvAtlasTex );
+			
+			GUI.DrawTexture ( uvControlRect, uvAtlasTex, ScaleMode.ScaleToFit, true );
+		
+			Handles.color = Color.green;
+
+			Handles.DrawLine ( uvBorderLines[0], uvBorderLines[1] );
+			Handles.DrawLine ( uvBorderLines[2], uvBorderLines[3] );
+			Handles.DrawLine ( uvBorderLines[4], uvBorderLines[5] );
+			Handles.DrawLine ( uvBorderLines[6], uvBorderLines[7] );
+			
+			Handles.color = Color.white;
+
+			GUILayout.EndScrollView ();
+
+			EditorGUILayout.Space ();
+
+			// Back
+			GUI.backgroundColor = Color.white;
+			if ( GUILayout.Button ( "Back to inspector", GUILayout.Height ( 30 ) ) ) {
+				uvMode = false;
+			}
+
+		// Edit style
+		} else {	
 			// Style
 			EditorGUILayout.BeginHorizontal();
 			EditorGUILayout.LabelField ( "Style", EditorStyles.boldLabel, GUILayout.Width ( 50 ) );
 			currentStyle = EditorGUILayout.Popup ( currentStyle, GetStyles ( false ), GUILayout.Width ( 100 ));
 			
-			var s : OGStyle = skin.styles[currentStyle];
-	
 			EditorGUILayout.Space ();
 
 			// ^ Preview
@@ -259,6 +337,9 @@ public class OGSkinInspector extends Editor {
 			EditorGUILayout.BeginHorizontal();
 			EditorGUILayout.LabelField ( "Coordinates", GUILayout.Width ( 100 ) );
 			s.coordinates = EditorGUILayout.RectField ( s.coordinates );
+			if ( GUILayout.Button ( "Edit", GUILayout.Width ( 40 ), GUILayout.Height ( 30 ) ) ) {
+				uvMode = true;
+			}
 			EditorGUILayout.EndHorizontal();
 
 			// ^ Border
