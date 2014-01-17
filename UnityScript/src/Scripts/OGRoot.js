@@ -34,10 +34,17 @@ class OGRoot extends MonoBehaviour {
 	private var screenRect : Rect;
 	private var textureMaterials : Material[];
 
+	//////////////////
+	// Instance
+	//////////////////
 	public static function GetInstance () {
 		return instance;
 	}
 
+	
+	//////////////////
+	// Font helpers
+	//////////////////
 	public function GetUnicode ( index : int ) : Dictionary.< int, int > {
 		if ( unicode == null ) {
 			ReloadFonts ();
@@ -65,6 +72,10 @@ class OGRoot extends MonoBehaviour {
 					
 	}
 
+	
+	//////////////////
+	// Page management
+	//////////////////
 	public function SetCurrentPage ( page : OGPage ) {
 		currentPage = page;
 
@@ -95,6 +106,10 @@ class OGRoot extends MonoBehaviour {
 		SetDirty ();
 	}
 
+	
+	//////////////////
+	// Draw loop
+	//////////////////
 	public function OnPostRender () {
 		if ( widgets != null ) {
 			var i : int = 0;
@@ -185,26 +200,30 @@ class OGRoot extends MonoBehaviour {
 		}
 	}
 	
-	public function ReleaseWidget () {
-		downWidget = null;
 	
-		SetDirty ();
-	}
-
-	public function SetDirty ( frames : int ) {
-		dirtyCounter = frames;
-	}
-
-	public function SetDirty () {
-		SetDirty ( 2 );
-	}
-
+	//////////////////
+	// Init
+	//////////////////
 	public function Start () {
 		if ( currentPage != null && Application.isPlaying ) {
 			currentPage.StartPage ();
 		}
+	}
 
-		SetDirty();
+
+	//////////////////
+	// Update
+	//////////////////
+	public function SetDirty ( s : int ) {
+		dirtyCounter = s;
+	}
+
+	public function SetDirty () {
+		dirtyCounter = 2;
+	}
+	
+	public function ReleaseWidget () {
+		downWidget = null;
 	}
 
 	public function Update () {
@@ -240,6 +259,10 @@ class OGRoot extends MonoBehaviour {
 		}
 	}
 
+
+	//////////////////
+	// Mouse interaction
+	//////////////////
 	public function UpdateMouse () {
 		if ( widgets == null ) { return; }
 		
@@ -268,7 +291,7 @@ class OGRoot extends MonoBehaviour {
 				downWidget.OnMouseCancel ();
 			}
 			
-			if ( topWidget != null ) {
+			if ( topWidget != null && !topWidget.isDisabled ) {
 				topWidget.OnMouseDown ();
 				downWidget = topWidget;
 			}
@@ -284,7 +307,7 @@ class OGRoot extends MonoBehaviour {
 				}
 				
 				// Mouse over
-				if ( downWidget.CheckMouseOver() ) {
+				if ( downWidget.CheckMouseOver() && !downWidget.isDisabled ) {
 					downWidget.OnMouseUp ();
 
 				// Mouse out
@@ -297,7 +320,7 @@ class OGRoot extends MonoBehaviour {
 		
 		// Dragging
 		} else if ( Input.GetMouseButton ( 0 ) || Input.GetMouseButton ( 2 ) ) {
-			if ( downWidget ) {
+			if ( downWidget != null && !downWidget.isDisabled ) {
 				downWidget.OnMouseDrag ();
 			
 				if ( downWidget.isDraggable && downWidget.GetType() != OGScrollView ) {
@@ -322,7 +345,7 @@ class OGRoot extends MonoBehaviour {
 
 		// Escape key
 		if ( Input.GetKeyDown ( KeyCode.Escape ) ) {
-			if ( downWidget ) {
+			if ( downWidget != null ) {
 				downWidget.OnMouseCancel ();
 				ReleaseWidget ();
 			}
@@ -330,14 +353,9 @@ class OGRoot extends MonoBehaviour {
 	}	
 
 
-        public function Intersect ( w : Transform ) : boolean {
-		var c1 : boolean = w.position.x + w.lossyScale.x > 0;
-		var c2 : boolean = w.position.x < Screen.width;
-		var c3 : boolean = w.position.y + w.lossyScale.y > 0;
-		var c4 : boolean = w.position.y < Screen.height;
-		return c1 && c2 && c3 && c4;
-	}
-   
+	//////////////////
+	// Widget management
+	//////////////////
 	public function UpdateWidgets ( onlyPositions : boolean ) {
 		screenRect = new Rect ( 0, Screen.width, 0, Screen.height );
 

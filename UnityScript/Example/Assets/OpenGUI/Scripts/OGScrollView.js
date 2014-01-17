@@ -13,6 +13,9 @@ public class OGScrollView extends OGWidget {
 	@HideInInspector public var inset : float = 0;
 
 	private var widgets : OGWidget[];
+	private var bounds : Vector2;
+	private var inPlace : boolean = true;
+
 
 	////////////////
 	// Update
@@ -22,43 +25,84 @@ public class OGScrollView extends OGWidget {
 			widgets = this.gameObject.GetComponentsInChildren.<OGWidget>();
 		}
 
+		bounds = Vector2.zero;
+		
 		for ( var i : int = 0; i < widgets.Length; i++ ) {
 			var w : OGWidget = widgets[i];
-			
+		
 			if ( w != null && w != this ) {
 				w.scrollOffset = new Vector3 ( padding.x + position.x, padding.y + position.y, 0 );
 				w.anchor.x = RelativeX.None;
 				w.anchor.y = RelativeY.None;
 				w.clipTo = this;
+
+				var bottom : float = w.transform.localPosition.y + w.transform.localScale.y - size.y + padding.y * 2;
+				var right : float = w.transform.localPosition.x + w.transform.localScale.x - size.x + padding.x * 2;
+
+				if ( -bottom < bounds.y ) {
+					bounds.y = -bottom;
+				}
+
+				if ( -right < bounds.x ) {
+					bounds.x = -right;
+				}
 			}
 		}
 	}
 
 	private function SnapBack () : IEnumerator {
-		var inPlace : boolean = false;
-		
+		inPlace = false;
+
+		var xInPlace : boolean = false;
+		var yInPlace : boolean = false;
+
+		// If the scoll position is not in place, keep going
 		while ( !inPlace ) {
+			// Out of bounds top
 			if ( position.y > 0 ) {
 				position.y = Mathf.Lerp ( position.y, 0, Time.deltaTime * padding.y );
-				inPlace = false;
+				yInPlace = false;
 
 				if ( position.y < 1 ) {
 					position.y = 0;
 				}
+			
+			// Out of bounds bottom
+			} else if ( position.y < bounds.y ) {
+				position.y = Mathf.Lerp ( position.y, bounds.y, Time.deltaTime * padding.y );
+				yInPlace = false;
+
+				if ( position.y > bounds.y - 1 ) {
+					position.y = bounds.y;
+				}
 
 			} else {
-				inPlace = true;
+				yInPlace = true;
 			}
 			
+			// Out of bounds left
 			if ( position.x > 0 ) {
 				position.x = Mathf.Lerp ( position.x, 0, Time.deltaTime * padding.x );
-				inPlace = false;
+				xInPlace = false;
 
 				if ( position.x < 1 ) {
 					position.x = 0;
 				}
+			
+			// Out of bounds right
+			} else if ( position.x < bounds.x ) {
+				position.x = Mathf.Lerp ( position.x, bounds.x, Time.deltaTime * padding.x );
+				xInPlace = false;
 
+				if ( position.x > bounds.x - 1 ) {
+					position.x = bounds.x;
+				}
+			
 			} else {
+				xInPlace = true;
+			}
+
+			if ( yInPlace && xInPlace ) {
 				inPlace = true;
 			}
 
@@ -82,14 +126,18 @@ public class OGScrollView extends OGWidget {
 		amount.x = Mathf.Floor ( drag.x * 20 );
 		amount.y = -Mathf.Floor ( drag.y * 20 );
 		
-		// ^ Elasticity
-		if ( position.x + amount.x < padding.x * elasticity ) {
-			position.x += amount.x / Mathf.Clamp ( position.x, 1, padding.x * elasticity );
-		}
+		// Elasticity
+		if ( position.x + amount.x > 0 || position.x + amount.x < bounds.x ) {
+			amount.x *= elasticity / 100;
+		} 
 
-		if ( position.y + amount.y < padding.x * elasticity ) {
-			position.y += amount.y / Mathf.Clamp ( position.y, 1, padding.y * elasticity );;
-		}	
+		if ( position.y + amount.y > 0 || position.y + amount.y < bounds.y ) {
+			amount.y *= elasticity / 100;
+		} 
+		
+		position.x += amount.x;
+		position.y += amount.y;
+
 	}
 
 	override function OnMouseCancel () {
@@ -108,18 +156,26 @@ public class OGScrollView extends OGWidget {
 		var amount : Vector2;
 		var scroll : float = Input.GetAxis ( "Mouse ScrollWheel" );
 
-		if ( scroll > 0 ) {
+		if ( scroll > 0 && inPlace ) {
 			if ( Input.GetKey ( KeyCode.LeftShift ) ) {
-				amount.x = 20;
+				if ( position.x > bounds.x ) {
+					amount.x = -20;
+				}
 			} else {
-				amount.y = 20;
+				if ( position.y < 0 ) {
+					amount.y = 20;
+				}
 			}
 		
-		} else if ( scroll < 0 ) {
+		} else if ( scroll < 0 && inPlace ) {
 			if ( Input.GetKey ( KeyCode.LeftShift ) ) {
-				amount.x = -20;
+				if ( position.x < 0 ) {
+					amount.x = 20;
+				}
 			} else {
-				amount.y = -20;
+				if ( position.y > bounds.y ) {
+					amount.y = -20;
+				}
 			}
 		}
 

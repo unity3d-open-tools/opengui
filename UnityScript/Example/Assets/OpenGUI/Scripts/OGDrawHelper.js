@@ -55,15 +55,15 @@ public class OGDrawHelper {
 			}
 		}
 		
-		var lines : String[] = string.Split ( "\n"[0] );
 		var size : float = ( intSize * 1.0 ) / 72;
+		var atlasSize : Vector2 = new Vector2 ( style.font.material.mainTexture.width, style.font.material.mainTexture.height );
 		var advance : Vector2;
 		var left : float = style.padding.left;
 		var right : float = rect.width - style.padding.right - style.padding.left;
 		var top : float = rect.height - style.padding.top;
-		var middle : float = ( rect.height / 2 ) + ( lines.Length * ( intSize * style.lineHeight ) ) / 2;
+		var middle : float = ( rect.height / 2 ) + ( intSize / 2 );
 		var center : float = style.padding.left + right / 2;
-		var bottom : float = lines.Length * ( intSize * style.lineHeight ) + style.padding.bottom;
+		var bottom : float = rect.height - style.padding.bottom;
 		var anchor : Vector2;
 		var space : float = ( intSize / 4 ) * style.spacing;
 		var nextLineStart : int = 0;
@@ -123,7 +123,7 @@ public class OGDrawHelper {
 		// Draw all glyphs
 		GL.Color ( style.fontColor );
 		
-		while ( nextLineStart != string.Length ) {
+		while ( nextLineStart != string.Length && advance.y > -bottom ) {
 			// Get next line
 			lastSpace = 0;
 			lineWidth = 0;
@@ -185,7 +185,7 @@ public class OGDrawHelper {
 					
 				var vert : Rect = new Rect ( info.vert.x * size, info.vert.y * size, info.vert.width * size, info.vert.height * size );
 				var uv : Vector2[] = new Vector2[4];
-				
+
 				if ( info.flipped ) {
 					uv[3] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
 					uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
@@ -203,13 +203,35 @@ public class OGDrawHelper {
 				var gRight : float = anchor.x + vert.x + rect.x + advance.x + vert.width;
 				var gBottom : float = anchor.y + vert.height + vert.y + rect.y + advance.y;
 				var gTop : float = anchor.y + vert.height + vert.y + rect.y + advance.y - vert.height;
+			
+				// Advance regardless if the glyph is drawn or not	
+				advance.x += vert.width * style.spacing;
 		
 				// Clipping
 				if ( clipping != null ) {
-					if ( gLeft < clipping.drawRct.xMin ) { gLeft = clipping.drawRct.xMin; }
-					if ( gRight > clipping.drawRct.xMax ) { gRight = clipping.drawRct.xMax; }
-					if ( gBottom < clipping.drawRct.yMin ) { gBottom = clipping.drawRct.yMin; }
-					if ( gTop > clipping.drawRct.yMax ) { gTop = clipping.drawRct.yMax; }
+					if ( gLeft < clipping.drawRct.xMin ) {
+						uv[0].x += ( clipping.drawRct.xMin - gLeft ) / atlasSize.x;
+						uv[1].x += ( clipping.drawRct.xMin - gLeft ) / atlasSize.x;
+						gLeft = clipping.drawRct.xMin;
+					}
+					
+					if ( gRight > clipping.drawRct.xMax ) {
+						uv[2].x -= ( gRight - clipping.drawRct.xMax ) / atlasSize.x;
+						uv[3].x -= ( gRight - clipping.drawRct.xMax ) / atlasSize.x;
+						gRight = clipping.drawRct.xMax;
+					}
+					
+					if ( gBottom < clipping.drawRct.yMin ) {
+						uv[0].y += ( clipping.drawRct.yMin - gBottom ) / atlasSize.y;
+						uv[3].y += ( clipping.drawRct.yMin - gBottom ) / atlasSize.y;
+						gBottom = clipping.drawRct.yMin;
+					}
+					
+					if ( gTop > clipping.drawRct.yMax ) {
+						uv[1].y += ( gTop - clipping.drawRct.yMax ) / atlasSize.y;
+						uv[2].y += ( gTop - clipping.drawRct.yMax ) / atlasSize.y;
+						gTop = clipping.drawRct.yMax;
+					}
 
 					// If the sides overlap, the glyph shouldn't be drawn
 					if ( gLeft >= gRight || gBottom >= gTop ) {
@@ -233,7 +255,6 @@ public class OGDrawHelper {
 				GL.TexCoord2 ( uv[3].x, uv[3].y );
 				GL.Vertex3 ( gRight, gBottom, depth );
 
-				advance.x += vert.width * style.spacing;
 			}
 
 			// Next line

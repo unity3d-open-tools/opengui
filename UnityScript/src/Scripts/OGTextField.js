@@ -103,6 +103,8 @@ public class OGTextField extends OGWidget {
 	}
 
 	override function DrawText () {
-		OGDrawHelper.DrawLabel ( drawRct, text, styles.basic.text, drawDepth, this );
+		if ( !listening ) {
+			OGDrawHelper.DrawLabel ( drawRct, text, styles.basic.text, drawDepth, this );
+		}
 	}
 }
