@@ -17,7 +17,14 @@ class OGPopUp extends OGWidget {
 	// Options
 	////////////////////
 	private function GetOptionRect ( i : int ) : Rect {
-		return new Rect ( drawRct.x, drawRct.y - ( ( 1 + i ) * drawRct.height ), drawRct.width, drawRct.height );
+		var bottom : float = drawRct.y - options.Length * drawRct.height;
+		var top : float = drawRct.y + options.Length * drawRct.height;
+
+		if ( bottom < 0 || clipTo && bottom < clipTo.drawRct.y ) {
+			return new Rect ( drawRct.x, top - ( i * drawRct.height ), drawRct.width, drawRct.height );
+		} else {
+			return new Rect ( drawRct.x, drawRct.y - ( ( 1 + i ) * drawRct.height ), drawRct.width, drawRct.height );
+		}
 	}
 	
 	private function GetOptionStyle ( i : int ) : OGStyle {
@@ -35,7 +42,13 @@ class OGPopUp extends OGWidget {
 	}
 
 	private function GetExpandedRect () : Rect {
-		return new Rect ( drawRct.x, drawRct.y - options.Length * drawRct.height, drawRct.width, drawRct.height * ( options.Length + 1 ) );
+		var bottom : float = drawRct.y - options.Length * drawRct.height;
+		
+		if ( bottom < 0 || clipTo && bottom < clipTo.drawRct.y ) {
+			return new Rect ( drawRct.x, drawRct.y, drawRct.width, drawRct.height * ( options.Length + 1 ) );
+		} else {
+			return new Rect ( drawRct.x, bottom, drawRct.width, drawRct.height * ( options.Length + 1 ) );
+		}
 	}
 
 	public function SetOptions ( list : String[] ) {
@@ -87,8 +100,12 @@ class OGPopUp extends OGWidget {
 	// Update
 	////////////////////
 	override function UpdateWidget () {
+		// Persistent vars
 		isSelectable = true;
 		
+		// Update data
+		isAlwaysOnTop = isUp;
+
 		// Mouse
 		if ( isUp ) {
 			mouseRct = GetExpandedRect ();

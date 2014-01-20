@@ -43,9 +43,13 @@ public class OGTextField extends OGWidget {
 		if ( listening && isDrawn ) {
 			//GUI.color = new Color ( 0, 0, 0, 0 );
 
+			var style : GUIStyle = new GUIStyle();
+			style.normal.textColor = styles.basic.text.fontColor;
+			style.wordWrap = true;
+
 			var invertedRct : Rect = drawRct;
 			invertedRct.y = Screen.height - invertedRct.y - invertedRct.height;
-			text = GUI.TextArea ( invertedRct, text );
+			text = GUI.TextArea ( invertedRct, text, style );
 
 			var controlID : int = GUIUtility.GetControlID(drawRct.GetHashCode(), FocusType.Keyboard);
 			var editor : TextEditor = GUIUtility.GetStateObject(typeof(TextEditor), controlID -1 ) as TextEditor;
@@ -70,6 +74,7 @@ public class OGTextField extends OGWidget {
 
 		// Update data
 		mouseRct = drawRct;
+		isAlwaysOnTop = listening;
 
 		// ^ Regex presets
 		if ( regexPreset != currentPreset ) {
@@ -99,7 +104,7 @@ public class OGTextField extends OGWidget {
 	// Draw
 	/////////////////
 	override function DrawSkin () {
-		OGDrawHelper.DrawSlicedSprite ( drawRct, styles.basic.coordinates, styles.basic.border, drawDepth );
+		OGDrawHelper.DrawSlicedSprite ( drawRct, styles.basic.coordinates, styles.basic.border, drawDepth, clipTo );
 	}
 
 	override function DrawText () {

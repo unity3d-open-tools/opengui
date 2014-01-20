@@ -73,6 +73,7 @@ public class OGWidget extends MonoBehaviour {
 	@HideInInspector public var hidden : boolean = false;
 	@HideInInspector public var outOfBounds : boolean = false;
 	@HideInInspector public var isDirty : boolean = false;
+	@HideInInspector public var isAlwaysOnTop : boolean = false;
 	@HideInInspector public var root : OGRoot;
 	
 	
@@ -266,8 +267,13 @@ public class OGWidget extends MonoBehaviour {
 		var drawScl : Vector3 = RecalcScale ();
 		var drawPos : Vector3 = RecalcPosition ();
 		drawCrd = RecalcCoords ( styles.basic.coordinates );
-		drawDepth = -this.transform.position.z;
-			
+		
+		if ( isAlwaysOnTop ) {
+			drawDepth = 0;
+		} else {
+			drawDepth = -this.transform.position.z;
+		}
+
 		var tempRct : Rect = new Rect ( drawPos.x, drawPos.y, drawScl.x, drawScl.y );
 		drawRct = tempRct;
 	}	
