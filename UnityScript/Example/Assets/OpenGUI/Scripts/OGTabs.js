@@ -35,9 +35,9 @@ public class OGTabs extends OGWidget {
 		tabs.Add ( newTab );
 
 		if ( switchTo ) {
-			activeTab = tabs.Count - 1;
+			SetActiveTab ( tabs.Count - 1 );
 		} else if ( tabs.Count < 2 ) {
-			activeTab = 0;
+			SetActiveTab ( 0 );
 		}
 	}
 
@@ -72,7 +72,15 @@ public class OGTabs extends OGWidget {
 		}
 	}
 
+	override function OnMouseUp () {
+		GetRoot().ReleaseWidget();
+	}
+
+	override function OnMouseCancel () {
+		GetRoot().ReleaseWidget();
+	}
 	
+
 	//////////////////
 	// Update
 	//////////////////

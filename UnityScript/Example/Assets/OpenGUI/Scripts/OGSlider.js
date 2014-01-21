@@ -53,6 +53,9 @@ public class OGSlider extends OGWidget {
 	// Update
 	////////////////	
 	override function UpdateWidget () {
+		// Persistent vars
+		isSelectable = true;
+		
 		// Mouse
 		mouseRct = CombineRects ( GetThumbRect(), GetBackgroundRect() );
 	}
