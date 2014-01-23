@@ -13,7 +13,8 @@ public class OGScrollView extends OGWidget {
 	public var elasticity : float = 2;
 	public var lockAxis : ScrollDirection;
 	public var infiniteScrolling : boolean = false;
-	
+	public var touchControl : boolean = false;
+
 	private var widgets : OGWidget[];
 	private var bounds : Vector2;
 	private var inPlace : boolean = true;
@@ -280,6 +281,7 @@ public class OGScrollView extends OGWidget {
 
 		isSelectable = true;
 		
+		// Mouse		
 		mouseRct = drawRct;
 
 		// Reset scale	
@@ -290,6 +292,6 @@ public class OGScrollView extends OGWidget {
 	}
 	
 	override function DrawSkin () {
-		OGDrawHelper.DrawSprite ( drawRct, drawCrd, drawDepth - 10 );
+		OGDrawHelper.DrawSprite ( drawRct, styles.basic.coordinates, drawDepth - 10 );
 	}
 }

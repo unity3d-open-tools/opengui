@@ -80,6 +80,11 @@ public class OGWidget extends MonoBehaviour {
 	//////////////////
 	// Calculations
 	//////////////////
+	// TODO: There has to be a better way of doing this
+	public function ToEnum () : OGWidgetType {
+		return OGSkin.widgetEnums[this.GetType()];
+	}
+	
 	// Find child
 	public function FindChild ( n : String ) : GameObject {
 		for ( var i : int = 0; i < this.transform.childCount; i++ ) {
@@ -123,18 +128,6 @@ public class OGWidget extends MonoBehaviour {
 		return CheckMouseOver ( rect1 ) || CheckMouseOver ( rect2 );
 	}
 	
-	// Coordinates (based on texture size)
-	private function RecalcCoords ( coords : Rect ) : Rect {
-		if ( this.GetType () == OGTexture ) {
-			coords.x = 0;
-			coords.y = 0;
-			coords.width = 1;
-			coords.height = 1;
-		}
-
-		return coords;
-	}
-		
 	// Scale (based on screen size)
 	public function RecalcScale () : Vector3 {
 		CalcStretch ();
@@ -148,7 +141,7 @@ public class OGWidget extends MonoBehaviour {
 		}
 	}
 	
-	// Position (based on screen size)
+	// Position (based on screen size, and flipped vertically because of OpenGL)
 	public function RecalcPosition () : Vector3 {
 		CalcAnchor ();
 		CalcPivot ();
@@ -262,20 +255,30 @@ public class OGWidget extends MonoBehaviour {
 	
 	// Apply all calculations
 	public function Recalculate () {
-		if ( !styles.basic ) { return; }
-
+		var texture : OGTexture = this as OGTexture;
 		var drawScl : Vector3 = RecalcScale ();
 		var drawPos : Vector3 = RecalcPosition ();
-		drawCrd = RecalcCoords ( styles.basic.coordinates );
 		
+		if ( texture != null ) {
+			drawCrd.x = 0;
+			drawCrd.y = 0;
+			drawCrd.width = 1;
+			drawCrd.height = 1;
+		
+		} else if ( currentStyle != null ) {
+			drawCrd = currentStyle.coordinates;
+		
+		} else if ( styles.basic != null ) {
+			drawCrd = styles.basic.coordinates;
+		}
+
 		if ( isAlwaysOnTop ) {
 			drawDepth = 0;
 		} else {
 			drawDepth = -this.transform.position.z;
 		}
 
-		var tempRct : Rect = new Rect ( drawPos.x, drawPos.y, drawScl.x, drawScl.y );
-		drawRct = tempRct;
+		drawRct = new Rect ( drawPos.x, drawPos.y, drawScl.x, drawScl.y );
 	}	
 
 	
@@ -290,7 +293,15 @@ public class OGWidget extends MonoBehaviour {
 		return root;
 	}
 	
-	
+
+	//////////////////
+	// Init
+	//////////////////
+	public function Start () {
+		Recalculate ();
+	}
+
+
 	//////////////////
 	// Mouse
 	//////////////////
@@ -300,7 +311,7 @@ public class OGWidget extends MonoBehaviour {
 	public function OnMouseDrag () {};
 	public function OnMouseCancel () {};
 	
-	
+
 	//////////////////
 	// Update
 	//////////////////

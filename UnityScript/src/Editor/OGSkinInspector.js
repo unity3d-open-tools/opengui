@@ -9,6 +9,7 @@ public class OGSkinInspector extends Editor {
 	private var addMode : boolean = false;
 	private var uvMode : boolean = false;
 	private var uvScrollPosition : Vector2;
+	private var uvScale : float = 1;
 	private var addStyleName : String = "";
 
 	private static var currentStyle : int = 0;
@@ -90,10 +91,10 @@ public class OGSkinInspector extends Editor {
 	
 	private function CalcUVBorderLines ( controlRect : Rect, style : OGStyle, atlas : Texture ) : Vector3[] {
 		var lines : Vector3[] = new Vector3[8];
-		var width : float = style.coordinates.width;
-		var height : float = style.coordinates.height;
-		var x : float = controlRect.x + style.coordinates.x;
-		var y : float = controlRect.y + atlas.height - style.coordinates.y;
+		var width : float = style.coordinates.width * uvScale;
+		var height : float = style.coordinates.height * uvScale;
+		var x : float = controlRect.x + style.coordinates.x * uvScale;
+		var y : float = controlRect.y + ( atlas.height - style.coordinates.y ) * uvScale;
 		
 		// Left
 		lines[0] = new Vector3 ( x, y, 0 );
@@ -209,12 +210,12 @@ public class OGSkinInspector extends Editor {
 
 			GUILayout.Space ( 10 );
 
-			for ( var sr : OGStyleReference in skin.defaults ) {
+			for ( var sr : OGStyleReference in skin.GetAllDefaults() ) {
 				if ( !sr || !sr.type || !sr.styles ) { 
 					continue;
 				}
 				
-				EditorGUILayout.LabelField ( sr.type, EditorStyles.boldLabel, GUILayout.Width ( 100 ) );
+				EditorGUILayout.LabelField ( sr.type.ToString(), EditorStyles.boldLabel, GUILayout.Width ( 100 ) );
 				
 				EditorGUILayout.BeginVertical ();
 
@@ -277,11 +278,15 @@ public class OGSkinInspector extends Editor {
 
 			EditorGUILayout.Space ();
 
-			uvScrollPosition = GUILayout.BeginScrollView ( uvScrollPosition, GUILayout.Height ( uvAtlasTex.height + 20 ) );
+			uvScale = EditorGUILayout.Slider ( "Zoom", uvScale, 1, 10 );
 			
-			var uvControlRect : Rect = EditorGUILayout.GetControlRect ( false, uvAtlasTex.height, GUILayout.Width ( uvAtlasTex.width ) );
+			EditorGUILayout.Space ();
+			
+			uvScrollPosition = GUILayout.BeginScrollView ( uvScrollPosition, GUILayout.Height ( Mathf.Clamp ( uvAtlasTex.height * uvScale, uvAtlasTex.height, 300 ) + 20 ) );
+			
+			var uvControlRect : Rect = EditorGUILayout.GetControlRect ( false, uvAtlasTex.height * uvScale, GUILayout.Width ( uvAtlasTex.width * uvScale ) );
 			var uvBorderLines : Vector3[] = CalcUVBorderLines ( uvControlRect, s, uvAtlasTex );
-			
+
 			GUI.DrawTexture ( uvControlRect, uvAtlasTex, ScaleMode.ScaleToFit, true );
 		
 			Handles.color = Color.green;

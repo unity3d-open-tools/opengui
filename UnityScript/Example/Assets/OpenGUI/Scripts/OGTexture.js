@@ -11,14 +11,18 @@ public class OGTexture extends OGWidget {
 	}
 
 	override function DrawGL () {
-		if ( drawCrd == null || drawRct == null || mainTexture == null ) { return; }
+		if ( drawRct == null || mainTexture == null ) {
+			return;
+		}
 	
 		if ( material == null ) {
 			material = new Material ( GetRoot().skin.atlas.shader );
+			return;
 		}
 
 		if ( material.mainTexture != mainTexture ) {
 			material.mainTexture = mainTexture;
+			return;
 		}
 
 		GL.Begin(GL.QUADS);

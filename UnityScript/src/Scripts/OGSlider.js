@@ -30,14 +30,6 @@ public class OGSlider extends OGWidget {
 	
 
 		sliderValue = Mathf.Clamp ( Mathf.Round ( sliderValue * 100 ) / 100, 0, 1 );
-
-		if ( sliderLabel ) {
-			if ( toPercent ) {
-				sliderLabel.text = ( sliderValue * 100 ).ToString() + suffix;
-			} else {
-				sliderLabel.text = sliderValue.ToString() + suffix;
-			}	
-		}
 	}
 
 	override function OnMouseCancel () {
@@ -58,6 +50,15 @@ public class OGSlider extends OGWidget {
 		
 		// Mouse
 		mouseRct = CombineRects ( GetThumbRect(), GetBackgroundRect() );
+		
+		// Update data
+		if ( sliderLabel ) {
+			if ( toPercent ) {
+				sliderLabel.text = ( sliderValue * 100 ).ToString() + suffix;
+			} else {
+				sliderLabel.text = sliderValue.ToString() + suffix;
+			}	
+		}
 	}
 	
 	

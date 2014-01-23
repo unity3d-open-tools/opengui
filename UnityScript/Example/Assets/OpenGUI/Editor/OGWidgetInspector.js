@@ -51,7 +51,7 @@ public class OGWidgetInspector extends Editor {
 			EditorGUILayout.LabelField ( "Style", EditorStyles.boldLabel );
 
 			for ( var styleType : OGStyleType in System.Enum.GetValues ( OGStyleType ) as OGStyleType[] ) {
-				if ( OGWidgetStyles.IsStyleUsed ( styleType, widget.GetType().ToString() ) ) {
+				if ( OGWidgetStyles.IsStyleUsed ( styleType, widget.ToEnum() ) ) {
 					// Styles
 					var wdStyle : OGStyle = widget.styles.GetStyle ( styleType ); 
 					var wdStyleIndex : int = GetStyleIndex ( widget, wdStyle );		

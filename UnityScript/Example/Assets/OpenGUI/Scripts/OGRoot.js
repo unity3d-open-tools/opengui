@@ -278,7 +278,7 @@ class OGRoot extends MonoBehaviour {
 				
 				if ( ( topWidget == null || w.transform.position.z < topWidget.transform.position.z ) && w.isSelectable ) {
 				        if ( w.GetComponent(OGScrollView) ) {
-						if ( Input.GetMouseButton ( 2 ) ) {	
+						if ( Input.GetMouseButton ( 2 ) || w.GetComponent(OGScrollView).touchControl ) {	
 							topWidget = w;
 						}
 					} else {
@@ -351,6 +351,32 @@ class OGRoot extends MonoBehaviour {
 			}
 		}
 	}	
+
+	// OnGUI selection
+	public static var EditorSelectWidget : Function;
+	
+	public function OnGUI () {
+		var e : Event = Event.current;
+		var w : OGWidget;
+
+		if ( e.type == EventType.MouseDown && !Application.isPlaying ) {
+			for ( var i : int = 0; i < widgets.Length; i++ ) {
+				if ( widgets[i].drawRct.Contains ( new Vector2 ( e.mousePosition.x, Screen.height - e.mousePosition.y ) ) ) {
+					if ( w == null || w.drawDepth < widgets[i].drawDepth ) {
+						w = widgets[i];
+					}
+				}
+			}
+
+			if ( w != null ) {
+				if ( EditorSelectWidget == null ) {
+					Debug.LogWarning ( "OGRoot | Highlight the '" + this.name + "' object first to enable selection by mouse" );
+				} else {
+					EditorSelectWidget ( w );
+				}
+			}
+		}
+	}
 
 
 	//////////////////
