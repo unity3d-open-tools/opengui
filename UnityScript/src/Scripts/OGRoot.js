@@ -370,7 +370,7 @@ class OGRoot extends MonoBehaviour {
 
 			if ( w != null ) {
 				if ( EditorSelectWidget == null ) {
-					Debug.LogWarning ( "OGRoot | Highlight the '" + this.name + "' object first to enable selection by mouse" );
+					Debug.LogWarning ( "OpenGUI: Highlight the '" + this.name + "' object first to enable widget selection by mouse" );
 				} else {
 					EditorSelectWidget ( w );
 				}

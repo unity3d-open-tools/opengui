@@ -1,8 +1,9 @@
 #pragma strict
 
 @CustomEditor ( OGRoot )
+@InitializeOnLoad
 public class OGRootInspector extends Editor {
-	function OnEnable () {
+	private static function OGRootInspector () {
 		OGRoot.EditorSelectWidget = function ( w : OGWidget ) {
 			Selection.activeObject = w.gameObject;
 		};
@@ -11,6 +12,12 @@ public class OGRootInspector extends Editor {
 	override function OnInspectorGUI () {
 		var root : OGRoot = target as OGRoot;
 	
+		if ( OGRoot.EditorSelectWidget == null ) {
+			OGRoot.EditorSelectWidget = function ( w : OGWidget ) {
+				Selection.activeObject = w.gameObject;
+			};
+		}
+		
 		if ( !root ) { return; }
 		
 		DrawDefaultInspector ();

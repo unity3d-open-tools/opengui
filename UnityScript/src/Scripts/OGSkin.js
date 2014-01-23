@@ -214,22 +214,31 @@ public class OGSkin extends MonoBehaviour {
 	public var styles : OGStyle[];	
 	private var defaults : OGStyleReference [] = new OGStyleReference[0];
 
-	public static var widgetEnums : Hashtable = {
-		OGButton: OGWidgetType.Button,
-		OGDropDown: OGWidgetType.DropDown,
-		OGLabel: OGWidgetType.Label,
-		OGListItem: OGWidgetType.ListItem,
-		OGPopUp: OGWidgetType.PopUp,
-		OGProgressBar: OGWidgetType.ProgressBar,
-		OGScrollView: OGWidgetType.ScrollView,
-		OGSlider: OGWidgetType.Slider,
-		OGSlicedSprite: OGWidgetType.SlicedSprite,
-		OGSprite: OGWidgetType.Sprite,
-		OGTabs: OGWidgetType.Tabs,
-		OGTextField: OGWidgetType.TextField,
-		OGTickBox: OGWidgetType.TickBox
-	};
+	private static var widgetEnums : Dictionary.< System.Type, OGWidgetType > = new Dictionary.< System.Type, OGWidgetType > ();
 
+	public static function GetWidgetEnum ( w : OGWidget ) : OGWidgetType {
+		if ( widgetEnums.Count < 1 ) {
+			widgetEnums.Add ( OGButton, OGWidgetType.Button );
+			widgetEnums.Add ( OGDropDown, OGWidgetType.DropDown );
+			widgetEnums.Add ( OGLabel, OGWidgetType.Label );
+			widgetEnums.Add ( OGListItem, OGWidgetType.ListItem );
+			widgetEnums.Add ( OGPopUp, OGWidgetType.PopUp );
+			widgetEnums.Add ( OGProgressBar, OGWidgetType.ProgressBar );
+			widgetEnums.Add ( OGScrollView, OGWidgetType.ScrollView );
+			widgetEnums.Add ( OGSlider, OGWidgetType.Slider );
+			widgetEnums.Add ( OGSlicedSprite, OGWidgetType.SlicedSprite );
+			widgetEnums.Add ( OGSprite, OGWidgetType.Sprite );
+			widgetEnums.Add ( OGTabs, OGWidgetType.Tabs );
+			widgetEnums.Add ( OGTextField, OGWidgetType.TextField );
+			widgetEnums.Add ( OGTickBox, OGWidgetType.TickBox );
+		}
+
+		if ( widgetEnums.ContainsKey ( w.GetType() ) ) {
+			return widgetEnums [ w.GetType() ];
+		} else {
+			return OGWidgetType.NONE;
+		}
+	}
 
 	public function GetAllDefaults () : OGStyleReference [] {
 		return defaults;

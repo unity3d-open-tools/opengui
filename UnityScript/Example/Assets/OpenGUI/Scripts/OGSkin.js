@@ -214,22 +214,21 @@ public class OGSkin extends MonoBehaviour {
 	public var styles : OGStyle[];	
 	private var defaults : OGStyleReference [] = new OGStyleReference[0];
 
-	public static var widgetEnums : Hashtable = {
-		OGButton: OGWidgetType.Button,
-		OGDropDown: OGWidgetType.DropDown,
-		OGLabel: OGWidgetType.Label,
-		OGListItem: OGWidgetType.ListItem,
-		OGPopUp: OGWidgetType.PopUp,
-		OGProgressBar: OGWidgetType.ProgressBar,
-		OGScrollView: OGWidgetType.ScrollView,
-		OGSlider: OGWidgetType.Slider,
-		OGSlicedSprite: OGWidgetType.SlicedSprite,
-		OGSprite: OGWidgetType.Sprite,
-		OGTabs: OGWidgetType.Tabs,
-		OGTextField: OGWidgetType.TextField,
-		OGTickBox: OGWidgetType.TickBox
-	};
-
+	public static var widgetEnums : KeyValuePair.< System.Type, OGWidgetType > [] = new KeyValuePair.< System.Type, OGWidgetType > [
+		new KeyValuePair.< System.Type, OGWidgetType > ( OGButton, OGWidgetType.Button ),
+		new KeyValuePair.< System.Type, OGWidgetType > ( OGDropDown, OGWidgetType.DropDown ),
+		new KeyValuePair.< System.Type, OGWidgetType > ( OGLabel, OGWidgetType.Label ),
+		new KeyValuePair.< System.Type, OGWidgetType > ( OGListItem, OGWidgetType.ListItem ),
+		new KeyValuePair.< System.Type, OGWidgetType > ( OGPopUp, OGWidgetType.PopUp ),
+		new KeyValuePair.< System.Type, OGWidgetType > ( OGProgressBar, OGWidgetType.ProgressBar ),
+		new KeyValuePair.< System.Type, OGWidgetType > ( OGScrollView, OGWidgetType.ScrollView ),
+		new KeyValuePair.< System.Type, OGWidgetType > ( OGSlider, OGWidgetType.Slider ),
+		new KeyValuePair.< System.Type, OGWidgetType > ( OGSlicedSprite, OGWidgetType.SlicedSprite ),
+		new KeyValuePair.< System.Type, OGWidgetType > ( OGSprite, OGWidgetType.Sprite ),
+		new KeyValuePair.< System.Type, OGWidgetType > ( OGTabs, OGWidgetType.Tabs ),
+		new KeyValuePair.< System.Type, OGWidgetType > ( OGTextField, OGWidgetType.TextField ),
+		new KeyValuePair.< System.Type, OGWidgetType > ( OGTickBox, OGWidgetType.TickBox )
+	];
 
 	public function GetAllDefaults () : OGStyleReference [] {
 		return defaults;

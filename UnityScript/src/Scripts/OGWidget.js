@@ -80,9 +80,9 @@ public class OGWidget extends MonoBehaviour {
 	//////////////////
 	// Calculations
 	//////////////////
-	// TODO: There has to be a better way of doing this
+	// Convert to enum
 	public function ToEnum () : OGWidgetType {
-		return OGSkin.widgetEnums[this.GetType()];
+		return OGSkin.GetWidgetEnum ( this );
 	}
 	
 	// Find child
