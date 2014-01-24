@@ -135,7 +135,7 @@ MonoBehaviour:
   clipTo: {fileID: 0}
   styles:
     basic:
-      name: TextBody
+      name: Label
       coordinates:
         serializedVersion: 2
         x: 0
@@ -190,8 +190,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     active:
       name: New Style
       coordinates:
@@ -219,8 +219,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     ticked:
       name: New Style
       coordinates:
@@ -248,8 +248,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     thumb:
       name: New Style
       coordinates:
@@ -277,27 +277,27 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     disabled:
-      name: Box
+      name: Label
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 2
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 0
         wordWrap: 1
@@ -309,7 +309,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
   currentStyle:
-    name: TextBody
+    name: Label
     coordinates:
       serializedVersion: 2
       x: 0
@@ -346,13 +346,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 300
+    y: 351
     width: 380
     height: 80
   mouseRct:
     serializedVersion: 2
     x: 30
-    y: 300
+    y: 351
     width: 380
     height: 80
   drawDepth: -10
@@ -363,6 +363,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   text: Lorem Ipsum is simply dummy text of the printing and typesetting industry.
     Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
@@ -457,7 +458,7 @@ MonoBehaviour:
         wordWrap: 0
         padding:
           m_Left: 10
-          m_Right: 10
+          m_Right: 0
           m_Top: 0
           m_Bottom: 0
         lineHeight: 1.25
@@ -479,14 +480,14 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .191176474, g: .191176474, b: .191176474, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 3
         wordWrap: 1
         padding:
           m_Left: 10
-          m_Right: 10
+          m_Right: 0
           m_Top: 0
           m_Bottom: 0
         lineHeight: 1.25
@@ -515,7 +516,7 @@ MonoBehaviour:
         wordWrap: 1
         padding:
           m_Left: 10
-          m_Right: 10
+          m_Right: 0
           m_Top: 0
           m_Bottom: 0
         lineHeight: 1.25
@@ -524,10 +525,10 @@ MonoBehaviour:
       name: DropDownTicked
       coordinates:
         serializedVersion: 2
-        x: 16
-        y: 128
-        width: 16
-        height: 16
+        x: 0
+        y: 64
+        width: 32
+        height: 32
       border:
         top: 0
         bottom: 0
@@ -537,14 +538,14 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        fontColor: {r: .316176474, g: .632150173, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 3
         wordWrap: 1
         padding:
           m_Left: 10
-          m_Right: 10
+          m_Right: 0
           m_Top: 0
           m_Bottom: 0
         lineHeight: 1.25
@@ -564,7 +565,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -579,29 +580,29 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: DropDownTicked
       coordinates:
         serializedVersion: 2
-        x: 32
+        x: 0
         y: 64
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .316176474, g: .632150173, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 3
         wordWrap: 1
         padding:
-          m_Left: 0
+          m_Left: 10
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
@@ -638,20 +639,20 @@ MonoBehaviour:
       spacing: 1.25
   drawCrd:
     serializedVersion: 2
-    x: 96
+    x: 0
     y: 0
     width: 32
     height: 32
   drawRct:
     serializedVersion: 2
     x: 20
-    y: 560
+    y: 611
     width: 200
     height: 20
   mouseRct:
     serializedVersion: 2
     x: 20
-    y: 560
+    y: 611
     width: 100
     height: 20
   drawDepth: -0
@@ -662,6 +663,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   title: Dropdown menu
   target: {fileID: 0}
@@ -970,13 +972,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 20
-    y: 290
+    y: 341
     width: 400
     height: 200
   mouseRct:
     serializedVersion: 2
     x: 20
-    y: 290
+    y: 341
     width: 400
     height: 200
   drawDepth: -10
@@ -987,6 +989,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
 --- !u!1 &455861479
 GameObject:
@@ -1078,10 +1081,10 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     hover:
-      name: Button
+      name: ButtonActive
       coordinates:
         serializedVersion: 2
-        x: 0
+        x: 32
         y: 0
         width: 32
         height: 32
@@ -1094,7 +1097,7 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 4
@@ -1162,14 +1165,14 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     thumb:
-      name: Box
+      name: ButtonActive
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
+        y: 0
         width: 32
         height: 32
       border:
@@ -1181,10 +1184,10 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -1194,11 +1197,11 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: ButtonActive
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
+        y: 0
         width: 32
         height: 32
       border:
@@ -1210,10 +1213,10 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -1277,6 +1280,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   hiddenString: 
   text: ButtonTest
@@ -1492,26 +1496,26 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: TickBoxTicked
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 16
+        y: 128
+        width: 16
+        height: 16
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 3
         wordWrap: 1
         padding:
           m_Left: 0
@@ -1558,13 +1562,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 460
-    y: 204
+    y: 255
     width: 100
     height: 16
   mouseRct:
     serializedVersion: 2
     x: 460
-    y: 204
+    y: 255
     width: 100
     height: 16
   drawDepth: -0
@@ -1575,570 +1579,10 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   text: Tickbox
   isTicked: 0
---- !u!1 &471648581
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 471648582}
-  - 114: {fileID: 471648584}
-  - 114: {fileID: 471648583}
-  m_Layer: 0
-  m_Name: Label
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &471648582
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 471648581}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20, y: 20, z: 0}
-  m_LocalScale: {x: 200, y: 40, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1396317486}
---- !u!114 &471648583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 471648581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0d0bc449a04bfd4495496d7876b9dba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDrawn: 1
-  isDisabled: 0
-  isSelectable: 0
-  isDraggable: 0
-  resetAfterDrag: 0
-  pivot:
-    x: 0
-    y: 0
-  anchor:
-    x: 0
-    xOffset: 0
-    y: 0
-    yOffset: 0
-  stretch:
-    width: 0
-    widthFactor: 1
-    widthOffset: 0
-    height: 0
-    heightFactor: 1
-    heightOffset: 0
-  clipTo: {fileID: 0}
-  styles:
-    basic:
-      name: ScrollView
-      coordinates:
-        serializedVersion: 2
-        x: 2
-        y: 66
-        width: 28
-        height: 28
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      text:
-        fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1.25
-    hover:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      text:
-        fontIndex: 0
-        font: {fileID: 0}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1.25
-    active:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      text:
-        fontIndex: 0
-        font: {fileID: 0}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1.25
-    ticked:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      text:
-        fontIndex: 0
-        font: {fileID: 0}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1.25
-    thumb:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      text:
-        fontIndex: 0
-        font: {fileID: 0}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1.25
-    disabled:
-      name: Box
-      coordinates:
-        serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
-      border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
-      text:
-        fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1.25
-  currentStyle:
-    name: New Style
-    coordinates:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 32
-      height: 32
-    border:
-      top: 0
-      bottom: 0
-      left: 0
-      right: 0
-    text:
-      fontIndex: 0
-      font: {fileID: 0}
-      fontSize: 12
-      fontColor: {r: 1, g: 1, b: 1, a: 1}
-      shadowSize: 0
-      shadowColor: {r: 0, g: 0, b: 0, a: 1}
-      alignment: 0
-      wordWrap: 1
-      padding:
-        m_Left: 0
-        m_Right: 0
-        m_Top: 0
-        m_Bottom: 0
-      lineHeight: 1.25
-      spacing: 1.25
-  drawCrd:
-    serializedVersion: 2
-    x: 2
-    y: 66
-    width: 28
-    height: 28
-  drawRct:
-    serializedVersion: 2
-    x: 20
-    y: 591
-    width: 200
-    height: 40
-  mouseRct:
-    serializedVersion: 2
-    x: 20
-    y: 591
-    width: 200
-    height: 40
-  drawDepth: -0
-  scrollOffset: {x: 0, y: 0, z: 0}
-  dragOffset: {x: 0, y: 0, z: 0}
-  dragOrigPos: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  hidden: 0
-  outOfBounds: 0
-  isDirty: 0
-  root: {fileID: 2092932567}
-  tile: {x: 1, y: 1}
---- !u!114 &471648584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 471648581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cf85498c81483e49b991b79d244577a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDrawn: 1
-  isDisabled: 0
-  isSelectable: 0
-  isDraggable: 0
-  resetAfterDrag: 0
-  pivot:
-    x: 0
-    y: 0
-  anchor:
-    x: 0
-    xOffset: 0
-    y: 0
-    yOffset: 0
-  stretch:
-    width: 0
-    widthFactor: 1
-    widthOffset: 0
-    height: 0
-    heightFactor: 1
-    heightOffset: 0
-  clipTo: {fileID: 0}
-  styles:
-    basic:
-      name: TextBody
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      text:
-        fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
-        fontSize: 12
-        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
-        shadowSize: 2
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1.25
-    hover:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      text:
-        fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1.25
-    active:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      text:
-        fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1.25
-    ticked:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      text:
-        fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1.25
-    thumb:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      text:
-        fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1.25
-    disabled:
-      name: Box
-      coordinates:
-        serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
-      border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
-      text:
-        fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1.25
-  currentStyle:
-    name: TextBody
-    coordinates:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 32
-      height: 32
-    border:
-      top: 0
-      bottom: 0
-      left: 0
-      right: 0
-    text:
-      fontIndex: 0
-      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
-      fontSize: 12
-      fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
-      shadowSize: 2
-      shadowColor: {r: 0, g: 0, b: 0, a: 1}
-      alignment: 0
-      wordWrap: 1
-      padding:
-        m_Left: 0
-        m_Right: 0
-        m_Top: 0
-        m_Bottom: 0
-      lineHeight: 1.25
-      spacing: 1.25
-  drawCrd:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 32
-    height: 32
-  drawRct:
-    serializedVersion: 2
-    x: 20
-    y: 591
-    width: 200
-    height: 40
-  mouseRct:
-    serializedVersion: 2
-    x: 20
-    y: 591
-    width: 200
-    height: 40
-  drawDepth: -0
-  scrollOffset: {x: 0, y: 0, z: 0}
-  dragOffset: {x: 0, y: 0, z: 0}
-  dragOrigPos: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  hidden: 0
-  outOfBounds: 0
-  isDirty: 0
-  root: {fileID: 2092932567}
-  text: 'Lorem Ipsum is simply dummy text bla '
-  overrideFontSize: 0
-  fontSize: 12
-  overrideAlignment: 0
-  alignment: 0
-  lineWidth: 0
 --- !u!1 &618374636
 GameObject:
   m_ObjectHideFlags: 0
@@ -2229,10 +1673,10 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     hover:
-      name: Button
+      name: ButtonActive
       coordinates:
         serializedVersion: 2
-        x: 0
+        x: 32
         y: 0
         width: 32
         height: 32
@@ -2245,7 +1689,7 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 4
@@ -2316,11 +1760,11 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: Box
+      name: ButtonActive
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
+        y: 0
         width: 32
         height: 32
       border:
@@ -2332,10 +1776,10 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -2345,11 +1789,11 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: ButtonActive
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
+        y: 0
         width: 32
         height: 32
       border:
@@ -2361,10 +1805,10 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -2411,13 +1855,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 400
+    y: 451
     width: 185
     height: 30
   mouseRct:
     serializedVersion: 2
     x: 30
-    y: 400
+    y: 451
     width: 185
     height: 30
   drawDepth: -10
@@ -2428,6 +1872,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   hiddenString: 
   text: Button 1
@@ -2527,10 +1972,10 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     hover:
-      name: Button
+      name: ButtonActive
       coordinates:
         serializedVersion: 2
-        x: 0
+        x: 32
         y: 0
         width: 32
         height: 32
@@ -2543,7 +1988,7 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 4
@@ -2611,14 +2056,14 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     thumb:
-      name: Box
+      name: ButtonActive
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
+        y: 0
         width: 32
         height: 32
       border:
@@ -2630,10 +2075,10 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -2643,11 +2088,11 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: ButtonActive
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
+        y: 0
         width: 32
         height: 32
       border:
@@ -2659,10 +2104,10 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -2709,13 +2154,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 225
-    y: 400
+    y: 451
     width: 185
     height: 30
   mouseRct:
     serializedVersion: 2
     x: 225
-    y: 400
+    y: 451
     width: 185
     height: 30
   drawDepth: -10
@@ -2726,6 +2171,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   hiddenString: 
   text: Button 2
@@ -2758,7 +2204,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 784223071}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 480, y: 20, z: 0}
+  m_LocalPosition: {x: 657, y: 20, z: 0}
   m_LocalScale: {x: 300, y: 40, z: 1}
   m_Children: []
   m_Father: {fileID: 1838180341}
@@ -2796,7 +2242,7 @@ MonoBehaviour:
   clipTo: {fileID: 0}
   styles:
     basic:
-      name: TextBody
+      name: Label
       coordinates:
         serializedVersion: 2
         x: 0
@@ -2839,7 +2285,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -2868,7 +2314,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -2897,7 +2343,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -2926,7 +2372,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -2941,24 +2387,24 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: Label
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 2
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 0
         wordWrap: 1
@@ -2970,7 +2416,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
   currentStyle:
-    name: TextBody
+    name: Label
     coordinates:
       serializedVersion: 2
       x: 0
@@ -3006,14 +2452,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 330
-    y: 540
+    x: 507
+    y: 591
     width: 300
     height: 40
   mouseRct:
     serializedVersion: 2
-    x: 330
-    y: 540
+    x: 507
+    y: 591
     width: 300
     height: 40
   drawDepth: -0
@@ -3024,6 +2470,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   text: OpenGUI 0.9a
   overrideFontSize: 1
@@ -3055,7 +2502,7 @@ Transform:
   m_GameObject: {fileID: 808215932}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10, y: 10, z: 20}
-  m_LocalScale: {x: 940, y: 580, z: 1}
+  m_LocalScale: {x: 1294, y: 631, z: 1}
   m_Children: []
   m_Father: {fileID: 1838180341}
 --- !u!114 &808215934
@@ -3092,7 +2539,7 @@ MonoBehaviour:
   clipTo: {fileID: 0}
   styles:
     basic:
-      name: Box
+      name: Background
       coordinates:
         serializedVersion: 2
         x: 32
@@ -3237,7 +2684,7 @@ MonoBehaviour:
         lineHeight: 1.5
         spacing: 1
     disabled:
-      name: Box
+      name: Background
       coordinates:
         serializedVersion: 2
         x: 32
@@ -3296,22 +2743,22 @@ MonoBehaviour:
       spacing: 1.25
   drawCrd:
     serializedVersion: 2
-    x: 32
-    y: 64
+    x: 0
+    y: 0
     width: 32
     height: 32
   drawRct:
     serializedVersion: 2
     x: 10
     y: 10
-    width: 940
-    height: 580
+    width: 1294
+    height: 631
   mouseRct:
     serializedVersion: 2
     x: 10
     y: 10
-    width: 940
-    height: 580
+    width: 1294
+    height: 631
   drawDepth: -20
   scrollOffset: {x: 0, y: 0, z: 0}
   dragOffset: {x: 0, y: 0, z: 0}
@@ -3320,6 +2767,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
 --- !u!1 &858828965
 GameObject:
@@ -3444,7 +2892,7 @@ MonoBehaviour:
   clipTo: {fileID: 0}
   styles:
     basic:
-      name: Tab
+      name: Tabs
       coordinates:
         serializedVersion: 2
         x: 32
@@ -3499,10 +2947,10 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     active:
-      name: TabActive
+      name: TabsActive
       coordinates:
         serializedVersion: 2
         x: 64
@@ -3557,8 +3005,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     thumb:
       name: New Style
       coordinates:
@@ -3586,14 +3034,14 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     disabled:
-      name: Box
+      name: TabsActive
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 64
+        y: 96
         width: 32
         height: 32
       border:
@@ -3605,10 +3053,10 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -3648,20 +3096,20 @@ MonoBehaviour:
       spacing: 1.25
   drawCrd:
     serializedVersion: 2
-    x: 32
-    y: 96
+    x: 0
+    y: 0
     width: 32
     height: 32
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 490
+    y: 541
     width: 200
     height: 30
   mouseRct:
     serializedVersion: 2
     x: 30
-    y: 490
+    y: 541
     width: 200
     height: 30
   drawDepth: -5
@@ -3672,6 +3120,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   activeTab: 0
   tabs:
@@ -3881,10 +3330,10 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     hover:
-      name: Button
+      name: ButtonActive
       coordinates:
         serializedVersion: 2
-        x: 0
+        x: 32
         y: 0
         width: 32
         height: 32
@@ -3897,7 +3346,7 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 4
@@ -3953,7 +3402,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -3968,11 +3417,11 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: Box
+      name: ButtonActive
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
+        y: 0
         width: 32
         height: 32
       border:
@@ -3984,10 +3433,10 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -3997,11 +3446,11 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: ButtonActive
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
+        y: 0
         width: 32
         height: 32
       border:
@@ -4013,10 +3462,10 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -4063,13 +3512,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 240
-    y: 190
+    y: 241
     width: 170
     height: 30
   mouseRct:
     serializedVersion: 2
     x: 240
-    y: 190
+    y: 241
     width: 170
     height: 30
   drawDepth: -0
@@ -4080,6 +3529,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   hiddenString: 
   text: Dude!
@@ -4139,7 +3589,7 @@ MonoBehaviour:
   clipTo: {fileID: 0}
   styles:
     basic:
-      name: TextBody
+      name: Label
       coordinates:
         serializedVersion: 2
         x: 0
@@ -4194,8 +3644,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     active:
       name: New Style
       coordinates:
@@ -4223,8 +3673,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     ticked:
       name: New Style
       coordinates:
@@ -4252,8 +3702,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     thumb:
       name: New Style
       coordinates:
@@ -4281,27 +3731,27 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     disabled:
-      name: Box
+      name: Label
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 2
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 0
         wordWrap: 1
@@ -4367,6 +3817,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   text: Text text text loots of text, and then some more text right here, and little
     more over here.
@@ -4476,35 +3927,6 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     hover:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      text:
-        fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1.25
-    active:
       name: ListItemActive
       coordinates:
         serializedVersion: 2
@@ -4533,22 +3955,22 @@ MonoBehaviour:
           m_Bottom: 0
         lineHeight: 1.25
         spacing: 1.25
-    ticked:
-      name: Box
+    active:
+      name: New Style
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -4557,6 +3979,35 @@ MonoBehaviour:
         wordWrap: 1
         padding:
           m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1.25
+    ticked:
+      name: ListItemActive
+      coordinates:
+        serializedVersion: 2
+        x: 128
+        y: 96
+        width: 32
+        height: 32
+      border:
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+      text:
+        fontIndex: 0
+        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        fontSize: 12
+        fontColor: {r: .338235319, g: .338235319, b: .338235319, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 3
+        wordWrap: 0
+        padding:
+          m_Left: 10
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
@@ -4577,7 +4028,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -4592,29 +4043,29 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: ListItemActive
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 128
+        y: 96
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .338235319, g: .338235319, b: .338235319, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
+        alignment: 3
+        wordWrap: 0
         padding:
-          m_Left: 0
+          m_Left: 10
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
@@ -4658,13 +4109,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 460
-    y: 60
+    y: 111
     width: 200
     height: 20
   mouseRct:
     serializedVersion: 2
     x: 460
-    y: 60
+    y: 111
     width: 200
     height: 20
   drawDepth: -2
@@ -4675,6 +4126,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   text: List item 1
   isSelected: 0
@@ -4744,7 +4196,7 @@ MonoBehaviour:
   clipTo: {fileID: 1423993018}
   styles:
     basic:
-      name: TextBody
+      name: Label
       coordinates:
         serializedVersion: 2
         x: 0
@@ -4799,8 +4251,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     active:
       name: New Style
       coordinates:
@@ -4828,8 +4280,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     ticked:
       name: New Style
       coordinates:
@@ -4857,8 +4309,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     thumb:
       name: New Style
       coordinates:
@@ -4886,27 +4338,27 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     disabled:
-      name: Box
+      name: Label
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 2
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 0
         wordWrap: 1
@@ -4918,7 +4370,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
   currentStyle:
-    name: TextBody
+    name: Label
     coordinates:
       serializedVersion: 2
       x: 0
@@ -4955,13 +4407,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: -50
+    y: 1
     width: 180
     height: 140
   mouseRct:
     serializedVersion: 2
     x: 30
-    y: -50
+    y: 1
     width: 180
     height: 140
   drawDepth: -10
@@ -4972,6 +4424,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   text: Lorem Ipsum is simply dummy text of the printing and typesetting industry.
     Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
@@ -5043,7 +4496,7 @@ MonoBehaviour:
   clipTo: {fileID: 1423993018}
   styles:
     basic:
-      name: TextBody
+      name: Label
       coordinates:
         serializedVersion: 2
         x: 0
@@ -5098,8 +4551,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     active:
       name: New Style
       coordinates:
@@ -5127,8 +4580,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     ticked:
       name: New Style
       coordinates:
@@ -5156,8 +4609,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     thumb:
       name: New Style
       coordinates:
@@ -5185,27 +4638,27 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     disabled:
-      name: Box
+      name: Label
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 2
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 0
         wordWrap: 1
@@ -5217,7 +4670,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
   currentStyle:
-    name: TextBody
+    name: Label
     coordinates:
       serializedVersion: 2
       x: 0
@@ -5254,13 +4707,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 110
+    y: 161
     width: 180
     height: 110
   mouseRct:
     serializedVersion: 2
     x: 30
-    y: 110
+    y: 161
     width: 180
     height: 110
   drawDepth: -0
@@ -5271,6 +4724,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   text: Try dragging with middle mouse :) The scrollview is now more or less complete,
     snapping and clipping works as intended. With a few adjustments, it could be brought
@@ -5341,7 +4795,7 @@ MonoBehaviour:
   clipTo: {fileID: 1395078230}
   styles:
     basic:
-      name: TextBody
+      name: Label
       coordinates:
         serializedVersion: 2
         x: 0
@@ -5396,8 +4850,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     active:
       name: New Style
       coordinates:
@@ -5425,8 +4879,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     ticked:
       name: New Style
       coordinates:
@@ -5454,8 +4908,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     thumb:
       name: New Style
       coordinates:
@@ -5483,27 +4937,27 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     disabled:
-      name: Box
+      name: Label
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 2
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 0
         wordWrap: 1
@@ -5515,7 +4969,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
   currentStyle:
-    name: TextBody
+    name: Label
     coordinates:
       serializedVersion: 2
       x: 0
@@ -5552,13 +5006,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 240
-    y: 220
+    y: 271
     width: 180
     height: 30
   mouseRct:
     serializedVersion: 2
     x: 240
-    y: 220
+    y: 271
     width: 180
     height: 30
   drawDepth: -0
@@ -5569,6 +5023,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   text: Infinite scrolling! Try it!
   overrideFontSize: 0
@@ -5666,35 +5121,6 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     hover:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      text:
-        fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1.25
-    active:
       name: ListItemActive
       coordinates:
         serializedVersion: 2
@@ -5723,12 +5149,41 @@ MonoBehaviour:
           m_Bottom: 0
         lineHeight: 1.25
         spacing: 1.25
-    ticked:
-      name: ListItemTicked
+    active:
+      name: New Style
       coordinates:
         serializedVersion: 2
         x: 0
-        y: 64
+        y: 0
+        width: 32
+        height: 32
+      border:
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+      text:
+        fontIndex: 0
+        font: {fileID: 0}
+        fontSize: 12
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 0
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1.25
+    ticked:
+      name: ListItemActive
+      coordinates:
+        serializedVersion: 2
+        x: 128
+        y: 96
         width: 32
         height: 32
       border:
@@ -5740,7 +5195,7 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .338235319, g: .338235319, b: .338235319, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 3
@@ -5767,7 +5222,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -5782,29 +5237,29 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: ListItemActive
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 128
+        y: 96
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .338235319, g: .338235319, b: .338235319, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
+        alignment: 3
+        wordWrap: 0
         padding:
-          m_Left: 0
+          m_Left: 10
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
@@ -5848,13 +5303,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 460
-    y: 40
+    y: 91
     width: 200
     height: 20
   mouseRct:
     serializedVersion: 2
     x: 460
-    y: 40
+    y: 91
     width: 200
     height: 20
   drawDepth: -2
@@ -5865,6 +5320,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   text: List item 2
   isSelected: 0
@@ -6162,6 +5618,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
 --- !u!1 &1395078228
 GameObject:
@@ -6270,7 +5727,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -6299,7 +5756,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -6328,7 +5785,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -6357,7 +5814,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -6372,21 +5829,21 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: New Style
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -6431,20 +5888,20 @@ MonoBehaviour:
       spacing: 1.25
   drawCrd:
     serializedVersion: 2
-    x: 2
-    y: 66
-    width: 28
-    height: 28
+    x: 0
+    y: 0
+    width: 32
+    height: 32
   drawRct:
     serializedVersion: 2
     x: 230
-    y: 160
+    y: 211
     width: 190
     height: 100
   mouseRct:
     serializedVersion: 2
     x: 230
-    y: 160
+    y: 211
     width: 190
     height: 100
   drawDepth: -0
@@ -6455,6 +5912,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   size: {x: 190, y: 100}
   position: {x: 0, y: 0}
@@ -6462,46 +5920,7 @@ MonoBehaviour:
   elasticity: 20
   lockAxis: 2
   infiniteScrolling: 1
---- !u!1 &1396317485
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1396317486}
-  - 114: {fileID: 1396317487}
-  m_Layer: 0
-  m_Name: Page2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1396317486
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1396317485}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 471648582}
-  m_Father: {fileID: 2092932571}
---- !u!114 &1396317487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1396317485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ece6f022ee9515a478aa268f54388303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pageName: Page2
+  touchControl: 0
 --- !u!1 &1423993016
 GameObject:
   m_ObjectHideFlags: 0
@@ -6609,7 +6028,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -6638,7 +6057,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -6667,7 +6086,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -6696,7 +6115,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -6711,21 +6130,21 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: New Style
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -6770,20 +6189,20 @@ MonoBehaviour:
       spacing: 1.25
   drawCrd:
     serializedVersion: 2
-    x: 2
-    y: 66
-    width: 28
-    height: 28
+    x: 0
+    y: 0
+    width: 32
+    height: 32
   drawRct:
     serializedVersion: 2
     x: 20
-    y: 40
+    y: 91
     width: 200
     height: 220
   mouseRct:
     serializedVersion: 2
     x: 20
-    y: 40
+    y: 91
     width: 200
     height: 220
   drawDepth: -0
@@ -6794,6 +6213,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   size: {x: 200, y: 220}
   position: {x: 0, y: 0}
@@ -6801,6 +6221,7 @@ MonoBehaviour:
   elasticity: 20
   lockAxis: 0
   infiniteScrolling: 0
+  touchControl: 0
 --- !u!1 &1435533456
 GameObject:
   m_ObjectHideFlags: 0
@@ -6862,10 +6283,10 @@ MonoBehaviour:
   clipTo: {fileID: 0}
   styles:
     basic:
-      name: ButtonActive
+      name: ProgressBar
       coordinates:
         serializedVersion: 2
-        x: 32
+        x: 0
         y: 0
         width: 32
         height: 32
@@ -6876,20 +6297,20 @@ MonoBehaviour:
         right: 4
       text:
         fontIndex: 0
-        font: {fileID: 0}
+        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 4
+        alignment: 0
         wordWrap: 1
         padding:
           m_Left: 0
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     hover:
       name: New Style
       coordinates:
@@ -6917,8 +6338,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     active:
       name: New Style
       coordinates:
@@ -6946,8 +6367,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     ticked:
       name: New Style
       coordinates:
@@ -6975,15 +6396,15 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     thumb:
-      name: TextFieldCursor
+      name: ProgressBarThumb
       coordinates:
         serializedVersion: 2
-        x: 8
+        x: 7
         y: 32
-        width: 1
+        width: 2
         height: 32
       border:
         top: 0
@@ -6992,7 +6413,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 0}
+        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -7004,24 +6425,24 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     disabled:
-      name: Box
+      name: ProgressBarThumb
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
+        x: 7
+        y: 32
+        width: 2
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
-        font: {fileID: 0}
+        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -7033,8 +6454,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
   currentStyle:
     name: New Style
     coordinates:
@@ -7066,14 +6487,14 @@ MonoBehaviour:
       spacing: 1.25
   drawCrd:
     serializedVersion: 2
-    x: 32
+    x: 0
     y: 0
     width: 32
     height: 32
   drawRct:
     serializedVersion: 2
     x: 460
-    y: 110
+    y: 161
     width: 300
     height: 30
   mouseRct:
@@ -7090,6 +6511,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   value: .75
   padding: {x: 6, y: 6}
@@ -7154,7 +6576,7 @@ MonoBehaviour:
   clipTo: {fileID: 0}
   styles:
     basic:
-      name: TextBody
+      name: Label
       coordinates:
         serializedVersion: 2
         x: 0
@@ -7197,7 +6619,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -7226,7 +6648,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -7255,7 +6677,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -7284,7 +6706,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -7299,24 +6721,24 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: Label
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 2
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 0
         wordWrap: 1
@@ -7328,7 +6750,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
   currentStyle:
-    name: TextBody
+    name: Label
     coordinates:
       serializedVersion: 2
       x: 0
@@ -7365,13 +6787,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 440
+    y: 491
     width: 200
     height: 40
   mouseRct:
     serializedVersion: 2
     x: 30
-    y: 440
+    y: 491
     width: 200
     height: 40
   drawDepth: -10
@@ -7382,6 +6804,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   text: Page 1 header
   overrideFontSize: 1
@@ -7417,10 +6840,10 @@ Camera:
   m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: .208333328
-    y: .75
-    width: .145833328
-    height: .233333334
+    x: .152207002
+    y: .769585252
+    width: .106544904
+    height: .215053767
   near clip plane: .300000012
   far clip plane: 1000
   field of view: 60
@@ -7712,14 +7135,14 @@ MonoBehaviour:
       spacing: 1.25
   drawCrd:
     serializedVersion: 2
-    x: 32
-    y: 64
+    x: 0
+    y: 0
     width: 32
     height: 32
   drawRct:
     serializedVersion: 2
     x: 200
-    y: 450
+    y: 501
     width: 140
     height: 140
   mouseRct:
@@ -7736,6 +7159,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   targetCamera: {fileID: 1459164326}
 --- !u!1 &1485999109
@@ -7854,8 +7278,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     active:
       name: New Style
       coordinates:
@@ -7883,8 +7307,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     ticked:
       name: New Style
       coordinates:
@@ -7912,8 +7336,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     thumb:
       name: SliderThumb
       coordinates:
@@ -7944,18 +7368,18 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: SliderThumb
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
@@ -8003,20 +7427,20 @@ MonoBehaviour:
       spacing: 1.25
   drawCrd:
     serializedVersion: 2
-    x: 64
-    y: 64
+    x: 0
+    y: 0
     width: 32
     height: 32
   drawRct:
     serializedVersion: 2
     x: 520
-    y: 253
+    y: 304
     width: 240
     height: 14
   mouseRct:
     serializedVersion: 2
     x: 513
-    y: 253
+    y: 304
     width: 247
     height: 14
   drawDepth: -0
@@ -8027,6 +7451,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   sliderValue: 0
   sliderLabel: {fileID: 2043151943}
@@ -8195,7 +7620,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -8210,21 +7635,21 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: Box
+      name: New Style
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -8239,18 +7664,18 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: PopUpHover
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 3
+        bottom: 3
+        left: 3
+        right: 3
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
@@ -8258,10 +7683,10 @@ MonoBehaviour:
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 3
         wordWrap: 1
         padding:
-          m_Left: 0
+          m_Left: 10
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
@@ -8298,20 +7723,20 @@ MonoBehaviour:
       spacing: 1.25
   drawCrd:
     serializedVersion: 2
-    x: 64
-    y: 32
+    x: 0
+    y: 0
     width: 32
-    height: 16
+    height: 32
   drawRct:
     serializedVersion: 2
     x: 460
-    y: 160
+    y: 211
     width: 100
     height: 20
   mouseRct:
     serializedVersion: 2
     x: 460
-    y: 160
+    y: 211
     width: 100
     height: 20
   drawDepth: -0
@@ -8322,6 +7747,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   title: <options>
   options:
@@ -8440,7 +7866,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -8469,7 +7895,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -8498,7 +7924,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -8513,18 +7939,18 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: Box
+      name: TextFieldThumb
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
+        x: 8
+        y: 32
+        width: 1
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
@@ -8542,18 +7968,18 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: TextFieldThumb
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
+        x: 8
+        y: 32
+        width: 1
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
@@ -8602,19 +8028,19 @@ MonoBehaviour:
   drawCrd:
     serializedVersion: 2
     x: 0
-    y: 96
+    y: 0
     width: 32
     height: 32
   drawRct:
     serializedVersion: 2
     x: 460
-    y: 390
+    y: 441
     width: 300
     height: 100
   mouseRct:
     serializedVersion: 2
     x: 460
-    y: 390
+    y: 441
     width: 300
     height: 100
   drawDepth: -0
@@ -8625,6 +8051,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   locked: 0
   text: I am hijacking the TextEditor feature of OnGUI, which as you might have figured
@@ -8755,10 +8182,10 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     hover:
-      name: Button
+      name: ButtonActive
       coordinates:
         serializedVersion: 2
-        x: 0
+        x: 32
         y: 0
         width: 32
         height: 32
@@ -8771,7 +8198,7 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 4
@@ -8827,7 +8254,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -8842,11 +8269,11 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: Box
+      name: ButtonActive
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
+        y: 0
         width: 32
         height: 32
       border:
@@ -8858,10 +8285,10 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -8871,11 +8298,11 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: ButtonActive
       coordinates:
         serializedVersion: 2
         x: 32
-        y: 64
+        y: 0
         width: 32
         height: 32
       border:
@@ -8887,10 +8314,10 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .70588237, g: .70588237, b: .70588237, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
+        alignment: 4
         wordWrap: 1
         padding:
           m_Left: 0
@@ -8937,13 +8364,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 240
-    y: 150
+    y: 201
     width: 170
     height: 30
   mouseRct:
     serializedVersion: 2
     x: 240
-    y: 150
+    y: 201
     width: 170
     height: 30
   drawDepth: -0
@@ -8954,6 +8381,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   hiddenString: 
   text: Sweet!
@@ -9112,7 +8540,7 @@ MonoBehaviour:
   clipTo: {fileID: 1423993018}
   styles:
     basic:
-      name: TextBody
+      name: Label
       coordinates:
         serializedVersion: 2
         x: 0
@@ -9167,8 +8595,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     active:
       name: New Style
       coordinates:
@@ -9196,8 +8624,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     ticked:
       name: New Style
       coordinates:
@@ -9225,8 +8653,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     thumb:
       name: New Style
       coordinates:
@@ -9254,27 +8682,27 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     disabled:
-      name: Box
+      name: Label
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 2
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 0
         wordWrap: 1
@@ -9286,7 +8714,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
   currentStyle:
-    name: TextBody
+    name: Label
     coordinates:
       serializedVersion: 2
       x: 0
@@ -9323,13 +8751,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 30
-    y: 210
+    y: 261
     width: 200
     height: 40
   mouseRct:
     serializedVersion: 2
     x: 30
-    y: 210
+    y: 261
     width: 200
     height: 40
   drawDepth: -0
@@ -9340,6 +8768,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   text: Scrollview
   overrideFontSize: 1
@@ -9397,7 +8826,7 @@ MonoBehaviour:
   clipTo: {fileID: 0}
   styles:
     basic:
-      name: TextBody
+      name: Label
       coordinates:
         serializedVersion: 2
         x: 0
@@ -9452,8 +8881,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     active:
       name: New Style
       coordinates:
@@ -9481,8 +8910,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     ticked:
       name: New Style
       coordinates:
@@ -9510,8 +8939,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     thumb:
       name: New Style
       coordinates:
@@ -9539,27 +8968,27 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     disabled:
-      name: Box
+      name: Label
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 2
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 0
         wordWrap: 1
@@ -9571,7 +9000,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
   currentStyle:
-    name: TextBody
+    name: Label
     coordinates:
       serializedVersion: 2
       x: 0
@@ -9607,14 +9036,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 330
-    y: 510
+    x: 507
+    y: 561
     width: 300
     height: 40
   mouseRct:
     serializedVersion: 2
-    x: 330
-    y: 510
+    x: 507
+    y: 561
     width: 300
     height: 40
   drawDepth: -0
@@ -9625,6 +9054,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   text: Early adopter's preview
   overrideFontSize: 0
@@ -9639,7 +9069,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1924953455}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 480, y: 50, z: 0}
+  m_LocalPosition: {x: 657, y: 50, z: 0}
   m_LocalScale: {x: 300, y: 40, z: 1}
   m_Children: []
   m_Father: {fileID: 1838180341}
@@ -9704,7 +9134,7 @@ MonoBehaviour:
   clipTo: {fileID: 0}
   styles:
     basic:
-      name: TextBody
+      name: Label
       coordinates:
         serializedVersion: 2
         x: 0
@@ -9759,8 +9189,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     active:
       name: New Style
       coordinates:
@@ -9788,8 +9218,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     ticked:
       name: New Style
       coordinates:
@@ -9817,8 +9247,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     thumb:
       name: New Style
       coordinates:
@@ -9846,27 +9276,27 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     disabled:
-      name: Box
+      name: Label
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 2
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 0
         wordWrap: 1
@@ -9878,7 +9308,7 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
   currentStyle:
-    name: TextBody
+    name: Label
     coordinates:
       serializedVersion: 2
       x: 0
@@ -9915,13 +9345,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 460
-    y: 246
+    y: 297
     width: 100
     height: 20
   mouseRct:
     serializedVersion: 2
     x: 460
-    y: 246
+    y: 297
     width: 100
     height: 20
   drawDepth: -0
@@ -9932,6 +9362,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   text: 0 %
   overrideFontSize: 0
@@ -10020,7 +9451,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1838180341}
-  - {fileID: 1396317486}
   m_Father: {fileID: 0}
 --- !u!1 &2142525300
 GameObject:
@@ -10083,7 +9513,7 @@ MonoBehaviour:
   clipTo: {fileID: 0}
   styles:
     basic:
-      name: TextBody
+      name: Label
       coordinates:
         serializedVersion: 2
         x: 0
@@ -10138,8 +9568,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     active:
       name: New Style
       coordinates:
@@ -10167,8 +9597,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     ticked:
       name: New Style
       coordinates:
@@ -10196,8 +9626,8 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     thumb:
       name: New Style
       coordinates:
@@ -10225,27 +9655,27 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        lineHeight: 1.5
-        spacing: 1
+        lineHeight: 1.25
+        spacing: 1.25
     disabled:
-      name: Box
+      name: Label
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 0
+        y: 0
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
+        fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+        shadowSize: 2
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 0
         wordWrap: 1
@@ -10311,6 +9741,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   text: Page 2 header
   overrideFontSize: 1
@@ -10408,35 +9839,6 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     hover:
-      name: New Style
-      coordinates:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      border:
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-      text:
-        fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
-        fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
-        shadowSize: 0
-        shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
-        padding:
-          m_Left: 0
-          m_Right: 0
-          m_Top: 0
-          m_Bottom: 0
-        lineHeight: 1.25
-        spacing: 1.25
-    active:
       name: ListItemActive
       coordinates:
         serializedVersion: 2
@@ -10465,12 +9867,41 @@ MonoBehaviour:
           m_Bottom: 0
         lineHeight: 1.25
         spacing: 1.25
-    ticked:
-      name: ListItemTicked
+    active:
+      name: New Style
       coordinates:
         serializedVersion: 2
         x: 0
-        y: 64
+        y: 0
+        width: 32
+        height: 32
+      border:
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+      text:
+        fontIndex: 0
+        font: {fileID: 0}
+        fontSize: 12
+        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        shadowSize: 0
+        shadowColor: {r: 0, g: 0, b: 0, a: 1}
+        alignment: 0
+        wordWrap: 1
+        padding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        lineHeight: 1.25
+        spacing: 1.25
+    ticked:
+      name: ListItemActive
+      coordinates:
+        serializedVersion: 2
+        x: 128
+        y: 96
         width: 32
         height: 32
       border:
@@ -10482,7 +9913,7 @@ MonoBehaviour:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .338235319, g: .338235319, b: .338235319, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
         alignment: 3
@@ -10509,7 +9940,7 @@ MonoBehaviour:
         right: 0
       text:
         fontIndex: 0
-        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+        font: {fileID: 0}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -10524,29 +9955,29 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     disabled:
-      name: Box
+      name: ListItemActive
       coordinates:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 128
+        y: 96
         width: 32
         height: 32
       border:
-        top: 4
-        bottom: 4
-        left: 4
-        right: 4
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
       text:
         fontIndex: 0
         font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
-        fontColor: {r: 1, g: 1, b: 1, a: 1}
+        fontColor: {r: .338235319, g: .338235319, b: .338235319, a: 1}
         shadowSize: 0
         shadowColor: {r: 0, g: 0, b: 0, a: 1}
-        alignment: 0
-        wordWrap: 1
+        alignment: 3
+        wordWrap: 0
         padding:
-          m_Left: 0
+          m_Left: 10
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
@@ -10590,13 +10021,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 460
-    y: 20
+    y: 71
     width: 200
     height: 20
   mouseRct:
     serializedVersion: 2
     x: 460
-    y: 20
+    y: 71
     width: 200
     height: 20
   drawDepth: -2
@@ -10607,6 +10038,7 @@ MonoBehaviour:
   hidden: 0
   outOfBounds: 0
   isDirty: 0
+  isAlwaysOnTop: 0
   root: {fileID: 2092932567}
   text: List item 3
   isSelected: 0

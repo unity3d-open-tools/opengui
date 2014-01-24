@@ -29,10 +29,12 @@ public class OGWidgetInspector extends Editor {
 	}
 	
 	override function OnInspectorGUI () {		
+		serializedObject.Update ();
+		
 		var widget : OGWidget = target as OGWidget;
 				
 		if ( !widget || !widget.GetRoot() ) { return; }
-		
+	
 		// Check for hidden widgets
 		if ( widget.hidden ) {
 			EditorGUILayout.LabelField ( "This widget is rubbish that somehow didn't get deleted." );
@@ -46,48 +48,52 @@ public class OGWidgetInspector extends Editor {
 			// Default inspector
 			DrawDefaultInspector ();
 			
-			EditorGUILayout.Space();
-	
-			EditorGUILayout.LabelField ( "Style", EditorStyles.boldLabel );
+			// OGCameraWindow and OGTexture don't need styles
+			if ( target.GetType() != OGTexture && target.GetType() != OGCameraWindow ) {
+				EditorGUILayout.Space();
+		
+				EditorGUILayout.LabelField ( "Style", EditorStyles.boldLabel );
 
-			for ( var styleType : OGStyleType in System.Enum.GetValues ( OGStyleType ) as OGStyleType[] ) {
-				if ( OGWidgetStyles.IsStyleUsed ( styleType, widget.ToEnum() ) ) {
-					// Styles
-					var wdStyle : OGStyle = widget.styles.GetStyle ( styleType ); 
-					var wdStyleIndex : int = GetStyleIndex ( widget, wdStyle );		
-					EditorGUILayout.BeginHorizontal();
+				for ( var styleType : OGStyleType in System.Enum.GetValues ( OGStyleType ) as OGStyleType[] ) {
+					if ( OGSkin.IsStyleUsed ( styleType, widget.ToEnum() ) ) {
+						// Styles
+						var wdStyle : OGStyle = widget.styles.GetStyle ( styleType ); 
+						var wdStyleIndex : int = GetStyleIndex ( widget, wdStyle );		
+						EditorGUILayout.BeginHorizontal();
+						
+						EditorGUILayout.LabelField ( styleType.ToString() );
+						
+						wdStyleIndex = EditorGUILayout.Popup ( wdStyleIndex, GetStyles ( widget ) );
+						widget.styles.SetStyle ( styleType, widget.GetRoot().skin.styles [ wdStyleIndex ] );
 					
-					EditorGUILayout.LabelField ( styleType.ToString() );
-					
-					wdStyleIndex = EditorGUILayout.Popup ( wdStyleIndex, GetStyles ( widget ) );
-					widget.styles.SetStyle ( styleType, widget.GetRoot().skin.styles [ wdStyleIndex ] );
+						// ^ Edit
+						if ( GUILayout.Button ( "Edit", GUILayout.Width ( 40 ) ) ) {
+							Selection.activeObject = widget.GetRoot().skin;
+							OGSkinInspector.SetCurrentStyle ( wdStyleIndex );
+						}
+						
+						EditorGUILayout.EndHorizontal ();
+					}	
+				}
+
+				EditorGUILayout.Space();
 				
-					// ^ Edit
-					if ( GUILayout.Button ( "Edit", GUILayout.Width ( 40 ) ) ) {
-						Selection.activeObject = widget.GetRoot().skin;
-						OGSkinInspector.SetCurrentStyle ( wdStyleIndex );
-					}
-					
-					EditorGUILayout.EndHorizontal ();
-				}	
+				EditorGUILayout.BeginHorizontal();
+
+				// Get defaults	
+				if ( GUILayout.Button ( "Get default styles" ) ) {
+					( target as OGWidget ).GetDefaultStyles();
+				}
+				
+				// ^ Edit
+				if ( GUILayout.Button ( "Edit", GUILayout.Width ( 40 ) ) ) {
+					Selection.activeObject = widget.GetRoot().skin;
+					OGSkinInspector.SetDefaultsMode();
+				}
+				
+				EditorGUILayout.EndHorizontal ();
 			}
 
-			EditorGUILayout.Space();
-			
-			EditorGUILayout.BeginHorizontal();
-
-			// Get defaults	
-			if ( GUILayout.Button ( "Get default styles" ) ) {
-				( target as OGWidget ).GetDefaultStyles();
-			}
-			
-			// ^ Edit
-			if ( GUILayout.Button ( "Edit", GUILayout.Width ( 40 ) ) ) {
-				Selection.activeObject = widget.GetRoot().skin;
-				OGSkinInspector.SetDefaultsMode();
-			}
-
-			EditorGUILayout.EndHorizontal ();
 		}
 	}
 }

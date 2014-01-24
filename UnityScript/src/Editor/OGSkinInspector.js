@@ -14,10 +14,10 @@ public class OGSkinInspector extends Editor {
 
 	private static var currentStyle : int = 0;
 	private static var setDefaultsMode : boolean = false;
-	private static var selectedStyle : int = 0;
 	
 	public static function SetCurrentStyle ( i : int ) {
 		currentStyle = i;
+		setDefaultsMode = false;
 	}
 
 	public static function SetDefaultsMode () {
@@ -41,10 +41,18 @@ public class OGSkinInspector extends Editor {
 	
 	private function AddStyle ( n : String ) {
 		var skin : OGSkin = target as OGSkin;
+		
+		for ( var i : int = 0; i < skin.styles.Length; i++ ) {
+			if ( n == skin.styles[i].name ) {
+				Debug.LogWarning ( "OpenGUI: There is already a style by name '" + n + "'" );
+				return;
+			}
+		}
+		
 		var tempList : List.< OGStyle > = new List.< OGStyle > ( skin.styles );
 		var newStyle : OGStyle = new OGStyle ();
 		newStyle.name = n;
-		
+
 		tempList.Add ( newStyle );
 		
 		skin.styles = tempList.ToArray();
@@ -116,7 +124,7 @@ public class OGSkinInspector extends Editor {
 	}
 
 	private function GetStyleIndex ( skin : OGSkin, style : OGStyle ) : int {
-		if ( skin && style ) {
+		if ( skin != null && style != null ) {
 			for ( var i : int = 0; i < skin.styles.Length; i++ ) {
 				if ( skin.styles[i].name == style.name ) {
 					return i;
@@ -125,6 +133,28 @@ public class OGSkinInspector extends Editor {
 		}
 	
 		return 0;
+	}
+	
+	private function GuessStyleIndex ( skin : OGSkin, widgetType : OGWidgetType, styleType : OGStyleType ) : int {
+		var bestGuess : int = 0;
+		
+		if ( skin ) {
+			for ( var i : int = 0; i < skin.styles.Length; i++ ) {
+				if ( skin.styles[i].name == widgetType.ToString() && styleType == OGStyleType.Basic ) {
+					bestGuess = i;
+					break;
+
+				} else if ( skin.styles[i].name.Contains ( widgetType.ToString() ) ) {
+					bestGuess = i;
+					
+					if ( skin.styles[i].name.Contains ( styleType.ToString() ) ) {
+						break;
+					}
+				}
+			}
+		}
+	
+		return bestGuess;
 	}
 
 	private function GetAnchors () : String[] {
@@ -146,21 +176,27 @@ public class OGSkinInspector extends Editor {
 	private function GetFonts ( skin : OGSkin ) : String[] {
 		var tempList : List.< String > = new List.< String >();
 		
-		if ( skin ) {
+		if ( skin != null ) {
 			for ( var font : Font in skin.fonts ) {
-				tempList.Add ( font.name );
+				if ( font != null ) {
+					tempList.Add ( font.name );
+				}
 			}
 		}
 		
 		return tempList.ToArray();
 	}
 
-	private function SortStyles ( skin : OGSkin, focus : OGStyle ) {
+	private function SortStyles ( skin : OGSkin ) {
 		var tempList : List.< OGStyle > = new List.< OGStyle > ( skin.styles );
 				
 		tempList.Sort ( CompareNames );
 		
 		skin.styles = tempList.ToArray ();
+	}
+
+	private function SortStyles ( skin : OGSkin, focus : OGStyle ) {
+		SortStyles ( skin );
 
 		for ( var i : int = 0; i < skin.styles.Length; i++ ) {
 			if ( skin.styles[i] == focus ) {
@@ -170,17 +206,19 @@ public class OGSkinInspector extends Editor {
 	}
 	
 	override function OnInspectorGUI () {		
+		serializedObject.Update ();
+		
 		var skin : OGSkin = target as OGSkin;
 		
-		// Break if null	
-		if ( skin.atlas == null || skin.styles.Length < 1 || skin.styles[currentStyle] == null || skin.styles[currentStyle].text == null) { return; }
-	
 		if ( currentStyle >= skin.styles.Length ) {
 			currentStyle = skin.styles.Length - 1;
 		}
 
 		var tempObj : Object;
-		var s : OGStyle = skin.styles[currentStyle];
+		var s : OGStyle;
+		if ( skin.styles.Length > 0 ) {
+			s = skin.styles[currentStyle];
+		}
 				
 		if ( !skin ) { return; }
 	
@@ -208,28 +246,36 @@ public class OGSkinInspector extends Editor {
 				setDefaultsMode = false;
 			}
 
+			// Auto detect
+			var autoDetect : boolean = false;
+			if ( GUILayout.Button ( "Autodetect" ) ) {
+				autoDetect = true;
+			}
+
 			GUILayout.Space ( 10 );
 
-			for ( var sr : OGStyleReference in skin.GetAllDefaults() ) {
-				if ( !sr || !sr.type || !sr.styles ) { 
-					continue;
-				}
-				
-				EditorGUILayout.LabelField ( sr.type.ToString(), EditorStyles.boldLabel, GUILayout.Width ( 100 ) );
+			for ( var d : OGDefault in skin.GetAllDefaults() ) {
+				EditorGUILayout.LabelField ( d.widgetType.ToString(), EditorStyles.boldLabel, GUILayout.Width ( 100 ) );
 				
 				EditorGUILayout.BeginVertical ();
 
 				for ( var styleType : OGStyleType in System.Enum.GetValues(OGStyleType) as OGStyleType[] ) {
-					if ( OGWidgetStyles.IsStyleUsed ( styleType, sr.type ) ) {
+					if ( OGSkin.IsStyleUsed ( styleType, d.widgetType ) ) {
 						var stateName : String = styleType.ToString();
-						var style : OGStyle = sr.styles.GetStyle ( styleType );
-						var styleIndex : int = GetStyleIndex ( skin, style );		
-						
+						var style : OGStyle = d.styleSet.GetStyle ( styleType );
+						var styleIndex : int;
+					       
+						if ( autoDetect ) {
+							styleIndex = GuessStyleIndex ( skin, d.widgetType, styleType );		
+						} else {
+							styleIndex = GetStyleIndex ( skin, style );
+						}
+
 						EditorGUILayout.BeginHorizontal();
 						EditorGUILayout.LabelField ( stateName, GUILayout.Width ( 80 ) );
 						styleIndex = EditorGUILayout.Popup ( styleIndex, GetStyles ( skin ) );
 						EditorGUILayout.EndHorizontal ();
-						sr.styles.SetStyle ( styleType, skin.styles [ styleIndex ] );
+						d.styleSet.SetStyle ( styleType, skin.styles [ styleIndex ] );
 					}
 				}
 
@@ -310,165 +356,172 @@ public class OGSkinInspector extends Editor {
 
 		// Edit style
 		} else {	
-			// Style
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Style", EditorStyles.boldLabel, GUILayout.Width ( 50 ) );
-			currentStyle = EditorGUILayout.Popup ( currentStyle, GetStyles ( false ), GUILayout.Width ( 100 ));
-			
-			EditorGUILayout.Space ();
+			// Null check
+			if ( skin.styles.Length > 0 ) {
+				// Style
+				EditorGUILayout.BeginHorizontal();
+				EditorGUILayout.LabelField ( "Style", EditorStyles.boldLabel, GUILayout.Width ( 50 ) );
+				currentStyle = EditorGUILayout.Popup ( currentStyle, GetStyles ( false ), GUILayout.Width ( 100 ));
+				
+				EditorGUILayout.Space ();
 
-			// ^ Preview
-			var newCoords : Rect = new Rect (
-				s.coordinates.x / skin.atlas.mainTexture.width,
-				s.coordinates.y / skin.atlas.mainTexture.height,
-				s.coordinates.width / skin.atlas.mainTexture.width,
-				s.coordinates.height / skin.atlas.mainTexture.height
-			);
-			
-			var controlRect : Rect = EditorGUILayout.GetControlRect ( false, s.coordinates.height * 2, GUILayout.Width(s.coordinates.width * 2));
-			var borderLines : Vector3[] = CalcBorderLines ( controlRect, skin );
-			var previewTex : Texture = skin.atlas.mainTexture;
-			
-			GUI.DrawTextureWithTexCoords ( controlRect, previewTex, newCoords, true );
+				// ^ Preview
+				if ( skin.atlas != null && skin.atlas.mainTexture != null ) {
+					var newCoords : Rect = new Rect (
+						s.coordinates.x / skin.atlas.mainTexture.width,
+						s.coordinates.y / skin.atlas.mainTexture.height,
+						s.coordinates.width / skin.atlas.mainTexture.width,
+						s.coordinates.height / skin.atlas.mainTexture.height
+					);
 					
-			Handles.DrawLine ( borderLines[0], borderLines[1] );
-			Handles.DrawLine ( borderLines[2], borderLines[3] );
-			Handles.DrawLine ( borderLines[4], borderLines[5] );
-			Handles.DrawLine ( borderLines[6], borderLines[7] );
-			
-			EditorGUILayout.EndHorizontal ();
-			
-			GUILayout.Space ( 20 );
-			
-			// ^ Name
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Name", GUILayout.Width ( 100 ) );
-			s.name = EditorGUILayout.TextField ( s.name );
-			EditorGUILayout.EndHorizontal();
+					var controlRect : Rect = EditorGUILayout.GetControlRect ( false, s.coordinates.height * 2, GUILayout.Width(s.coordinates.width * 2));
+					var borderLines : Vector3[] = CalcBorderLines ( controlRect, skin );
+					var previewTex : Texture = skin.atlas.mainTexture;
+					
+					GUI.DrawTextureWithTexCoords ( controlRect, previewTex, newCoords, true );
+							
+					Handles.DrawLine ( borderLines[0], borderLines[1] );
+					Handles.DrawLine ( borderLines[2], borderLines[3] );
+					Handles.DrawLine ( borderLines[4], borderLines[5] );
+					Handles.DrawLine ( borderLines[6], borderLines[7] );
+				}
+				
+				EditorGUILayout.EndHorizontal ();
+				
+				GUILayout.Space ( 20 );
 
-			// ^ Coordinates
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Coordinates", GUILayout.Width ( 100 ) );
-			s.coordinates = EditorGUILayout.RectField ( s.coordinates );
-			if ( GUILayout.Button ( "Edit", GUILayout.Width ( 40 ), GUILayout.Height ( 30 ) ) ) {
-				uvMode = true;
+				// ^ Name
+				EditorGUILayout.BeginHorizontal();
+				EditorGUILayout.LabelField ( "Name", GUILayout.Width ( 100 ) );
+				s.name = EditorGUILayout.TextField ( s.name );
+				EditorGUILayout.EndHorizontal();
+
+				// ^ Coordinates
+				EditorGUILayout.BeginHorizontal();
+				EditorGUILayout.LabelField ( "Coordinates", GUILayout.Width ( 100 ) );
+				s.coordinates = EditorGUILayout.RectField ( s.coordinates );
+				if ( GUILayout.Button ( "Edit", GUILayout.Width ( 40 ), GUILayout.Height ( 30 ) ) ) {
+					uvMode = true;
+				}
+				EditorGUILayout.EndHorizontal();
+
+				// ^ Border
+				EditorGUILayout.BeginHorizontal();
+				EditorGUILayout.LabelField ( "Border", GUILayout.Width ( 100 ) );
+
+				EditorGUILayout.BeginVertical();
+				EditorGUILayout.BeginHorizontal();
+				EditorGUILayout.Space ();
+				s.border.top = EditorGUILayout.FloatField ( s.border.top, GUILayout.Width ( 30 ) );
+				EditorGUILayout.Space ();
+				EditorGUILayout.EndHorizontal();
+				EditorGUILayout.BeginHorizontal();
+				s.border.left = EditorGUILayout.FloatField ( s.border.left, GUILayout.Width ( 30 ) );
+				EditorGUILayout.Space ();
+				s.border.right = EditorGUILayout.FloatField ( s.border.right, GUILayout.Width ( 30 ) );
+				EditorGUILayout.EndHorizontal();
+				EditorGUILayout.BeginHorizontal();
+				EditorGUILayout.Space ();
+				s.border.bottom = EditorGUILayout.FloatField ( s.border.bottom, GUILayout.Width ( 30 ) );
+				EditorGUILayout.Space ();
+				EditorGUILayout.EndHorizontal();
+				EditorGUILayout.EndVertical();
+				
+				EditorGUILayout.EndHorizontal();
+			
+				if ( s.text != null ) {
+					// ^ Text
+					GUILayout.Space ( 20 );
+					
+					// ^^ Font
+					EditorGUILayout.BeginHorizontal();
+					EditorGUILayout.LabelField ( "Font", GUILayout.Width ( 100 ) );
+					if ( s.text.fontIndex >= skin.fonts.Length ) {
+						s.text.fontIndex = skin.fonts.Length - 1;
+					
+					} else if ( s.text.fontIndex < 0 ) {
+						s.text.fontIndex = 0;
+					
+					}
+					s.text.fontIndex = EditorGUILayout.Popup ( s.text.fontIndex, GetFonts ( skin ));
+					s.text.font = skin.fonts[s.text.fontIndex];
+					EditorGUILayout.EndHorizontal();
+					
+					// ^^ Size
+					EditorGUILayout.BeginHorizontal();
+					EditorGUILayout.LabelField ( "Size", GUILayout.Width ( 100 ) );
+					s.text.fontSize = EditorGUILayout.IntField ( s.text.fontSize );
+					EditorGUILayout.EndHorizontal();
+
+					// ^^ Colour
+					EditorGUILayout.BeginHorizontal();
+					EditorGUILayout.LabelField ( "Colour", GUILayout.Width ( 100 ) );
+					s.text.fontColor = EditorGUILayout.ColorField ( s.text.fontColor );
+					EditorGUILayout.EndHorizontal();
+					
+					// ^^ Shadow
+					EditorGUILayout.BeginHorizontal();
+					EditorGUILayout.LabelField ( "Shadow offset", GUILayout.Width ( 100 ) );
+					s.text.shadowSize = EditorGUILayout.IntField ( s.text.shadowSize );
+					EditorGUILayout.EndHorizontal();
+
+					EditorGUILayout.BeginHorizontal();
+					EditorGUILayout.LabelField ( "Shadow colour", GUILayout.Width ( 100 ) );
+					s.text.shadowColor = EditorGUILayout.ColorField ( s.text.shadowColor );
+					EditorGUILayout.EndHorizontal();
+
+					// ^^ Alignment
+					EditorGUILayout.BeginHorizontal();
+					EditorGUILayout.LabelField ( "Alignment", GUILayout.Width ( 100 ) );
+					s.text.alignment = EditorGUILayout.Popup ( s.text.alignment, GetAnchors ());
+					EditorGUILayout.EndHorizontal();
+					
+					// ^^ Word wrap
+					EditorGUILayout.BeginHorizontal();
+					EditorGUILayout.LabelField ( "Word wrap", GUILayout.Width ( 100 ) );
+					s.text.wordWrap = EditorGUILayout.Toggle ( s.text.wordWrap );
+					EditorGUILayout.EndHorizontal();
+					
+					// ^^ Padding
+					EditorGUILayout.BeginHorizontal();
+					EditorGUILayout.LabelField ( "Padding", GUILayout.Width ( 100 ) );
+
+					EditorGUILayout.BeginVertical();
+					EditorGUILayout.BeginHorizontal();
+					EditorGUILayout.Space ();
+					s.text.padding.top = EditorGUILayout.FloatField ( s.text.padding.top, GUILayout.Width ( 30 ) );
+					EditorGUILayout.Space ();
+					EditorGUILayout.EndHorizontal();
+					EditorGUILayout.BeginHorizontal();
+					s.text.padding.left = EditorGUILayout.FloatField ( s.text.padding.left, GUILayout.Width ( 30 ) );
+					EditorGUILayout.Space ();
+					s.text.padding.right = EditorGUILayout.FloatField ( s.text.padding.right, GUILayout.Width ( 30 ) );
+					EditorGUILayout.EndHorizontal();
+					EditorGUILayout.BeginHorizontal();
+					EditorGUILayout.Space ();
+					s.text.padding.bottom = EditorGUILayout.FloatField ( s.text.padding.bottom, GUILayout.Width ( 30 ) );
+					EditorGUILayout.Space ();
+					EditorGUILayout.EndHorizontal();
+					EditorGUILayout.EndVertical();
+					
+					EditorGUILayout.EndHorizontal();
+
+					// ^^ Line height
+					EditorGUILayout.BeginHorizontal();
+					EditorGUILayout.LabelField ( "Line height", GUILayout.Width ( 100 ) );
+					s.text.lineHeight = EditorGUILayout.FloatField ( s.text.lineHeight );
+					EditorGUILayout.EndHorizontal();
+					
+					// ^^ Spacing
+					EditorGUILayout.BeginHorizontal();
+					EditorGUILayout.LabelField ( "Spacing", GUILayout.Width ( 100 ) );
+					s.text.spacing = EditorGUILayout.FloatField ( s.text.spacing );
+					EditorGUILayout.EndHorizontal();
+				}
+
+				GUILayout.Space ( 20 );
 			}
-			EditorGUILayout.EndHorizontal();
 
-			// ^ Border
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Border", GUILayout.Width ( 100 ) );
-
-			EditorGUILayout.BeginVertical();
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.Space ();
-			s.border.top = EditorGUILayout.FloatField ( s.border.top, GUILayout.Width ( 30 ) );
-			EditorGUILayout.Space ();
-			EditorGUILayout.EndHorizontal();
-			EditorGUILayout.BeginHorizontal();
-			s.border.left = EditorGUILayout.FloatField ( s.border.left, GUILayout.Width ( 30 ) );
-			EditorGUILayout.Space ();
-			s.border.right = EditorGUILayout.FloatField ( s.border.right, GUILayout.Width ( 30 ) );
-			EditorGUILayout.EndHorizontal();
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.Space ();
-			s.border.bottom = EditorGUILayout.FloatField ( s.border.bottom, GUILayout.Width ( 30 ) );
-			EditorGUILayout.Space ();
-			EditorGUILayout.EndHorizontal();
-			EditorGUILayout.EndVertical();
-			
-			EditorGUILayout.EndHorizontal();
-		
-			// ^ Text
-			GUILayout.Space ( 20 );
-			
-			// ^^ Font
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Font", GUILayout.Width ( 100 ) );
-			if ( s.text.fontIndex >= skin.fonts.Length ) {
-				s.text.fontIndex = skin.fonts.Length - 1;
-			
-			} else if ( s.text.fontIndex < 0 ) {
-				s.text.fontIndex = 0;
-			
-			}
-			s.text.fontIndex = EditorGUILayout.Popup ( s.text.fontIndex, GetFonts ( skin ));
-			s.text.font = skin.fonts[s.text.fontIndex];
-			EditorGUILayout.EndHorizontal();
-			
-			// ^^ Size
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Size", GUILayout.Width ( 100 ) );
-			s.text.fontSize = EditorGUILayout.IntField ( s.text.fontSize );
-			EditorGUILayout.EndHorizontal();
-
-			// ^^ Colour
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Colour", GUILayout.Width ( 100 ) );
-			s.text.fontColor = EditorGUILayout.ColorField ( s.text.fontColor );
-			EditorGUILayout.EndHorizontal();
-			
-			// ^^ Shadow
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Shadow offset", GUILayout.Width ( 100 ) );
-			s.text.shadowSize = EditorGUILayout.IntField ( s.text.shadowSize );
-			EditorGUILayout.EndHorizontal();
-
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Shadow colour", GUILayout.Width ( 100 ) );
-			s.text.shadowColor = EditorGUILayout.ColorField ( s.text.shadowColor );
-			EditorGUILayout.EndHorizontal();
-
-			// ^^ Alignment
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Alignment", GUILayout.Width ( 100 ) );
-			s.text.alignment = EditorGUILayout.Popup ( s.text.alignment, GetAnchors ());
-			EditorGUILayout.EndHorizontal();
-			
-			// ^^ Word wrap
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Word wrap", GUILayout.Width ( 100 ) );
-			s.text.wordWrap = EditorGUILayout.Toggle ( s.text.wordWrap );
-			EditorGUILayout.EndHorizontal();
-			
-			// ^^ Padding
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Padding", GUILayout.Width ( 100 ) );
-
-			EditorGUILayout.BeginVertical();
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.Space ();
-			s.text.padding.top = EditorGUILayout.FloatField ( s.text.padding.top, GUILayout.Width ( 30 ) );
-			EditorGUILayout.Space ();
-			EditorGUILayout.EndHorizontal();
-			EditorGUILayout.BeginHorizontal();
-			s.text.padding.left = EditorGUILayout.FloatField ( s.text.padding.left, GUILayout.Width ( 30 ) );
-			EditorGUILayout.Space ();
-			s.text.padding.right = EditorGUILayout.FloatField ( s.text.padding.right, GUILayout.Width ( 30 ) );
-			EditorGUILayout.EndHorizontal();
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.Space ();
-			s.text.padding.bottom = EditorGUILayout.FloatField ( s.text.padding.bottom, GUILayout.Width ( 30 ) );
-			EditorGUILayout.Space ();
-			EditorGUILayout.EndHorizontal();
-			EditorGUILayout.EndVertical();
-			
-			EditorGUILayout.EndHorizontal();
-
-			// ^^ Line height
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Line height", GUILayout.Width ( 100 ) );
-			s.text.lineHeight = EditorGUILayout.FloatField ( s.text.lineHeight );
-			EditorGUILayout.EndHorizontal();
-			
-			// ^^ spacing
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField ( "Spacing", GUILayout.Width ( 100 ) );
-			s.text.spacing = EditorGUILayout.FloatField ( s.text.spacing );
-			EditorGUILayout.EndHorizontal();
-
-			GUILayout.Space ( 20 );
-		
 			// Fonts
 			EditorGUILayout.LabelField ( "Fonts", EditorStyles.boldLabel );
 			var tmpList : List.< Font >;
@@ -537,9 +590,8 @@ public class OGSkinInspector extends Editor {
 								
 				EditorGUILayout.BeginHorizontal ();
 				
-				// Select
-				selectedStyle = EditorGUILayout.Popup ( selectedStyle, GetStyles( true ) );
-				
+				EditorGUILayout.LabelField ( "Are you sure?" );
+
 				// Cancel
 				if ( GUILayout.Button ( "Cancel" ) ) {
 					deleteMode = false;
@@ -548,7 +600,7 @@ public class OGSkinInspector extends Editor {
 				GUI.backgroundColor = Color.red;
 				if ( GUILayout.Button ( "Delete" ) ) {
 					deleteMode = false;
-					RemoveStyle ( selectedStyle - 1 );
+					RemoveStyle ( currentStyle );
 				}
 				GUI.backgroundColor = Color.white;
 				
@@ -593,15 +645,16 @@ public class OGSkinInspector extends Editor {
 				// Delete style
 				GUI.backgroundColor = Color.red;
 				if ( GUILayout.Button ( "Delete style" ) ) {
-					selectedStyle = 0;
 					deleteMode = true;
 				}
 				
 				EditorGUILayout.EndHorizontal ();
 			
-				// Set defaults
+				// Manage defaults
 				GUI.backgroundColor = Color.white;
-				if ( GUILayout.Button ( "Manage defaults", GUILayout.Height ( 30 ) ) ) {
+				if ( GUILayout.Button ( "Sort styles" ) ) {
+					SortStyles ( skin );
+				} else if ( GUILayout.Button ( "Manage defaults", GUILayout.Height ( 30 ) ) ) {
 					setDefaultsMode = true;
 				}
 				

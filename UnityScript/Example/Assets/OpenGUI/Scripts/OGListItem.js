@@ -101,7 +101,7 @@ class OGListItem extends OGWidget {
 		if ( isDisabled ) {
 			currentStyle = this.styles.disabled;
 		} else if ( isSelected ) {
-			currentStyle = this.styles.active;
+			currentStyle = this.styles.hover;
 		} else if ( isTicked ) {
 			currentStyle = this.styles.ticked;
 		} else {

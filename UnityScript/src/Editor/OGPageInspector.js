@@ -4,6 +4,8 @@
 @CustomEditor ( OGPage, true )
 public class OGPageInspector extends Editor {
 	override function OnInspectorGUI () {
+		serializedObject.Update ();
+		
 		var page : OGPage = target as OGPage;
 
 		if ( !page ) { return; }

@@ -13,8 +13,8 @@ public class OGSlicedSprite extends OGWidget {
 	// Draw
 	//////////////////
 	override function DrawSkin () {
-		if ( drawCrd == null || drawRct == null ) { return; }
+		if ( drawRct == null ) { return; }
 
-		OGDrawHelper.DrawSlicedSprite ( drawRct, drawCrd, styles.basic.border, drawDepth, clipTo );
+		OGDrawHelper.DrawSlicedSprite ( drawRct, styles.basic.coordinates, styles.basic.border, drawDepth, clipTo );
 	}
 }

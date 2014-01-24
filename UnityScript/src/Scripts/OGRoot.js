@@ -34,6 +34,7 @@ class OGRoot extends MonoBehaviour {
 	private var screenRect : Rect;
 	private var textureMaterials : Material[];
 
+
 	//////////////////
 	// Instance
 	//////////////////
@@ -149,8 +150,13 @@ class OGRoot extends MonoBehaviour {
 
 				for ( o = 0; o < widgets.Length; o++ ) {
 					w = widgets[o];
-					
-					if ( w != null && w.isDrawn && w.gameObject.activeSelf ) {
+				
+					if ( w == null ) { continue; }
+
+					if ( w.styles == null ) {
+						skin.GetDefaultStyles ( w );
+
+					} else if ( w.isDrawn && w.gameObject.activeSelf ) {
 						if ( w.styles.basic != null && w.styles.basic.text.fontIndex == i ) {
 							w.DrawText ();
 						}

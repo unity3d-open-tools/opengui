@@ -68,73 +68,13 @@ public class OGStyle {
 	public var text : OGTextStyle;
 }
 
-public class OGWidgetStyles {
+public class OGStyleSet {
 	public var basic : OGStyle;
 	public var hover : OGStyle;
 	public var active : OGStyle;
 	public var ticked : OGStyle;
 	public var thumb : OGStyle;
 	public var disabled : OGStyle;
-
-	public static function IsStyleUsed ( styleType : OGStyleType, widgetType : OGWidgetType ) : boolean {
-		switch ( widgetType ) {
-			case OGWidgetType.Button:
-				if ( styleType == OGStyleType.Basic ) { return true; }
-				if ( styleType == OGStyleType.Disabled ) { return true; }
-				if ( styleType == OGStyleType.Active ) { return true; }
-				if ( styleType == OGStyleType.Hover ) { return true; }
-				if ( styleType == OGStyleType.Thumb ) { return true; }
-				break;
-
-			case OGWidgetType.DropDown:
-				if ( styleType == OGStyleType.Basic ) { return true; }
-				if ( styleType == OGStyleType.Disabled ) { return true; }
-				if ( styleType == OGStyleType.Active ) { return true; }
-				if ( styleType == OGStyleType.Hover ) { return true; }
-				if ( styleType == OGStyleType.Ticked ) { return true; }
-				break;
-
-			case OGWidgetType.Label: case OGWidgetType.SlicedSprite: case OGWidgetType.Sprite: case OGWidgetType.ScrollView:
-				if ( styleType == OGStyleType.Basic ) { return true; }
-				if ( styleType == OGStyleType.Disabled ) { return true; }
-				break;
-
-			case OGWidgetType.ListItem:
-				if ( styleType == OGStyleType.Basic ) { return true; }
-				if ( styleType == OGStyleType.Disabled ) { return true; }
-				if ( styleType == OGStyleType.Active ) { return true; }
-				if ( styleType == OGStyleType.Ticked ) { return true; }
-				break;
-
-			case OGWidgetType.PopUp:
-				if ( styleType == OGStyleType.Basic ) { return true; }
-				if ( styleType == OGStyleType.Disabled ) { return true; }
-				if ( styleType == OGStyleType.Active ) { return true; }
-				if ( styleType == OGStyleType.Hover ) { return true; }
-				break;
-
-			case OGWidgetType.Tabs:
-				if ( styleType == OGStyleType.Basic ) { return true; }
-				if ( styleType == OGStyleType.Disabled ) { return true; }
-				if ( styleType == OGStyleType.Active ) { return true; }
-				break;
-
-			case OGWidgetType.TickBox:
-				if ( styleType == OGStyleType.Basic ) { return true; }
-				if ( styleType == OGStyleType.Disabled ) { return true; }
-				if ( styleType == OGStyleType.Hover ) { return true; }
-				if ( styleType == OGStyleType.Ticked ) { return true; }
-				break;
-
-			case OGWidgetType.Slider: case OGWidgetType.TextField: case OGWidgetType.ProgressBar:
-				if ( styleType == OGStyleType.Basic ) { return true; }
-				if ( styleType == OGStyleType.Disabled ) { return true; }
-				if ( styleType == OGStyleType.Thumb ) { return true; }
-				break;
-		}
-		
-		return false;
-	}
 
 	public function GetStyle ( typ : OGStyleType ) {
 		var result : OGStyle;
@@ -197,68 +137,121 @@ public class OGWidgetStyles {
 	}
 }
 
-public class OGStyleReference {
-	public var type : OGWidgetType;
-	public var styles : OGWidgetStyles;
+public class OGDefault {
+	public var widgetType : OGWidgetType;
+	public var styleSet : OGStyleSet;
 
-	function OGStyleReference ( type : OGWidgetType, styles : OGWidgetStyles ) {
-		this.type = type;
-		this.styles = styles;
+	function OGDefault ( t : OGWidgetType, s : OGStyleSet ) {
+		widgetType = t;
+		styleSet = s;
 	}
 }
 
 public class OGSkin extends MonoBehaviour {
-	@HideInInspector public var atlas : Material;
-	@HideInInspector public var fonts : Font[];
-	@HideInInspector public var fontShader : Shader;
+	public var atlas : Material;
+	public var fonts : Font[];
+	public var fontShader : Shader;
 	public var styles : OGStyle[];	
-	private var defaults : OGStyleReference [] = new OGStyleReference[0];
+	public var defaults : OGDefault[];
 
-	public static var widgetEnums : KeyValuePair.< System.Type, OGWidgetType > [] = new KeyValuePair.< System.Type, OGWidgetType > [
-		new KeyValuePair.< System.Type, OGWidgetType > ( OGButton, OGWidgetType.Button ),
-		new KeyValuePair.< System.Type, OGWidgetType > ( OGDropDown, OGWidgetType.DropDown ),
-		new KeyValuePair.< System.Type, OGWidgetType > ( OGLabel, OGWidgetType.Label ),
-		new KeyValuePair.< System.Type, OGWidgetType > ( OGListItem, OGWidgetType.ListItem ),
-		new KeyValuePair.< System.Type, OGWidgetType > ( OGPopUp, OGWidgetType.PopUp ),
-		new KeyValuePair.< System.Type, OGWidgetType > ( OGProgressBar, OGWidgetType.ProgressBar ),
-		new KeyValuePair.< System.Type, OGWidgetType > ( OGScrollView, OGWidgetType.ScrollView ),
-		new KeyValuePair.< System.Type, OGWidgetType > ( OGSlider, OGWidgetType.Slider ),
-		new KeyValuePair.< System.Type, OGWidgetType > ( OGSlicedSprite, OGWidgetType.SlicedSprite ),
-		new KeyValuePair.< System.Type, OGWidgetType > ( OGSprite, OGWidgetType.Sprite ),
-		new KeyValuePair.< System.Type, OGWidgetType > ( OGTabs, OGWidgetType.Tabs ),
-		new KeyValuePair.< System.Type, OGWidgetType > ( OGTextField, OGWidgetType.TextField ),
-		new KeyValuePair.< System.Type, OGWidgetType > ( OGTickBox, OGWidgetType.TickBox )
-	];
+	private static var widgetEnums : Dictionary.< System.Type, OGWidgetType > = new Dictionary.< System.Type, OGWidgetType > ();
 
-	public function GetAllDefaults () : OGStyleReference [] {
+	public static function GetWidgetEnum ( w : OGWidget ) : OGWidgetType {
+		if ( widgetEnums.Count < 1 ) {
+			widgetEnums.Add ( OGButton, OGWidgetType.Button );
+			widgetEnums.Add ( OGDropDown, OGWidgetType.DropDown );
+			widgetEnums.Add ( OGLabel, OGWidgetType.Label );
+			widgetEnums.Add ( OGListItem, OGWidgetType.ListItem );
+			widgetEnums.Add ( OGPopUp, OGWidgetType.PopUp );
+			widgetEnums.Add ( OGProgressBar, OGWidgetType.ProgressBar );
+			widgetEnums.Add ( OGScrollView, OGWidgetType.ScrollView );
+			widgetEnums.Add ( OGSlider, OGWidgetType.Slider );
+			widgetEnums.Add ( OGSlicedSprite, OGWidgetType.SlicedSprite );
+			widgetEnums.Add ( OGSprite, OGWidgetType.Sprite );
+			widgetEnums.Add ( OGTabs, OGWidgetType.Tabs );
+			widgetEnums.Add ( OGTextField, OGWidgetType.TextField );
+			widgetEnums.Add ( OGTickBox, OGWidgetType.TickBox );
+		}
+
+		if ( widgetEnums.ContainsKey ( w.GetType() ) ) {
+			return widgetEnums [ w.GetType() ];
+		} else {
+			return OGWidgetType.NONE;
+		}
+	}
+
+	public static function IsStyleUsed ( styleType : OGStyleType, widgetType : OGWidgetType ) : boolean {
+		if ( widgetType == OGWidgetType.NONE ) { 
+			return false;
+
+		// All widgets use basic style
+		} else if ( styleType == OGStyleType.Basic ) {
+			return true;
+
+		} else {
+			var s : OGStyleType[];
+
+			switch ( widgetType ) {
+				case OGWidgetType.Button: s = [ OGStyleType.Disabled, OGStyleType.Active, OGStyleType.Hover, OGStyleType.Thumb ]; break;
+				case OGWidgetType.DropDown: s = [ OGStyleType.Disabled, OGStyleType.Active, OGStyleType.Hover, OGStyleType.Ticked ]; break;
+				case OGWidgetType.Label: s = [ OGStyleType.Disabled ]; break;
+				case OGWidgetType.ListItem: s = [ OGStyleType.Disabled, OGStyleType.Hover, OGStyleType.Ticked ]; break;
+				case OGWidgetType.PopUp: s = [ OGStyleType.Disabled, OGStyleType.Active, OGStyleType.Hover ]; break;
+				case OGWidgetType.ProgressBar: s = [ OGStyleType.Disabled, OGStyleType.Thumb ]; break;
+				case OGWidgetType.SlicedSprite: s = [ OGStyleType.Disabled ]; break;
+				case OGWidgetType.Sprite: s = [ OGStyleType.Disabled ]; break;
+				case OGWidgetType.Slider: s = [ OGStyleType.Disabled, OGStyleType.Thumb ]; break;
+				case OGWidgetType.Tabs: s = [ OGStyleType.Disabled, OGStyleType.Active ]; break;
+				case OGWidgetType.TextField: s = [ OGStyleType.Disabled, OGStyleType.Thumb ]; break;
+				case OGWidgetType.TickBox: s = [ OGStyleType.Disabled, OGStyleType.Hover, OGStyleType.Ticked ]; break;
+				default: return false;
+			}
+
+			for ( var i : int = 0; i < s.Length ; i++ ) {
+				if ( styleType == s[i] ) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	public function GetAllDefaults () : OGDefault[] {
+		if ( defaults == null || defaults.Length < 1 ) {
+			ResetDefaults ();
+		}
+	
 		return defaults;
 	}
 
 	public function ResetDefaults () {
 		defaults = [
-			new OGStyleReference ( OGWidgetType.Button, new OGWidgetStyles() ),
-			new OGStyleReference ( OGWidgetType.DropDown, new OGWidgetStyles() ),
-			new OGStyleReference ( OGWidgetType.Label, new OGWidgetStyles() ),
-			new OGStyleReference ( OGWidgetType.ListItem, new OGWidgetStyles() ),
-			new OGStyleReference ( OGWidgetType.PopUp, new OGWidgetStyles() ),
-			new OGStyleReference ( OGWidgetType.ProgressBar, new OGWidgetStyles() ),
-			new OGStyleReference ( OGWidgetType.ScrollView, new OGWidgetStyles() ),
-			new OGStyleReference ( OGWidgetType.Slider, new OGWidgetStyles() ),
-			new OGStyleReference ( OGWidgetType.Tabs, new OGWidgetStyles() ),
-			new OGStyleReference ( OGWidgetType.TextField, new OGWidgetStyles() ),
-			new OGStyleReference ( OGWidgetType.TickBox, new OGWidgetStyles() )
+			new OGDefault ( OGWidgetType.Button, new OGStyleSet() ),
+			new OGDefault ( OGWidgetType.DropDown, new OGStyleSet() ),
+			new OGDefault ( OGWidgetType.Label, new OGStyleSet() ),
+			new OGDefault ( OGWidgetType.ListItem, new OGStyleSet() ),
+			new OGDefault ( OGWidgetType.PopUp, new OGStyleSet() ),
+			new OGDefault ( OGWidgetType.ProgressBar, new OGStyleSet() ),
+			new OGDefault ( OGWidgetType.ScrollView, new OGStyleSet() ),
+			new OGDefault ( OGWidgetType.Slider, new OGStyleSet() ),
+			new OGDefault ( OGWidgetType.Tabs, new OGStyleSet() ),
+			new OGDefault ( OGWidgetType.TextField, new OGStyleSet() ),
+			new OGDefault ( OGWidgetType.TickBox, new OGStyleSet() )
 		];
 	}
 
 
 	public function GetDefaultStyles ( w : OGWidget ) {
-		if ( defaults == null || defaults.Length < 1 ) {
-			ResetDefaults ();
-		}
-	
-		for ( var sr : OGStyleReference in defaults ) {
-			if ( sr.type == w.ToEnum() ) {
-				w.styles = sr.styles;
+		for ( var d : OGDefault in GetAllDefaults() ) {
+			if ( d.widgetType == w.ToEnum() ) {
+				w.styles = new OGStyleSet();
+				w.styles.basic = d.styleSet.basic;
+				w.styles.active = d.styleSet.active;
+				w.styles.hover = d.styleSet.hover;
+				w.styles.thumb = d.styleSet.thumb;
+				w.styles.disabled = d.styleSet.disabled;
+				w.styles.ticked = d.styleSet.ticked;
 			}
 		}	
 	}

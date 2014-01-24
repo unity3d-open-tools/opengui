@@ -60,7 +60,7 @@ public class OGWidget extends MonoBehaviour {
 	public var stretch : Stretch = new Stretch();
 	public var clipTo : OGScrollView;
 	
-	@HideInInspector public var styles : OGWidgetStyles = new OGWidgetStyles();
+	@HideInInspector public var styles : OGStyleSet = new OGStyleSet();
 	@HideInInspector public var currentStyle : OGStyle;
 	@HideInInspector public var drawCrd : Rect;
 	@HideInInspector public var drawRct : Rect;
