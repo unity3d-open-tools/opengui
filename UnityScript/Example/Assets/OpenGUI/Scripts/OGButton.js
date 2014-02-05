@@ -73,6 +73,8 @@ class OGButton extends OGWidget {
 	// Draw
 	////////////////////
 	override function DrawSkin () {
+		if ( currentStyle == null ) { return; }
+		
 		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle.coordinates, currentStyle.border, drawDepth, clipTo );
 
 		if ( enableImage ) {
