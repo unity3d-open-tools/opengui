@@ -1,0 +1,1101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="diagram.svg">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lstart"
+       style="overflow:visible">
+      <path
+         id="path4076"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt"
+         transform="scale(0.8) translate(12.5,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;">
+      <path
+         id="path4079"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+    <linearGradient
+       id="linearGradient3767">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3769" />
+      <stop
+         style="stop-color:#dcdcdc;stop-opacity:0;"
+         offset="1"
+         id="stop3771" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3755">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3757" />
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="1"
+         id="stop3759" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3767"
+       id="linearGradient3773"
+       x1="359.51855"
+       y1="81.665977"
+       x2="359.51855"
+       y2="-1.8744808"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(10.986542,-2.0102196)" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3755-7"
+       id="radialGradient3761-1"
+       cx="344.99997"
+       cy="64.710152"
+       fx="344.99997"
+       fy="64.710152"
+       r="72.428574"
+       gradientTransform="matrix(1.9722128,-3.3743269e-7,1.1197521e-7,0.65446815,-308.36612,-14.64927)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       id="linearGradient3755-7">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3757-4" />
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="1"
+         id="stop3759-0" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3767-4"
+       id="linearGradient3773-9"
+       x1="359.51855"
+       y1="81.665977"
+       x2="359.51855"
+       y2="-1.8744808"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(10.986542,-2.0102196)" />
+    <linearGradient
+       id="linearGradient3767-4">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3769-8" />
+      <stop
+         style="stop-color:#dcdcdc;stop-opacity:0;"
+         offset="1"
+         id="stop3771-8" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3767-4"
+       id="linearGradient3798"
+       x1="359.51855"
+       y1="81.665977"
+       x2="359.51855"
+       y2="-1.8744808"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(10.986542,-2.0102196)" />
+    <linearGradient
+       id="linearGradient3800">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3802" />
+      <stop
+         style="stop-color:#dcdcdc;stop-opacity:0;"
+         offset="1"
+         id="stop3804" />
+    </linearGradient>
+    <linearGradient
+       y2="-1.8744808"
+       x2="359.51855"
+       y1="81.665977"
+       x1="359.51855"
+       gradientTransform="translate(10.986542,-2.0102196)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3810"
+       xlink:href="#linearGradient3767-4"
+       inkscape:collect="always" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3755-7-7"
+       id="radialGradient3761-1-1"
+       cx="344.99997"
+       cy="64.710152"
+       fx="344.99997"
+       fy="64.710152"
+       r="72.428574"
+       gradientTransform="matrix(1.9722128,-3.3743269e-7,1.1197521e-7,0.65446815,-308.36612,-14.64927)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       id="linearGradient3755-7-7">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3757-4-1" />
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="1"
+         id="stop3759-0-1" />
+    </linearGradient>
+    <linearGradient
+       y2="-1.8744808"
+       x2="359.51855"
+       y1="81.665977"
+       x1="359.51855"
+       gradientTransform="translate(10.986542,-2.0102196)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3810-5"
+       xlink:href="#linearGradient3767-4-2"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient3767-4-2">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3769-8-7" />
+      <stop
+         style="stop-color:#dcdcdc;stop-opacity:0;"
+         offset="1"
+         id="stop3771-8-6" />
+    </linearGradient>
+    <linearGradient
+       y2="-1.8744808"
+       x2="359.51855"
+       y1="81.665977"
+       x1="359.51855"
+       gradientTransform="translate(10.986542,-2.0102196)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3869"
+       xlink:href="#linearGradient3767-4-2"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient3871">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3873" />
+      <stop
+         style="stop-color:#dcdcdc;stop-opacity:0;"
+         offset="1"
+         id="stop3875" />
+    </linearGradient>
+    <linearGradient
+       y2="-1.8744808"
+       x2="359.51855"
+       y1="81.665977"
+       x1="359.51855"
+       gradientTransform="translate(10.986542,-2.0102196)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3881"
+       xlink:href="#linearGradient3767-4-2"
+       inkscape:collect="always" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3755"
+       id="radialGradient3922"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.9722128,-3.3743269e-7,1.1197521e-7,0.65446815,-308.36612,-14.64927)"
+       cx="344.99997"
+       cy="64.710152"
+       fx="344.99997"
+       fy="64.710152"
+       r="72.428574" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3767"
+       id="linearGradient3924"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(10.986542,-2.0102196)"
+       x1="359.51855"
+       y1="81.665977"
+       x2="359.51855"
+       y2="-1.8744808" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3755-7-7"
+       id="radialGradient3922-2"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.9722128,-3.3743269e-7,1.1197521e-7,0.65446815,-308.36612,-14.64927)"
+       cx="344.99997"
+       cy="64.710152"
+       fx="344.99997"
+       fy="64.710152"
+       r="72.428574" />
+    <linearGradient
+       id="linearGradient3755-2">
+      <stop
+         style="stop-color:#00ffff;stop-opacity:1;"
+         offset="0"
+         id="stop3757-1" />
+      <stop
+         style="stop-color:#00c8c8;stop-opacity:1;"
+         offset="1"
+         id="stop3759-6" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3767-5"
+       id="linearGradient3924-8"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(10.986542,-2.0102196)"
+       x1="359.51855"
+       y1="81.665977"
+       x2="359.51855"
+       y2="-1.8744808" />
+    <linearGradient
+       id="linearGradient3767-5">
+      <stop
+         style="stop-color:#00ffff;stop-opacity:1;"
+         offset="0"
+         id="stop3769-7" />
+      <stop
+         style="stop-color:#dcdcdc;stop-opacity:0;"
+         offset="1"
+         id="stop3771-6" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3767-5"
+       id="linearGradient3944"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(10.986542,-2.0102196)"
+       x1="359.51855"
+       y1="81.665977"
+       x2="359.51855"
+       y2="-1.8744808" />
+    <linearGradient
+       id="linearGradient3946">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3948" />
+      <stop
+         style="stop-color:#dcdcdc;stop-opacity:0;"
+         offset="1"
+         id="stop3950" />
+    </linearGradient>
+    <linearGradient
+       y2="-1.8744808"
+       x2="359.51855"
+       y1="81.665977"
+       x1="359.51855"
+       gradientTransform="translate(10.986542,-2.0102196)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3956"
+       xlink:href="#linearGradient3946"
+       inkscape:collect="always" />
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-9"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4079-5"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3755-7-7"
+       id="radialGradient3922-2-1"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.9722128,-3.3743269e-7,1.1197521e-7,0.65446815,-308.36612,-14.64927)"
+       cx="344.99997"
+       cy="64.710152"
+       fx="344.99997"
+       fy="64.710152"
+       r="72.428574" />
+    <linearGradient
+       id="linearGradient3755-2-1">
+      <stop
+         style="stop-color:#00ffff;stop-opacity:1;"
+         offset="0"
+         id="stop3757-1-3" />
+      <stop
+         style="stop-color:#00c8c8;stop-opacity:1;"
+         offset="1"
+         id="stop3759-6-8" />
+    </linearGradient>
+    <linearGradient
+       y2="-1.8744808"
+       x2="359.51855"
+       y1="81.665977"
+       x1="359.51855"
+       gradientTransform="translate(10.986542,-2.0102196)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3956-7"
+       xlink:href="#linearGradient3946"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient3767-5-4">
+      <stop
+         style="stop-color:#00ffff;stop-opacity:1;"
+         offset="0"
+         id="stop3769-7-2" />
+      <stop
+         style="stop-color:#dcdcdc;stop-opacity:0;"
+         offset="1"
+         id="stop3771-6-7" />
+    </linearGradient>
+    <linearGradient
+       y2="-1.8744808"
+       x2="359.51855"
+       y1="81.665977"
+       x1="359.51855"
+       gradientTransform="translate(10.986542,-2.0102196)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient5171"
+       xlink:href="#linearGradient3767-5-4"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5173">
+      <stop
+         style="stop-color:#00ffff;stop-opacity:1;"
+         offset="0"
+         id="stop5175" />
+      <stop
+         style="stop-color:#dcdcdc;stop-opacity:0;"
+         offset="1"
+         id="stop5177" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3755-7-7-2"
+       id="radialGradient3922-2-0"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.9722128,-3.3743269e-7,1.1197521e-7,0.65446815,-308.36612,-14.64927)"
+       cx="344.99997"
+       cy="64.710152"
+       fx="344.99997"
+       fy="64.710152"
+       r="72.428574" />
+    <linearGradient
+       id="linearGradient3755-7-7-2">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3757-4-1-8" />
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="1"
+         id="stop3759-0-1-6" />
+    </linearGradient>
+    <linearGradient
+       y2="-1.8744808"
+       x2="359.51855"
+       y1="81.665977"
+       x1="359.51855"
+       gradientTransform="translate(10.986542,-2.0102196)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3956-0"
+       xlink:href="#linearGradient3946-2"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient3946-2">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3948-4" />
+      <stop
+         style="stop-color:#dcdcdc;stop-opacity:0;"
+         offset="1"
+         id="stop3950-8" />
+    </linearGradient>
+    <linearGradient
+       y2="-1.8744808"
+       x2="359.51855"
+       y1="81.665977"
+       x1="359.51855"
+       gradientTransform="translate(10.986542,-2.0102196)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient5305"
+       xlink:href="#linearGradient3946-2"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5307">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop5309" />
+      <stop
+         style="stop-color:#dcdcdc;stop-opacity:0;"
+         offset="1"
+         id="stop5311" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3755-7-3"
+       id="radialGradient3761-1-9"
+       cx="344.99997"
+       cy="64.710152"
+       fx="344.99997"
+       fy="64.710152"
+       r="72.428574"
+       gradientTransform="matrix(1.9722128,-3.3743269e-7,1.1197521e-7,0.65446815,-308.36612,-14.64927)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       id="linearGradient3755-7-3">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3757-4-4" />
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="1"
+         id="stop3759-0-4" />
+    </linearGradient>
+    <linearGradient
+       y2="-1.8744808"
+       x2="359.51855"
+       y1="81.665977"
+       x1="359.51855"
+       gradientTransform="translate(10.986542,-2.0102196)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3810-6"
+       xlink:href="#linearGradient3767-4-0"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient3767-4-0">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3769-8-6" />
+      <stop
+         style="stop-color:#dcdcdc;stop-opacity:0;"
+         offset="1"
+         id="stop3771-8-61" />
+    </linearGradient>
+    <linearGradient
+       y2="-1.8744808"
+       x2="359.51855"
+       y1="81.665977"
+       x1="359.51855"
+       gradientTransform="translate(10.986542,-2.0102196)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient5462"
+       xlink:href="#linearGradient3767-4-0"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5464">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop5466" />
+      <stop
+         style="stop-color:#dcdcdc;stop-opacity:0;"
+         offset="1"
+         id="stop5468" />
+    </linearGradient>
+    <linearGradient
+       y2="-1.8744808"
+       x2="359.51855"
+       y1="81.665977"
+       x1="359.51855"
+       gradientTransform="translate(10.986542,-2.0102196)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient5474"
+       xlink:href="#linearGradient3767-4-0"
+       inkscape:collect="always" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="465.85328"
+     inkscape:cy="107.55847"
+     inkscape:document-units="px"
+     inkscape:current-layer="g5523-5"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1015"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g3775"
+       transform="translate(-210,224)">
+      <rect
+         ry="10.000001"
+         rx="10"
+         y="40.938725"
+         x="273.04724"
+         height="38"
+         width="198"
+         id="rect2985"
+         style="fill:url(#radialGradient3922);fill-opacity:1;stroke:#969696;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3763"
+         y="68.338501"
+         x="371.4408"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#666666;fill-opacity:1;stroke:url(#linearGradient3924);stroke-width:1.20000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:24px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;text-anchor:middle;fill:#666666;stroke:url(#linearGradient3924);stroke-width:1.20000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold"
+           y="68.338501"
+           x="371.4408"
+           id="tspan3765"
+           sodipodi:role="line">OGRoot</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;font-family:Sans"
+         x="271.85107"
+         y="96.362175"
+         id="text4044"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4046"
+           x="271.85107"
+           y="96.362175"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu">+ Camera component</tspan></text>
+    </g>
+    <g
+       transform="translate(-116,303.99996)"
+       id="g3775-2">
+      <rect
+         ry="10.000001"
+         rx="10"
+         y="40.938725"
+         x="273.04724"
+         height="38"
+         width="198"
+         id="rect2985-4"
+         style="fill:url(#radialGradient3761-1);fill-opacity:1;stroke:#969696;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3763-5"
+         y="68.338501"
+         x="371.4408"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#666666;fill-opacity:1;stroke:url(#linearGradient3810);stroke-width:1.20000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:24px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;text-anchor:middle;fill:#666666;stroke:url(#linearGradient3810);stroke-width:1.20000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold"
+           y="68.338501"
+           x="371.4408"
+           id="tspan3765-5"
+           sodipodi:role="line">OGPage</tspan></text>
+    </g>
+    <g
+       transform="translate(-16.000001,383.99996)"
+       id="g3775-2-1">
+      <rect
+         ry="10.000001"
+         rx="10"
+         y="40.938725"
+         x="273.04724"
+         height="38"
+         width="198"
+         id="rect2985-4-4"
+         style="fill:url(#radialGradient3761-1-1);fill-opacity:1;stroke:#969696;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3763-5-2"
+         y="68.338501"
+         x="371.4408"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#666666;fill-opacity:1;stroke:url(#linearGradient3881);stroke-width:1.20000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:24px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;text-anchor:middle;fill:#666666;stroke:url(#linearGradient3881);stroke-width:1.20000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold"
+           y="68.338501"
+           x="371.4408"
+           id="tspan3765-5-3"
+           sodipodi:role="line">OGWidget</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;font-family:Sans"
+         x="272.76428"
+         y="97.65847"
+         id="text4044-6"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4046-1"
+           x="272.76428"
+           y="97.65847"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu">OGButton</tspan><tspan
+           sodipodi:role="line"
+           x="272.76428"
+           y="112.65847"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5391">OGCameraWindow</tspan><tspan
+           sodipodi:role="line"
+           x="272.76428"
+           y="127.65847"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5393">OGDropDown</tspan><tspan
+           sodipodi:role="line"
+           x="272.76428"
+           y="142.65846"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5395">OGLabel</tspan><tspan
+           sodipodi:role="line"
+           x="272.76428"
+           y="157.65846"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5397">OGListItem</tspan><tspan
+           sodipodi:role="line"
+           x="272.76428"
+           y="172.65846"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5399">OGPopUp</tspan><tspan
+           sodipodi:role="line"
+           x="272.76428"
+           y="187.65846"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5401">OGProgressBar</tspan><tspan
+           sodipodi:role="line"
+           x="272.76428"
+           y="202.65846"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5403">OGScrollView</tspan><tspan
+           sodipodi:role="line"
+           x="272.76428"
+           y="217.65846"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5405">OGSlicedSprite</tspan><tspan
+           sodipodi:role="line"
+           x="272.76428"
+           y="232.65846"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5407">OGSlider</tspan><tspan
+           sodipodi:role="line"
+           x="272.76428"
+           y="247.65846"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5409">OGSprite</tspan><tspan
+           sodipodi:role="line"
+           x="272.76428"
+           y="262.65848"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5411">OGTabs</tspan><tspan
+           sodipodi:role="line"
+           x="272.76428"
+           y="277.65848"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5413">OGTextField</tspan><tspan
+           sodipodi:role="line"
+           x="272.76428"
+           y="292.65848"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5415">OGTexture</tspan><tspan
+           sodipodi:role="line"
+           x="272.76428"
+           y="307.65848"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5417">OGTickBox</tspan></text>
+    </g>
+    <g
+       id="g3775-1"
+       transform="translate(-244.94557,23.886679)">
+      <rect
+         ry="10.000001"
+         rx="10"
+         y="40.938725"
+         x="273.04724"
+         height="38"
+         width="198"
+         id="rect2985-8"
+         style="fill:url(#radialGradient3922-2);fill-opacity:1;stroke:#969696;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3763-9"
+         y="68.338501"
+         x="371.4408"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#666666;fill-opacity:1;stroke:url(#linearGradient3956);stroke-width:1.20000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:24px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;text-anchor:middle;fill:#666666;stroke:url(#linearGradient3956);stroke-width:1.20000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold"
+           y="68.338501"
+           x="371.4408"
+           id="tspan3765-2"
+           sodipodi:role="line">OGSkin</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;font-family:Sans"
+         x="273.05783"
+         y="95.664253"
+         id="text4044-3"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           x="273.05783"
+           y="95.664253"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5149">Atlas</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:2, 2;stroke-dashoffset:0"
+       d="m 80.365492,332.07771 0,33.13708 61.624408,0"
+       id="path4048"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:2, 2;stroke-dashoffset:0"
+       d="m 181.75922,395.79364 0,47.13708 61.62441,0"
+       id="path4048-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
+    <g
+       id="g4530"
+       transform="translate(44,104)">
+      <path
+         sodipodi:nodetypes="ccc"
+         inkscape:connector-curvature="0"
+         id="path4070"
+         d="m 328.29958,261.41274 c 81.49616,0 82.05465,-76.8122 -2.0203,-76.8122 l -97.9848,0"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)" />
+      <rect
+         ry="10.000001"
+         rx="10"
+         y="210.35942"
+         x="327.89603"
+         height="18.687822"
+         width="120.71323"
+         id="rect4520"
+         style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text4516"
+         y="223.23141"
+         x="333.23199"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           y="223.23141"
+           x="333.23199"
+           id="tspan4518"
+           sodipodi:role="line">Get all child widgets</tspan></text>
+    </g>
+    <g
+       transform="translate(44,98)"
+       id="g4530-4">
+      <path
+         sodipodi:nodetypes="ccc"
+         inkscape:connector-curvature="0"
+         id="path4070-3"
+         d="m 428.29958,347.41274 c 141.49616,0 152.05465,-166.8122 -2.0203,-166.8122 l -197.9848,0"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow1Lstart);marker-end:none" />
+      <rect
+         ry="10.000001"
+         rx="10"
+         y="250.35942"
+         x="477.89603"
+         height="18.687822"
+         width="120.71323"
+         id="rect4520-1"
+         style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text4516-2"
+         y="263.23141"
+         x="447.23199"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           y="263.23141"
+           x="447.23199"
+           id="tspan4518-3"
+           sodipodi:role="line">Run all widget drawing methods</tspan></text>
+    </g>
+    <g
+       id="g3775-1-7"
+       transform="translate(-1.9557386,23.886679)">
+      <rect
+         ry="10.000001"
+         rx="10"
+         y="40.938725"
+         x="273.04724"
+         height="38"
+         width="198"
+         id="rect2985-8-9"
+         style="fill:url(#radialGradient3922-2-1);fill-opacity:1;stroke:#969696;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3763-9-3"
+         y="68.338501"
+         x="371.4408"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#666666;fill-opacity:1;stroke:url(#linearGradient3956-7);stroke-width:1.20000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:24px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;text-anchor:middle;fill:#666666;stroke:url(#linearGradient3956-7);stroke-width:1.20000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold"
+           y="68.338501"
+           x="371.4408"
+           id="tspan3765-2-1"
+           sodipodi:role="line">OGStyle</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;font-family:Sans"
+         x="273.05783"
+         y="95.664253"
+         id="text4044-3-9"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           x="273.05783"
+           y="95.664253"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5149-8">Font</tspan><tspan
+           sodipodi:role="line"
+           x="273.05783"
+           y="110.66425"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5228">Texture coordinates</tspan><tspan
+           sodipodi:role="line"
+           x="273.05783"
+           y="125.66425"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5226">9-slice border</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="16.608971"
+       y="41.199486"
+       id="text5230"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5232"
+         x="16.608971"
+         y="41.199486"
+         style="font-size:30px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:Ubuntu">Project classes</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="16.608971"
+       y="240.49516"
+       id="text5230-6"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5232-5"
+         x="16.608971"
+         y="240.49516"
+         style="font-size:30px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:Ubuntu">Hierarchy classes</tspan></text>
+    <g
+       id="g3775-1-6"
+       transform="translate(241.03412,23.886679)">
+      <rect
+         ry="10.000001"
+         rx="10"
+         y="40.938725"
+         x="273.04724"
+         height="38"
+         width="198"
+         id="rect2985-8-5"
+         style="fill:url(#radialGradient3922-2-0);fill-opacity:1;stroke:#969696;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3763-9-0"
+         y="68.338501"
+         x="371.4408"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#666666;fill-opacity:1;stroke:url(#linearGradient3956-0);stroke-width:1.20000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:24px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;text-anchor:middle;fill:#666666;stroke:url(#linearGradient3956-0);stroke-width:1.20000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold"
+           y="68.338501"
+           x="371.4408"
+           id="tspan3765-2-9"
+           sodipodi:role="line">OGDrawHelper</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;font-family:Sans"
+         x="273.05783"
+         y="95.664253"
+         id="text4044-3-0"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           x="273.05783"
+           y="95.664253"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5149-0">Label</tspan><tspan
+           sodipodi:role="line"
+           x="273.05783"
+           y="110.66425"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5360">Sprite</tspan><tspan
+           sodipodi:role="line"
+           x="273.05783"
+           y="125.66425"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5366">SlicedSprite</tspan><tspan
+           sodipodi:role="line"
+           x="273.05783"
+           y="140.66425"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           id="tspan5364">TiledSprite</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="20.737528"
+       y="819.85742"
+       id="text5230-6-3"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5232-5-8"
+         x="20.737528"
+         y="819.85742"
+         style="font-size:30px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:Ubuntu">Anatomy of a widget</tspan></text>
+    <g
+       transform="matrix(1.9949241,0,0,1.9949241,-389.66277,801.04273)"
+       id="g3775-2-8">
+      <rect
+         ry="10.000001"
+         rx="10"
+         y="40.938725"
+         x="273.04724"
+         height="38"
+         width="198"
+         id="rect2985-4-49"
+         style="fill:url(#radialGradient3761-1-9);fill-opacity:1;stroke:#969696;stroke-width:0.5012722;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3763-5-6"
+         y="68.338501"
+         x="371.4408"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#666666;fill-opacity:1;stroke:url(#linearGradient5474);stroke-width:0.60152668;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:24px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;text-anchor:middle;fill:#666666;stroke:url(#linearGradient5474);stroke-width:0.60152668;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Ubuntu;-inkscape-font-specification:Ubuntu Bold"
+           y="68.338501"
+           x="371.4408"
+           id="tspan3765-5-37"
+           sodipodi:role="line">Click Me!</tspan></text>
+    </g>
+    <g
+       id="g5523">
+      <rect
+         y="838.79077"
+         x="33.57143"
+         height="172.85715"
+         width="675"
+         id="rect5521"
+         style="fill:none;fill-opacity:1;stroke:#323232;stroke-opacity:1;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:4, 4;stroke-dashoffset:0" />
+      <rect
+         y="831.13879"
+         x="14.142136"
+         height="17.67767"
+         width="56.316006"
+         id="rect5519"
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:2, 2;stroke-dashoffset:0" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text5515"
+         y="843.26056"
+         x="26.203053"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:12px;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           y="843.26056"
+           x="26.203053"
+           id="tspan5517"
+           sodipodi:role="line">Anchor</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.62682052,0,0,0.5873076,324.53692,379.19267)"
+       id="g5523-8">
+      <text
+         sodipodi:linespacing="125%"
+         id="text5515-9"
+         y="841.1322"
+         x="25.063515"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:19.77774811px;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           y="841.1322"
+           x="25.063515"
+           id="tspan5517-1"
+           sodipodi:role="line">Pivot</tspan></text>
+      <path
+         style="fill:#333333;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:0.99999999, 0.99999999;stroke-dashoffset:0"
+         d="m 143.39286,882.8979 9.19643,-9.19643"
+         id="path5560"
+         inkscape:connector-curvature="0"
+         transform="matrix(1.595353,0,0,1.7026853,-188.18899,-638.76589)" />
+      <path
+         style="fill:#333333;stroke:#000000;stroke-width:1.64814568;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:1.64814564, 1.64814564;stroke-dashoffset:0"
+         d="m 40.573243,848.87276 14.671546,15.65862"
+         id="path5560-3"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       transform="translate(147.00502,129.70867)"
+       id="g5523-5">
+      <path
+         style="fill:none;stroke:#323232;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 4;stroke-dashoffset:0"
+         d="m 9.8225655,829.11711 0,9.67366 391.7854645,0 0,-9.67366"
+         id="rect5521-9"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccc" />
+      <rect
+         y="831.13879"
+         x="181.67769"
+         height="17.67767"
+         width="48.739861"
+         id="rect5519-8"
+         style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text5515-4"
+         y="843.26056"
+         x="188.20305"
+         style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:12px;fill:#333333;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           y="843.26056"
+           x="188.20305"
+           id="tspan5517-0"
+           sodipodi:role="line">Stretch</tspan></text>
+    </g>
+  </g>
+</svg>
