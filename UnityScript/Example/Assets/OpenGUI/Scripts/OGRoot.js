@@ -364,12 +364,12 @@ class OGRoot extends MonoBehaviour {
 
 	// OnGUI selection
 	public static var EditorSelectWidget : Function;
-	
-	public function OnGUI () {
-		var e : Event = Event.current;
+	private static var editWidget : OGWidget;
+
+	private function FindMouseOverWidget ( e : Event ) : OGWidget {
 		var w : OGWidget;
 
-		if ( e.type == EventType.MouseDown && !Application.isPlaying ) {
+		if ( editWidget == null ) {
 			for ( var i : int = 0; i < widgets.Length; i++ ) {
 				if ( widgets[i].drawRct.Contains ( new Vector2 ( e.mousePosition.x, Screen.height - e.mousePosition.y ) ) ) {
 					if ( w == null || w.drawDepth < widgets[i].drawDepth ) {
@@ -377,13 +377,55 @@ class OGRoot extends MonoBehaviour {
 					}
 				}
 			}
+		} else {
+			w = editWidget;
+		}
 
-			if ( w != null ) {
-				if ( EditorSelectWidget == null ) {
-					Debug.LogWarning ( "OpenGUI: Highlight the '" + this.name + "' object first to enable widget selection by mouse" );
-				} else {
-					EditorSelectWidget ( w );
-				}
+		return w;
+	}
+
+	public function OnGUI () {
+		var e : Event = Event.current;
+		var w : OGWidget;
+
+		if ( !Application.isPlaying ) {
+			switch ( e.type ) { 
+				case EventType.MouseDown:
+					w = FindMouseOverWidget ( e );
+
+					if ( w != null ) {
+						EditorSelectWidget ( w, e );
+						editWidget = w;
+					}
+
+					break;
+
+				case EventType.MouseDrag:
+					w = FindMouseOverWidget ( e );
+
+					if ( w != null ) {
+						var delta : Vector2 = e.delta;
+						w.transform.localPosition = w.transform.localPosition + new Vector3 ( delta.x, delta.y, 0 );
+					}
+
+					break;
+
+				case EventType.MouseUp:
+					editWidget = null;
+
+					break;
+			}
+
+			if ( editWidget != null ) {
+				var revRect : Rect = editWidget.drawRct;
+				revRect.y = Screen.height - revRect.y - revRect.height;
+
+				Handles.color = Color.green;
+
+				Handles.DrawLine ( new Vector3 ( revRect.xMin, revRect.yMin, 0 ), new Vector3 ( revRect.xMin, revRect.yMax, 0 ) );
+				Handles.DrawLine ( new Vector3 ( revRect.xMin, revRect.yMax, 0 ), new Vector3 ( revRect.xMax, revRect.yMax, 0 ) );
+				Handles.DrawLine ( new Vector3 ( revRect.xMax, revRect.yMax, 0 ), new Vector3 ( revRect.xMax, revRect.yMin, 0 ) );
+				Handles.DrawLine ( new Vector3 ( revRect.xMax, revRect.yMin, 0 ), new Vector3 ( revRect.xMin, revRect.yMin, 0 ) );
 			}
 		}
 	}
