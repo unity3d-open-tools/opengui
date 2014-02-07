@@ -7718,29 +7718,29 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
   currentStyle:
-    name: New Style
+    name: PopUp
     coordinates:
       serializedVersion: 2
-      x: 0
-      y: 0
+      x: 64
+      y: 32
       width: 32
-      height: 32
+      height: 16
     border:
-      top: 0
-      bottom: 0
-      left: 0
-      right: 0
+      top: 3
+      bottom: 3
+      left: 3
+      right: 12
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
-      fontColor: {r: 1, g: 1, b: 1, a: 1}
+      fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
       shadowSize: 0
       shadowColor: {r: 0, g: 0, b: 0, a: 1}
-      alignment: 0
+      alignment: 3
       wordWrap: 1
       padding:
-        m_Left: 0
+        m_Left: 10
         m_Right: 0
         m_Top: 0
         m_Bottom: 0
@@ -7748,10 +7748,10 @@ MonoBehaviour:
       spacing: 1.25
   drawCrd:
     serializedVersion: 2
-    x: 0
-    y: 0
+    x: 64
+    y: 32
     width: 32
-    height: 32
+    height: 16
   drawRct:
     serializedVersion: 2
     x: 460
@@ -8023,21 +8023,21 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
   currentStyle:
-    name: New Style
+    name: TextField
     coordinates:
       serializedVersion: 2
       x: 0
-      y: 0
+      y: 96
       width: 32
       height: 32
     border:
-      top: 0
-      bottom: 0
-      left: 0
-      right: 0
+      top: 4
+      bottom: 4
+      left: 4
+      right: 4
     text:
       fontIndex: 0
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
       fontSize: 12
       fontColor: {r: 1, g: 1, b: 1, a: 1}
       shadowSize: 0
@@ -8054,7 +8054,7 @@ MonoBehaviour:
   drawCrd:
     serializedVersion: 2
     x: 0
-    y: 0
+    y: 96
     width: 32
     height: 32
   drawRct:
