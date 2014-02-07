@@ -63,7 +63,7 @@ class OGButton extends OGWidget {
 
 		// Styles
 		if ( isDisabled ) {
-			currentStyle = disabled;
+			currentStyle = styles.disabled;
 		} else if ( isDown ) {
 			currentStyle = styles.active;
 		} else if ( CheckMouseOver() ) {
