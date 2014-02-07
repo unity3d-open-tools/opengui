@@ -19,7 +19,13 @@ public class OGTabs extends OGWidget {
 	}
 
 	private function GetTabStyle ( i : int ) : OGStyle {
-		return ( i == activeTab ) ? styles.active : styles.basic;
+		if ( isDisabled ) {
+			return styles.disabled;
+		} else if ( i == activeTab ) {
+			return styles.active;
+		} else {
+			return styles.basic;
+		}
 	}
 
 	

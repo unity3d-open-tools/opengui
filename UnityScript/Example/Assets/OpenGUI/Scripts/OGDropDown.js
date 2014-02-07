@@ -231,7 +231,11 @@ class OGDropDown extends OGWidget {
 	}	
 
 	override function DrawText () {
-		OGDrawHelper.DrawLabel ( drawRct, title, styles.basic.text, drawDepth );
+		if ( isDisabled ) {
+			OGDrawHelper.DrawLabel ( drawRct, title, styles.disabled.text, drawDepth );
+		} else {	
+			OGDrawHelper.DrawLabel ( drawRct, title, styles.basic.text, drawDepth );
+		}
 
 		if ( isDown ) {
 			for ( var s : int = 0; s < submenu.Length; s++ ) {

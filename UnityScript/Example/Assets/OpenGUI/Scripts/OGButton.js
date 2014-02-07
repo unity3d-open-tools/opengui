@@ -62,7 +62,15 @@ class OGButton extends OGWidget {
 		isSelectable = true;
 
 		// Styles
-		currentStyle = isDown ? styles.active : styles.basic;
+		if ( isDisabled ) {
+			currentStyle = disabled;
+		} else if ( isDown ) {
+			currentStyle = styles.active;
+		} else if ( CheckMouseOver() ) {
+			currentStyle = styles.hover;
+		} else { 
+			currentStyle = styles.basic;
+		}
 
 		// Mouse
 		mouseRct = drawRct;

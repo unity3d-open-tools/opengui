@@ -30,7 +30,9 @@ public class OGTickBox extends OGWidget {
 		mouseRct = drawRct;
 		
 		// Styles
-		if ( isTicked ) {
+		if ( isDisabled ) {
+			currentStyle = styles.disabled;
+		} else if ( isTicked ) {
 			currentStyle = styles.ticked;
 		} else {
 			currentStyle = styles.basic;

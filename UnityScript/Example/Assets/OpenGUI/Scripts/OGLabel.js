@@ -18,7 +18,7 @@ public class OGLabel extends OGWidget {
 	// Update
 	/////////////////
 	override function UpdateWidget () {
-		currentStyle = styles.basic;
+		currentStyle = isDisabled ? styles.disabled : styles.basic;
 
 		if ( !overrideFontSize ) {
 			fontSize = currentStyle.text.fontSize;

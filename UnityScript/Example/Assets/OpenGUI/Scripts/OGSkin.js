@@ -197,9 +197,7 @@ public class OGSkin extends MonoBehaviour {
 				case OGWidgetType.Label: s = [ OGStyleType.Disabled ]; break;
 				case OGWidgetType.ListItem: s = [ OGStyleType.Disabled, OGStyleType.Hover, OGStyleType.Ticked ]; break;
 				case OGWidgetType.PopUp: s = [ OGStyleType.Disabled, OGStyleType.Active, OGStyleType.Hover ]; break;
-				case OGWidgetType.ProgressBar: s = [ OGStyleType.Disabled, OGStyleType.Thumb ]; break;
-				case OGWidgetType.SlicedSprite: s = [ OGStyleType.Disabled ]; break;
-				case OGWidgetType.Sprite: s = [ OGStyleType.Disabled ]; break;
+				case OGWidgetType.ProgressBar: s = [ OGStyleType.Thumb ]; break;
 				case OGWidgetType.Slider: s = [ OGStyleType.Disabled, OGStyleType.Thumb ]; break;
 				case OGWidgetType.Tabs: s = [ OGStyleType.Disabled, OGStyleType.Active ]; break;
 				case OGWidgetType.TextField: s = [ OGStyleType.Disabled, OGStyleType.Thumb ]; break;

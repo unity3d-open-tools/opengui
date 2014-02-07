@@ -112,6 +112,15 @@ class OGPopUp extends OGWidget {
 		} else {
 			mouseRct = drawRct;
 		}
+
+		// Styles
+		if ( isDisabled ) {
+			currentStyle = styles.disabled;
+		} else if ( isUp ) {
+			currentStyle = styles.active;
+		} else {
+			currentStyle = styles.basic;
+		}
 	}
 
 
@@ -134,9 +143,9 @@ class OGPopUp extends OGWidget {
 				OGDrawHelper.DrawLabel ( GetOptionRect ( i ), options[i], GetOptionStyle ( i ).text, drawDepth, clipTo );
 			}
 		} else if ( !String.IsNullOrEmpty ( selectedOption ) ) {
-			OGDrawHelper.DrawLabel ( drawRct, selectedOption, styles.basic.text, drawDepth, clipTo );
+			OGDrawHelper.DrawLabel ( drawRct, selectedOption, currentStyle.text, drawDepth, clipTo );
 		} else {
-			OGDrawHelper.DrawLabel ( drawRct, title, styles.basic.text, drawDepth, clipTo );
+			OGDrawHelper.DrawLabel ( drawRct, title, currentStyle.text, drawDepth, clipTo );
 		}
 	}
 }

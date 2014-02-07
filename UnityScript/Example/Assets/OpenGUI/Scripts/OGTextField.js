@@ -76,6 +76,13 @@ public class OGTextField extends OGWidget {
 		mouseRct = drawRct;
 		isAlwaysOnTop = listening;
 
+		// Styles
+		if ( isDisabled ) {
+			currentStyle = styles.disabled;
+		} else {
+			currentStyle = styles.basic;
+		}
+
 		// ^ Regex presets
 		if ( regexPreset != currentPreset ) {
 			currentPreset = regexPreset;
@@ -104,12 +111,12 @@ public class OGTextField extends OGWidget {
 	// Draw
 	/////////////////
 	override function DrawSkin () {
-		OGDrawHelper.DrawSlicedSprite ( drawRct, styles.basic.coordinates, styles.basic.border, drawDepth, clipTo );
+		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle.coordinates, styles.basic.border, drawDepth, clipTo );
 	}
 
 	override function DrawText () {
 		if ( !listening ) {
-			OGDrawHelper.DrawLabel ( drawRct, text, styles.basic.text, drawDepth, this );
+			OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, this );
 		}
 	}
 }
