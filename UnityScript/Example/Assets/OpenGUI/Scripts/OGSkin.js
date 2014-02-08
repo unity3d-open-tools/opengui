@@ -65,6 +65,7 @@ public class OGStyle {
 	public var name : String = "New Style";
 	public var coordinates : Rect = new Rect ( 0, 0, 32, 32 );
 	public var border : OGSlicedSpriteOffset = new OGSlicedSpriteOffset ( 0, 0, 0, 0 );
+	public var color : Color = Color.white;
 	public var text : OGTextStyle;
 }
 

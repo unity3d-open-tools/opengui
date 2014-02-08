@@ -385,16 +385,19 @@ class OGRoot extends MonoBehaviour {
 
 	public function OnGUI () {
 		var e : Event = Event.current;
-		var w : OGWidget;
+		var revRect : Rect;
+		var pivotRect : Rect;
+		var scaleXRect : Rect;
+		var scaleYRect : Rect;
 
 		if ( !Application.isPlaying ) {
 			if ( editWidget != null ) {
-				var revRect : Rect = editWidget.drawRct;
+				revRect = editWidget.drawRct;
 				revRect.y = Screen.height - revRect.y - revRect.height;
 
-				var pivotRect : Rect = new Rect ( editWidget.transform.position.x - 2, editWidget.transform.position.y - 2, 4, 4 );
-				var scaleXRect : Rect = new Rect ( revRect.xMax, revRect.center.y - 6, 6, 12 );
-				var scaleYRect : Rect = new Rect ( revRect.center.x - 6, revRect.yMax, 12, 6 );
+				pivotRect = new Rect ( editWidget.transform.position.x - 2, editWidget.transform.position.y - 2, 4, 4 );
+				scaleXRect = new Rect ( revRect.xMax, revRect.center.y - 6, 6, 12 );
+				scaleYRect = new Rect ( revRect.center.x - 6, revRect.yMax, 12, 6 );
 
 				var color : Color = Color.white;//new Color ( 0.19, 0.3, 0.47, 1 );
 				
@@ -432,60 +435,40 @@ class OGRoot extends MonoBehaviour {
 				// Draw scale
 				GUI.Box ( scaleXRect, "", style );
 				GUI.Box ( scaleYRect, "", style );
-
-				if ( e.type == EventType.MouseDown && revRect.Contains ( e.mousePosition ) ) {
-					draggingWidget = true;
-				
-				} else if ( e.type == EventType.MouseDown && scaleXRect.Contains ( e.mousePosition ) ) {
-					scalingWidgetX = true;
-				
-				} else if ( e.type == EventType.MouseDown && scaleYRect.Contains ( e.mousePosition ) ) {
-					scalingWidgetY = true;
-
-				} else if ( e.type == EventType.KeyDown ) {
-					var modifier : int = 1;
-
-					if ( e.shift ) {
-						modifier = 10;
-					}
-
-					switch ( e.keyCode ) {
-						case KeyCode.UpArrow:
-							editWidget.transform.position -= new Vector3 ( 0, modifier, 0 );
-							break;
-						
-						case KeyCode.DownArrow:
-							editWidget.transform.position += new Vector3 ( 0, modifier, 0 );
-							break;
-						
-						case KeyCode.LeftArrow:
-							editWidget.transform.position -= new Vector3 ( modifier, 0, 0 );
-							break;
-						
-						case KeyCode.RightArrow:
-							editWidget.transform.position += new Vector3 ( modifier, 0, 0 );
-							break;
-					}
-
-				}
 			}
-		
+
 			switch ( e.type ) { 
 				case EventType.MouseDown:
-					if ( !draggingWidget && !scalingWidgetX && !scalingWidgetY ) {
-						w = FindMouseOverWidget ( e );
+					var w : OGWidget = FindMouseOverWidget ( e );
 
-						if ( w != null ) {
-							EditorSelectWidget ( w, e );
-							editWidget = w;
-						} else {
-							editWidget = null;
-						}
+					if ( editWidget != w && w != null ) {
+						EditorSelectWidget ( w );
+						editWidget = w;
+						revRect = editWidget.drawRct;
+						revRect.y = Screen.height - revRect.y - revRect.height;
+						scaleXRect = new Rect ( revRect.xMax, revRect.center.y - 6, 6, 12 );
+						scaleYRect = new Rect ( revRect.center.x - 6, revRect.yMax, 12, 6 );
+					}	
+					
+					if ( revRect.Contains ( e.mousePosition ) ) {
+						draggingWidget = true;
+					
+					} else if ( scaleXRect.Contains ( e.mousePosition ) ) {
+						scalingWidgetX = true;
+					
+					} else if ( scaleYRect.Contains ( e.mousePosition ) ) {
+						scalingWidgetY = true;
+					
+					} else if ( w == null ) {
+						editWidget = null;
+				
 					}
 
 					break;
 
 				case EventType.MouseDrag:
+					if ( editWidget == null ) { break; }
+					
 					var delta : Vector2 = e.delta;
 					var vModifier : Vector2 = Vector2.one;
 					var scrollView : OGScrollView = editWidget as OGScrollView;
@@ -520,8 +503,36 @@ class OGRoot extends MonoBehaviour {
 					scalingWidgetY = false;
 
 					break;
-			}
+				
+				case EventType.KeyDown:
+					if ( editWidget == null ) { break; }
 
+					var modifier : int = 1;
+
+					if ( e.shift ) {
+						modifier = 10;
+					}
+
+					switch ( e.keyCode ) {
+						case KeyCode.UpArrow:
+							editWidget.transform.position -= new Vector3 ( 0, modifier, 0 );
+							break;
+						
+						case KeyCode.DownArrow:
+							editWidget.transform.position += new Vector3 ( 0, modifier, 0 );
+							break;
+						
+						case KeyCode.LeftArrow:
+							editWidget.transform.position -= new Vector3 ( modifier, 0, 0 );
+							break;
+						
+						case KeyCode.RightArrow:
+							editWidget.transform.position += new Vector3 ( modifier, 0, 0 );
+							break;
+					}
+
+					break;
+			}
 		}
 	}
 

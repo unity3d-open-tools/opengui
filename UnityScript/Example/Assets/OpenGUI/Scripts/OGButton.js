@@ -74,6 +74,11 @@ class OGButton extends OGWidget {
 
 		// Mouse
 		mouseRct = drawRct;
+	
+		// Color
+		if ( !overrideColor ) {
+			color = currentStyle.color;
+		}
 	}
 
 	
