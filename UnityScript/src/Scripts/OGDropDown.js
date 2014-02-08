@@ -199,6 +199,9 @@ class OGDropDown extends OGWidget {
 		} else {
 			mouseRct = GetMouseRect();
 		}
+
+		// Styles
+		currentStyle = isDisabled ? styles.disabled : styles.basic;
 	}
 	
 	
@@ -207,23 +210,23 @@ class OGDropDown extends OGWidget {
 	////////////////////
 	override function DrawSkin () {
 		if ( isDown ) {
-			OGDrawHelper.DrawSlicedSprite ( GetRootBackgroundRect (), styles.basic.coordinates, styles.basic.border, drawDepth, clipTo );
+			OGDrawHelper.DrawSlicedSprite ( GetRootBackgroundRect (), styles.basic.coordinates, styles.basic.border, drawDepth, styles.basic.color, clipTo );
 		
 			if ( activeNestedMenu != -1 ) {
-				OGDrawHelper.DrawSlicedSprite ( GetNestedBackgroundRect (), styles.basic.coordinates, styles.basic.border, drawDepth, clipTo );
+				OGDrawHelper.DrawSlicedSprite ( GetNestedBackgroundRect (), styles.basic.coordinates, styles.basic.border, drawDepth, styles.basic.color, clipTo );
 			}
 		
 			// Draw tick boxes
 			for ( var s : int = 0; s < submenu.Length; s++ ) {
 				if ( submenu[s].isTicked ) {
-					OGDrawHelper.DrawSprite ( GetTickRect ( s, true ), styles.ticked.coordinates, drawDepth, clipTo );
+					OGDrawHelper.DrawSprite ( GetTickRect ( s, true ), styles.ticked.coordinates, drawDepth, styles.ticked.color, clipTo );
 				}
 			}
 
 			if ( activeNestedMenu != -1 ) {
 				for ( var n : int = 0; n < submenu[activeNestedMenu].nestedMenu.Length; n++ ) {
 					if ( submenu[activeNestedMenu].nestedMenu[n].isTicked ) {
-						OGDrawHelper.DrawSprite ( GetTickRect ( n, false ), styles.ticked.coordinates, drawDepth, clipTo );
+						OGDrawHelper.DrawSprite ( GetTickRect ( n, false ), styles.ticked.coordinates, drawDepth, styles.ticked.color, clipTo );
 					}
 				}
 			}
@@ -231,7 +234,7 @@ class OGDropDown extends OGWidget {
 	}	
 
 	override function DrawText () {
-		OGDrawHelper.DrawLabel ( drawRct, title, styles.basic.text, drawDepth );
+		OGDrawHelper.DrawLabel ( drawRct, title, currentStyle.text, drawDepth );
 
 		if ( isDown ) {
 			for ( var s : int = 0; s < submenu.Length; s++ ) {

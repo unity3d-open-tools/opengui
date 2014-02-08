@@ -30,7 +30,9 @@ public class OGTickBox extends OGWidget {
 		mouseRct = drawRct;
 		
 		// Styles
-		if ( isTicked ) {
+		if ( isDisabled ) {
+			currentStyle = styles.disabled;
+		} else if ( isTicked ) {
 			currentStyle = styles.ticked;
 		} else {
 			currentStyle = styles.basic;
@@ -42,7 +44,7 @@ public class OGTickBox extends OGWidget {
 	// Draw
 	////////////////	
 	override function DrawSkin () {
-		OGDrawHelper.DrawSprite ( GetTickRect(), currentStyle.coordinates, drawDepth, clipTo );
+		OGDrawHelper.DrawSprite ( GetTickRect(), currentStyle.coordinates, drawDepth, currentStyle.color, clipTo );
 	}
 
 	override function DrawText () {

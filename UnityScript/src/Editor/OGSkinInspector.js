@@ -428,7 +428,13 @@ public class OGSkinInspector extends Editor {
 				EditorGUILayout.EndVertical();
 				
 				EditorGUILayout.EndHorizontal();
-			
+		
+				// ^ Color
+				EditorGUILayout.BeginHorizontal();
+				EditorGUILayout.LabelField ( "Color", GUILayout.Width ( 100 ) );
+				s.color = EditorGUILayout.ColorField ( s.color );
+				EditorGUILayout.EndHorizontal();
+
 				if ( s.text != null ) {
 					// ^ Text
 					GUILayout.Space ( 20 );
@@ -455,7 +461,7 @@ public class OGSkinInspector extends Editor {
 
 					// ^^ Colour
 					EditorGUILayout.BeginHorizontal();
-					EditorGUILayout.LabelField ( "Colour", GUILayout.Width ( 100 ) );
+					EditorGUILayout.LabelField ( "Color", GUILayout.Width ( 100 ) );
 					s.text.fontColor = EditorGUILayout.ColorField ( s.text.fontColor );
 					EditorGUILayout.EndHorizontal();
 					

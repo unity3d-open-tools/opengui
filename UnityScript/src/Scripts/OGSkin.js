@@ -65,6 +65,7 @@ public class OGStyle {
 	public var name : String = "New Style";
 	public var coordinates : Rect = new Rect ( 0, 0, 32, 32 );
 	public var border : OGSlicedSpriteOffset = new OGSlicedSpriteOffset ( 0, 0, 0, 0 );
+	public var color : Color = Color.white;
 	public var text : OGTextStyle;
 }
 
@@ -197,9 +198,7 @@ public class OGSkin extends MonoBehaviour {
 				case OGWidgetType.Label: s = [ OGStyleType.Disabled ]; break;
 				case OGWidgetType.ListItem: s = [ OGStyleType.Disabled, OGStyleType.Hover, OGStyleType.Ticked ]; break;
 				case OGWidgetType.PopUp: s = [ OGStyleType.Disabled, OGStyleType.Active, OGStyleType.Hover ]; break;
-				case OGWidgetType.ProgressBar: s = [ OGStyleType.Disabled, OGStyleType.Thumb ]; break;
-				case OGWidgetType.SlicedSprite: s = [ OGStyleType.Disabled ]; break;
-				case OGWidgetType.Sprite: s = [ OGStyleType.Disabled ]; break;
+				case OGWidgetType.ProgressBar: s = [ OGStyleType.Thumb ]; break;
 				case OGWidgetType.Slider: s = [ OGStyleType.Disabled, OGStyleType.Thumb ]; break;
 				case OGWidgetType.Tabs: s = [ OGStyleType.Disabled, OGStyleType.Active ]; break;
 				case OGWidgetType.TextField: s = [ OGStyleType.Disabled, OGStyleType.Thumb ]; break;

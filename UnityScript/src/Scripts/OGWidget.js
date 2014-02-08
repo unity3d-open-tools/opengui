@@ -55,7 +55,6 @@ public class OGWidget extends MonoBehaviour {
 	public var isSelectable : boolean = false;
 	public var isDraggable : boolean = false;
 	public var resetAfterDrag : boolean = false;
-	public var color : Color = Color.white;
 	public var pivot : Pivot = new Pivot();
 	public var anchor : Anchor = new Anchor();	
 	public var stretch : Stretch = new Stretch();

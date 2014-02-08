@@ -19,7 +19,13 @@ public class OGTabs extends OGWidget {
 	}
 
 	private function GetTabStyle ( i : int ) : OGStyle {
-		return ( i == activeTab ) ? styles.active : styles.basic;
+		if ( isDisabled ) {
+			return styles.disabled;
+		} else if ( i == activeTab ) {
+			return styles.active;
+		} else {
+			return styles.basic;
+		}
 	}
 
 	
@@ -102,7 +108,7 @@ public class OGTabs extends OGWidget {
 	//////////////////
 	override function DrawSkin () {
 		for ( var i : int = 0; i < tabs.Count; i++ ) {
-			OGDrawHelper.DrawSlicedSprite ( GetTabRect(i), GetTabStyle(i).coordinates, GetTabStyle(i).border, drawDepth, clipTo );
+			OGDrawHelper.DrawSlicedSprite ( GetTabRect(i), GetTabStyle(i).coordinates, GetTabStyle(i).border, drawDepth, GetTabStyle(i).color, clipTo );
 		}
 	}
 

@@ -292,6 +292,6 @@ public class OGScrollView extends OGWidget {
 	}
 	
 	override function DrawSkin () {
-		OGDrawHelper.DrawSprite ( drawRct, styles.basic.coordinates, drawDepth - 10 );
+		OGDrawHelper.DrawSprite ( drawRct, styles.basic.coordinates, drawDepth - 10, styles.basic.color );
 	}
 }

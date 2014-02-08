@@ -130,9 +130,7 @@ class OGRoot extends MonoBehaviour {
 				if ( w == null ) { continue; }
 				
 				if ( w.gameObject.activeSelf && w.isDrawn && w.drawRct.height > 0 && w.drawRct.width > 0 ) {
-					GL.Color ( w.color );
 					w.DrawSkin ();
-					GL.Color ( Color.white );
 				}
 			}
 			
@@ -199,9 +197,7 @@ class OGRoot extends MonoBehaviour {
 				w = widgets[i];
 				
 				if ( w != null && w.gameObject.activeSelf && w.isDrawn ) {
-					GL.Color ( w.color );
 					w.DrawGL();
-					GL.Color ( Color.white );
 				}
 			}
 
@@ -364,26 +360,174 @@ class OGRoot extends MonoBehaviour {
 
 	// OnGUI selection
 	public static var EditorSelectWidget : Function;
-	
-	public function OnGUI () {
-		var e : Event = Event.current;
+	private static var editWidget : OGWidget;
+	private static var draggingWidget : boolean = false;
+	private static var scalingWidgetX : boolean = false;
+	private static var scalingWidgetY : boolean = false;
+
+	private function FindMouseOverWidget ( e : Event ) : OGWidget {
 		var w : OGWidget;
 
-		if ( e.type == EventType.MouseDown && !Application.isPlaying ) {
-			for ( var i : int = 0; i < widgets.Length; i++ ) {
-				if ( widgets[i].drawRct.Contains ( new Vector2 ( e.mousePosition.x, Screen.height - e.mousePosition.y ) ) ) {
-					if ( w == null || w.drawDepth < widgets[i].drawDepth ) {
-						w = widgets[i];
-					}
+		for ( var i : int = 0; i < widgets.Length; i++ ) {
+			if ( widgets[i].drawRct.Contains ( new Vector2 ( e.mousePosition.x, Screen.height - e.mousePosition.y ) ) ) {
+				if ( w == null || w.drawDepth < widgets[i].drawDepth ) {
+					w = widgets[i];
 				}
 			}
+		}
 
-			if ( w != null ) {
-				if ( EditorSelectWidget == null ) {
-					Debug.LogWarning ( "OpenGUI: Highlight the '" + this.name + "' object first to enable widget selection by mouse" );
-				} else {
-					EditorSelectWidget ( w );
-				}
+		return w;
+	}
+
+	public function OnGUI () {
+		var e : Event = Event.current;
+		var revRect : Rect;
+		var pivotRect : Rect;
+		var scaleXRect : Rect;
+		var scaleYRect : Rect;
+
+		if ( !Application.isPlaying ) {
+			if ( editWidget != null ) {
+				revRect = editWidget.drawRct;
+				revRect.y = Screen.height - revRect.y - revRect.height;
+
+				pivotRect = new Rect ( editWidget.transform.position.x - 2, editWidget.transform.position.y - 2, 4, 4 );
+				scaleXRect = new Rect ( revRect.xMax, revRect.center.y - 6, 6, 12 );
+				scaleYRect = new Rect ( revRect.center.x - 6, revRect.yMax, 12, 6 );
+
+				var color : Color = Color.white;//new Color ( 0.19, 0.3, 0.47, 1 );
+				
+				if ( editWidget.pivot.x == RelativeX.Right ) { scaleXRect.center.x = revRect.xMax + 3; }
+				if ( editWidget.pivot.y == RelativeY.Bottom ) { scaleYRect.center.y = revRect.yMin - 3; }
+
+				var tex : Texture2D = new Texture2D ( 1, 1 );
+				tex.SetPixel ( 0, 0, color );
+				tex.Apply ();
+
+				var style : GUIStyle = new GUIStyle();
+				style.normal.background = tex;
+				
+				var textStyle : GUIStyle = new GUIStyle();
+				textStyle.fontSize = 14;
+				textStyle.normal.textColor = Color.white;
+				textStyle.alignment = TextAnchor.MiddleCenter;
+
+				Handles.color = color;
+
+				e = Event.current;
+
+				// Draw outline
+				Handles.DrawPolyLine (
+					new Vector3 ( revRect.xMin, revRect.yMin, 0 ),
+					new Vector3 ( revRect.xMin, revRect.yMax, 0 ),
+					new Vector3 ( revRect.xMax, revRect.yMax, 0 ),
+					new Vector3 ( revRect.xMax, revRect.yMin, 0 ),
+					new Vector3 ( revRect.xMin, revRect.yMin, 0 )
+				);
+
+				// Draw pivot
+				GUI.Box ( pivotRect, "", style );
+
+				// Draw scale
+				GUI.Box ( scaleXRect, "", style );
+				GUI.Box ( scaleYRect, "", style );
+			}
+
+			switch ( e.type ) { 
+				case EventType.MouseDown:
+					var w : OGWidget = FindMouseOverWidget ( e );
+
+					if ( editWidget != w && w != null ) {
+						EditorSelectWidget ( w );
+						editWidget = w;
+						revRect = editWidget.drawRct;
+						revRect.y = Screen.height - revRect.y - revRect.height;
+						scaleXRect = new Rect ( revRect.xMax, revRect.center.y - 6, 6, 12 );
+						scaleYRect = new Rect ( revRect.center.x - 6, revRect.yMax, 12, 6 );
+					}	
+					
+					if ( revRect.Contains ( e.mousePosition ) ) {
+						draggingWidget = true;
+					
+					} else if ( scaleXRect.Contains ( e.mousePosition ) ) {
+						scalingWidgetX = true;
+					
+					} else if ( scaleYRect.Contains ( e.mousePosition ) ) {
+						scalingWidgetY = true;
+					
+					} else if ( w == null ) {
+						editWidget = null;
+				
+					}
+
+					break;
+
+				case EventType.MouseDrag:
+					if ( editWidget == null ) { break; }
+					
+					var delta : Vector2 = e.delta;
+					var vModifier : Vector2 = Vector2.one;
+					var scrollView : OGScrollView = editWidget as OGScrollView;
+					if ( editWidget.pivot.y == RelativeY.Center ) { vModifier.y = 2; }
+					else if ( editWidget.pivot.y == RelativeY.Bottom ) { vModifier.y = -1; }
+					if ( editWidget.pivot.x == RelativeX.Center ) { vModifier.x = 2; }
+					
+					if ( scalingWidgetX && editWidget ) {
+						if ( scrollView ) {
+							scrollView.size.x += delta.x * vModifier.x;
+						} else {
+							editWidget.transform.localScale += new Vector3 ( delta.x * vModifier.x, 0, 0 );
+						}
+
+					} else if ( scalingWidgetY && editWidget ) {
+						if ( scrollView ) {
+							scrollView.size.y += delta.y * vModifier.y;
+						} else {
+							editWidget.transform.localScale += new Vector3 ( 0, delta.y * vModifier.y, 0 );
+						}
+
+					} else if ( draggingWidget && editWidget ) {
+						editWidget.transform.localPosition += new Vector3 ( delta.x, delta.y, 0 );
+					
+					}
+
+					break;
+
+				case EventType.MouseUp:
+					draggingWidget = false;
+					scalingWidgetX = false;
+					scalingWidgetY = false;
+
+					break;
+				
+				case EventType.KeyDown:
+					if ( editWidget == null ) { break; }
+
+					var modifier : int = 1;
+
+					if ( e.shift ) {
+						modifier = 10;
+					}
+
+					switch ( e.keyCode ) {
+						case KeyCode.UpArrow:
+							editWidget.transform.position -= new Vector3 ( 0, modifier, 0 );
+							break;
+						
+						case KeyCode.DownArrow:
+							editWidget.transform.position += new Vector3 ( 0, modifier, 0 );
+							break;
+						
+						case KeyCode.LeftArrow:
+							editWidget.transform.position -= new Vector3 ( modifier, 0, 0 );
+							break;
+						
+						case KeyCode.RightArrow:
+							editWidget.transform.position += new Vector3 ( modifier, 0, 0 );
+							break;
+					}
+
+					break;
 			}
 		}
 	}
