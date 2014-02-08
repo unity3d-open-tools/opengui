@@ -108,7 +108,7 @@ public class OGTabs extends OGWidget {
 	//////////////////
 	override function DrawSkin () {
 		for ( var i : int = 0; i < tabs.Count; i++ ) {
-			OGDrawHelper.DrawSlicedSprite ( GetTabRect(i), GetTabStyle(i).coordinates, GetTabStyle(i).border, drawDepth, clipTo );
+			OGDrawHelper.DrawSlicedSprite ( GetTabRect(i), GetTabStyle(i).coordinates, GetTabStyle(i).border, drawDepth, GetTabStyle(i).color, clipTo );
 		}
 	}
 

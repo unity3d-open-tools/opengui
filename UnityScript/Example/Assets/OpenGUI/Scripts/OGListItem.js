@@ -97,7 +97,7 @@ class OGListItem extends OGWidget {
 		// ^ Cancel check
 		if ( !CheckMouseOver ( mouseRct ) ) { OnMouseCancel(); }
 		
-		// Update data
+		// Styles
 		if ( isDisabled ) {
 			currentStyle = this.styles.disabled;
 		} else if ( isSelected ) {
@@ -107,14 +107,13 @@ class OGListItem extends OGWidget {
 		} else {
 			currentStyle = this.styles.basic;
 		}
-
 	}
 
 	//////////////////
 	// Draw
 	//////////////////
 	override function DrawSkin () {
-		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle.coordinates, currentStyle.border, drawDepth, clipTo );
+		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle.coordinates, currentStyle.border, drawDepth, currentStyle.color, clipTo );
 	}
 
 	override function DrawText () {

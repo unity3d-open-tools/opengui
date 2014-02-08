@@ -130,9 +130,7 @@ class OGRoot extends MonoBehaviour {
 				if ( w == null ) { continue; }
 				
 				if ( w.gameObject.activeSelf && w.isDrawn && w.drawRct.height > 0 && w.drawRct.width > 0 ) {
-					GL.Color ( w.color );
 					w.DrawSkin ();
-					GL.Color ( Color.white );
 				}
 			}
 			
@@ -199,9 +197,7 @@ class OGRoot extends MonoBehaviour {
 				w = widgets[i];
 				
 				if ( w != null && w.gameObject.activeSelf && w.isDrawn ) {
-					GL.Color ( w.color );
 					w.DrawGL();
-					GL.Color ( Color.white );
 				}
 			}
 

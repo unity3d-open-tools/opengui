@@ -74,11 +74,6 @@ class OGButton extends OGWidget {
 
 		// Mouse
 		mouseRct = drawRct;
-	
-		// Color
-		if ( !overrideColor ) {
-			color = currentStyle.color;
-		}
 	}
 
 	
@@ -88,10 +83,10 @@ class OGButton extends OGWidget {
 	override function DrawSkin () {
 		if ( currentStyle == null ) { return; }
 		
-		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle.coordinates, currentStyle.border, drawDepth, clipTo );
+		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle.coordinates, currentStyle.border, drawDepth, currentStyle.color, clipTo );
 
 		if ( enableImage ) {
-			OGDrawHelper.DrawSprite ( GetImageRect(), styles.thumb.coordinates, drawDepth, clipTo );
+			OGDrawHelper.DrawSprite ( GetImageRect(), styles.thumb.coordinates, drawDepth, styles.thumb.color, clipTo );
 		}
 	}
 

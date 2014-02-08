@@ -44,7 +44,7 @@ public class OGTickBox extends OGWidget {
 	// Draw
 	////////////////	
 	override function DrawSkin () {
-		OGDrawHelper.DrawSprite ( GetTickRect(), currentStyle.coordinates, drawDepth, clipTo );
+		OGDrawHelper.DrawSprite ( GetTickRect(), currentStyle.coordinates, drawDepth, currentStyle.color, clipTo );
 	}
 
 	override function DrawText () {

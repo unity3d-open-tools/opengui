@@ -129,9 +129,9 @@ class OGPopUp extends OGWidget {
 	///////////////////
 	override function DrawSkin () {
 		if ( isUp ) {
-			OGDrawHelper.DrawSlicedSprite ( GetExpandedRect(), styles.active.coordinates, styles.active.border, drawDepth, clipTo );
+			OGDrawHelper.DrawSlicedSprite ( GetExpandedRect(), currentStyle.coordinates, currentStyle.border, drawDepth, currentStyle.color, clipTo );
 		} else {
-			OGDrawHelper.DrawSlicedSprite ( drawRct, styles.basic.coordinates, styles.basic.border, drawDepth, clipTo );
+			OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle.coordinates, currentStyle.border, drawDepth, currentStyle.color, clipTo );
 		}
 	}	
 	
