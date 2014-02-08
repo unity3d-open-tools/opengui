@@ -392,25 +392,28 @@ class OGRoot extends MonoBehaviour {
 				var revRect : Rect = editWidget.drawRct;
 				revRect.y = Screen.height - revRect.y - revRect.height;
 
-				var pivotRect : Rect = new Rect ( editWidget.transform.position.x - 3, editWidget.transform.position.y - 3, 6, 6 );
-				var scaleXRect : Rect = new Rect ( revRect.xMax - 3, revRect.center.y - 6, 6, 12 );
-				var scaleYRect : Rect = new Rect ( revRect.center.x - 6, revRect.yMax - 3, 12, 6 );
+				var pivotRect : Rect = new Rect ( editWidget.transform.position.x - 2, editWidget.transform.position.y - 2, 4, 4 );
+				var scaleXRect : Rect = new Rect ( revRect.xMax, revRect.center.y - 6, 6, 12 );
+				var scaleYRect : Rect = new Rect ( revRect.center.x - 6, revRect.yMax, 12, 6 );
 
-				if ( editWidget.pivot.x == RelativeX.Right ) { scaleXRect.center.x = revRect.xMax; }
+				var color : Color = Color.white;//new Color ( 0.19, 0.3, 0.47, 1 );
 				
-				if ( editWidget.pivot.y == RelativeY.Bottom ) { scaleYRect.center.y = revRect.yMax; }
+				if ( editWidget.pivot.x == RelativeX.Right ) { scaleXRect.center.x = revRect.xMax + 3; }
+				if ( editWidget.pivot.y == RelativeY.Bottom ) { scaleYRect.center.y = revRect.yMin - 3; }
 
 				var tex : Texture2D = new Texture2D ( 1, 1 );
-				tex.SetPixel ( 0, 0, Color.white );
+				tex.SetPixel ( 0, 0, color );
 				tex.Apply ();
 
 				var style : GUIStyle = new GUIStyle();
-				style.fontSize = 14;
-				style.normal.textColor = Color.black;
 				style.normal.background = tex;
-				style.alignment = TextAnchor.MiddleCenter;
+				
+				var textStyle : GUIStyle = new GUIStyle();
+				textStyle.fontSize = 14;
+				textStyle.normal.textColor = Color.white;
+				textStyle.alignment = TextAnchor.MiddleCenter;
 
-				Handles.color = Color.white;//new Color ( 0.19, 0.3, 0.47, 1 );
+				Handles.color = color;
 
 				e = Event.current;
 
@@ -485,15 +488,28 @@ class OGRoot extends MonoBehaviour {
 				case EventType.MouseDrag:
 					var delta : Vector2 = e.delta;
 					var vModifier : Vector2 = Vector2.one;
+					var scrollView : OGScrollView = editWidget as OGScrollView;
 					if ( editWidget.pivot.y == RelativeY.Center ) { vModifier.y = 2; }
+					else if ( editWidget.pivot.y == RelativeY.Bottom ) { vModifier.y = -1; }
 					if ( editWidget.pivot.x == RelativeX.Center ) { vModifier.x = 2; }
 					
 					if ( scalingWidgetX && editWidget ) {
-						editWidget.transform.localScale += new Vector3 ( delta.x * vModifier.x, 0, 0 );
+						if ( scrollView ) {
+							scrollView.size.x += delta.x * vModifier.x;
+						} else {
+							editWidget.transform.localScale += new Vector3 ( delta.x * vModifier.x, 0, 0 );
+						}
+
 					} else if ( scalingWidgetY && editWidget ) {
-						editWidget.transform.localScale += new Vector3 ( 0, delta.y * vModifier.y, 0 );
+						if ( scrollView ) {
+							scrollView.size.y += delta.y * vModifier.y;
+						} else {
+							editWidget.transform.localScale += new Vector3 ( 0, delta.y * vModifier.y, 0 );
+						}
+
 					} else if ( draggingWidget && editWidget ) {
 						editWidget.transform.localPosition += new Vector3 ( delta.x, delta.y, 0 );
+					
 					}
 
 					break;

@@ -1611,8 +1611,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 618374636}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 60, z: 0}
-  m_LocalScale: {x: 185, y: 30, z: 1}
+  m_LocalPosition: {x: 116, y: 72, z: 0}
+  m_LocalScale: {x: 161, y: 30, z: 1}
   m_Children: []
   m_Father: {fileID: 976106503}
 --- !u!114 &618374638
@@ -1633,8 +1633,8 @@ MonoBehaviour:
   resetAfterDrag: 0
   color: {r: 0, g: 1, b: .0896551609, a: 1}
   pivot:
-    x: 0
-    y: 0
+    x: 2
+    y: 2
   anchor:
     x: 0
     xOffset: 0
@@ -1860,21 +1860,21 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 30
-    y: 400
-    width: 185
+    x: 55.5
+    y: 403
+    width: 161
     height: 30
   mouseRct:
     serializedVersion: 2
-    x: 30
-    y: 400
-    width: 185
+    x: 55.5
+    y: 403
+    width: 161
     height: 30
   drawDepth: -10
   scrollOffset: {x: 0, y: 0, z: 0}
   dragOffset: {x: 0, y: 0, z: 0}
   dragOrigPos: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: -80.5, y: -15, z: 0}
   hidden: 0
   outOfBounds: 0
   isDirty: 0
@@ -1911,8 +1911,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 679171667}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 205, y: 60, z: 0}
-  m_LocalScale: {x: 185, y: 30, z: 1}
+  m_LocalPosition: {x: 225, y: 52, z: 0}
+  m_LocalScale: {x: 146, y: 38, z: 1}
   m_Children: []
   m_Father: {fileID: 976106503}
 --- !u!114 &679171669
@@ -1933,8 +1933,8 @@ MonoBehaviour:
   resetAfterDrag: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   pivot:
-    x: 0
-    y: 0
+    x: 1
+    y: 1
   anchor:
     x: 0
     xOffset: 0
@@ -2160,16 +2160,16 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 225
+    x: 245
     y: 400
-    width: 185
-    height: 30
+    width: 146
+    height: 38
   mouseRct:
     serializedVersion: 2
-    x: 225
+    x: 245
     y: 400
-    width: 185
-    height: 30
+    width: 146
+    height: 38
   drawDepth: -10
   scrollOffset: {x: 0, y: 0, z: 0}
   dragOffset: {x: 0, y: 0, z: 0}
@@ -2212,7 +2212,7 @@ Transform:
   m_GameObject: {fileID: 784223071}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 480, y: 20, z: 0}
-  m_LocalScale: {x: 300, y: 40, z: 1}
+  m_LocalScale: {x: 300, y: 28, z: 1}
   m_Children: []
   m_Father: {fileID: 1838180341}
 --- !u!114 &784223073
@@ -2461,15 +2461,15 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 330
-    y: 540
+    y: 552
     width: 300
-    height: 40
+    height: 28
   mouseRct:
     serializedVersion: 2
     x: 330
-    y: 540
+    y: 552
     width: 300
-    height: 40
+    height: 28
   drawDepth: -0
   scrollOffset: {x: 0, y: 0, z: 0}
   dragOffset: {x: 0, y: 0, z: 0}
@@ -2509,7 +2509,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 808215932}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 10, z: 20}
+  m_LocalPosition: {x: 12, y: 10, z: 20}
   m_LocalScale: {x: 940, y: 580, z: 1}
   m_Children: []
   m_Father: {fileID: 1838180341}
@@ -2758,13 +2758,13 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 10
+    x: 12
     y: 10
     width: 940
     height: 580
   mouseRct:
     serializedVersion: 2
-    x: 10
+    x: 12
     y: 10
     width: 940
     height: 580
@@ -5914,15 +5914,15 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 230
-    y: 160
-    width: 190
-    height: 100
+    y: 158
+    width: 193
+    height: 102
   mouseRct:
     serializedVersion: 2
     x: 230
-    y: 160
-    width: 190
-    height: 100
+    y: 158
+    width: 193
+    height: 102
   drawDepth: -0
   scrollOffset: {x: 0, y: 0, z: 0}
   dragOffset: {x: 0, y: 0, z: 0}
@@ -5933,7 +5933,7 @@ MonoBehaviour:
   isDirty: 0
   isAlwaysOnTop: 0
   root: {fileID: 2092932567}
-  size: {x: 190, y: 100}
+  size: {x: 193, y: 102}
   position: {x: 0, y: 0}
   padding: {x: 10, y: 10}
   elasticity: 20
@@ -6863,9 +6863,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: .208333328
-    y: .75
+    y: .74333334
     width: .145833328
-    height: .233333334
+    height: .239999995
   near clip plane: .300000012
   far clip plane: 1000
   field of view: 60
@@ -6916,7 +6916,7 @@ Transform:
   m_GameObject: {fileID: 1470144161}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 200, y: 10, z: 0}
-  m_LocalScale: {x: 140, y: 140, z: 1}
+  m_LocalScale: {x: 140, y: 144, z: 1}
   m_Children: []
   m_Father: {fileID: 1838180341}
 --- !u!114 &1470144164
@@ -7165,9 +7165,9 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 200
-    y: 450
+    y: 446
     width: 140
-    height: 140
+    height: 144
   mouseRct:
     serializedVersion: 2
     x: 0
@@ -7506,7 +7506,7 @@ Transform:
   m_GameObject: {fileID: 1612302975}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 460, y: 420, z: 0}
-  m_LocalScale: {x: 100, y: 20, z: 1}
+  m_LocalScale: {x: 108, y: 20, z: 1}
   m_Children: []
   m_Father: {fileID: 1838180341}
 --- !u!114 &1612302977
@@ -7756,13 +7756,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 460
     y: 160
-    width: 100
+    width: 108
     height: 20
   mouseRct:
     serializedVersion: 2
     x: 460
     y: 160
-    width: 100
+    width: 108
     height: 20
   drawDepth: -0
   scrollOffset: {x: 0, y: 0, z: 0}
@@ -7811,7 +7811,7 @@ Transform:
   m_GameObject: {fileID: 1711851235}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 460, y: 110, z: 0}
-  m_LocalScale: {x: 300, y: 100, z: 1}
+  m_LocalScale: {x: 300, y: 97, z: 1}
   m_Children: []
   m_Father: {fileID: 1838180341}
 --- !u!114 &1711851237
@@ -8060,15 +8060,15 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 460
-    y: 390
+    y: 393
     width: 300
-    height: 100
+    height: 97
   mouseRct:
     serializedVersion: 2
     x: 460
-    y: 390
+    y: 393
     width: 300
-    height: 100
+    height: 97
   drawDepth: -0
   scrollOffset: {x: 0, y: 0, z: 0}
   dragOffset: {x: 0, y: 0, z: 0}
@@ -9066,15 +9066,15 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 330
-    y: 510
+    y: 531
     width: 300
-    height: 40
+    height: 19
   mouseRct:
     serializedVersion: 2
     x: 330
-    y: 510
+    y: 531
     width: 300
-    height: 40
+    height: 19
   drawDepth: -0
   scrollOffset: {x: 0, y: 0, z: 0}
   dragOffset: {x: 0, y: 0, z: 0}
@@ -9099,7 +9099,7 @@ Transform:
   m_GameObject: {fileID: 1924953455}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 480, y: 50, z: 0}
-  m_LocalScale: {x: 300, y: 40, z: 1}
+  m_LocalScale: {x: 300, y: 19, z: 1}
   m_Children: []
   m_Father: {fileID: 1838180341}
 --- !u!1 &2043151941
@@ -9126,7 +9126,7 @@ Transform:
   m_GameObject: {fileID: 2043151941}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 460, y: 334, z: 0}
-  m_LocalScale: {x: 100, y: 20, z: 1}
+  m_LocalScale: {x: 40, y: 20, z: 1}
   m_Children: []
   m_Father: {fileID: 1838180341}
 --- !u!114 &2043151943
@@ -9376,13 +9376,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 460
     y: 246
-    width: 100
+    width: 40
     height: 20
   mouseRct:
     serializedVersion: 2
     x: 460
     y: 246
-    width: 100
+    width: 40
     height: 20
   drawDepth: -0
   scrollOffset: {x: 0, y: 0, z: 0}
