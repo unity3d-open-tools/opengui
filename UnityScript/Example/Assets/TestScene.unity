@@ -4249,7 +4249,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1143270680}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 160, z: -1}
+  m_LocalPosition: {x: 1, y: 166, z: -1}
   m_LocalScale: {x: 180, y: 140, z: 1}
   m_Children: []
   m_Father: {fileID: 1423993017}
@@ -4504,14 +4504,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 30
-    y: -50
+    x: 31
+    y: -56
     width: 180
     height: 140
   mouseRct:
     serializedVersion: 2
-    x: 30
-    y: -50
+    x: 31
+    y: -56
     width: 180
     height: 140
   drawDepth: -1
@@ -6052,6 +6052,7 @@ MonoBehaviour:
   padding: {x: 10, y: 10}
   elasticity: 20
   lockAxis: 2
+  scrollbarVisibility: 0
   infiniteScrolling: 1
   touchControl: 0
 --- !u!1 &1423993016
@@ -6238,12 +6239,12 @@ MonoBehaviour:
         lineHeight: 1.25
         spacing: 1.25
     thumb:
-      name: New Style
+      name: ScrollViewThumb
       coordinates:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
+        x: 7
+        y: 32
+        width: 2
         height: 32
       border:
         top: 0
@@ -6253,7 +6254,7 @@ MonoBehaviour:
       color: {r: 1, g: 1, b: 1, a: 1}
       text:
         fontIndex: 0
-        font: {fileID: 0}
+        font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
         fontSize: 12
         fontColor: {r: 1, g: 1, b: 1, a: 1}
         shadowSize: 0
@@ -6360,6 +6361,7 @@ MonoBehaviour:
   padding: {x: 10, y: 10}
   elasticity: 20
   lockAxis: 0
+  scrollbarVisibility: 2
   infiniteScrolling: 0
   touchControl: 0
 --- !u!1 &1435533456

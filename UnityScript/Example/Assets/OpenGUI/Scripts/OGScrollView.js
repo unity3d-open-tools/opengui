@@ -7,17 +7,36 @@ public class OGScrollView extends OGWidget {
 		Y
 	}
 
+	public enum ScrollbarVisibility {
+		Hidden,
+		Auto,
+		Always
+	}
+
 	public var size : Vector2;
 	public var position : Vector2;
 	public var padding : Vector2 = new Vector2 ( 10, 10 );
 	public var elasticity : float = 2;
 	public var lockAxis : ScrollDirection;
+	public var scrollbarVisibility : ScrollbarVisibility;
 	public var infiniteScrolling : boolean = false;
 	public var touchControl : boolean = false;
 
 	private var widgets : OGWidget[];
 	private var bounds : Vector2;
 	private var inPlace : boolean = true;
+
+	
+	////////////////
+	// Rects
+	////////////////
+	private function GetScrollbarYRect () : Rect {
+		var totalHeight : float = size.y - bounds.y;
+		var length : float = ( size.y / totalHeight ) * size.y;
+		var width : float = 6;
+
+		return new Rect ( drawRct.xMax - width, drawRct.yMax - length + ( position.y / totalHeight ) * ( size.y - ( length / 2 ) ), width, length );
+	}
 
 
 	////////////////
@@ -293,5 +312,9 @@ public class OGScrollView extends OGWidget {
 	
 	override function DrawSkin () {
 		OGDrawHelper.DrawSprite ( drawRct, styles.basic.coordinates, drawDepth - 10, styles.basic.color );
+	
+		if ( scrollbarVisibility == ScrollbarVisibility.Always ) {
+			OGDrawHelper.DrawSprite ( GetScrollbarYRect(), styles.thumb.coordinates, drawDepth - 9, styles.thumb.color );
+		}
 	}
 }
