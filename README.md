@@ -5,7 +5,7 @@ It's a GUI framework for Unity that aims to keep things as simple as possible wh
 GUI frameworks for Unity are overpriced, and the built-in API is a ridiculous resource hog with every widget requiring one or two draw calls. And we can't expect Unity to provide a decent UI system "sometime in the future", when we are ready to develop games now :) So this framework is using the OpenGL API to render widgets, and trying its best to be simple and easy to use at the same time.
 
 ### Notes
-- Yes, it does works with C# project  
+- Yes, it does work with C# project  
 - It is an open source project developed in the coontributors' spare time  
 - It won't cost you anything, but it comes without guarantee  
 
