@@ -359,6 +359,8 @@ class OGRoot extends MonoBehaviour {
 	}	
 
 	// OnGUI selection
+	#if UNITY_EDITOR
+	
 	public static var EditorSelectWidget : Function;
 	private static var editWidget : OGWidget;
 	private static var draggingWidget : boolean = false;
@@ -531,6 +533,7 @@ class OGRoot extends MonoBehaviour {
 			}
 		}
 	}
+	#endif
 
 
 	//////////////////
