@@ -6,7 +6,7 @@ GUI frameworks for Unity are overpriced, and the built-in API is a ridiculous re
 
 ### Notes
 - Yes, it does work with C# project  
-- It is an open source project developed in the coontributors' spare time  
+- It is an open source project developed in the contributors' spare time  
 - It won't cost you anything, but it comes without guarantee  
 
 ### Contribution
