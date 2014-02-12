@@ -18,19 +18,19 @@ Anyone willing to provide feedback, fixes, new implementations, whatever you mig
 
 FAQ
 ------------------------------------
-#### Does OpenGUI work with C# even though it's written in UnityScript?
+**Does OpenGUI work with C# even though it's written in UnityScript?** 
 Yep, as long as the provided directory configuration is maintained and .cs files are in a subfolder, .e.g /Assets/Scripts. This is because of the Unity [compilation order] (http://docs.unity3d.com/412/Documentation/ScriptReference/index.Script_compilation_28Advanced29.html).
 
-#### I've created widgets, but nothing's displaying. What's wrong?  
+**I've created widgets, but nothing's displaying. What's wrong?**  
 Make sure your OGPage object is the current one, and make sure your OGRoot object has a Camera component
 
-#### Where are the tutorials and documentation?
+**Where are the tutorials and documentation?** 
 In the [wiki] (https://github.com/mrzapp/opengui/wiki)  
 
-#### What about examples?
+**What about examples?** 
 Check out the [example project] (https://github.com/mrzapp/opengui/releases/tag/example)
 
-#### How can I align object realtive to the screen?
+**How can I align object realtive to the screen?** 
 A: The "anchor" and "pivot" prperties of the OGWidget and subclasses take care of that.
 
 
