@@ -1,3 +1,6 @@
+Introduction
+------------------------------------
+
 ### What?
 It's a GUI framework for Unity that aims to keep things as simple as possible while keeping draw calls to an absolute minimum. I am developing this in tandem with my Deus Ex-based game project <a href="http://mrzapp.github.io/vongott/">The Vongott Chronicles</a>
 
@@ -14,3 +17,31 @@ Anyone willing to provide feedback, fixes, new implementations, whatever you mig
 
 ### License
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">OpenGUI</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">mrzapp</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/mrzapp/opengui" rel="dct:source">https://github.com/mrzapp/opengui</a>.
+
+FAQ
+------------------------------------
+**Q: Does OpenGUI work with C# even though it's written in UnityScript?**  
+A: Yep, as long as the provided directory configuration is maintained.
+
+**Q: I've created widgets, but nothing's displaying. What's wrong**?  
+A: Make sure your OGPage object is the current one, and make sure your OGRoot object has a Camera component
+
+**Q: Where are the tutorials and documentation?**  
+A: In the [wiki] (https://github.com/mrzapp/opengui/wiki)  
+
+**Q: What about examples?**  
+A: Check out the [example project] (https://github.com/mrzapp/opengui/releases/tag/example)
+
+**Q: How can I align object realtive to the screen?**  
+A: The "anchor" and "pivot" prperties of the OGWidget and subclasses take care of that.
+
+
+Technical overview
+------------------------------------
+![diagram](https://raw2.github.com/mrzapp/opengui/master/Screenshots/diagram.jpg)
+
+### Rendering
+OpenGUI utilises the low-level OpenGL library in Unity. Every base widget has its own drawing rectangle and texture coordinates depending on the assigned OGStyle. OGRoot starts the draw loop by setting a pixel matrix according to the screen size, passes the atlas material from the OGSkin and then uses the drawing rectangles and texture coordinates to "move and crop the atlas" for every widget. The depth of a widget is solely dependent on the Z buffer, so there should be no confusion about what is on top of what.
+   
+### Positioning and scaling
+Screen-relative stretching and anchoring is calculated on the Transform component first. Then the position and scale of the drawing rectangle is derived from the Transform component and recalculated to fit the "flipped"" coordinates of OpenGL. 
