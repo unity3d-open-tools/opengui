@@ -139,4 +139,23 @@ public class MenuTest extends MonoBehaviour {
 		
 		w.GetDefaultStyles ();
 	}
+	
+	@MenuItem ("OpenGUI/Widgets/TextField")
+	static function NewTextField () {
+		var w : OGTextField = new GameObject ( "TextField", OGTextField ).GetComponent(OGTextField);
+
+		PlaceObject ( w.gameObject, new Vector3 ( 200, 20, 1 ) );
+		
+		w.GetDefaultStyles ();
+	}
+	
+	@MenuItem ("OpenGUI/Widgets/TickBox")
+	static function NewTickBox () {
+		var w : OGTickBox = new GameObject ( "TickBox", OGTickBox ).GetComponent(OGTickBox);
+
+		PlaceObject ( w.gameObject, new Vector3 ( 200, 20, 1 ) );
+		
+		w.title = "Tickbox";
+		w.GetDefaultStyles ();
+	}
 }
