@@ -30,7 +30,7 @@ In the [wiki] (https://github.com/mrzapp/opengui/wiki)
 **What about examples?**  
 Check out the [example project] (https://github.com/mrzapp/opengui/releases/tag/example)
 
-**How can I align object relatively to the screen?**  
+**How can I align objects relatively to the screen?**  
 The "anchor" and "pivot" properties of the OGWidget and subclasses take care of that.  
 
 **How do I deal with different aspect ratios?**  
