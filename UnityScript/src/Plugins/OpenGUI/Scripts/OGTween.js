@@ -1,7 +1,7 @@
 #pragma strict
 
 class OGTween extends MonoBehaviour {
-	enum TweenMessageSend {
+/*	enum TweenMessageSend {
 		Begin,
 		Complete
 	}
@@ -140,4 +140,4 @@ class OGTween extends MonoBehaviour {
 			Play ( true );
 		}
 	}
-}
+*/}

@@ -204,7 +204,15 @@ public class OGSkinInspector extends Editor {
 			}
 		}
 	}
-	
+
+	/*private function SavePrefab () {
+		EditorUtility.SetDirty ( target );
+		
+		if ( PrefabUtility.GetPrefabType ( Selection.objects[0] ) == PrefabType.PrefabInstance ) {
+			PrefabUtility.ReplacePrefab ( Selection.objects[0], PrefabUtility.GetPrefabParent ( Selection.objects[0] ), ReplacePrefabOptions.ConnectToPrefab );
+		}
+	}*/
+
 	override function OnInspectorGUI () {		
 		serializedObject.Update ();
 		
