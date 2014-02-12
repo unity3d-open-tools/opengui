@@ -15,8 +15,6 @@ GUI frameworks for Unity are overpriced, and the built-in API is a ridiculous re
 ### Contribution
 Anyone willing to provide feedback, fixes, new implementations, whatever you might think of are very welcome to join as a contributor.
 
-### License
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">OpenGUI</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">mrzapp</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/mrzapp/opengui" rel="dct:source">https://github.com/mrzapp/opengui</a>.
 
 FAQ
 ------------------------------------
@@ -45,3 +43,7 @@ OpenGUI utilises the low-level OpenGL library in Unity. Every base widget has it
    
 ### Positioning and scaling
 Screen-relative stretching and anchoring is calculated on the Transform component first. Then the position and scale of the drawing rectangle is derived from the Transform component and recalculated to fit the "flipped"" coordinates of OpenGL. 
+
+License
+------------------------------------
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">OpenGUI</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">mrzapp</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/mrzapp/opengui" rel="dct:source">https://github.com/mrzapp/opengui</a>.
