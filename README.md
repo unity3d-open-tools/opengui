@@ -31,7 +31,7 @@ In the [wiki] (https://github.com/mrzapp/opengui/wiki)
 Check out the [example project] (https://github.com/mrzapp/opengui/releases/tag/example)
 
 **How can I align object realtive to the screen?**  
-The "anchor" and "pivot" prperties of the OGWidget and subclasses take care of that.
+The "anchor" and "pivot" properties of the OGWidget and subclasses take care of that.
 
 
 Technical overview
