@@ -55,6 +55,8 @@ class OGRoot extends MonoBehaviour {
 	}
 
 	public function ReloadFonts () {
+		if ( !skin ) { return; }
+
 		unicode = new Dictionary.< int, int > [ skin.fonts.Length ];
 		
 		for ( var i : int = 0; i < skin.fonts.Length; i++ ) {
@@ -112,7 +114,7 @@ class OGRoot extends MonoBehaviour {
 	// Draw loop
 	//////////////////
 	public function OnPostRender () {
-		if ( widgets != null ) {
+		if ( skin != null && widgets != null ) {
 			var i : int = 0;
 			var o : int = 0;
 			var w : OGWidget;

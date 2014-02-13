@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{30420316-4525-555A-EEE8-A67768844348}</ProjectGuid>
+	<ProjectGuid>{5EBF87C6-A64A-E529-A96D-1A17BF39338F}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_WEBPLAYER;WEBPLUG;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_0;UNITY_4_3;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_WEBPLAYER;WEBPLUG;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_2;UNITY_4_3;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX;UNITY_TEAM_LICENSE</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -39,42 +39,25 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\OpenGUI\Scripts\OGButton.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGButton3D.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGCameraWindow.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGDropDown.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGLabel.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGListItem.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGPage.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGPopUp.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGRoot.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGScrollView.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGSkin.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGSlicedSprite.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGSlider.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGSprite.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGTabs.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGTextField.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGTexture.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGTickBox.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGTween.js" />
-     <Compile Include="Assets\OpenGUI\Scripts\OGWidget.js" />
-     <Compile Include="Assets\OpenGUI\Tools\OGArrangeInCircle.js" />
-     <Compile Include="Assets\OpenGUI\Tools\OGScaleToCamera.js" />
-     <None Include="Assets\OpenGUI\Shaders\UnlitAlphaColored.shader" />
-     <None Include="Assets\OpenGUI\Shaders\3DText.shader" />
-     <None Include="Assets\OpenGUI\Shaders\UnlitClipped.shader" />
+     <Compile Include="Assets\TestAssets\RotateObject.js" />
+     <Compile Include="Assets\TutorialScripts\MyOtherPage.js" />
+     <None Include="Assets\Plugins\OpenGUI\Shaders\UnlitAlphaColored.shader" />
+     <None Include="Assets\Plugins\OpenGUI\Shaders\UnlitVertexColored.shader" />
+     <None Include="Assets\Plugins\OpenGUI\Shaders\3DText.shader" />
+     <None Include="Assets\Plugins\OpenGUI\Shaders\UnlitClipped.shader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{40D55E3F-E532-17B1-C43F-91BA2180FBB6}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+      <Project>{329BB6BB-CBEE-07F0-9BAD-0A799D932E51}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+    <ProjectReference Include="Assembly-UnityScript-firstpass.unityproj">
+      <Project>{9753204F-FE99-ED6F-8C22-F9BEDEDFB126}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
