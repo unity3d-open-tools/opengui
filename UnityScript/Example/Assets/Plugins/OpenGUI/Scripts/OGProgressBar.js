@@ -21,9 +21,9 @@ public class OGProgressBar extends OGWidget {
 	/////////////////
 	override function DrawSkin () {
 		// Background
-		OGDrawHelper.DrawSlicedSprite ( drawRct, styles.basic.coordinates, styles.basic.border, drawDepth, styles.basic.color, clipTo );
+		OGDrawHelper.DrawSlicedSprite ( drawRct, styles.basic, drawDepth, alpha, clipTo );
 
 		// Thumb
-		OGDrawHelper.DrawSprite ( GetThumbRect (), styles.thumb.coordinates, drawDepth, styles.thumb.color, clipTo ); 
+		OGDrawHelper.DrawSprite ( GetThumbRect (), styles.thumb, drawDepth, alpha, clipTo ); 
 	}
 }

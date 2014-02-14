@@ -113,10 +113,10 @@ class OGListItem extends OGWidget {
 	// Draw
 	//////////////////
 	override function DrawSkin () {
-		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle.coordinates, currentStyle.border, drawDepth, currentStyle.color, clipTo );
+		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle, drawDepth, alpha, clipTo );
 	}
 
 	override function DrawText () {
-		OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, clipTo );
+		OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, alpha, clipTo );
 	}
 }

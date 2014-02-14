@@ -10,9 +10,9 @@ public class OGSprite extends OGWidget {
 		if ( drawCrd == null || drawRct == null ) { return; }
 		
 		if ( tile.x != 1 || tile.y != 1 ) {
-			OGDrawHelper.DrawTiledSprite ( drawRct, styles.basic.coordinates, drawDepth, styles.basic.color, tile.x, tile.y, clipTo );
+			OGDrawHelper.DrawTiledSprite ( drawRct, styles.basic, drawDepth, alpha, tile.x, tile.y, clipTo );
 		} else {
-			OGDrawHelper.DrawSprite ( drawRct, styles.basic.coordinates, drawDepth, styles.basic.color, clipTo );
+			OGDrawHelper.DrawSprite ( drawRct, styles.basic, drawDepth, alpha, clipTo );
 		}
 	}
 

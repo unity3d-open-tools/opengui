@@ -210,23 +210,23 @@ class OGDropDown extends OGWidget {
 	////////////////////
 	override function DrawSkin () {
 		if ( isDown ) {
-			OGDrawHelper.DrawSlicedSprite ( GetRootBackgroundRect (), styles.basic.coordinates, styles.basic.border, drawDepth, styles.basic.color, clipTo );
+			OGDrawHelper.DrawSlicedSprite ( GetRootBackgroundRect (), styles.basic, drawDepth, alpha, clipTo );
 		
 			if ( activeNestedMenu != -1 ) {
-				OGDrawHelper.DrawSlicedSprite ( GetNestedBackgroundRect (), styles.basic.coordinates, styles.basic.border, drawDepth, styles.basic.color, clipTo );
+				OGDrawHelper.DrawSlicedSprite ( GetNestedBackgroundRect (), styles.basic, drawDepth, alpha, clipTo );
 			}
 		
 			// Draw tick boxes
 			for ( var s : int = 0; s < submenu.Length; s++ ) {
 				if ( submenu[s].isTicked ) {
-					OGDrawHelper.DrawSprite ( GetTickRect ( s, true ), styles.ticked.coordinates, drawDepth, styles.ticked.color, clipTo );
+					OGDrawHelper.DrawSprite ( GetTickRect ( s, true ), styles.ticked, drawDepth, alpha, clipTo );
 				}
 			}
 
 			if ( activeNestedMenu != -1 ) {
 				for ( var n : int = 0; n < submenu[activeNestedMenu].nestedMenu.Length; n++ ) {
 					if ( submenu[activeNestedMenu].nestedMenu[n].isTicked ) {
-						OGDrawHelper.DrawSprite ( GetTickRect ( n, false ), styles.ticked.coordinates, drawDepth, styles.ticked.color, clipTo );
+						OGDrawHelper.DrawSprite ( GetTickRect ( n, false ), styles.ticked, drawDepth, alpha, clipTo );
 					}
 				}
 			}
@@ -234,16 +234,16 @@ class OGDropDown extends OGWidget {
 	}	
 
 	override function DrawText () {
-		OGDrawHelper.DrawLabel ( drawRct, title, currentStyle.text, drawDepth );
+		OGDrawHelper.DrawLabel ( drawRct, title, currentStyle.text, drawDepth, alpha );
 
 		if ( isDown ) {
 			for ( var s : int = 0; s < submenu.Length; s++ ) {
-				OGDrawHelper.DrawLabel ( GetRootItemRect ( s ), submenu[s].name, GetRootItemStyle ( s ).text, drawDepth, clipTo );
+				OGDrawHelper.DrawLabel ( GetRootItemRect ( s ), submenu[s].name, GetRootItemStyle ( s ).text, drawDepth, alpha, clipTo );
 			}
 
 			if ( activeNestedMenu != -1 ) {
 				for ( var n : int = 0; n < submenu[activeNestedMenu].nestedMenu.Length; n++ ) {
-					OGDrawHelper.DrawLabel ( GetNestedItemRect ( n ), submenu[activeNestedMenu].nestedMenu[n].name, GetNestedItemStyle ( n ).text, drawDepth, clipTo );
+					OGDrawHelper.DrawLabel ( GetNestedItemRect ( n ), submenu[activeNestedMenu].nestedMenu[n].name, GetNestedItemStyle ( n ).text, drawDepth, alpha, clipTo );
 				}
 			}
 		}

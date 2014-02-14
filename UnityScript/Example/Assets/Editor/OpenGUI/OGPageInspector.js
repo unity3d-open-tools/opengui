@@ -7,8 +7,9 @@ public class OGPageInspector extends Editor {
 		serializedObject.Update ();
 		
 		var page : OGPage = target as OGPage;
+		var root : OGRoot =  OGRoot.GetInstance();
 
-		if ( !page ) { return; }
+		if ( !page || !root ) { return; }
 		
 		DrawDefaultInspector ();
 	
@@ -19,7 +20,9 @@ public class OGPageInspector extends Editor {
 		}
 		
 		GUI.backgroundColor = Color.green;
-		if ( OGRoot.GetInstance().currentPage == page ) {
+		
+
+		if ( root.currentPage == page ) {
 			if ( GUILayout.Button ( "Update", GUILayout.Height(30) ) ) {
 				OGRoot.GetInstance().SetDirty();
 			}

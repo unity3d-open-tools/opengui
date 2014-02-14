@@ -129,23 +129,23 @@ class OGPopUp extends OGWidget {
 	///////////////////
 	override function DrawSkin () {
 		if ( isUp ) {
-			OGDrawHelper.DrawSlicedSprite ( GetExpandedRect(), currentStyle.coordinates, currentStyle.border, drawDepth, currentStyle.color, clipTo );
+			OGDrawHelper.DrawSlicedSprite ( GetExpandedRect(), currentStyle, drawDepth, alpha, clipTo );
 		} else {
-			OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle.coordinates, currentStyle.border, drawDepth, currentStyle.color, clipTo );
+			OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle, drawDepth, alpha, clipTo );
 		}
 	}	
 	
 	override function DrawText () {
 		if ( isUp ) {
-			OGDrawHelper.DrawLabel ( drawRct, title, styles.basic.text, drawDepth, clipTo );
+			OGDrawHelper.DrawLabel ( drawRct, title, styles.basic.text, drawDepth, alpha, clipTo );
 
 			for ( var i : int = 0; i < options.Length; i++ ) {
-				OGDrawHelper.DrawLabel ( GetOptionRect ( i ), options[i], GetOptionStyle ( i ).text, drawDepth, clipTo );
+				OGDrawHelper.DrawLabel ( GetOptionRect ( i ), options[i], GetOptionStyle ( i ).text, drawDepth, alpha, clipTo );
 			}
 		} else if ( !String.IsNullOrEmpty ( selectedOption ) ) {
-			OGDrawHelper.DrawLabel ( drawRct, selectedOption, currentStyle.text, drawDepth, clipTo );
+			OGDrawHelper.DrawLabel ( drawRct, selectedOption, currentStyle.text, drawDepth, alpha, clipTo );
 		} else {
-			OGDrawHelper.DrawLabel ( drawRct, title, currentStyle.text, drawDepth, clipTo );
+			OGDrawHelper.DrawLabel ( drawRct, title, currentStyle.text, drawDepth, alpha, clipTo );
 		}
 	}
 }

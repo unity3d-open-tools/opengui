@@ -117,6 +117,7 @@ MonoBehaviour:
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
+  alpha: 1
   pivot:
     x: 2
     y: 2
@@ -353,13 +354,13 @@ MonoBehaviour:
   drawRct:
     serializedVersion: 2
     x: 183.5
-    y: 213
+    y: 56
     width: 157
     height: 38
   mouseRct:
     serializedVersion: 2
     x: 183.5
-    y: 213
+    y: 56
     width: 157
     height: 38
   drawDepth: -10
@@ -412,6 +413,7 @@ MonoBehaviour:
   isSelectable: 1
   isDraggable: 0
   resetAfterDrag: 0
+  alpha: 1
   pivot:
     x: 2
     y: 2

@@ -111,12 +111,12 @@ public class OGTextField extends OGWidget {
 	// Draw
 	/////////////////
 	override function DrawSkin () {
-		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle.coordinates, currentStyle.border, drawDepth, currentStyle.color, clipTo );
+		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle, drawDepth, alpha, clipTo );
 	}
 
 	override function DrawText () {
 		if ( !listening ) {
-			OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, this );
+			OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, alpha, this );
 		}
 	}
 }
