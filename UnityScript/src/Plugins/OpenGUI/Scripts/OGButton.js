@@ -7,6 +7,8 @@ class OGButton extends OGWidget {
 	public var message : String;
 	public var argument : String;
 	public var func : Function;
+	public var argumentSource : MonoBehaviour;
+	public var argumentSourceField : String = "";
 	public var enableImage : boolean = false;
 	public var imageScale : float = 1;
 	public var imageOffset : Vector2 = Vector2.zero;
@@ -30,7 +32,11 @@ class OGButton extends OGWidget {
 			func ();
 				
 		} else if ( target != null && !String.IsNullOrEmpty ( message ) ) {
-			if ( !String.IsNullOrEmpty ( argument ) ) {
+			// if the source widget and source field are set then we
+			// get the argument from this
+			if ( argumentSource != null && !String.IsNullOrEmpty( argumentSourceField ) ) {
+				target.SendMessage( message, argumentSource.GetType().GetField( argumentSourceField ).GetValue( argumentSource ) );
+			} else if ( !String.IsNullOrEmpty ( argument ) ) {
 				target.SendMessage ( message, argument );
 			} else {	
 				target.SendMessage ( message, this );
