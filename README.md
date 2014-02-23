@@ -1,5 +1,5 @@
 #### OpenGUI
-This project aims to be a lean, no-frills GUI framework for Unity
+It’s a GUI framework for Unity that aims to keep things as simple as possible while keeping draw calls to an absolute minimum.
 
 #### Website
 Is [here](http://jeppezapp.com/opengui)
