@@ -6756,7 +6756,7 @@ MonoBehaviour:
     y: 0
     width: 0
     height: 0
-  isMouseOver: 1
+  isMouseOver: 0
   texWidth: 256
   texHeight: 144
 --- !u!20 &2092932570

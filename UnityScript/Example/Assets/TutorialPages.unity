@@ -97,7 +97,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 618374636}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 262, y: 368, z: 10}
+  m_LocalPosition: {x: 209, y: 265, z: 10}
   m_LocalScale: {x: 157, y: 38, z: 1}
   m_Children: []
   m_Father: {fileID: 1838180341}
@@ -353,14 +353,14 @@ MonoBehaviour:
     height: 32
   drawRct:
     serializedVersion: 2
-    x: 183.5
-    y: 56
+    x: 130.5
+    y: 263
     width: 157
     height: 38
   mouseRct:
     serializedVersion: 2
-    x: 183.5
-    y: 56
+    x: 130.5
+    y: 263
     width: 157
     height: 38
   drawDepth: -10
@@ -378,6 +378,8 @@ MonoBehaviour:
   target: {fileID: 1838180340}
   message: SwitchPage
   argument: 
+  argumentSource: {fileID: 0}
+  argumentSourceField: 
   enableImage: 0
   imageScale: 1
   imageOffset: {x: 0, y: 0}
@@ -674,6 +676,8 @@ MonoBehaviour:
   target: {fileID: 2143573018}
   message: SwitchPage
   argument: 
+  argumentSource: {fileID: 0}
+  argumentSourceField: 
   enableImage: 0
   imageScale: 1
   imageOffset: {x: 0, y: 0}
