@@ -31,11 +31,11 @@ public class OGScrollView extends OGWidget {
 	// Rects
 	////////////////
 	private function GetScrollbarYRect () : Rect {
-		var totalHeight : float = size.y - bounds.y;
-		var length : float = ( size.y / totalHeight ) * size.y;
-		var width : float = 6;
+		var thumbSize : Vector2 = new Vector2 ( 6, Mathf.Clamp ( size.y + bounds.y, 20, size.y ) );
+		var factor : float = Mathf.Clamp ( -position.y / -bounds.y, 0, 1 ); 
+		var thumbPos : Vector2 = new Vector2 ( drawRct.xMax - thumbSize.x, drawRct.yMax - thumbSize.y - factor * size.y );
 
-		return new Rect ( drawRct.xMax - width, drawRct.yMax - length + ( position.y / totalHeight ) * ( size.y - ( length / 2 ) ), width, length );
+		return new Rect ( thumbPos.x, thumbPos.y, thumbSize.x, thumbSize.y );
 	}
 
 

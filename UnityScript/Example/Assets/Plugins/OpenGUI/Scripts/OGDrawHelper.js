@@ -357,6 +357,17 @@ public class OGDrawHelper {
 			}
 		}
 	}
+	
+	public static function DrawTiledSprite ( rect : Rect, uvRect : Rect, depth : float, color : Color, alpha : float, tileX : float, tileY : float, clipping : OGWidget ) {
+		for ( var x : int = 0; x < tileX; x++ ) {
+			for ( var y : int = 0; y < tileY; y++ ) {
+				var newScale : Vector2 = new Vector2 ( rect.width / tileX, rect.height / tileY );
+				var newPosition : Vector2 = new Vector2 ( rect.x + x * newScale.x, rect.y + y * newScale.y );
+
+				DrawSprite ( new Rect ( newPosition.x, newPosition.y, newScale.x, newScale.y ), uvRect, depth, color, alpha, clipping );
+			}
+		}
+	}
 
 	// Sliced
 	public static function DrawSlicedSprite ( rect : Rect, style : OGStyle, depth : float, alpha : float ) {
@@ -461,6 +472,124 @@ public class OGDrawHelper {
 				depth,
 				color,
 				alpha,
+				clipping
+			);
+		}
+	}
+
+	// Tiled sliced
+	public static function DrawTiledSlicedSprite ( rect : Rect, style : OGStyle, depth : float, alpha : float, tileX : float, tileY : float ) {
+		DrawSlicedSprite ( rect, style, depth, alpha, null );
+	}
+
+	public static function DrawTiledSlicedSprite ( rect : Rect, style : OGStyle, depth : float, alpha : float, tileX : float, tileY : float, clipping : OGWidget ) {
+		var uvRect : Rect = style.coordinates;
+		var border : OGSlicedSpriteOffset = style.border;
+		var color : Color = style.color;
+
+		// If no border is defined, draw a regular sprite
+		if ( border.left == 0 && border.right == 0 && border.top == 0 && border.bottom == 0 ) {
+			DrawSprite ( rect, style, depth, alpha, clipping );
+
+		// Draw all corners, panels and the center	
+		} else {
+			// Bottom left corner
+			DrawSprite (
+				new Rect ( rect.x, rect.y, border.left, border.bottom ),
+				new Rect ( uvRect.x, uvRect.y, border.left, border.bottom ),
+				depth,
+				color,
+				alpha,
+				clipping
+			);
+		
+			// Left panel
+			DrawTiledSprite (
+				new Rect ( rect.x, rect.y + border.bottom, border.left, rect.height - border.bottom - border.top ),
+				new Rect ( uvRect.x, uvRect.y + border.bottom, border.left, uvRect.height - border.top - border.bottom ),
+				depth,
+				color,
+				alpha,
+				1.0,
+				tileY,
+				clipping
+			);
+
+			// Top left corner
+			DrawSprite (
+				new Rect ( rect.x, rect.y + rect.height - border.top, border.left, border.top ),
+				new Rect ( uvRect.x, uvRect.y + uvRect.height - border.top, border.left, border.top ),
+				depth,
+				color,
+				alpha,
+				clipping
+			);
+
+			// Top panel
+			DrawTiledSprite (
+				new Rect ( rect.x + border.left, rect.y + rect.height - border.top, rect.width - border.horizontal, border.top ),
+				new Rect ( uvRect.x + border.left, uvRect.y + uvRect.height - border.top, uvRect.width - border.horizontal, border.top ),
+				depth,
+				color,
+				alpha,
+				tileX,
+				1.0,
+				clipping
+			);
+			
+			// Top right corner
+			DrawSprite (
+				new Rect ( rect.x + rect.width - border.right, rect.y + rect.height - border.top, border.right, border.top ),
+				new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y + uvRect.height - border.top, border.right, border.top ),
+				depth,
+				color,
+				alpha,
+				clipping
+			);
+			
+			// Right panel
+			DrawTiledSprite (
+				new Rect ( rect.x + rect.width - border.right, rect.y + border.bottom, border.right, rect.height - border.vertical ),
+				new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y + border.bottom, border.right, uvRect.height - border.vertical ),
+				depth,
+				color,
+				alpha,
+				1.0,
+				tileY,
+				clipping
+			);
+
+			// Bottom left corner
+			DrawSprite (
+				new Rect ( rect.x + rect.width - border.right, rect.y, border.right, border.bottom ),
+				new Rect ( uvRect.x + uvRect.width - border.right, uvRect.y, border.right, border.bottom ),
+				depth,
+				color,
+				alpha,
+				clipping
+			);
+			
+			// Top panel
+			DrawTiledSprite (
+				new Rect ( rect.x + border.left, rect.y, rect.width - border.horizontal, border.bottom ),
+				new Rect ( uvRect.x + border.left, uvRect.y, uvRect.width - border.horizontal, border.bottom ),
+				depth,
+				color,
+				alpha,
+				tileX,
+				1.0,
+				clipping
+			);
+			
+			// Center
+			DrawTiledSprite (
+				new Rect ( rect.x + border.left, rect.y + border.bottom, rect.width - border.right - border.left, rect.height - border.bottom - border.top ),
+				new Rect ( uvRect.x + border.left, uvRect.y + border.bottom, uvRect.width - border.right - border.left, uvRect.height - border.bottom - border.top ),
+				depth,
+				color,
+				alpha,
+				tileX,
+				tileY,
 				clipping
 			);
 		}

@@ -271,6 +271,17 @@ class OGRoot extends MonoBehaviour {
 	//////////////////
 	// Mouse interaction
 	//////////////////
+	private function GetTouch () : TouchPhase {
+		if ( Input.touchCount < 1 ) {
+			return -1;
+		
+		} else {
+			var touch : Touch = Input.GetTouch ( 0 );
+
+			return touch.phase;
+		}
+	}
+	
 	public function UpdateMouse () {
 		if ( widgets == null ) { return; }
 		
@@ -278,7 +289,7 @@ class OGRoot extends MonoBehaviour {
 		var w : OGWidget;
 
 		// Click
-		if ( Input.GetMouseButtonDown ( 0 ) || Input.GetMouseButtonDown ( 2 ) ) {
+		if ( Input.GetMouseButtonDown ( 0 ) || Input.GetMouseButtonDown ( 2 ) || GetTouch () == TouchPhase.Began ) {
 			var topWidget : OGWidget;
 			
 			for ( i = 0; i < mouseOver.Count; i++ ) {
@@ -305,7 +316,7 @@ class OGRoot extends MonoBehaviour {
 			}
 
 		// Release
-		} else if ( Input.GetMouseButtonUp ( 0 ) || Input.GetMouseButtonUp ( 2 ) ) {
+		} else if ( Input.GetMouseButtonUp ( 0 ) || Input.GetMouseButtonUp ( 2 ) || GetTouch () == TouchPhase.Ended || GetTouch () == TouchPhase.Canceled ) {
 			if ( downWidget ) {
 				// Draggable
 				if ( downWidget.resetAfterDrag && !downWidget.GetComponent(OGScrollView) ) {
@@ -315,7 +326,7 @@ class OGRoot extends MonoBehaviour {
 				}
 				
 				// Mouse over
-				if ( downWidget.CheckMouseOver() && !downWidget.isDisabled ) {
+				if ( ( downWidget.CheckMouseOver() || GetTouch () == TouchPhase.Ended ) && !downWidget.isDisabled ) {
 					downWidget.OnMouseUp ();
 
 				// Mouse out
@@ -327,7 +338,7 @@ class OGRoot extends MonoBehaviour {
 			}
 		
 		// Dragging
-		} else if ( Input.GetMouseButton ( 0 ) || Input.GetMouseButton ( 2 ) ) {
+		} else if ( Input.GetMouseButton ( 0 ) || Input.GetMouseButton ( 2 ) || GetTouch () == TouchPhase.Moved ) {
 			if ( downWidget != null && !downWidget.isDisabled ) {
 				downWidget.OnMouseDrag ();
 			
