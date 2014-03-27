@@ -205,13 +205,29 @@ public class OGSkinInspector extends Editor {
 		}
 	}
 
-	/*private function SavePrefab () {
-		EditorUtility.SetDirty ( target );
-		
-		if ( PrefabUtility.GetPrefabType ( Selection.objects[0] ) == PrefabType.PrefabInstance ) {
-			PrefabUtility.ReplacePrefab ( Selection.objects[0], PrefabUtility.GetPrefabParent ( Selection.objects[0] ), ReplacePrefabOptions.ConnectToPrefab );
-		}
-	}*/
+	private function SavePrefab () {
+		var selectedGameObject : GameObject;
+		var selectedPrefabType : PrefabType;
+		var parentGameObject : GameObject;
+		var prefabParent : UnityEngine.Object;
+		     
+	    	// Get currently selected object in "Hierarchy" view and store
+	    	// its type, parent, and the parent's prefab origin
+		selectedGameObject = Selection.gameObjects[0];
+		selectedPrefabType = PrefabUtility.GetPrefabType(selectedGameObject);
+		parentGameObject = selectedGameObject.transform.root.gameObject;
+		prefabParent = PrefabUtility.GetPrefabParent(selectedGameObject);
+		     
+		// Notify the script this is modifying that something changed
+		EditorUtility.SetDirty(target);
+		     
+		// If the selected object is an instance of a prefab
+		if (selectedPrefabType == PrefabType.PrefabInstance) {
+			// Replace parent's prefab origin with new parent as a prefab
+			PrefabUtility.ReplacePrefab(parentGameObject, prefabParent,
+			ReplacePrefabOptions.ConnectToPrefab);
+	    	}
+	}
 
 	override function OnInspectorGUI () {		
 		serializedObject.Update ();
@@ -676,7 +692,9 @@ public class OGSkinInspector extends Editor {
 			
 			EditorGUILayout.Space();
 			
-			
+			if ( GUI.changed ) {
+				SavePrefab (); 
+			}
 		}
 	}
 }

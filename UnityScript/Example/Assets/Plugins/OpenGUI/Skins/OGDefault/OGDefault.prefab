@@ -188,6 +188,35 @@ MonoBehaviour:
         m_Bottom: 0
       lineHeight: 1.25
       spacing: 1.25
+  - name: ButtonHover
+    coordinates:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 32
+      height: 32
+    border:
+      top: 4
+      bottom: 4
+      left: 4
+      right: 4
+    color: {r: 1, g: 1, b: 1, a: 1}
+    text:
+      fontIndex: 0
+      font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
+      fontSize: 12
+      fontColor: {r: 1, g: 1, b: 1, a: 1}
+      shadowSize: 0
+      shadowColor: {r: 0, g: 0, b: 0, a: 1}
+      alignment: 4
+      wordWrap: 1
+      padding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 0
+      lineHeight: 1.25
+      spacing: 1.25
   - name: DropDown
     coordinates:
       serializedVersion: 2
@@ -860,7 +889,7 @@ MonoBehaviour:
           lineHeight: 1.25
           spacing: 1.25
       hover:
-        name: Button
+        name: ButtonHover
         coordinates:
           serializedVersion: 2
           x: 0
@@ -877,7 +906,7 @@ MonoBehaviour:
           fontIndex: 0
           font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
-          fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+          fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
           shadowColor: {r: 0, g: 0, b: 0, a: 1}
           alignment: 4
@@ -950,11 +979,11 @@ MonoBehaviour:
           lineHeight: 1.25
           spacing: 1.25
       thumb:
-        name: Background
+        name: ButtonHover
         coordinates:
           serializedVersion: 2
-          x: 32
-          y: 64
+          x: 0
+          y: 0
           width: 32
           height: 32
         border:
@@ -970,7 +999,7 @@ MonoBehaviour:
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
           shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 0
+          alignment: 4
           wordWrap: 1
           padding:
             m_Left: 0
@@ -980,11 +1009,11 @@ MonoBehaviour:
           lineHeight: 1.25
           spacing: 1.25
       disabled:
-        name: Background
+        name: ButtonHover
         coordinates:
           serializedVersion: 2
-          x: 32
-          y: 64
+          x: 0
+          y: 0
           width: 32
           height: 32
         border:
@@ -1000,7 +1029,7 @@ MonoBehaviour:
           fontColor: {r: 1, g: 1, b: 1, a: 1}
           shadowSize: 0
           shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 0
+          alignment: 4
           wordWrap: 1
           padding:
             m_Left: 0
@@ -1194,25 +1223,25 @@ MonoBehaviour:
   - widgetType: 3
     styleSet:
       basic:
-        name: Background
+        name: Label
         coordinates:
           serializedVersion: 2
-          x: 32
-          y: 64
+          x: 0
+          y: 0
           width: 32
           height: 32
         border:
-          top: 4
-          bottom: 4
-          left: 4
-          right: 4
+          top: 0
+          bottom: 0
+          left: 0
+          right: 0
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
           font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
-          fontColor: {r: 1, g: 1, b: 1, a: 1}
-          shadowSize: 0
+          fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+          shadowSize: 2
           shadowColor: {r: 0, g: 0, b: 0, a: 1}
           alignment: 0
           wordWrap: 1
@@ -1344,25 +1373,25 @@ MonoBehaviour:
           lineHeight: 1.25
           spacing: 1.25
       disabled:
-        name: Background
+        name: Label
         coordinates:
           serializedVersion: 2
-          x: 32
-          y: 64
+          x: 0
+          y: 0
           width: 32
           height: 32
         border:
-          top: 4
-          bottom: 4
-          left: 4
-          right: 4
+          top: 0
+          bottom: 0
+          left: 0
+          right: 0
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
           font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
-          fontColor: {r: 1, g: 1, b: 1, a: 1}
-          shadowSize: 0
+          fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
+          shadowSize: 2
           shadowColor: {r: 0, g: 0, b: 0, a: 1}
           alignment: 0
           wordWrap: 1
@@ -1740,11 +1769,11 @@ MonoBehaviour:
   - widgetType: 6
     styleSet:
       basic:
-        name: Background
+        name: ProgressBar
         coordinates:
           serializedVersion: 2
-          x: 32
-          y: 64
+          x: 0
+          y: 0
           width: 32
           height: 32
         border:
@@ -1860,18 +1889,18 @@ MonoBehaviour:
           lineHeight: 1.25
           spacing: 1.25
       thumb:
-        name: Background
+        name: ProgressBarThumb
         coordinates:
           serializedVersion: 2
-          x: 32
-          y: 64
-          width: 32
+          x: 7
+          y: 32
+          width: 2
           height: 32
         border:
-          top: 4
-          bottom: 4
-          left: 4
-          right: 4
+          top: 0
+          bottom: 0
+          left: 0
+          right: 0
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
@@ -2042,18 +2071,18 @@ MonoBehaviour:
           lineHeight: 1.25
           spacing: 1.25
       thumb:
-        name: Background
+        name: ScrollView
         coordinates:
           serializedVersion: 2
-          x: 32
-          y: 64
-          width: 32
-          height: 32
+          x: 2
+          y: 66
+          width: 28
+          height: 28
         border:
-          top: 4
-          bottom: 4
-          left: 4
-          right: 4
+          top: 0
+          bottom: 0
+          left: 0
+          right: 0
         color: {r: 1, g: 1, b: 1, a: 1}
         text:
           fontIndex: 0
@@ -2286,11 +2315,11 @@ MonoBehaviour:
   - widgetType: 11
     styleSet:
       basic:
-        name: Background
+        name: Tabs
         coordinates:
           serializedVersion: 2
           x: 32
-          y: 64
+          y: 96
           width: 32
           height: 32
         border:
@@ -2303,10 +2332,10 @@ MonoBehaviour:
           fontIndex: 0
           font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
-          fontColor: {r: 1, g: 1, b: 1, a: 1}
+          fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0
           shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 0
+          alignment: 4
           wordWrap: 1
           padding:
             m_Left: 0
@@ -2346,11 +2375,11 @@ MonoBehaviour:
           lineHeight: 1.25
           spacing: 1.25
       active:
-        name: Background
+        name: TabsActive
         coordinates:
           serializedVersion: 2
-          x: 32
-          y: 64
+          x: 64
+          y: 96
           width: 32
           height: 32
         border:
@@ -2363,10 +2392,10 @@ MonoBehaviour:
           fontIndex: 0
           font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
-          fontColor: {r: 1, g: 1, b: 1, a: 1}
+          fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0
           shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 0
+          alignment: 4
           wordWrap: 1
           padding:
             m_Left: 0
@@ -2436,11 +2465,11 @@ MonoBehaviour:
           lineHeight: 1.25
           spacing: 1.25
       disabled:
-        name: Background
+        name: TabsActive
         coordinates:
           serializedVersion: 2
-          x: 32
-          y: 64
+          x: 64
+          y: 96
           width: 32
           height: 32
         border:
@@ -2453,10 +2482,10 @@ MonoBehaviour:
           fontIndex: 0
           font: {fileID: 12800000, guid: 131adbf4c5e0eaf4eab283cb2d5fa72c, type: 3}
           fontSize: 12
-          fontColor: {r: 1, g: 1, b: 1, a: 1}
+          fontColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
           shadowSize: 0
           shadowColor: {r: 0, g: 0, b: 0, a: 1}
-          alignment: 0
+          alignment: 4
           wordWrap: 1
           padding:
             m_Left: 0
