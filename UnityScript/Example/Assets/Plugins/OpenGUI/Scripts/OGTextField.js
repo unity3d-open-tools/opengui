@@ -15,12 +15,12 @@ public class OGTextField extends OGWidget {
 	public var regex : String;
 	public var regexPreset : RegExPreset;
 
-	@HideInInspector public var cursorStyle : OGStyle;
 	@HideInInspector public var listening : boolean = false;
 	
 	private var currentPreset : RegExPreset = RegExPreset.None;
-	private var cursorPosition : Vector2;
-	private var selectCursorPosition : Vector2;
+	private var cursorRect : Rect = new Rect();
+	private var cursorPos : Vector2 = new Vector2 ();
+	private var cursorIndex : int = 0;
 
 
 	//////////////////
@@ -41,7 +41,7 @@ public class OGTextField extends OGWidget {
 	// Steal TextEditor functionality from OnGUI
 	public function OnGUI () {
 		if ( listening && isDrawn ) {
-			//GUI.color = new Color ( 0, 0, 0, 0 );
+			GUI.color = new Color ( 0, 0, 0, 0 );
 
 			var style : GUIStyle = new GUIStyle();
 			style.normal.textColor = styles.basic.text.fontColor;
@@ -53,14 +53,20 @@ public class OGTextField extends OGWidget {
 
 			var controlID : int = GUIUtility.GetControlID(drawRct.GetHashCode(), FocusType.Keyboard);
 			var editor : TextEditor = GUIUtility.GetStateObject(typeof(TextEditor), controlID -1 ) as TextEditor;
-		
-			cursorPosition = new Vector2 ( editor.graphicalCursorPos.x / this.transform.localScale.x, ( editor.graphicalCursorPos.y - 2 ) / this.transform.localScale.y );
+	
+			cursorIndex = editor.pos;
+
+			cursorRect.x = cursorPos.x;
+			cursorRect.y = cursorPos.y;
+			cursorRect.width = styles.basic.text.fontSize / 6;
+			cursorRect.height = styles.basic.text.fontSize;
 		
 			if ( !String.IsNullOrEmpty ( regex ) && regex != "\\" && regexPreset != RegExPreset.None ) {
 				text = Regex.Replace ( text, "[" + regex + "]", "" );
 			}
 
-			//GUI.color = new Color ( 1, 1, 1, 1 );
+			GUI.color = new Color ( 1, 1, 1, 1 );
+
 		}
 	}
 
@@ -112,11 +118,13 @@ public class OGTextField extends OGWidget {
 	/////////////////
 	override function DrawSkin () {
 		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle, drawDepth, alpha, clipTo );
+
+		if ( listening ) {
+			OGDrawHelper.DrawSprite ( cursorRect, styles.thumb, drawDepth, alpha, clipTo );
+		}
 	}
 
 	override function DrawText () {
-		if ( !listening ) {
-			OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, alpha, this );
-		}
+		cursorPos = OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, alpha, this, cursorIndex );
 	}
 }

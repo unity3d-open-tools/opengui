@@ -28,11 +28,19 @@ public class OGDrawHelper {
 		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, alpha, clipping );
 	}
 	
+	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float, alpha : float, clipping : OGWidget, cursorIndex : int ) : Vector2 {
+		return DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, alpha, clipping, cursorIndex );
+	}
+	
 	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float, alpha : float ) {
 		DrawLabel ( rect, string, style, intSize, alignment, depth, alpha, null );
 	}
-		
-	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float, alpha : float, clipping : OGWidget ) {
+	
+	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float, alpha : float, clipping : OGWidget ) {	
+		DrawLabel ( rect, string, style, intSize, alignment, depth, alpha, clipping, 0 );
+	}
+
+	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float, alpha : float, clipping : OGWidget, cursorIndex : int ) : Vector2 {
 		// Check font
 		if ( style.font == null ) {
 			return;
@@ -72,6 +80,7 @@ public class OGDrawHelper {
 		var lineWidth : float = 0;
 		var info : CharacterInfo;
 		var emergencyBrake : int = 0;
+		var cursorPos : Vector2;
 
 		switch ( alignment ) {
 			case TextAnchor.UpperLeft:
@@ -180,14 +189,19 @@ public class OGDrawHelper {
 					continue;
 				}
 				
+				var vert : Rect = new Rect ( info.vert.x * size, info.vert.y * size, info.vert.width * size, info.vert.height * size );
+				var uv : Vector2[] = new Vector2[4];
+
+				// Set cursor position
+				if ( g == cursorIndex ) {
+					cursorPos = new Vector2 ( anchor.x + vert.x + rect.x + advance.x, anchor.y + vert.height + vert.y + rect.y + advance.y );
+				}
+				
 				if ( string[g] == " "[0] ) {
 					advance.x += space;
 					continue;
 				}
 					
-				var vert : Rect = new Rect ( info.vert.x * size, info.vert.y * size, info.vert.width * size, info.vert.height * size );
-				var uv : Vector2[] = new Vector2[4];
-
 				if ( info.flipped ) {
 					uv[3] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
 					uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
@@ -273,7 +287,8 @@ public class OGDrawHelper {
 		}
 		
 		GL.Color ( Color.white );
-	
+
+		return cursorPos;
 	}
 
 
