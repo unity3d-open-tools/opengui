@@ -150,10 +150,10 @@ public class OGDefault {
 
 public class OGSkin extends MonoBehaviour {
 	public var atlas : Material;
-	public var fonts : Font[];
+	public var fonts : Font[] = new Font[0];
 	public var fontShader : Shader;
-	public var styles : OGStyle[];	
-	public var defaults : OGDefault[];
+	public var styles : OGStyle[] = new OGStyle[0];	
+	public var defaults : OGDefault[] = new OGDefault[0];
 
 	private static var widgetEnums : Dictionary.< System.Type, OGWidgetType > = new Dictionary.< System.Type, OGWidgetType > ();
 

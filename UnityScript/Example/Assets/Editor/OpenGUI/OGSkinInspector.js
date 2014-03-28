@@ -233,7 +233,17 @@ public class OGSkinInspector extends Editor {
 		serializedObject.Update ();
 		
 		var skin : OGSkin = target as OGSkin;
+				
+		if ( !skin ) { 
+			EditorGUILayout.LabelField ( "Skin is null fr some reason" );
+			return;
+		}
 		
+		if ( !skin.styles ) {
+			EditorGUILayout.LabelField ( "Skin styles are null fr some reason" );
+			return;
+		}
+
 		if ( currentStyle >= skin.styles.Length ) {
 			currentStyle = skin.styles.Length - 1;
 		}
@@ -243,8 +253,6 @@ public class OGSkinInspector extends Editor {
 		if ( skin.styles.Length > 0 ) {
 			s = skin.styles[currentStyle];
 		}
-				
-		if ( !skin ) { return; }
 	
 		// Set defaults	
 		if ( setDefaultsMode ) {
