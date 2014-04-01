@@ -64,13 +64,13 @@ public class OGDrawHelper {
 		var left : float = style.padding.left;
 		var right : float = rect.width - style.padding.right;
 		var top : float = rect.height - style.padding.top;
-		var middle : float = ( rect.height / 2 ) + ( ( style.font.info.ascent * size ) / 2 );
+		var middle : float = ( rect.height / 2 ) + ( ( style.font.info.lineSpacing * size ) / 2 );
 		var center : float = left + right / 2;
 		var bottom : float = rect.height - style.padding.bottom;
 		
 		// Positioning
 		var anchor : Vector2;
-		var space : float = ( style.font.GetCharacterInfo ( " "[0] ).width * size ) * style.spacing;
+		var space : float = ( style.font.GetCharacterInfo ( " "[0] ).width * size );
 		
 		// Line and progression management
 		var advance : Vector2;
@@ -164,7 +164,7 @@ public class OGDrawHelper {
 						nextLineStart = c + 1;
 						break;
 					} else {
-						lineWidth += ( info.width * size ) * style.spacing;
+						lineWidth += info.width * size;
 					}
 				}
 
@@ -218,7 +218,7 @@ public class OGDrawHelper {
 				var gTop : float = anchor.y + vert.height + vert.y + rect.y + advance.y - vert.height;
 			
 				// Advance regardless if the glyph is drawn or not	
-				advance.x += ( info.width * size ) * style.spacing;
+				advance.x += info.width * size;
 		
 				// Clipping
 				if ( clipping != null ) {

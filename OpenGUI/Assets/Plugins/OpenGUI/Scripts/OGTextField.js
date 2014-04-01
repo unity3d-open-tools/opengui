@@ -38,19 +38,20 @@ public class OGTextField extends OGWidget {
 	/////////////////
 	// Steal TextEditor functionality from OnGUI
 	public function OnGUI () {
-		if ( listening && isDrawn ) {
+		if ( isDrawn && listening ) {
 			GUI.SetNextControlName ( "ActiveTextField" );
-			
+
 			var style : GUIStyle = new GUIStyle();
-			style.normal.textColor = new Color ( 1, 1, 1, 0 );
+			style.normal.textColor = currentStyle.text.fontColor;
 			style.font = currentStyle.text.font.dynamicFont;
 			style.fontSize = currentStyle.text.fontSize;
 			style.alignment = currentStyle.text.alignment;
 			style.wordWrap = currentStyle.text.wordWrap;
 			style.padding = currentStyle.text.padding;
+			style.clipping = TextClipping.Clip;
 
 			var c : Color = currentStyle.text.fontColor;
-			GUI.skin.settings.selectionColor = new Color ( 1.0 - c.r, 1.0 - c.g, 1.0 - c.b, 0.2 );
+			GUI.skin.settings.selectionColor = new Color ( 1.0 - c.r, 1.0 - c.g, 1.0 - c.b, c.a );
 
 			var invertedRct : Rect = drawRct;
 			invertedRct.y = Screen.height - invertedRct.y - invertedRct.height;
@@ -64,7 +65,7 @@ public class OGTextField extends OGWidget {
 			}
 
 			GUI.FocusControl ( "ActiveTextField" );
-		}
+		}	
 	}
 
 	
@@ -120,6 +121,8 @@ public class OGTextField extends OGWidget {
 	}
 
 	override function DrawText () {
-		OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, tint, this );
+		if ( !listening ) {
+			OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, tint, this );
+		}
 	}
 }

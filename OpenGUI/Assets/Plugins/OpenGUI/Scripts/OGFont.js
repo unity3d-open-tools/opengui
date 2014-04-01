@@ -15,6 +15,9 @@ public class OGFontInfo {
 	public var lineSpacing : float;
 	public var ascent : float;
 	public var convertCase : int;
+	public var characterPadding : int;
+	public var characterSpacing : int;
+	public var size : int;
 	public var characterRects : OGCharacterInfo[];
 }
 
@@ -32,6 +35,8 @@ public class OGFont extends MonoBehaviour {
 		info.kerning = s.FindProperty ( "m_Kerning" ).floatValue;
 		info.lineSpacing = s.FindProperty ( "m_LineSpacing" ).floatValue;
 		info.ascent = s.FindProperty ( "m_Ascent" ).floatValue;
+		info.characterPadding = s.FindProperty ( "m_CharacterPadding" ).intValue;
+		info.characterSpacing = s.FindProperty ( "m_CharacterSpacing" ).intValue;
 		info.convertCase = s.FindProperty ( "m_ConvertCase" ).intValue;
 
 		var size : int = s.FindProperty ( "m_CharacterRects.Array.size" ).intValue;

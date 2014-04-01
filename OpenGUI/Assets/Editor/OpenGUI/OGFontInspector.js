@@ -13,6 +13,17 @@ public class OGFontInspector extends Editor {
 		
 		EditorGUILayout.Space ();
 
+		/* DEBUG: Display available properties
+		var s : SerializedObject = new SerializedObject ( font.bitmapFont );
+		var p : SerializedProperty = s.GetIterator();
+
+		for ( var i : int = 0; i < 40; i++ ) {
+			p.Next(true);
+			GUILayout.Label ( p.name + ", " + p.type );
+		}
+		p.Reset();*/
+		
+
 		GUI.backgroundColor = Color.green;
 		if ( GUILayout.Button ( "Update", GUILayout.Height ( 30 ) ) ) {
 			font.UpdateData ();
