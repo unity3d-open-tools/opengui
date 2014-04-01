@@ -15,7 +15,7 @@ public class OGFontInfo {
 	public var lineSpacing : float;
 	public var ascent : float;
 	public var convertCase : int;
-	@HideInInspector public var characterRects : OGCharacterInfo[];
+	public var characterRects : OGCharacterInfo[];
 }
 
 public class OGFont extends MonoBehaviour {
@@ -35,7 +35,7 @@ public class OGFont extends MonoBehaviour {
 		info.convertCase = s.FindProperty ( "m_ConvertCase" ).intValue;
 
 		var size : int = s.FindProperty ( "m_CharacterRects.Array.size" ).intValue;
-		info.characterRects = new OGCharacterInfo[90000];
+		info.characterRects = new OGCharacterInfo[size];
 
 		for ( var i : int = 0; i < size; i++ ) {
 			var ci : OGCharacterInfo = new OGCharacterInfo ();
@@ -50,7 +50,7 @@ public class OGFont extends MonoBehaviour {
 				ci.carriageReturn = true;
 			}
 
-			info.characterRects[ci.index] = ci;
+			info.characterRects[i] = ci;
 		}
 		
 		atlasSize = new Vector2 ( bitmapFont.material.mainTexture.width, bitmapFont.material.mainTexture.height );
@@ -58,6 +58,12 @@ public class OGFont extends MonoBehaviour {
 	}
 
 	public function GetCharacterInfo ( index : int ) : OGCharacterInfo {
-		return info.characterRects[index];
+		for ( var i : int = 0; i < info.characterRects.Length; i++ ) {
+			if ( info.characterRects[i].index == index ) {
+				return info.characterRects[i];
+			}
+		}
+
+		return null;
 	}
 }
