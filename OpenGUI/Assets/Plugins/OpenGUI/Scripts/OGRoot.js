@@ -383,12 +383,17 @@ class OGRoot extends MonoBehaviour {
 		var pivotRect : Rect;
 
 		if ( !Application.isPlaying ) {
-			if ( editWidget != null ) {
+			if ( Selection.activeObject as GameObject && ( Selection.activeObject as GameObject ).GetComponent(OGWidget) ) {
+				editWidget = ( Selection.activeObject as GameObject ).GetComponent(OGWidget);
 				revRect = editWidget.drawRct;
 				revRect.y = Screen.height - revRect.y - revRect.height;
-
 				pivotRect = new Rect ( editWidget.transform.position.x - 2, editWidget.transform.position.y - 2, 4, 4 );
 
+			} else {
+				editWidget = null;
+			}	
+				
+			if ( editWidget != null ) {
 				var color : Color = Color.white;//new Color ( 0.19, 0.3, 0.47, 1 );
 				
 				var tex : Texture2D = new Texture2D ( 1, 1 );
@@ -426,17 +431,11 @@ class OGRoot extends MonoBehaviour {
 
 					if ( editWidget != w && w != null ) {
 						EditorSelectWidget ( w );
-						editWidget = w;
-						revRect = editWidget.drawRct;
-						revRect.y = Screen.height - revRect.y - revRect.height;
 					}	
 					
 					if ( revRect.Contains ( e.mousePosition ) ) {
 						draggingWidget = true;
 					
-					} else if ( w == null ) {
-						editWidget = null;
-				
 					}
 
 					break;
