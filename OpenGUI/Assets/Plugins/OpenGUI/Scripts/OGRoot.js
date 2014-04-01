@@ -123,11 +123,13 @@ class OGRoot extends MonoBehaviour {
 				
 				GL.Begin(GL.QUADS);
 				
-				if ( skin.fontShader != null ) {
+				if ( skin.fontShader != null && skin.fonts[i].bitmapFont != null ) {
 					skin.fonts[i].bitmapFont.material.shader = skin.fontShader;
 				}
 				
-				OGDrawHelper.SetPass ( skin.fonts[i].bitmapFont.material );
+				if ( skin.fonts[i].bitmapFont != null ) {
+					OGDrawHelper.SetPass ( skin.fonts[i].bitmapFont.material );
+				}
 
 				for ( o = 0; o < widgets.Length; o++ ) {
 					w = widgets[o];

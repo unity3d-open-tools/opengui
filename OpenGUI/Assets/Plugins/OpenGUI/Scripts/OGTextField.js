@@ -47,6 +47,7 @@ public class OGTextField extends OGWidget {
 			style.fontSize = currentStyle.text.fontSize;
 			style.alignment = currentStyle.text.alignment;
 			style.wordWrap = currentStyle.text.wordWrap;
+			style.padding = currentStyle.text.padding;
 
 			var c : Color = currentStyle.text.fontColor;
 			GUI.skin.settings.selectionColor = new Color ( 1.0 - c.r, 1.0 - c.g, 1.0 - c.b, 0.2 );
