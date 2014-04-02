@@ -152,20 +152,20 @@ public class OGDrawHelper {
 			for ( var c : int = thisLineStart; c < string.Length; c++ ) {
 				info = style.font.GetCharacterInfo ( string[c] );
 				
+				// This character is a carriage return	
+				if ( string[c] == "\n"[0] ) {
+					nextLineStart = c + 1;
+					break;
+				
 				// This character is a space
-				if ( string[c] == " "[0] ) {
+				} else if ( string[c] == " "[0] ) {
 					lineWidth += space;
 					lastSpace = c;
 				
 				// This character is a regular glyph
 				} else if ( info ) {
-					// This character is a carriage return	
-					if ( string[c] == "\n"[0] ) {
-						nextLineStart = c + 1;
-						break;
-					} else {
-						lineWidth += info.width * size;
-					}
+					lineWidth += info.width * size;
+				
 				}
 
 				// The line width has exceeded the border
@@ -191,6 +191,10 @@ public class OGDrawHelper {
 			for ( var g : int = thisLineStart; g < nextLineStart; g++ ) {
 				info = style.font.GetCharacterInfo ( string[g] );
 				
+				if ( info == null ) {
+					continue;
+				}
+
 				if ( string[g] == " "[0] ) {
 					advance.x += space;
 					continue;

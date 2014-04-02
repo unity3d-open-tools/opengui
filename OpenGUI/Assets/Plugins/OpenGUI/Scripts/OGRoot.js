@@ -1,6 +1,7 @@
 ﻿#pragma strict
 
 import System.Collections.Generic;
+import System.Linq;
 
 @script ExecuteInEditMode();
 class OGLine {
@@ -21,7 +22,7 @@ class OGRoot extends MonoBehaviour {
 	public var lineMaterial : Material;
 	public var lines : OGLine[];
 	public var lineClip : Rect;
-
+	
 	@HideInInspector public var isMouseOver : boolean = false;
 	@HideInInspector public var texWidth : int = 256;
 	@HideInInspector public var texHeight : int = 256;
@@ -39,19 +40,6 @@ class OGRoot extends MonoBehaviour {
 	//////////////////
 	public static function GetInstance () {
 		return instance;
-	}
-
-	
-	//////////////////
-	// Font helpers
-	//////////////////
-	public function ReloadFonts () {
-		if ( !skin ) { return; }
-
-		for ( var i : int = 0; i < skin.fonts.Length; i++ ) {
-			skin.fonts[i].UpdateData();	
-		}
-					
 	}
 
 	
@@ -525,7 +513,7 @@ class OGRoot extends MonoBehaviour {
 		mouseOver.Clear ();
 		
 		// Update widget lists	
-		widgets = currentPage.gameObject.GetComponentsInChildren.<OGWidget>();
+		widgets = currentPage.gameObject.GetComponentsInChildren.<OGWidget>().OrderByDescending(function(w:OGWidget) w.transform.position.z).ToArray();
 
 		for ( var i : int = 0; i < widgets.Length; i++ ) {
 			var w : OGWidget = widgets[i];
