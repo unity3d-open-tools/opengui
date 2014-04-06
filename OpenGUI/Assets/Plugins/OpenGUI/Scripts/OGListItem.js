@@ -9,6 +9,8 @@ class OGListItem extends OGWidget {
 	public var message : String;
 	public var hoverMessage : String;
 	public var argument : String;
+	public var func : Function;
+	public var hoverFunc : Function;
 
 
 	//////////////////
@@ -21,6 +23,10 @@ class OGListItem extends OGWidget {
 			if ( li != this ) {
 				li.isSelected = false;
 			}
+		}
+
+		if ( hoverFunc ) {
+			hoverFunc ();
 		}
 
 		if ( target != null ) {
@@ -40,6 +46,10 @@ class OGListItem extends OGWidget {
 	}
 
 	private function Action () {
+		if ( func ) {
+			func ();
+		}
+		
 		if ( target != null ) {
 			if ( !String.IsNullOrEmpty ( message ) ) {
 				if ( !String.IsNullOrEmpty ( argument ) ) {
