@@ -52,6 +52,8 @@ public class OGTexture extends OGWidget {
 
 		GL.Begin(GL.QUADS);
 		
+		GL.Color ( tint );
+		
 		material.SetPass ( 0 );
 
 		// Bottom Left	
@@ -70,6 +72,8 @@ public class OGTexture extends OGWidget {
 		GL.TexCoord2 ( uvRct.x + uvRct.width, uvRct.y );
 		GL.Vertex3 ( displayRct.x + displayRct.width, displayRct.y, drawDepth );
 		
+		GL.Color ( Color.white );
+
 		GL.End();
 	}
 }

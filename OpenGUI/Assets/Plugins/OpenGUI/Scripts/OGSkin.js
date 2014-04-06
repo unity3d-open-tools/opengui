@@ -77,6 +77,15 @@ public class OGStyleSet {
 	public var thumb : OGStyle;
 	public var disabled : OGStyle;
 
+	public function Refresh ( skin : OGSkin ) {
+		basic = skin.GetStyle ( basic.name );
+		hover = skin.GetStyle ( hover.name );
+		active = skin.GetStyle ( active.name );
+		ticked = skin.GetStyle ( ticked.name );
+		thumb = skin.GetStyle ( thumb.name );
+		disabled = skin.GetStyle ( disabled.name );
+	}
+
 	public function GetStyle ( typ : OGStyleType ) {
 		var result : OGStyle;
 		

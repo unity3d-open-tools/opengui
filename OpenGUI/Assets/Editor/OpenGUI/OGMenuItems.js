@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public class MenuTest extends MonoBehaviour {
+public class OGMenuItems extends MonoBehaviour {
 	// Helper functions
 	private static function PlaceObject ( go : GameObject, scale : Vector3 ) {
 		var parent : GameObject = Selection.activeGameObject;
@@ -147,6 +147,13 @@ public class MenuTest extends MonoBehaviour {
 		PlaceObject ( w.gameObject, new Vector3 ( 200, 20, 1 ) );
 		
 		w.GetDefaultStyles ();
+	}
+	
+	@MenuItem ("OpenGUI/Widgets/Texture")
+	static function NewTexture () {
+		var w : OGTexture = new GameObject ( "Texture", OGTexture ).GetComponent(OGTexture);
+
+		PlaceObject ( w.gameObject, new Vector3 ( 120, 120, 1 ) );
 	}
 	
 	@MenuItem ("OpenGUI/Widgets/TickBox")

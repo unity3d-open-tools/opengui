@@ -71,6 +71,7 @@ class OGRoot extends MonoBehaviour {
 			currentPage.gameObject.SetActive ( true );
 		
 			currentPage.StartPage ();
+			currentPage.UpdateStyles ();
 		}
 
 		SetDirty ();
@@ -221,6 +222,11 @@ class OGRoot extends MonoBehaviour {
 			// Current page
 			currentPage.UpdatePage ();
 
+			// Update styles if in edit mode
+			if ( !Application.isPlaying ) {
+				currentPage.UpdateStyles ();
+			}
+
 			// Mouse interaction
 			UpdateMouse ();	
 		}
@@ -237,6 +243,13 @@ class OGRoot extends MonoBehaviour {
 		} else {
 			UpdateWidgets ( true );
 
+		}
+
+		// Force OGPage transformation
+		if ( currentPage ) {
+			currentPage.transform.localScale = Vector3.one;
+			currentPage.transform.localPosition = Vector3.zero;
+			currentPage.transform.localEulerAngles = Vector3.zero;
 		}
 	}
 
@@ -384,7 +397,7 @@ class OGRoot extends MonoBehaviour {
 			}	
 				
 			if ( editWidget != null ) {
-				var color : Color = Color.white;//new Color ( 0.19, 0.3, 0.47, 1 );
+				var color : Color = Color.white;
 				
 				var tex : Texture2D = new Texture2D ( 1, 1 );
 				tex.SetPixel ( 0, 0, color );

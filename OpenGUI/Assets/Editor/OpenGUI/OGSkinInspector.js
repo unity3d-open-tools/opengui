@@ -11,6 +11,7 @@ public class OGSkinInspector extends Editor {
 	private var uvScrollPosition : Vector2;
 	private var uvScale : float = 1;
 	private var addStyleName : String = "";
+	private var tintColor : Color = Color.white;
 
 	private static var currentStyle : int = 0;
 	private static var setDefaultsMode : boolean = false;
@@ -399,6 +400,8 @@ public class OGSkinInspector extends Editor {
 
 				// ^ Preview
 				if ( skin.atlas != null && skin.atlas.mainTexture != null ) {
+					GUI.color = tintColor;
+					
 					var newCoords : Rect = new Rect (
 						s.coordinates.x / skin.atlas.mainTexture.width,
 						s.coordinates.y / skin.atlas.mainTexture.height,
@@ -412,6 +415,8 @@ public class OGSkinInspector extends Editor {
 					
 					GUI.DrawTextureWithTexCoords ( controlRect, previewTex, newCoords, true );
 							
+					GUI.color = Color.white;
+
 					Handles.DrawLine ( borderLines[0], borderLines[1] );
 					Handles.DrawLine ( borderLines[2], borderLines[3] );
 					Handles.DrawLine ( borderLines[4], borderLines[5] );
@@ -465,6 +470,9 @@ public class OGSkinInspector extends Editor {
 				EditorGUILayout.BeginHorizontal();
 				EditorGUILayout.LabelField ( "Color", GUILayout.Width ( 100 ) );
 				s.color = EditorGUILayout.ColorField ( s.color );
+
+				tintColor = s.color;
+
 				EditorGUILayout.EndHorizontal();
 
 				if ( s.text != null ) {

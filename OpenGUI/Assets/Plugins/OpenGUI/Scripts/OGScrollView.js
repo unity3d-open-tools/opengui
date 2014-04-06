@@ -9,16 +9,16 @@ public class OGScrollView extends OGWidget {
 
 	public enum ScrollbarVisibility {
 		Hidden,
-		Auto,
-		Always
+		Auto
 	}
 
 	public var size : Vector2;
 	public var position : Vector2;
 	public var padding : Vector2 = new Vector2 ( 10, 10 );
 	public var elasticity : float = 2;
+	public var thumbScale : Vector2 = new Vector2 ( 6, 1 );
 	public var lockAxis : ScrollDirection;
-	public var scrollbarVisibility : ScrollbarVisibility;
+	public var scrollbarVisibility : ScrollbarVisibility = ScrollbarVisibility.Auto;
 	public var infiniteScrolling : boolean = false;
 	public var touchControl : boolean = false;
 
@@ -31,11 +31,23 @@ public class OGScrollView extends OGWidget {
 	// Rects
 	////////////////
 	private function GetScrollbarYRect () : Rect {
-		var thumbSize : Vector2 = new Vector2 ( 6, Mathf.Clamp ( size.y + bounds.y, 20, size.y ) );
-		var factor : float = Mathf.Clamp ( -position.y / -bounds.y, 0, 1 ); 
-		var thumbPos : Vector2 = new Vector2 ( drawRct.xMax - thumbSize.x, drawRct.yMax - thumbSize.y - factor * size.y );
+		var size : Vector2 = new Vector2 ( thumbScale.x, ( drawRct.height + bounds.y ) * thumbScale.y );
+		var pos : Vector2 = new Vector2 ( drawRct.xMax - thumbScale.x, drawRct.yMax - size.y );
+		var percentage : float = Mathf.Clamp ( position.y, bounds.y, 0 ) / bounds.y;
+		
+		pos.y -= percentage * ( drawRct.height - size.y );
 
-		return new Rect ( thumbPos.x, thumbPos.y, thumbSize.x, thumbSize.y );
+		return new Rect ( pos.x, pos.y, size.x, size.y );
+	}
+	
+	private function GetScrollbarXRect () : Rect {
+		var size : Vector2 = new Vector2 ( ( drawRct.width + bounds.x ) * thumbScale.y, thumbScale.x );
+		var pos : Vector2 = new Vector2 ( drawRct.xMin, drawRct.yMin );
+		var percentage : float = Mathf.Clamp ( position.x, bounds.x, 0 ) / bounds.x;
+		
+		pos.x += percentage * ( drawRct.width - size.x );
+
+		return new Rect ( pos.x, pos.y, size.x, size.y );
 	}
 
 
@@ -299,6 +311,10 @@ public class OGScrollView extends OGWidget {
 			infiniteScrolling = false;
 		}
 
+		if ( thumbScale.y > 1 ) {
+			thumbScale.y = 1;
+		}
+
 		isSelectable = true;
 		
 		// Mouse		
@@ -314,8 +330,14 @@ public class OGScrollView extends OGWidget {
 	override function DrawSkin () {
 		OGDrawHelper.DrawSprite ( drawRct, styles.basic, drawDepth - 10, tint );
 	
-		if ( scrollbarVisibility == ScrollbarVisibility.Always ) {
-			OGDrawHelper.DrawSprite ( GetScrollbarYRect(), styles.thumb, drawDepth - 9, tint );
+		if ( scrollbarVisibility == ScrollbarVisibility.Auto ) {
+			if ( bounds.x < 0 ) {
+				if ( !IsInfiniteX() ) { OGDrawHelper.DrawSprite ( GetScrollbarXRect(), styles.thumb, drawDepth - 9, tint ); }
+			}
+
+			if ( bounds.y < 0 ) {
+				if ( !IsInfiniteY() ) { OGDrawHelper.DrawSprite ( GetScrollbarYRect(), styles.thumb, drawDepth - 9, tint ); }
+			}
 		}
 	}
 }

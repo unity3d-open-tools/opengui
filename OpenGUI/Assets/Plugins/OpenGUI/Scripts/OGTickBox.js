@@ -23,9 +23,6 @@ public class OGTickBox extends OGWidget {
 	// Update
 	////////////////	
 	override function UpdateWidget () {
-		// Persistent vars
-		isSelectable = true;
-		
 		// Mouse	
 		mouseRct = drawRct;
 		
