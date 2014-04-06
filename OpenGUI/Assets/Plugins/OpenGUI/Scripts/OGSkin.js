@@ -78,12 +78,14 @@ public class OGStyleSet {
 	public var disabled : OGStyle;
 
 	public function Refresh ( skin : OGSkin ) {
-		basic = skin.GetStyle ( basic.name );
-		hover = skin.GetStyle ( hover.name );
-		active = skin.GetStyle ( active.name );
-		ticked = skin.GetStyle ( ticked.name );
-		thumb = skin.GetStyle ( thumb.name );
-		disabled = skin.GetStyle ( disabled.name );
+		if ( !skin ) { return; }
+		
+		if ( basic ) { basic = skin.GetStyle ( basic.name ); }
+		if ( hover ) { hover = skin.GetStyle ( hover.name ); }
+		if ( active ) { active = skin.GetStyle ( active.name ); }
+		if ( ticked ) { ticked = skin.GetStyle ( ticked.name ); }
+		if ( thumb ) { thumb = skin.GetStyle ( thumb.name ); }
+		if ( disabled ) { disabled = skin.GetStyle ( disabled.name ); }
 	}
 
 	public function GetStyle ( typ : OGStyleType ) {
