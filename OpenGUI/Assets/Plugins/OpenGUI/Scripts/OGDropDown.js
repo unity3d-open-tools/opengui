@@ -216,10 +216,14 @@ class OGDropDown extends OGWidget {
 				OGDrawHelper.DrawSlicedSprite ( GetNestedBackgroundRect (), styles.basic, drawDepth, tint, clipTo );
 			}
 		
-			// Draw tick boxes
+			// Draw extra graphics
 			for ( var s : int = 0; s < submenu.Length; s++ ) {
 				if ( submenu[s].isTicked ) {
 					OGDrawHelper.DrawSprite ( GetTickRect ( s, true ), styles.ticked, drawDepth, tint, clipTo );
+				
+				} else if ( submenu[s].nestedMenu.Length > 0 ) {
+					OGDrawHelper.DrawSprite ( GetTickRect ( s, true ), styles.active, drawDepth, tint, clipTo );
+
 				}
 			}
 
