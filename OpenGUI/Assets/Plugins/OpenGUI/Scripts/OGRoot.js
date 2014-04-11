@@ -126,7 +126,7 @@ class OGRoot extends MonoBehaviour {
 					if ( w == null ) { continue; }
 
 					if ( w.styles == null ) {
-						skin.GetDefaultStyles ( w );
+						skin.ApplyDefaultStyles ( w );
 
 					} else if ( w.isDrawn && w.gameObject.activeSelf ) {
 						if ( w.currentStyle != null && w.currentStyle.text.fontIndex == i ) {

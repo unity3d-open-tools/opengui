@@ -321,13 +321,13 @@ public class OGWidget extends MonoBehaviour {
 	// Update
 	//////////////////
 	public function UpdateWidget () {} 
-	public function GetDefaultStyles () {
+	public function ApplyDefaultStyles () {
 		var skin : OGSkin = GetRoot().skin;
 		
 		if ( !skin ) {
 			Debug.LogWarning ( "OpenGUI | No OGSkin attached to OGRoot" );
 		} else {
-			skin.GetDefaultStyles ( this );
+			skin.ApplyDefaultStyles ( this );
 		}
 	}
 

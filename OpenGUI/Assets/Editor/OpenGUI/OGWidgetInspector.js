@@ -81,8 +81,8 @@ public class OGWidgetInspector extends Editor {
 				EditorGUILayout.BeginHorizontal();
 
 				// Get defaults	
-				if ( GUILayout.Button ( "Get default styles" ) ) {
-					( target as OGWidget ).GetDefaultStyles();
+				if ( GUILayout.Button ( "Apply default styles" ) ) {
+					( target as OGWidget ).ApplyDefaultStyles();
 				}
 				
 				// ^ Edit

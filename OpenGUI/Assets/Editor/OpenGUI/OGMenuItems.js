@@ -51,7 +51,7 @@ public class OGMenuItems extends MonoBehaviour {
 		PlaceObject ( w.gameObject, new Vector3 ( 100, 30, 1 ) );
 
 		w.text = "Button";
-		w.GetDefaultStyles ();
+		w.ApplyDefaultStyles ();
 	}
 
 	@MenuItem ("OpenGUI/Widgets/DropDown")
@@ -61,7 +61,7 @@ public class OGMenuItems extends MonoBehaviour {
 		PlaceObject ( w.gameObject, new Vector3 ( 140, 20, 1 ) );
 
 		w.title = "Dropdown Menu";
-		w.GetDefaultStyles ();
+		w.ApplyDefaultStyles ();
 	}
 	
 	@MenuItem ("OpenGUI/Widgets/Label")
@@ -71,7 +71,7 @@ public class OGMenuItems extends MonoBehaviour {
 		PlaceObject ( w.gameObject, new Vector3 ( 140, 20, 1 ) );
 
 		w.text = "New Label";
-		w.GetDefaultStyles ();
+		w.ApplyDefaultStyles ();
 	}
 	
 	@MenuItem ("OpenGUI/Widgets/PopUp")
@@ -81,7 +81,7 @@ public class OGMenuItems extends MonoBehaviour {
 		PlaceObject ( w.gameObject, new Vector3 ( 100, 20, 1 ) );
 
 		w.title = "Popup Menu";
-		w.GetDefaultStyles ();
+		w.ApplyDefaultStyles ();
 	}
 	
 	@MenuItem ("OpenGUI/Widgets/ProgressBar")
@@ -91,7 +91,7 @@ public class OGMenuItems extends MonoBehaviour {
 		PlaceObject ( w.gameObject, new Vector3 ( 200, 30, 1 ) );
 
 		w.padding = new Vector2 ( 8, 8 );
-		w.GetDefaultStyles ();
+		w.ApplyDefaultStyles ();
 	}
 	
 	@MenuItem ("OpenGUI/Widgets/ScrollView")
@@ -101,7 +101,7 @@ public class OGMenuItems extends MonoBehaviour {
 		PlaceObject ( w.gameObject, new Vector3 ( 1, 1, 1 ) );
 		
 		w.size = new Vector2 ( 400, 300 );
-		w.GetDefaultStyles ();
+		w.ApplyDefaultStyles ();
 	}
 	
 	@MenuItem ("OpenGUI/Widgets/SlicedSprite")
@@ -110,7 +110,7 @@ public class OGMenuItems extends MonoBehaviour {
 
 		PlaceObject ( w.gameObject, new Vector3 ( 200, 200, 1 ) );
 		
-		w.GetDefaultStyles ();
+		w.ApplyDefaultStyles ();
 	}
 	
 	@MenuItem ("OpenGUI/Widgets/Slider")
@@ -119,7 +119,7 @@ public class OGMenuItems extends MonoBehaviour {
 
 		PlaceObject ( w.gameObject, new Vector3 ( 200, 20, 1 ) );
 		
-		w.GetDefaultStyles ();
+		w.ApplyDefaultStyles ();
 	}
 	
 	@MenuItem ("OpenGUI/Widgets/Sprite")
@@ -128,7 +128,7 @@ public class OGMenuItems extends MonoBehaviour {
 
 		PlaceObject ( w.gameObject, new Vector3 ( 200, 20, 1 ) );
 		
-		w.GetDefaultStyles ();
+		w.ApplyDefaultStyles ();
 	}
 	
 	@MenuItem ("OpenGUI/Widgets/Tabs")
@@ -137,7 +137,7 @@ public class OGMenuItems extends MonoBehaviour {
 
 		PlaceObject ( w.gameObject, new Vector3 ( 200, 20, 1 ) );
 		
-		w.GetDefaultStyles ();
+		w.ApplyDefaultStyles ();
 	}
 	
 	@MenuItem ("OpenGUI/Widgets/TextField")
@@ -146,7 +146,7 @@ public class OGMenuItems extends MonoBehaviour {
 
 		PlaceObject ( w.gameObject, new Vector3 ( 200, 20, 1 ) );
 		
-		w.GetDefaultStyles ();
+		w.ApplyDefaultStyles ();
 	}
 	
 	@MenuItem ("OpenGUI/Widgets/Texture")
@@ -163,6 +163,6 @@ public class OGMenuItems extends MonoBehaviour {
 		PlaceObject ( w.gameObject, new Vector3 ( 200, 20, 1 ) );
 		
 		w.text = "Tickbox";
-		w.GetDefaultStyles ();
+		w.ApplyDefaultStyles ();
 	}
 }
