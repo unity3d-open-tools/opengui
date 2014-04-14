@@ -24,15 +24,12 @@ class OGRoot extends MonoBehaviour {
 	public var lineClip : Rect;
 	
 	@HideInInspector public var isMouseOver : boolean = false;
-	@HideInInspector public var texWidth : int = 256;
-	@HideInInspector public var texHeight : int = 256;
 
 	private var dirtyCounter : int = 0;
 	private var widgets : OGWidget[];
 	private var mouseOver : List.< OGWidget > = new List.< OGWidget > ();
 	private var downWidget : OGWidget;
 	private var screenRect : Rect;
-	private var textureMaterials : Material[];
 
 
 	//////////////////
@@ -233,9 +230,6 @@ class OGRoot extends MonoBehaviour {
 
 		// Dirty
 		if ( dirtyCounter > 0 ) {
-			texWidth = skin.atlas.mainTexture.width;
-			texHeight = skin.atlas.mainTexture.height;
-
 			UpdateWidgets ( false );
 			dirtyCounter--;
 		
@@ -361,129 +355,76 @@ class OGRoot extends MonoBehaviour {
 	#if UNITY_EDITOR
 	
 	public static var EditorSelectWidget : Function;
-	private static var editWidget : OGWidget;
-	private static var draggingWidget : boolean = false;
-	private static var scalingWidgetX : boolean = false;
-	private static var scalingWidgetY : boolean = false;
 
 	private function FindMouseOverWidget ( e : Event ) : OGWidget {
-		var w : OGWidget;
-
-		for ( var i : int = 0; i < widgets.Length; i++ ) {
+		for ( var i : int = widgets.Length - 1; i > 0; i-- ) {
 			if ( widgets[i].drawRct.Contains ( new Vector2 ( e.mousePosition.x, Screen.height - e.mousePosition.y ) ) ) {
-				if ( w == null || w.drawDepth < widgets[i].drawDepth ) {
-					w = widgets[i];
-				}
+				return widgets[i];
 			}
 		}
 
-		return w;
+		return null;
+	}
+
+	private function MoveSelection ( x : float, y : float ) {
+		for ( var i : int = 0; i < Selection.gameObjects.Length; i++ ) {
+			var w : OGWidget = Selection.gameObjects[i].GetComponent.<OGWidget>();
+
+			if ( w ) {
+				var newPos : Vector3 = new Vector3 ( x, y, 0 );
+
+				w.transform.localPosition = w.transform.localPosition + newPos;
+			}
+		}
 	}
 
 	public function OnGUI () {
 		var e : Event = Event.current;
-		var revRect : Rect;
-		var pivotRect : Rect;
 
 		if ( !Application.isPlaying ) {
-			if ( Selection.activeObject as GameObject && ( Selection.activeObject as GameObject ).GetComponent(OGWidget) ) {
-				editWidget = ( Selection.activeObject as GameObject ).GetComponent(OGWidget);
-				revRect = editWidget.drawRct;
-				revRect.y = Screen.height - revRect.y - revRect.height;
-				pivotRect = new Rect ( editWidget.transform.position.x - 2, editWidget.transform.position.y - 2, 4, 4 );
+			for ( var i : int = 0; i < Selection.gameObjects.Length; i++ ) {
+				var w : OGWidget = Selection.gameObjects[i].GetComponent.<OGWidget>();
 
-			} else {
-				editWidget = null;
-			}	
+				if ( w ) {
+					var color : Color = Color.white;
+					
+					var revRect : Rect = w.drawRct;
+					revRect.y = Screen.height - revRect.y - revRect.height;
+					
+					var pivotRect : Rect = new Rect ( w.transform.position.x - 2, w.transform.position.y - 2, 4, 4 );
 				
-			if ( editWidget != null ) {
-				var color : Color = Color.white;
-				
-				var tex : Texture2D = new Texture2D ( 1, 1 );
-				tex.SetPixel ( 0, 0, color );
-				tex.Apply ();
+					var tex : Texture2D = new Texture2D ( 1, 1 );
+					tex.SetPixel ( 0, 0, color );
+					tex.Apply ();
 
-				var style : GUIStyle = new GUIStyle();
-				style.normal.background = tex;
-				
-				var textStyle : GUIStyle = new GUIStyle();
-				textStyle.fontSize = 14;
-				textStyle.normal.textColor = Color.white;
-				textStyle.alignment = TextAnchor.MiddleCenter;
+					var style : GUIStyle = new GUIStyle();
+					style.normal.background = tex;
+					
+					Handles.color = color;
 
-				Handles.color = color;
+					// Draw outline
+					Handles.DrawPolyLine (
+						new Vector3 ( revRect.xMin, revRect.yMin, 0 ),
+						new Vector3 ( revRect.xMin, revRect.yMax, 0 ),
+						new Vector3 ( revRect.xMax, revRect.yMax, 0 ),
+						new Vector3 ( revRect.xMax, revRect.yMin, 0 ),
+						new Vector3 ( revRect.xMin, revRect.yMin, 0 )
+					);
 
-				e = Event.current;
-
-				// Draw outline
-				Handles.DrawPolyLine (
-					new Vector3 ( revRect.xMin, revRect.yMin, 0 ),
-					new Vector3 ( revRect.xMin, revRect.yMax, 0 ),
-					new Vector3 ( revRect.xMax, revRect.yMax, 0 ),
-					new Vector3 ( revRect.xMax, revRect.yMin, 0 ),
-					new Vector3 ( revRect.xMin, revRect.yMin, 0 )
-				);
-
-				// Draw pivot
-				GUI.Box ( pivotRect, "", style );
+					// Draw pivot
+					GUI.Box ( pivotRect, "", style );
+				}
 			}
 
 			switch ( e.type ) { 
 				case EventType.MouseDown:
-					var w : OGWidget = FindMouseOverWidget ( e );
+					w = FindMouseOverWidget ( e );
 
-					if ( editWidget != w && w != null ) {
-						EditorSelectWidget ( w );
-					}	
+					EditorSelectWidget ( w, e.shift );
 					
-					if ( revRect.Contains ( e.mousePosition ) ) {
-						draggingWidget = true;
-					
-					}
-
 					break;
 
-				case EventType.MouseDrag:
-					if ( editWidget == null ) { break; }
-					
-					var delta : Vector2 = e.delta;
-					var vModifier : Vector2 = Vector2.one;
-					var scrollView : OGScrollView = editWidget as OGScrollView;
-					if ( editWidget.pivot.y == RelativeY.Center ) { vModifier.y = 2; }
-					else if ( editWidget.pivot.y == RelativeY.Bottom ) { vModifier.y = -1; }
-					if ( editWidget.pivot.x == RelativeX.Center ) { vModifier.x = 2; }
-					
-					if ( scalingWidgetX && editWidget ) {
-						if ( scrollView ) {
-							scrollView.size.x += delta.x * vModifier.x;
-						} else {
-							editWidget.transform.localScale += new Vector3 ( delta.x * vModifier.x, 0, 0 );
-						}
-
-					} else if ( scalingWidgetY && editWidget ) {
-						if ( scrollView ) {
-							scrollView.size.y += delta.y * vModifier.y;
-						} else {
-							editWidget.transform.localScale += new Vector3 ( 0, delta.y * vModifier.y, 0 );
-						}
-
-					} else if ( draggingWidget && editWidget ) {
-						editWidget.transform.localPosition += new Vector3 ( delta.x, delta.y, 0 );
-					
-					}
-
-					break;
-
-				case EventType.MouseUp:
-					draggingWidget = false;
-					scalingWidgetX = false;
-					scalingWidgetY = false;
-
-					break;
-				
 				case EventType.KeyDown:
-					if ( editWidget == null ) { break; }
-
 					var modifier : int = 1;
 
 					if ( e.shift ) {
@@ -492,19 +433,19 @@ class OGRoot extends MonoBehaviour {
 
 					switch ( e.keyCode ) {
 						case KeyCode.UpArrow:
-							editWidget.transform.position -= new Vector3 ( 0, modifier, 0 );
+							MoveSelection ( 0, -modifier );
 							break;
 						
 						case KeyCode.DownArrow:
-							editWidget.transform.position += new Vector3 ( 0, modifier, 0 );
+							MoveSelection ( 0, modifier );
 							break;
 						
 						case KeyCode.LeftArrow:
-							editWidget.transform.position -= new Vector3 ( modifier, 0, 0 );
+							MoveSelection ( -modifier, 0 );
 							break;
 						
 						case KeyCode.RightArrow:
-							editWidget.transform.position += new Vector3 ( modifier, 0, 0 );
+							MoveSelection ( modifier, 0 );
 							break;
 					}
 
