@@ -214,6 +214,12 @@ class OGRoot extends MonoBehaviour {
 		this.transform.localPosition = Vector3.zero;
 		this.transform.localEulerAngles = Vector3.zero;
 
+		if(dirtyCounter <= 0)	
+		{
+			UpdateWidgets ( true );
+		}
+
+
 		// Only update these when playing
 		if ( Application.isPlaying && currentPage != null ) {
 			// Current page
@@ -229,16 +235,13 @@ class OGRoot extends MonoBehaviour {
 		}
 
 		// Dirty
-		if ( dirtyCounter > 0 ) {
+		// Update positions
+		if ( dirtyCounter > 0 ) 
+		{
 			UpdateWidgets ( false );
 			dirtyCounter--;
+		} 
 		
-		// Update positions
-		} else {
-			UpdateWidgets ( true );
-
-		}
-
 		// Force OGPage transformation
 		if ( currentPage ) {
 			currentPage.transform.localScale = Vector3.one;
@@ -473,9 +476,10 @@ class OGRoot extends MonoBehaviour {
 			var w : OGWidget = widgets[i];
 
 			if ( w == null || !w.isDrawn ) { continue; }
-			
+
 			// Check mouse
-			if ( w.CheckMouseOver() ) {
+			if ( w.CheckMouseOver() ) 
+			{
 				w.OnMouseOver ();
 				mouseOver.Add ( w );
 			}
