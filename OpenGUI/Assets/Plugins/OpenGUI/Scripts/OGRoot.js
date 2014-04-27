@@ -293,7 +293,7 @@ class OGRoot extends MonoBehaviour {
 				downWidget.OnMouseCancel ();
 			}
 			
-			if ( topWidget != null && !topWidget.isDisabled ) {
+			if ( topWidget != null && topWidget.CheckMouseOver() && !topWidget.isDisabled ) {
 				topWidget.OnMouseDown ();
 				downWidget = topWidget;
 			}
@@ -309,7 +309,7 @@ class OGRoot extends MonoBehaviour {
 				}
 				
 				// Mouse over
-				if ( ( downWidget.CheckMouseOver() || GetTouch () == TouchPhase.Ended ) && !downWidget.isDisabled ) {
+				if ( ( downWidget.CheckMouseOver() || GetTouch () == TouchPhase.Ended ) && !downWidget.isDisabled && downWidget.CheckMouseOver()) {
 					downWidget.OnMouseUp ();
 
 				// Mouse out
@@ -322,7 +322,7 @@ class OGRoot extends MonoBehaviour {
 		
 		// Dragging
 		} else if ( Input.GetMouseButton ( 0 ) || Input.GetMouseButton ( 2 ) || GetTouch () == TouchPhase.Moved ) {
-			if ( downWidget != null && !downWidget.isDisabled ) {
+			if ( downWidget != null && !downWidget.isDisabled && downWidget.CheckMouseOver()) {
 				downWidget.OnMouseDrag ();
 			
 				if ( downWidget.isDraggable && downWidget.GetType() != OGScrollView ) {
