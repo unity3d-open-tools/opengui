@@ -5,9 +5,6 @@ It’s a GUI framework for Unity that aims to keep things as simple as possible 
 [![demo](https://raw.githubusercontent.com/mrzapp/opengui/master/Screenshots/webdemo.jpg)](http://htmlpreview.github.io/?http://github.com/mrzapp/opengui/blob/master/Build/Build.html)
 
 ## FAQ
-#### Is this open source? Where is the GitHub page?
-Yes it is, and [here](http://github.com/mrzapp/opengui) it is.
-
 #### Does OpenGUI work with C# even though it is written in UnityScript?
 Yep, as long as the provided directory configuration is maintained and .cs files are in a subfolder, .e.g /Assets/Scripts. This is because of the Unity [compilation order](http://docs.unity3d.com/412/Documentation/ScriptReference/index.Script_compilation_28Advanced29.html).
 
