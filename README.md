@@ -3,7 +3,7 @@
 It's a GUI framework for Unity that aims to keep things as simple as possible while keeping draw calls to an absolute minimum. I am developing this in tandem with my Deus Ex-based game project [The Vongott Chronicles](http://jeppezapp.com/vongott/)
 
 #### Why?
-GUI frameworks for Unity are overpriced, and the built-in API is a ridiculous resource hog with every widget requiring one or two draw calls. And we can't expect Unity to provide a decent UI system "sometime in the future", when we are ready to develop games now :) So this framework is using the OpenGL API to render widgets, and trying its best to be simple and easy to use at the same time.
+GUI frameworks for Unity are overpriced, and the built-in API is a ridiculous resource hog with every widget requiring one or more draw calls each. And we can't expect Unity to provide a decent UI system "sometime in the future", when we are ready to develop games now :) So this framework is using the OpenGL API to render widgets, and trying its best to be simple and easy to use at the same time.
 
 ## Demo
 [![demo](https://raw.githubusercontent.com/mrzapp/opengui/master/Screenshots/webdemo.jpg)](http://htmlpreview.github.io/?http://github.com/mrzapp/opengui/blob/master/Build/Build.html)
