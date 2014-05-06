@@ -9,6 +9,9 @@ GUI frameworks for Unity are overpriced, and the built-in API is a ridiculous re
 ## Demo
 [![demo](https://raw.githubusercontent.com/mrzapp/opengui/master/Images/webdemo.jpg)](http://htmlpreview.github.io/?http://github.com/mrzapp/opengui/blob/master/Build/Build.html)
 
+## Documentation and tutorials
+In the [wiki](https://github.com/mrzapp/opengui/wiki)
+
 ## FAQ
 #### Does OpenGUI work with C# even though it is written in UnityScript?
 Yep, as long as the provided directory configuration is maintained and .cs files are in a subfolder, .e.g /Assets/Scripts. This is because of the Unity [compilation order](http://docs.unity3d.com/412/Documentation/ScriptReference/index.Script_compilation_28Advanced29.html).
