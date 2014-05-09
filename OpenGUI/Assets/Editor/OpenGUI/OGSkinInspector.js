@@ -15,6 +15,7 @@ public class OGSkinInspector extends Editor {
 
 	private static var currentStyle : int = 0;
 	private static var setDefaultsMode : boolean = false;
+	private static var showText : boolean = false;
 	
 	public static function SetCurrentStyle ( i : int ) {
 		currentStyle = i;
@@ -475,10 +476,12 @@ public class OGSkinInspector extends Editor {
 
 				EditorGUILayout.EndHorizontal();
 
-				if ( s.text != null ) {
-					// ^ Text
-					GUILayout.Space ( 20 );
+				// ^ Text
+				EditorGUILayout.Space ();
 					
+				showText = EditorGUILayout.Foldout ( showText, "Text" );
+
+				if ( s.text != null && showText ) {
 					// ^^ Font
 					EditorGUILayout.BeginHorizontal();
 					EditorGUILayout.LabelField ( "Font", GUILayout.Width ( 100 ) );

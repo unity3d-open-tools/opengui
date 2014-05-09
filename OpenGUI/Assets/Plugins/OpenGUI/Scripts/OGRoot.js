@@ -22,13 +22,13 @@ class OGRoot extends MonoBehaviour {
 	public var lineMaterial : Material;
 	public var lines : OGLine[];
 	public var lineClip : Rect;
-	
+
+	@HideInInspector public var downWidget : OGWidget;	
 	@HideInInspector public var isMouseOver : boolean = false;
 
 	private var dirtyCounter : int = 0;
 	private var widgets : OGWidget[];
 	private var mouseOver : List.< OGWidget > = new List.< OGWidget > ();
-	private var downWidget : OGWidget;
 	private var screenRect : Rect;
 
 

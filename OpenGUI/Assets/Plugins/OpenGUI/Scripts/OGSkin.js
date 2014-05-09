@@ -11,6 +11,7 @@ public enum OGStyleType {
 public enum OGWidgetType {
 	NONE,
 	Button,
+	DropContainer,
 	DropDown,
 	Label,
 	ListItem,
@@ -172,6 +173,7 @@ public class OGSkin extends MonoBehaviour {
 		if ( widgetEnums.Count < 1 ) {
 			widgetEnums.Add ( OGButton, OGWidgetType.Button );
 			widgetEnums.Add ( OGDropDown, OGWidgetType.DropDown );
+			widgetEnums.Add ( OGDropContainer, OGWidgetType.DropContainer );
 			widgetEnums.Add ( OGLabel, OGWidgetType.Label );
 			widgetEnums.Add ( OGListItem, OGWidgetType.ListItem );
 			widgetEnums.Add ( OGPopUp, OGWidgetType.PopUp );
@@ -205,6 +207,7 @@ public class OGSkin extends MonoBehaviour {
 
 			switch ( widgetType ) {
 				case OGWidgetType.Button: s = [ OGStyleType.Disabled, OGStyleType.Active, OGStyleType.Hover, OGStyleType.Thumb ]; break;
+				case OGWidgetType.DropContainer: s = [ OGStyleType.Hover ]; break;
 				case OGWidgetType.DropDown: s = [ OGStyleType.Disabled, OGStyleType.Active, OGStyleType.Hover, OGStyleType.Ticked ]; break;
 				case OGWidgetType.Label: s = [ OGStyleType.Disabled ]; break;
 				case OGWidgetType.ListItem: s = [ OGStyleType.Disabled, OGStyleType.Hover, OGStyleType.Ticked ]; break;
