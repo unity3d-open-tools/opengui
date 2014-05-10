@@ -3,7 +3,7 @@
 ### What?
 It's a GUI framework for Unity that aims to keep things as simple as possible while keeping draw calls to an absolute minimum. I am developing this in tandem with my Deus Ex-based game project [The Vongott Chronicles](http://jeppezapp.com/vongott/)
 
-#### Why?
+### Why?
 GI frameworks for Unity are overpriced, and the built-in API is a ridiculous resource hog with every widget requiring one or more draw calls each. And we can't expect Unity to provide a decent UI system "sometime in the future", when we are ready to develop games now :) So this framework is using the OpenGL API to render widgets, and trying its best to be simple and easy to use at the same time.
 
 ### Demo
@@ -23,7 +23,7 @@ Make sure your [`OGPage`](https://github.com/mrzapp/opengui/wiki/OGPage) object 
 In the [wiki](https://github.com/mrzapp/opengui/wiki)  
 
 #### What about examples?
-They are included in the release under /Plugins/OpenGUI/Examples
+This repository serves as one. Just download/clone the whole thing.
 
 #### How can I align objects relatively to the screen?
 The "anchor" and "pivot" properties of the [`OGWidget`](https://github.com/mrzapp/opengui/wiki/OGWidget) and subclasses take care of that.  
