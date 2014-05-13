@@ -7,6 +7,7 @@ class OGDropDown extends OGWidget {
 	public class DropDownItem {
 		public var name : String;
 		public var message : String;
+		public var argument : String;
 		public var tickable : boolean = false;
 		public var isTicked : boolean = false;
 	}
@@ -79,7 +80,11 @@ class OGDropDown extends OGWidget {
 		var item : DropDownItemRoot = submenu[i];
 		
 		if ( !String.IsNullOrEmpty ( item.message ) ) {
-			target.SendMessage ( item.message );
+			if ( !String.IsNullOrEmpty ( item.argument ) ) {
+				target.SendMessage ( item.message, item.argument );
+			} else {
+				target.SendMessage ( item.message );
+			}
 		}
 		
 		if ( item.tickable ) {
@@ -121,7 +126,11 @@ class OGDropDown extends OGWidget {
 		}
 
 		if ( !String.IsNullOrEmpty ( item.message ) ) {
-			target.SendMessage ( item.message );
+			if ( !String.IsNullOrEmpty ( item.argument ) ) {
+				target.SendMessage ( item.message, item.argument );
+			} else {
+				target.SendMessage ( item.message );
+			}
 		}
 	}
 

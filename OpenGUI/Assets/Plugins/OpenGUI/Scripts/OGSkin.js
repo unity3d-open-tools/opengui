@@ -243,6 +243,7 @@ public class OGSkin extends MonoBehaviour {
 		defaults = [
 			new OGDefault ( OGWidgetType.Button, new OGStyleSet() ),
 			new OGDefault ( OGWidgetType.DropDown, new OGStyleSet() ),
+			new OGDefault ( OGWidgetType.DropContainer, new OGStyleSet() ),
 			new OGDefault ( OGWidgetType.Label, new OGStyleSet() ),
 			new OGDefault ( OGWidgetType.ListItem, new OGStyleSet() ),
 			new OGDefault ( OGWidgetType.PopUp, new OGStyleSet() ),
