@@ -4,7 +4,6 @@ class OGPopUp extends OGWidget {
 	public var title : String = "";
 	public var options : String[];
 	public var selectedOption : String;
-	@HideInInspector public var selectedIndex : int;
 	public var target : GameObject;
 	public var message : String;
 	public var passSelectedOption : boolean = false;
@@ -13,6 +12,20 @@ class OGPopUp extends OGWidget {
 	private var timeStamp : float;
 	
 	
+	////////////////////
+	// Data
+	////////////////////
+	public function get selectedIndex () : int {
+		for ( var i : int = 0; i < options.Length; i++ ) {
+			if ( selectedOption == options[i] ) {
+				return i;
+			}
+		}
+
+		return 0;
+	}
+
+
 	////////////////////
 	// Options
 	////////////////////
@@ -68,7 +81,6 @@ class OGPopUp extends OGWidget {
 		
 		if ( mouseOverOption != -1 ) {
 			selectedOption = options[mouseOverOption];
-			selectedIndex = mouseOverOption;
 
 			if ( target != null && !String.IsNullOrEmpty ( message ) ) {
 				if ( passSelectedOption ) {

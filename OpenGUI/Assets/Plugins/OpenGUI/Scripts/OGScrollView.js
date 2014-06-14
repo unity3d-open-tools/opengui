@@ -55,9 +55,7 @@ public class OGScrollView extends OGWidget {
 	// Update
 	////////////////
 	private function UpdateChildren () {
-		if ( !widgets || widgets.Length != this.gameObject.GetComponentsInChildren.<OGWidget>().Length ) {
-			widgets = this.gameObject.GetComponentsInChildren.<OGWidget>();
-		}
+		widgets = this.gameObject.GetComponentsInChildren.<OGWidget>();
 
 		bounds = Vector2.zero;
 		
@@ -73,7 +71,6 @@ public class OGScrollView extends OGWidget {
 				w.anchor.x = RelativeX.None;
 				w.anchor.y = RelativeY.None;
 				w.clipTo = this;
-				w.tint = this.tint;
 
 				var bottom : float = w.transform.position.y - this.transform.position.y + w.transform.localScale.y - size.y + padding.y * 2;
 				var right : float = w.transform.position.x - this.transform.position.x + w.transform.localScale.x - size.x + padding.x * 2;

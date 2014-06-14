@@ -55,6 +55,11 @@ public class OGTextField extends OGWidget {
 
 			var invertedRct : Rect = drawRct;
 			invertedRct.y = Screen.height - invertedRct.y - invertedRct.height;
+			
+			if ( String.IsNullOrEmpty ( text ) ) {
+				text = "";
+			}
+
 			text = GUI.TextArea ( invertedRct, text, style );
 
 			var controlID : int = GUIUtility.GetControlID(drawRct.GetHashCode(), FocusType.Keyboard);

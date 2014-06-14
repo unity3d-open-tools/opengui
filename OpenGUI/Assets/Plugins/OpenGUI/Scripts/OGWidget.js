@@ -336,6 +336,7 @@ public class OGWidget extends MonoBehaviour {
 	// Draw
 	//////////////////
 	public function DrawGL () {}
+	public function DrawLine () {}
 	public function DrawSkin () {}
 	public function DrawText () {}
 }

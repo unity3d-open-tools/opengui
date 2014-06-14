@@ -1,10 +1,14 @@
 #pragma strict
 
 public class OGProgressBar extends OGWidget {
-	enum LayoutType { Horizontal, Vertcal }
+	public enum LayoutType {
+		Horizontal,
+		Vertical
+	}
+
 	public var value : float = 0.5;
 	public var padding : Vector2;
-	public var Type : LayoutType;
+	public var type : LayoutType;
 
 	public function SetValue ( value : float ) {
 		if ( this.value == value ) { return; }
@@ -14,10 +18,12 @@ public class OGProgressBar extends OGWidget {
 	}
 
 	private function GetThumbRect () : Rect {
-		if(Type == LayoutType.Horizontal)
-			return new Rect ( drawRct.x + padding.x, drawRct.y + padding.y, ( drawRct.width - ( padding.x * 2 ) ) * value, drawRct.height - ( padding.y*2 ) );
-		else 
-			return new Rect ( drawRct.x + padding.x, drawRct.y + padding.y, ( drawRct.width - ( padding.x * 2 ) ), (drawRct.height - ( padding.y * 2 ))  * value);
+		if ( type == LayoutType.Horizontal ) {
+			return new Rect ( drawRct.x + padding.x, drawRct.y + padding.y, ( drawRct.width - ( padding.x * 2 ) ) * value, drawRct.height - ( padding.y * 2 ) );
+		} else {
+			return new Rect ( drawRct.x + padding.x, drawRct.y + padding.y, ( drawRct.width - ( padding.x * 2 ) ), (drawRct.height - ( padding.y * 2 ))  * value );
+		
+		}
 	}
 
 

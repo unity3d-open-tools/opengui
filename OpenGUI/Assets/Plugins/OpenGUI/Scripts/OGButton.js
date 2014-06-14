@@ -7,6 +7,8 @@ class OGButton extends OGWidget {
 	public var message : String;
 	public var argument : String;
 	public var func : Function;
+	public var action : System.Action;
+	public var actionWithArgument : System.Action.< String >;
 	public var argumentSource : MonoBehaviour;
 	public var argumentSourceField : String = "";
 	public var enableImage : boolean = false;
@@ -29,8 +31,20 @@ class OGButton extends OGWidget {
 	////////////////////
 	override function OnMouseUp () {
 		if ( func ) {
-			func ();
-				
+			if ( !String.IsNullOrEmpty ( argument ) ) {
+				func ( argument );
+			
+			} else {
+				func ();
+
+			}
+		
+		} else if ( action ) {
+			action ();
+	
+		} else if ( actionWithArgument && !String.IsNullOrEmpty ( argument ) ) {
+			actionWithArgument ( argument );
+		
 		} else if ( target != null && !String.IsNullOrEmpty ( message ) ) {
 			// if the source widget and source field are set then we
 			// get the argument from this
