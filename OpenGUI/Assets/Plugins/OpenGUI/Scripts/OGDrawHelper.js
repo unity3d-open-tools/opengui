@@ -197,7 +197,7 @@ public class OGDrawHelper {
 
 				// The line width has exceeded the border
 				if ( lineWidth >= right ) {
-					nextLineStart = lastSpace + 1;
+					nextLineStart = lastSpace == 0 ? c : lastSpace + 1;
 					break;
 				}
 			}
