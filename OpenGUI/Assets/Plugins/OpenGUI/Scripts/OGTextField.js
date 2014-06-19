@@ -16,7 +16,7 @@ public class OGTextField extends OGWidget {
 	public var locked : boolean = false;
 	public var singleLine : boolean = false;
 	public var fitToText : boolean = false;
-	public var fitPadding : RectOffset;
+	public var fitPadding : RectOffset = new RectOffset ();
 
 	@HideInInspector public var listening : boolean = false;
 	
