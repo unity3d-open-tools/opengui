@@ -218,7 +218,7 @@ public class OGSkin extends MonoBehaviour {
 			switch ( widgetType ) {
 				case OGWidgetType.Button: s = [ OGStyleType.Active, OGStyleType.Hover, OGStyleType.Thumb ]; break;
 				case OGWidgetType.DropContainer: s = [ OGStyleType.Hover ]; break;
-				case OGWidgetType.DropDown: s = [ OGStyleType.Active, OGStyleType.Hover, OGStyleType.Ticked ]; break;
+				case OGWidgetType.DropDown: s = [ OGStyleType.Active, OGStyleType.Hover, OGStyleType.Thumb, OGStyleType.Ticked ]; break;
 				case OGWidgetType.ListItem: s = [ OGStyleType.Hover, OGStyleType.Ticked ]; break;
 				case OGWidgetType.PopUp: s = [ OGStyleType.Active, OGStyleType.Hover, OGStyleType.Thumb ]; break;
 				case OGWidgetType.ProgressBar: s = [ OGStyleType.Thumb ]; break;

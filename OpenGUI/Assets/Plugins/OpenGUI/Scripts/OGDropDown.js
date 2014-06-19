@@ -221,7 +221,7 @@ class OGDropDown extends OGWidget {
 					OGDrawHelper.DrawSprite ( GetTickRect ( s, true ), styles.ticked, drawDepth, tint, clipTo );
 				
 				} else if ( submenu[s].nestedMenu.Length > 0 ) {
-					OGDrawHelper.DrawSprite ( GetTickRect ( s, true ), styles.active, drawDepth, tint, clipTo );
+					OGDrawHelper.DrawSprite ( GetTickRect ( s, true ), styles.thumb, drawDepth, tint, clipTo );
 
 				}
 

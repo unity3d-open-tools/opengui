@@ -39,15 +39,6 @@ public class OGFont extends MonoBehaviour {
 		info.characterSpacing = s.FindProperty ( "m_CharacterSpacing" ).intValue;
 		info.convertCase = s.FindProperty ( "m_ConvertCase" ).intValue;
 
-		var p : SerializedProperty = s.GetIterator ();
-
-		var brake : int = 0;
-
-		while ( p.NextVisible ( true ) && brake < 100 ) {
-			Debug.Log ( p.name + " | " + p.type );
-			brake++;
-		}
-
 		var size : int = s.FindProperty ( "m_CharacterRects.Array.size" ).intValue;
 		info.characterRects = new OGCharacterInfo[size];
 
