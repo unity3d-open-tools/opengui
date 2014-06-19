@@ -29,8 +29,6 @@ public class OGWidgetInspector extends Editor {
 	}
 	
 	override function OnInspectorGUI () {		
-		serializedObject.Update ();
-		
 		var widget : OGWidget = target as OGWidget;
 				
 		if ( !widget || !widget.GetRoot() ) { return; }
@@ -48,8 +46,8 @@ public class OGWidgetInspector extends Editor {
 			// Default inspector
 			DrawDefaultInspector ();
 			
-			// OGCameraWindow and OGTexture don't need styles
-			if ( target.GetType() != OGTexture && target.GetType() != OGCameraWindow ) {
+			// OGCameraWindow, OGLineNode and OGTexture don't need styles
+			if ( target.GetType != OGLineNode && target.GetType() != OGTexture && target.GetType() != OGCameraWindow ) {
 				EditorGUILayout.Space();
 		
 				EditorGUILayout.LabelField ( "Style", EditorStyles.boldLabel );

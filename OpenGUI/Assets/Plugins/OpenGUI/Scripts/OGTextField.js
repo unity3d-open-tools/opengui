@@ -9,12 +9,14 @@ public class OGTextField extends OGWidget {
 		NoSpaces
 	}
 	
-	public var locked : boolean = false;
-	public var stealReturnKey : boolean = true;
 	public var text : String = "";
-	public var maxLength : int = 30;
+	public var maxLength : int = 200;
 	public var regex : String;
 	public var regexPreset : RegExPreset;
+	public var locked : boolean = false;
+	public var singleLine : boolean = false;
+	public var fitToText : boolean = false;
+	public var fitPadding : RectOffset;
 
 	@HideInInspector public var listening : boolean = false;
 	
@@ -48,6 +50,10 @@ public class OGTextField extends OGWidget {
 			style.alignment = currentStyle.text.alignment;
 			style.wordWrap = currentStyle.text.wordWrap;
 			style.padding = currentStyle.text.padding;
+			style.padding.left += fitPadding.left;
+			style.padding.right += fitPadding.right;
+			style.padding.top += fitPadding.top;
+			style.padding.bottom += fitPadding.bottom;
 			style.clipping = TextClipping.Clip;
 
 			var c : Color = currentStyle.text.fontColor;
@@ -61,6 +67,10 @@ public class OGTextField extends OGWidget {
 			}
 
 			text = GUI.TextArea ( invertedRct, text, style );
+
+			if ( singleLine ) {
+				text = text.Replace("\n", "").Replace("\r", "");
+			}
 
 			var controlID : int = GUIUtility.GetControlID(drawRct.GetHashCode(), FocusType.Keyboard);
 			var editor : TextEditor = GUIUtility.GetStateObject(typeof(TextEditor), controlID -1 ) as TextEditor;
@@ -81,14 +91,21 @@ public class OGTextField extends OGWidget {
 		// Persistent vars
 		isSelectable = true;
 
+		if ( fitToText ) {
+			singleLine = true;
+		}
+
 		// Update data
 		mouseRct = drawRct;
 		isAlwaysOnTop = listening;
+		
+		if ( fitToText ) {
+			this.transform.localScale.x = OGDrawHelper.GetLabelWidth ( text, currentStyle.text );
+		
+		}
 
 		// Styles
-		if ( isDisabled ) {
-			currentStyle = styles.disabled;
-		} else if ( listening ) {
+		if ( listening ) {
 			currentStyle = styles.active;
 		} else {
 			currentStyle = styles.basic;
@@ -128,6 +145,7 @@ public class OGTextField extends OGWidget {
 	override function DrawText () {
 		if ( !listening ) {
 			OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, tint, this );
+		
 		}
 	}
 }

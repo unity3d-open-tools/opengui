@@ -4,10 +4,25 @@ public class OGTickBox extends OGWidget {
 	public var text : String;
 	public var isTicked : boolean;
 	
+	private var isDown : boolean = false;
+
+	
+	////////////////
+	// Interaction
+	////////////////	
+	override function OnMouseCancel () {
+		isDown = false;
+		GetRoot().ReleaseWidget ();
+	}
+	
 	override function OnMouseDown () {
+		isDown = true;
+	}
+
+	override function OnMouseUp () {
 		isTicked = !isTicked;
 		
-		GetRoot().ReleaseWidget ();
+		OnMouseCancel ();
 	}
 
 	
@@ -28,15 +43,6 @@ public class OGTickBox extends OGWidget {
 		
 		// Mouse	
 		mouseRct = drawRct;
-		
-		// Styles
-		if ( isDisabled ) {
-			currentStyle = styles.disabled;
-		} else if ( isTicked ) {
-			currentStyle = styles.ticked;
-		} else {
-			currentStyle = styles.basic;
-		}
 	}
 
 
@@ -44,10 +50,14 @@ public class OGTickBox extends OGWidget {
 	// Draw
 	////////////////	
 	override function DrawSkin () {
-		OGDrawHelper.DrawSprite ( GetTickRect(), currentStyle, drawDepth, tint, clipTo );
+		OGDrawHelper.DrawSlicedSprite ( GetTickRect(), isDown ? styles.active : styles.basic, drawDepth, tint, clipTo );
+
+		if ( isTicked ) {
+			OGDrawHelper.DrawSprite ( GetTickRect(), styles.ticked, drawDepth, tint, clipTo );
+		}
 	}
 
 	override function DrawText () {
-		OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, tint, clipTo );
+		OGDrawHelper.DrawLabel ( drawRct, text, styles.basic.text, drawDepth, tint, clipTo );
 	}
 }

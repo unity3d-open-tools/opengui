@@ -42,10 +42,49 @@ public class OGDrawHelper {
 		GL.Vertex ( end + new Vector3 ( 0, 0, depth ) );
 	}
 	
+	public static function DrawCurve ( start : Vector3, startDir : Vector3, endDir : Vector3, end : Vector3, segments : int ) {
+		var lastPoint : Vector3; 
+
+		for ( var i : int = 0; i < segments; i++ ) {
+			var time : float = ( i * 1.0 ) * ( 1.0 / segments );
+			var p : Vector3 = CalculateBezierPoint ( time, start, startDir, endDir, end );
+		
+			if ( i > 0 ) {
+				GL.Vertex ( lastPoint );
+				GL.Vertex ( p );
+			}
+
+			lastPoint = p;
+		}
+	}
+
 
 	//////////////////
 	// Label
 	//////////////////
+	// Get width
+	public static function GetLabelWidth ( string : String, style : OGTextStyle ) : float {
+		var width : float = style.padding.left + style.padding.right;
+		
+		var size : float = ( style.fontSize * 1.0 ) / 72;
+		var space : float = ( style.font.GetCharacterInfo ( " "[0] ).width * size );
+		
+		for ( var c : int = 0; c < string.Length; c++ ) {
+			if ( string[c] == " "[0] ) {
+				width += space;
+
+			} else {
+				var info : OGCharacterInfo = style.font.GetCharacterInfo ( string[c] );
+
+				if ( info ) {
+					width += info.width * size;
+				}
+			}
+		}
+
+		return width;
+	}
+	
 	// Draw
 	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float, tint : Color ) {
 		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, tint, null );
@@ -89,7 +128,7 @@ public class OGDrawHelper {
 		
 		// Bounds
 		var left : float = style.padding.left;
-		var right : float = rect.width - style.padding.right;
+		var right : float = rect.width - style.padding.right - style.padding.left;
 		var top : float = rect.height - style.padding.top;
 		var middle : float = ( rect.height / 2 ) + ( ( style.font.info.lineSpacing * size ) / 2 );
 		var center : float = left + right / 2;

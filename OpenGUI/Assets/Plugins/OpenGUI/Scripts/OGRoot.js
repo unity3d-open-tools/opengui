@@ -26,11 +26,8 @@ class OGRoot extends MonoBehaviour {
 	public var skin : OGSkin;
 	public var currentPage : OGPage;
 	public var lineMaterial : Material;
-	public var lines : OGLine[];
-	public var lineClip : Rect;
-
-	@HideInInspector public var downWidget : OGWidget;	
-	@HideInInspector public var isMouseOver : boolean = false;
+	public var downWidget : OGWidget;	
+	public var isMouseOver : boolean = false;
 
 	private var dirtyCounter : int = 0;
 	private var widgets : OGWidget[];
@@ -100,7 +97,17 @@ class OGRoot extends MonoBehaviour {
 			for ( i = 0; i < widgets.Length; i++ ) {
 				w = widgets[i];
 				
-				if ( w == null ) { continue; }
+				if ( w == null ) {
+					continue;
+				
+				} else if ( w.drawRct == null || ( w.drawRct.x == 0 && w.drawRct.y == 0 && w.drawRct.height == 0 && w.drawRct.width == 0 ) ) {
+					w.Recalculate ();
+					continue;
+				}
+				
+				if ( w.currentStyle == null ) {
+					w.currentStyle = w.styles.basic;
+				}
 				
 				if ( w.gameObject.activeSelf && w.isDrawn && w.drawRct.height > 0 && w.drawRct.width > 0 ) {
 					w.DrawSkin ();
@@ -210,12 +217,6 @@ class OGRoot extends MonoBehaviour {
 		this.transform.localPosition = Vector3.zero;
 		this.transform.localEulerAngles = Vector3.zero;
 
-		if(dirtyCounter <= 0)	
-		{
-			UpdateWidgets ( true );
-		}
-
-
 		// Only update these when playing
 		if ( Application.isPlaying && currentPage != null ) {
 			// Current page
@@ -231,12 +232,7 @@ class OGRoot extends MonoBehaviour {
 		}
 
 		// Dirty
-		// Update positions
-		if ( dirtyCounter > 0 ) 
-		{
-			UpdateWidgets ( false );
-			dirtyCounter--;
-		} 
+		UpdateWidgets ();
 		
 		// Force OGPage transformation
 		if ( currentPage ) {
@@ -275,8 +271,8 @@ class OGRoot extends MonoBehaviour {
 				w = mouseOver[i];
 				
 				if ( ( topWidget == null || w.transform.position.z < topWidget.transform.position.z ) && w.isSelectable ) {
-				        if ( w.GetComponent(OGScrollView) ) {
-						if ( Input.GetMouseButton ( 2 ) || w.GetComponent(OGScrollView).touchControl ) {	
+				        if ( w.GetType() == typeof ( OGScrollView ) ) {
+						if ( Input.GetMouseButton ( 2 ) || ( w as OGScrollView ).touchControl ) {	
 							topWidget = w;
 						}
 					} else {
@@ -298,7 +294,7 @@ class OGRoot extends MonoBehaviour {
 		} else if ( Input.GetMouseButtonUp ( 0 ) || Input.GetMouseButtonUp ( 2 ) || GetTouch () == TouchPhase.Ended || GetTouch () == TouchPhase.Canceled ) {
 			if ( downWidget ) {
 				// Draggable
-				if ( downWidget.resetAfterDrag && !downWidget.GetComponent(OGScrollView) ) {
+				if ( downWidget.resetAfterDrag && downWidget.GetType() != typeof ( OGScrollView ) ) {
 					downWidget.transform.position = downWidget.dragOrigPos;
 					downWidget.dragOffset = Vector3.zero;
 					downWidget.dragOrigPos = Vector3.zero;
@@ -321,7 +317,7 @@ class OGRoot extends MonoBehaviour {
 			if ( downWidget != null && !downWidget.isDisabled && downWidget.CheckMouseOver()) {
 				downWidget.OnMouseDrag ();
 			
-				if ( downWidget.isDraggable && downWidget.GetType() != OGScrollView ) {
+				if ( downWidget.isDraggable && downWidget.GetType() != typeof ( OGScrollView ) ) {
 					var mousePos : Vector3 = Input.mousePosition;
 					mousePos.y = Screen.height - mousePos.y;
 
@@ -458,7 +454,7 @@ class OGRoot extends MonoBehaviour {
 	//////////////////
 	// Widget management
 	//////////////////
-	public function UpdateWidgets ( onlyPositions : boolean ) {
+	public function UpdateWidgets () {
 		screenRect = new Rect ( 0, Screen.width, 0, Screen.height );
 
 		if ( currentPage == null ) { return; }

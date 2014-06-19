@@ -108,9 +108,7 @@ class OGListItem extends OGWidget {
 		if ( !CheckMouseOver ( mouseRct ) ) { OnMouseCancel(); }
 		
 		// Styles
-		if ( isDisabled ) {
-			currentStyle = this.styles.disabled;
-		} else if ( isSelected ) {
+		if ( isSelected ) {
 			currentStyle = this.styles.hover;
 		} else if ( isTicked ) {
 			currentStyle = this.styles.ticked;

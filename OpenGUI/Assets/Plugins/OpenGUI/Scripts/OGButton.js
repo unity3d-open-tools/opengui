@@ -12,7 +12,7 @@ class OGButton extends OGWidget {
 	public var argumentSource : MonoBehaviour;
 	public var argumentSourceField : String = "";
 	public var enableImage : boolean = false;
-	public var imageScale : float = 1;
+	public var imageScale : Vector2 = Vector2.one;
 	public var imageOffset : Vector2 = Vector2.zero;
 	
 	private var isDown : boolean = false;
@@ -22,7 +22,7 @@ class OGButton extends OGWidget {
 	// Rects
 	////////////////////
 	private function GetImageRect () : Rect {
-		return new Rect ( drawRct.x + ( drawRct.width / 2 ) - ( ( drawRct.width * imageScale ) / 2 ) + imageOffset.x, drawRct.y + ( drawRct.height / 2 ) - ( ( drawRct.height * imageScale ) / 2 ) - imageOffset.y, drawRct.width * imageScale, drawRct.height * imageScale );
+		return new Rect ( drawRct.x + ( drawRct.width / 2 ) - ( ( drawRct.width * imageScale.x ) / 2 ) + imageOffset.x, drawRct.y + ( drawRct.height / 2 ) - ( ( drawRct.height * imageScale.y ) / 2 ) - imageOffset.y, drawRct.width * imageScale.x, drawRct.height * imageScale.y );
 	}
 
 
@@ -82,9 +82,7 @@ class OGButton extends OGWidget {
 		isSelectable = true;
 
 		// Styles
-		if ( isDisabled ) {
-			currentStyle = styles.disabled;
-		} else if ( isDown ) {
+		if ( isDown ) {
 			currentStyle = styles.active;
 		} else if ( CheckMouseOver() ) {
 			currentStyle = styles.hover;

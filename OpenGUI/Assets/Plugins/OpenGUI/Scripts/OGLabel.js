@@ -18,16 +18,13 @@ public class OGLabel extends OGWidget {
 	// Update
 	/////////////////
 	override function UpdateWidget () {
-		// Styles
-		currentStyle = isDisabled ? styles.disabled : styles.basic;
-		
 		// Update data
 		if ( !overrideFontSize ) {
-			fontSize = currentStyle.text.fontSize;
+			fontSize = styles.basic.text.fontSize;
 		}
 
 		if ( !overrideAlignment ) {
-			alignment = currentStyle.text.alignment;
+			alignment = styles.basic.text.alignment;
 		}
 
 		// Mouse
@@ -39,8 +36,6 @@ public class OGLabel extends OGWidget {
 	// Draw
 	//////////////////	
 	override function DrawText () {
-		if ( drawRct == null ) { return; }
-		
-		OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, fontSize, alignment, drawDepth, tint, clipTo );
+		OGDrawHelper.DrawLabel ( drawRct, text, styles.basic.text, fontSize, alignment, drawDepth, tint, clipTo );
 	}
 }

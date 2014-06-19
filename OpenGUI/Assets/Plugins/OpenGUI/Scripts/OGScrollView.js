@@ -16,7 +16,7 @@ public class OGScrollView extends OGWidget {
 	public var position : Vector2;
 	public var padding : Vector2 = new Vector2 ( 10, 10 );
 	public var elasticity : float = 2;
-	public var thumbScale : Vector2 = new Vector2 ( 6, 1 );
+	public var thumbScale : Vector2 = new Vector2 ( 16, 1 );
 	public var lockAxis : ScrollDirection;
 	public var scrollbarVisibility : ScrollbarVisibility = ScrollbarVisibility.Auto;
 	public var infiniteScrolling : boolean = false;
@@ -325,15 +325,15 @@ public class OGScrollView extends OGWidget {
 	}
 	
 	override function DrawSkin () {
-		OGDrawHelper.DrawSprite ( drawRct, styles.basic, drawDepth - 10, tint );
+		OGDrawHelper.DrawSlicedSprite ( drawRct, styles.basic, drawDepth - 10, tint );
 	
 		if ( scrollbarVisibility == ScrollbarVisibility.Auto ) {
-			if ( bounds.x < 0 ) {
-				if ( !IsInfiniteX() ) { OGDrawHelper.DrawSprite ( GetScrollbarXRect(), styles.thumb, drawDepth - 9, tint ); }
+			if ( bounds.x < 0 && !IsInfiniteX() && lockAxis != ScrollDirection.Y ) {
+				OGDrawHelper.DrawSlicedSprite ( GetScrollbarXRect(), styles.thumb, drawDepth - 9, tint );
 			}
 
-			if ( bounds.y < 0 ) {
-				if ( !IsInfiniteY() ) { OGDrawHelper.DrawSprite ( GetScrollbarYRect(), styles.thumb, drawDepth - 9, tint ); }
+			if ( bounds.y < 0 && !IsInfiniteY() && lockAxis != ScrollDirection.X ) {
+				OGDrawHelper.DrawSlicedSprite ( GetScrollbarYRect(), styles.thumb, drawDepth - 9, tint );
 			}
 		}
 	}

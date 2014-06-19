@@ -34,14 +34,14 @@ class OGPopUp extends OGWidget {
 		var top : float = drawRct.y + options.Length * drawRct.height;
 
 		if ( bottom < 0 || clipTo && bottom < clipTo.drawRct.y ) {
-			return new Rect ( drawRct.x, top - ( i * drawRct.height ), drawRct.width, drawRct.height );
+			return new Rect ( drawRct.x, top - ( i * ( drawRct.height + styles.active.text.padding.bottom ) ), drawRct.width, drawRct.height );
 		} else {
 			return new Rect ( drawRct.x, drawRct.y - ( ( 1 + i ) * drawRct.height ), drawRct.width, drawRct.height );
 		}
 	}
 	
 	private function GetOptionStyle ( i : int ) : OGStyle {
-		return ( CheckMouseOver ( GetOptionRect ( i ) ) ) ? styles.hover : styles.basic;
+		return ( CheckMouseOver ( GetOptionRect ( i ) ) ) ? styles.hover : styles.active;
 	}
 
 	private function GetMouseOverOption () : int {
@@ -54,13 +54,18 @@ class OGPopUp extends OGWidget {
 		return -1;
 	}
 
+	private function GetThumbRect () : Rect {
+		return new Rect ( drawRct.x + drawRct.width - drawRct.height - styles.basic.text.padding.right, drawRct.y, drawRct.height, drawRct.height );
+	}
+
 	private function GetExpandedRect () : Rect {
-		var bottom : float = drawRct.y - options.Length * drawRct.height;
+		var totalHeight : float = drawRct.height + options.Length * drawRct.height;
+		var bottom : float = drawRct.y - totalHeight + drawRct.height;
 		
 		if ( bottom < 0 || clipTo && bottom < clipTo.drawRct.y ) {
-			return new Rect ( drawRct.x, drawRct.y, drawRct.width, drawRct.height * ( options.Length + 1 ) );
+			return new Rect ( drawRct.x, drawRct.y, drawRct.width, totalHeight );
 		} else {
-			return new Rect ( drawRct.x, bottom, drawRct.width, drawRct.height * ( options.Length + 1 ) );
+			return new Rect ( drawRct.x, bottom, drawRct.width, totalHeight );
 		}
 	}
 
@@ -126,9 +131,7 @@ class OGPopUp extends OGWidget {
 		}
 
 		// Styles
-		if ( isDisabled ) {
-			currentStyle = styles.disabled;
-		} else if ( isUp ) {
+		if ( isUp ) {
 			currentStyle = styles.active;
 		} else {
 			currentStyle = styles.basic;
@@ -144,6 +147,7 @@ class OGPopUp extends OGWidget {
 			OGDrawHelper.DrawSlicedSprite ( GetExpandedRect(), currentStyle, drawDepth, tint, clipTo );
 		} else {
 			OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle, drawDepth, tint, clipTo );
+			OGDrawHelper.DrawSprite ( GetThumbRect (), styles.thumb, drawDepth, tint, clipTo );
 		}
 	}	
 	
@@ -154,10 +158,13 @@ class OGPopUp extends OGWidget {
 			for ( var i : int = 0; i < options.Length; i++ ) {
 				OGDrawHelper.DrawLabel ( GetOptionRect ( i ), options[i], GetOptionStyle ( i ).text, drawDepth, tint, clipTo );
 			}
+		
 		} else if ( !String.IsNullOrEmpty ( selectedOption ) ) {
 			OGDrawHelper.DrawLabel ( drawRct, selectedOption, currentStyle.text, drawDepth, tint, clipTo );
+			
 		} else {
 			OGDrawHelper.DrawLabel ( drawRct, title, currentStyle.text, drawDepth, tint, clipTo );
+			
 		}
 	}
 }

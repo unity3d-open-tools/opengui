@@ -25,7 +25,7 @@ public class OGSlider extends OGWidget {
 	////////////////
 	override function OnMouseDrag () {
 		if ( sliderValue >= 0 && sliderValue <= 1 ) {
-			sliderValue = ( Input.mousePosition.x - 10 - this.transform.position.x ) / this.transform.lossyScale.x;
+			sliderValue = ( Input.mousePosition.x - this.transform.position.x ) / this.transform.lossyScale.x;
 		}
 	
 
@@ -70,10 +70,6 @@ public class OGSlider extends OGWidget {
 		OGDrawHelper.DrawSprite ( GetBackgroundRect(), styles.basic, drawDepth, tint, clipTo );
 	
 		// Thumb
-		if ( isDisabled ) {
-			OGDrawHelper.DrawSlicedSprite ( GetThumbRect(), styles.disabled, drawDepth, tint, clipTo );
-		} else {
-			OGDrawHelper.DrawSlicedSprite ( GetThumbRect(), styles.thumb, drawDepth, tint, clipTo );
-		}
+		OGDrawHelper.DrawSlicedSprite ( GetThumbRect(), styles.thumb, drawDepth, tint, clipTo );
 	}		
 }

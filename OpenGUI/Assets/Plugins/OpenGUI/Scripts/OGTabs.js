@@ -4,11 +4,20 @@ public class OGTabs extends OGWidget {
 	public class Tab {
 		public var title : String = "Tab";
 		public var content : GameObject;
+	
+		function Tab ( title : String, content : GameObject ) {
+			this.title = title;
+			this.content = content;
+		}
 	}
 	
 	public var activeTab : int;
 	public var tabs : List.<Tab> = new List.<Tab>();
-	
+	public var target : GameObject;
+	public var message : String;
+	public var argument : String;
+	public var passSelectedTab : boolean = false;
+
 	
 	//////////////////
 	// Rects
@@ -19,9 +28,7 @@ public class OGTabs extends OGWidget {
 	}
 
 	private function GetTabStyle ( i : int ) : OGStyle {
-		if ( isDisabled ) {
-			return styles.disabled;
-		} else if ( i == activeTab ) {
+		if ( i == activeTab ) {
 			return styles.active;
 		} else {
 			return styles.basic;
@@ -33,10 +40,7 @@ public class OGTabs extends OGWidget {
 	// Management
 	//////////////////
 	public function AddTab ( tabName : String, tabObject : GameObject, switchTo : boolean ) {
-		var newTab : Tab = new Tab ();
-
-		newTab.title = tabName;
-		newTab.content = tabObject;
+		var newTab : Tab = new Tab ( tabName, tabObject );
 
 		tabs.Add ( newTab );
 
@@ -74,6 +78,19 @@ public class OGTabs extends OGWidget {
 		for ( var i : int = 0; i < tabs.Count; i++ ) {
 			if ( CheckMouseOver ( GetTabRect ( i ) ) ) {
 				SetActiveTab ( i );
+
+				if ( target && !String.IsNullOrEmpty ( message ) ) {
+					if ( passSelectedTab ) {
+						target.SendMessage ( message, i );
+
+					} else if ( !String.IsNullOrEmpty ( argument ) ) {
+						target.SendMessage ( message, argument );
+
+					} else {
+						target.SendMessage ( message );
+
+					}
+				}
 			}
 		}
 	}

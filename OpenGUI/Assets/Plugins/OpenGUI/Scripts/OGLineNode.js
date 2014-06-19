@@ -1,6 +1,11 @@
 ﻿#pragma strict
 
 public class OGLineNode extends OGWidget {
+	public enum LineType {
+		Straight,
+		Bezier
+	}
+
 	public class Connection {	
 		public var node : OGLineNode;
 		public var segments : Vector3 [] = new Vector3 [0];
@@ -23,6 +28,7 @@ public class OGLineNode extends OGWidget {
 		}
 	}
 
+	public var lineType : LineType;
 	public var connections : Connection [] = new Connection [ 0 ];
 
 	public function AddConnection ( node : OGLineNode ) {
@@ -58,23 +64,39 @@ public class OGLineNode extends OGWidget {
 	override function DrawLine () {
 		for ( var i : int = 0; i < connections.Length; i++ ) {
 			if ( connections[i] != null && connections[i].node != null ) {
-				if ( connections[i].segments.Length == 0 ) {
-					OGDrawHelper.DrawLine ( drawRct.center, connections[i].node.drawRct.center, drawDepth );
-				
-				} else {
-					for ( var s : int = 0; s < connections[i].segments.Length; s++ ) {
-						if ( s == 0 ) {
-							OGDrawHelper.DrawLine ( drawRct.center, drawRct.center + connections[i].segments[s], drawDepth );
+				if ( lineType == LineType.Straight ) {
+					if ( connections[i].segments.Length == 0 ) {
+						OGDrawHelper.DrawLine ( drawRct.center, connections[i].node.drawRct.center, drawDepth );
+					
+					} else {
+						for ( var s : int = 0; s < connections[i].segments.Length; s++ ) {
+							if ( s == 0 ) {
+								OGDrawHelper.DrawLine ( drawRct.center, drawRct.center + connections[i].segments[s], drawDepth );
+								
+							} else if ( s == connections[i].segments.Length - 1 ) {
+								OGDrawHelper.DrawLine ( drawRct.center + connections[i].segments[s-1], drawRct.center + connections[i].segments[s], drawDepth );
+								OGDrawHelper.DrawLine ( drawRct.center + connections[i].segments[s], connections[i].node.drawRct.center, drawDepth );
 							
-						} else if ( s == connections[i].segments.Length - 1 ) {
-							OGDrawHelper.DrawLine ( drawRct.center + connections[i].segments[s-1], drawRct.center + connections[i].segments[s], drawDepth );
-							OGDrawHelper.DrawLine ( drawRct.center + connections[i].segments[s], connections[i].node.drawRct.center, drawDepth );
-						
-						} else {
-							OGDrawHelper.DrawLine ( drawRct.center + connections[i].segments[s-1], drawRct.center + connections[i].segments[s], drawDepth );
-						
+							} else {
+								OGDrawHelper.DrawLine ( drawRct.center + connections[i].segments[s-1], drawRct.center + connections[i].segments[s], drawDepth );
+							
+							}
 						}
 					}
+				
+				} else {
+					var startDir : Vector3;
+					var endDir : Vector3;
+
+					if ( connections[i].segments.Length > 0 ) {
+						startDir = connections[i].segments[0];
+					}
+
+					if ( connections[i].segments.Length > 1 ) {
+						endDir = connections[i].segments[1];
+					}
+
+					OGDrawHelper.DrawCurve ( drawRct.center, startDir, endDir, connections[i].node.drawRct.center, 10 ); 
 
 				}
 			}
