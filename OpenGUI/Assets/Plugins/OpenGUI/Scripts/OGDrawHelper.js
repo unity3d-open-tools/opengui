@@ -66,7 +66,7 @@ public class OGDrawHelper {
 	public static function GetLabelWidth ( string : String, style : OGTextStyle ) : float {
 		var width : float = style.padding.left + style.padding.right;
 		
-		var size : float = ( style.fontSize * 1.0 ) / 72;
+		var size : float = ( style.fontSize * 1.0 ) / style.font.size;
 		var space : float = ( style.font.GetCharacterInfo ( " "[0] ).width * size );
 		
 		for ( var c : int = 0; c < string.Length; c++ ) {
@@ -123,16 +123,16 @@ public class OGDrawHelper {
 		}
 		
 		// Scale
-		var size : float = ( intSize * 1.0 ) / 72;
+		var size : float = ( intSize * 1.0 ) / style.font.size;
 		var atlasSize : Vector2 = style.font.atlasSize;
 		
 		// Bounds
 		var left : float = style.padding.left;
 		var right : float = rect.width - style.padding.right - style.padding.left;
 		var top : float = rect.height - style.padding.top;
+		var bottom : float = style.padding.bottom;
 		var middle : float = ( rect.height / 2 ) + ( ( style.font.info.lineSpacing * size ) / 2 );
 		var center : float = left + right / 2;
-		var bottom : float = rect.height - style.padding.bottom;
 		
 		// Positioning
 		var anchor : Vector2;
@@ -208,7 +208,8 @@ public class OGDrawHelper {
 		GL.Color ( color );
 		
 		// Draw loop
-		while ( nextLineStart < string.Length && advance.y > -bottom ) {
+		while ( nextLineStart < string.Length && advance.y - style.padding.top > - ( rect.height - style.padding.top - style.padding.bottom ) ) {
+			
 			// Get next line
 			lastSpace = 0;
 			lineWidth = 0;

@@ -34,7 +34,8 @@ public class OGFontInspector extends Editor {
 		
 		font.dynamicFont = EditorGUILayout.ObjectField ( "Dynamic font", font.dynamicFont, Font, false ) as Font;
 		font.bitmapFont = EditorGUILayout.ObjectField ( "Unicode font", font.bitmapFont, Font, false ) as Font;
-		
+		font.size = EditorGUILayout.IntField ( "Font size", font.size );
+
 		EditorGUILayout.Space ();
 
 		/* DEBUG: Display available properties
