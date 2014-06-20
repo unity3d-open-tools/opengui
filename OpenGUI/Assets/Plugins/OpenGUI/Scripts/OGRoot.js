@@ -29,7 +29,6 @@ class OGRoot extends MonoBehaviour {
 	public var downWidget : OGWidget;	
 	public var isMouseOver : boolean = false;
 
-	private var dirtyCounter : int = 0;
 	private var widgets : OGWidget[];
 	private var mouseOver : List.< OGWidget > = new List.< OGWidget > ();
 	private var screenRect : Rect;
@@ -73,8 +72,6 @@ class OGRoot extends MonoBehaviour {
 			currentPage.StartPage ();
 			currentPage.UpdateStyles ();
 		}
-
-		SetDirty ();
 	}
 
 	
@@ -196,14 +193,6 @@ class OGRoot extends MonoBehaviour {
 	//////////////////
 	// Update
 	//////////////////
-	public function SetDirty ( s : int ) {
-		dirtyCounter = s;
-	}
-
-	public function SetDirty () {
-		dirtyCounter = 2;
-	}
-	
 	public function ReleaseWidget () {
 		downWidget = null;
 	}
@@ -246,6 +235,22 @@ class OGRoot extends MonoBehaviour {
 	//////////////////
 	// Mouse interaction
 	//////////////////
+	private function GetDragging () : Vector2 {
+		var dragging : Vector2;
+		
+		if ( Input.GetMouseButton ( 0 ) || Input.GetMouseButton ( 2 ) ) {
+			dragging.x = Input.GetAxis ( "Mouse X" );
+			dragging.y = Input.GetAxis ( "Mouse Y" );
+		
+		} else if ( GetTouch () == TouchPhase.Moved ) {
+			var t = Input.GetTouch ( 0 );
+			var pos = GUIUtility.ScreenToGUIPoint ( t.position );
+			dragging = t.deltaPosition * ( Time.deltaTime / t.deltaTime );
+		}
+
+		return dragging;
+	}
+	
 	private function GetTouch () : TouchPhase {
 		if ( Input.touchCount < 1 ) {
 			return -1;
@@ -270,14 +275,8 @@ class OGRoot extends MonoBehaviour {
 			for ( i = 0; i < mouseOver.Count; i++ ) {
 				w = mouseOver[i];
 				
-				if ( ( topWidget == null || w.transform.position.z < topWidget.transform.position.z ) && w.isSelectable ) {
-				        if ( w.GetType() == typeof ( OGScrollView ) ) {
-						if ( Input.GetMouseButton ( 2 ) || ( w as OGScrollView ).touchControl ) {	
-							topWidget = w;
-						}
-					} else {
-						topWidget = w;
-					}
+				if ( ( w.GetType() != typeof ( OGScrollView ) || ( w as OGScrollView ).touchControl ) && ( topWidget == null || w.transform.position.z < topWidget.transform.position.z ) && w.isSelectable ) {
+					topWidget = w;
 				}
 			}
 			
@@ -313,8 +312,14 @@ class OGRoot extends MonoBehaviour {
 			}
 		
 		// Dragging
-		} else if ( Input.GetMouseButton ( 0 ) || Input.GetMouseButton ( 2 ) || GetTouch () == TouchPhase.Moved ) {
-			if ( downWidget != null && !downWidget.isDisabled && downWidget.CheckMouseOver()) {
+		} else if ( GetDragging () != Vector2.zero ) {
+			if ( downWidget != null && !downWidget.isDisabled ) {
+				if ( downWidget.clipTo && downWidget.clipTo.GetType() == typeof ( OGScrollView ) && ( downWidget.clipTo as OGScrollView ).touchControl ) {
+					var thisWidget : OGWidget = downWidget;
+					thisWidget.OnMouseCancel ();
+					downWidget = thisWidget.clipTo;
+				}
+				
 				downWidget.OnMouseDrag ();
 			
 				if ( downWidget.isDraggable && downWidget.GetType() != typeof ( OGScrollView ) ) {
@@ -332,7 +337,6 @@ class OGRoot extends MonoBehaviour {
 					var newPos : Vector3 = downWidget.transform.position;
 					newPos = mousePos + downWidget.dragOffset;
 					downWidget.transform.position = newPos;
-					SetDirty ();
 				}
 			}
 		}

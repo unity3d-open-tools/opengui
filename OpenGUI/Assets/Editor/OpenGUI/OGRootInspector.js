@@ -46,14 +46,5 @@ public class OGRootInspector extends Editor {
 		if ( !root ) { return; }
 		
 		DrawDefaultInspector ();
-
-		EditorGUILayout.Space ();
-
-		GUI.backgroundColor = Color.green;
-		if ( GUILayout.Button ( "Update", GUILayout.Height ( 30 ) ) ) {
-			root.SetDirty ();
-		}
-		GUI.backgroundColor = Color.white;
-
 	}
 }

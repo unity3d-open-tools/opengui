@@ -12,6 +12,8 @@ public class OGTabs extends OGWidget {
 	}
 	
 	public var activeTab : int;
+	public var leftArrow : String = "«";
+	public var rightArrow : String = "»";
 	public var tabs : List.<Tab> = new List.<Tab>();
 	public var target : GameObject;
 	public var message : String;
@@ -22,6 +24,8 @@ public class OGTabs extends OGWidget {
 	private var overflow : boolean = false;
 	private var maxTabs : int = 0;
 	private var focusTab : int = 0;
+	private var leftNavDown : boolean = false;
+	private var rightNavDown : boolean = false;
 
 
 	//////////////////
@@ -102,7 +106,7 @@ public class OGTabs extends OGWidget {
 	}
 
 	private function GetLeftStyle () : OGStyle {
-		if ( Input.GetMouseButtonDown ( 0 ) && CheckMouseOver ( GetLeftRect() ) ) {
+		if ( leftNavDown ) {
 			return styles.active;
 		} else {
 			return styles.basic;
@@ -110,7 +114,7 @@ public class OGTabs extends OGWidget {
 	}
 	
 	private function GetRightStyle () : OGStyle {
-		if ( Input.GetMouseButtonDown ( 0 ) && CheckMouseOver ( GetRightRect() ) ) {
+		if ( rightNavDown ) {
 			return styles.active;
 		} else {
 			return styles.basic;
@@ -158,10 +162,10 @@ public class OGTabs extends OGWidget {
 	//////////////////
 	override function OnMouseDown () {
 		if ( CheckMouseOver ( GetLeftRect () ) && activeTab > 0 ) {
-			SetActiveTab ( activeTab - 1 );
+			leftNavDown = true;
 
 		} else if ( CheckMouseOver ( GetRightRect () ) && activeTab < tabs.Count - 1 ) {
-			SetActiveTab ( activeTab + 1 );
+			rightNavDown = true;
 
 		} else {
 			for ( var i : int = 0; i < tabs.Count; i++ ) {
@@ -186,10 +190,21 @@ public class OGTabs extends OGWidget {
 	}
 
 	override function OnMouseUp () {
-		GetRoot().ReleaseWidget();
+		if ( leftNavDown ) {
+			SetActiveTab ( activeTab - 1 );
+		
+		} else if ( rightNavDown ) {
+			SetActiveTab ( activeTab + 1 );
+
+		}
+		
+		OnMouseCancel ();
 	}
 
 	override function OnMouseCancel () {
+		leftNavDown = false;
+		rightNavDown = false;
+
 		GetRoot().ReleaseWidget();
 	}
 	
@@ -249,11 +264,11 @@ public class OGTabs extends OGWidget {
 		
 		if ( overflow ) {
 			if ( activeTab > 0 ) {
-				OGDrawHelper.DrawLabel ( GetLeftRect (), "<", GetLeftStyle().text, drawDepth, tint, clipTo );
+				OGDrawHelper.DrawLabel ( GetLeftRect (), leftArrow, GetLeftStyle().text, drawDepth, tint, clipTo );
 			}
 
 			if ( activeTab < tabs.Count - 1 ) {
-				OGDrawHelper.DrawLabel ( GetRightRect (), ">", GetRightStyle().text, drawDepth, tint, clipTo );
+				OGDrawHelper.DrawLabel ( GetRightRect (), rightArrow, GetRightStyle().text, drawDepth, tint, clipTo );
 			}
 		}
 		

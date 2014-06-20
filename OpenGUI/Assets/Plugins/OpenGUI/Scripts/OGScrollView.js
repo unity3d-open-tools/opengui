@@ -12,15 +12,15 @@ public class OGScrollView extends OGWidget {
 		Auto
 	}
 
+	public var touchControl : boolean = false;
+	public var infiniteScrolling : boolean = false;
+	public var lockAxis : ScrollDirection;
+	public var scrollbarVisibility : ScrollbarVisibility = ScrollbarVisibility.Auto;
 	public var size : Vector2;
 	public var position : Vector2;
 	public var padding : Vector2 = new Vector2 ( 10, 10 );
 	public var elasticity : float = 2;
 	public var thumbScale : Vector2 = new Vector2 ( 16, 1 );
-	public var lockAxis : ScrollDirection;
-	public var scrollbarVisibility : ScrollbarVisibility = ScrollbarVisibility.Auto;
-	public var infiniteScrolling : boolean = false;
-	public var touchControl : boolean = false;
 
 	private var widgets : OGWidget[];
 	private var bounds : Vector2;
@@ -213,18 +213,17 @@ public class OGScrollView extends OGWidget {
 	// Mouse
 	//////////////////
 	override function OnMouseDrag () {
-		if ( !isDraggable ) { return; }
-
 		var drag : Vector2;
 		var amount : Vector2;
+		
 		drag.x = Input.GetAxis ( "Mouse X" ); 
 		drag.y = Input.GetAxis ( "Mouse Y" );
 		
-		amount.x = Mathf.Floor ( drag.x * 20 );
-		amount.y = -Mathf.Floor ( drag.y * 20 );
+		amount.x = Mathf.Floor ( drag.x * 12 );
+		amount.y = -Mathf.Floor ( drag.y * 12 );
 		
 		// Elasticity
-		if ( !IsInfiniteX() ) {
+		if ( !IsInfiniteX() && lockAxis != ScrollDirection.Y ) {
 			if ( position.x + amount.x > 0 ) {
 				amount.x *= elasticity / ( elasticity * ( position.x + amount.x ) );
 			} else if ( position.x + amount.x < bounds.x ) {
@@ -232,7 +231,7 @@ public class OGScrollView extends OGWidget {
 			} 
 		}
 
-		if ( !IsInfiniteY() ) {
+		if ( !IsInfiniteY() && lockAxis != ScrollDirection.X ) {
 			if ( position.y + amount.y > 0 ) {
 				amount.y *= elasticity / ( elasticity * ( position.y + amount.y ) );
 			} else if ( position.y + amount.y < bounds.y ) {

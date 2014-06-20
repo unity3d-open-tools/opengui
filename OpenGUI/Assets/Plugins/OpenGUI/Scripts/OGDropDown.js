@@ -90,6 +90,7 @@ class OGDropDown extends OGWidget {
 		if ( item.tickable ) {
 			item.isTicked = !item.isTicked;
 			activeNestedMenu = -1;
+			Exit ();
 
 		} else if ( item.nestedMenu.Length > 0 ) {
 			if ( activeNestedMenu == i ) {
@@ -100,8 +101,9 @@ class OGDropDown extends OGWidget {
 
 		} else {
 			Exit ();
-		
+
 		}
+		
 	}
 
 	// Nested item
@@ -121,9 +123,9 @@ class OGDropDown extends OGWidget {
 			} else {
 				item.isTicked = !item.isTicked;
 			}
-		} else {
-			Exit ();
 		}
+		
+		Exit ();
 
 		if ( !String.IsNullOrEmpty ( item.message ) ) {
 			if ( !String.IsNullOrEmpty ( item.argument ) ) {
