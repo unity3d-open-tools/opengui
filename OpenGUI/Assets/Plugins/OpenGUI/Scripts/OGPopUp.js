@@ -59,7 +59,7 @@ class OGPopUp extends OGWidget {
 	}
 
 	private function GetExpandedRect () : Rect {
-		var totalHeight : float = drawRct.height + options.Length * drawRct.height;
+		var totalHeight : float = styles.active.text.padding.bottom + styles.active.text.padding.top + drawRct.height + options.Length * drawRct.height;
 		var bottom : float = drawRct.y - totalHeight + drawRct.height;
 		
 		if ( bottom < 0 || clipTo && bottom < clipTo.drawRct.y ) {
