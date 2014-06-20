@@ -145,6 +145,13 @@ class OGPopUp extends OGWidget {
 	override function DrawSkin () {
 		if ( isUp ) {
 			OGDrawHelper.DrawSlicedSprite ( GetExpandedRect(), currentStyle, drawDepth, tint, clipTo );
+			
+			for ( var i : int = 0; i < options.Length; i++ ) {
+				if ( GetOptionStyle ( i ) == styles.hover ) {
+					OGDrawHelper.DrawSprite ( GetOptionRect ( i ), styles.hover, drawDepth, tint, clipTo );
+				}
+			}
+
 		} else {
 			OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle, drawDepth, tint, clipTo );
 			OGDrawHelper.DrawSprite ( GetThumbRect (), styles.thumb, drawDepth, tint, clipTo );
