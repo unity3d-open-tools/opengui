@@ -2,6 +2,99 @@
 
 import System.Collections.Generic;
 
+public class OGTextEditor {
+	public var enabled : boolean = true;
+	public var string : String;
+	public var cursorPos : Vector2;
+	public var cursorSize : Vector2 = new Vector2 ( 2, 12 );
+	public var cursorRect : Rect;
+	public var cursorIndex : int;
+	public var cursorSelectIndex : int;
+	public var exitKey : KeyCode = KeyCode.Escape;
+	public var exitAction : System.Action;
+
+	public function Backspace () {
+		if ( cursorIndex > 0 && string.Length > 0 ) {
+			cursorIndex--;
+
+			var before : String = "";
+			var after : String = "";
+		       
+			string.Substring ( 0, cursorIndex );
+			
+			if ( cursorSelectIndex < string.Length - 1 ) {	
+				after = string.Substring ( cursorSelectIndex, string.Length - 1 );
+			}
+
+			string = before + after;
+
+			cursorSelectIndex = cursorIndex;
+		}
+	}
+	
+	public function AddText ( newText : String ) {
+		var before : String;
+		var after : String;
+		
+		if ( string.Length > 0 ) {
+			before = string.Substring ( 0, cursorIndex );
+			
+			if ( string.Length > 1 && cursorIndex < string.Length - 1 ) {
+				after = string.Substring ( cursorIndex, string.Length - 1 );
+			}
+		}
+
+		string = before + newText + after;
+		
+		cursorIndex += newText.Length;
+		cursorSelectIndex = cursorIndex;
+	}
+	
+	public function MoveLeft () {
+		if ( cursorIndex > 0 ) {
+			cursorIndex--;
+			cursorSelectIndex = cursorIndex;
+		}
+	}
+
+	public function MoveRight () {
+		if ( cursorIndex < string.Length - 1 ) {
+			cursorIndex++;
+			cursorSelectIndex = cursorIndex;
+		}
+	}
+
+	public function Update ( text : String ) : String {
+		string = text;
+
+		if ( exitAction && Input.GetKeyDown ( exitKey ) ) {
+			exitAction ();
+		
+		} else if ( Input.GetKeyDown ( KeyCode.Backspace ) ) {
+			Backspace ();
+
+		} else if ( Input.GetKeyDown ( KeyCode.LeftArrow ) ) {
+			MoveLeft ();
+
+		} else if ( Input.GetKeyDown ( KeyCode.RightArrow ) ) {
+			MoveRight ();
+
+		} else if ( !String.IsNullOrEmpty ( Input.inputString ) ) {
+			AddText ( Input.inputString );
+
+		}
+
+		if ( cursorIndex != cursorSelectIndex ) {
+			
+		} else {
+			cursorRect = new Rect ( cursorPos.x, cursorPos.y, cursorSize.x, cursorSize.y );
+
+		}
+
+		return string;
+	}
+}
+
 public class OGDrawHelper {
 	private static var texSize : Vector2;
 
@@ -87,18 +180,22 @@ public class OGDrawHelper {
 	
 	// Draw
 	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float, tint : Color ) {
-		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, tint, null );
+		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, tint, null, null );
+	}
+	
+	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float, tint : Color, clipping : OGWidget, editor : OGTextEditor ) {
+		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, tint, clipping, editor );
 	}
 		
 	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, depth : float, tint : Color, clipping : OGWidget ) {
-		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, tint, clipping );
+		DrawLabel ( rect, string, style, style.fontSize, style.alignment, depth, tint, clipping, null );
 	}
 	
 	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float, tint : Color ) {
-		DrawLabel ( rect, string, style, intSize, alignment, depth, tint, null );
+		DrawLabel ( rect, string, style, intSize, alignment, depth, tint, null, null );
 	}
 	
-	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float, tint : Color, clipping : OGWidget ) {
+	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float, tint : Color, clipping : OGWidget, editor : OGTextEditor ) {
 		// Check font
 		if ( style.font == null ) {
 			style.font = OGRoot.GetInstance().skin.fonts [ style.fontIndex ];
@@ -146,10 +243,10 @@ public class OGDrawHelper {
 		var lineWidth : float = 0;
 		var lineHeight : float = style.font.info.lineSpacing * size;
 		var emergencyBrake : int = 0;
+		var closestGlyphToCursor : Vector2;
 		
 		// Temp vars
 		var info : OGCharacterInfo;
-		var cursorPos : Vector2;
 
 		// Set anchor
 		switch ( alignment ) {
@@ -323,6 +420,14 @@ public class OGDrawHelper {
 					}
 				}
 
+				// Set cursor position
+				if ( editor && editor.cursorIndex == g ) {
+					editor.cursorPos.x = gLeft;
+					editor.cursorPos.y = gBottom;
+					editor.cursorSize.x = 1;
+					editor.cursorSize.y = style.fontSize;
+				}
+				
 				// Bottom Left
 				GL.TexCoord2 ( uv[0].x, uv[0].y );
 				GL.Vertex3 ( gLeft, gBottom, depth );

@@ -17,9 +17,10 @@ public class OGTextField extends OGWidget {
 	public var singleLine : boolean = false;
 	public var fitToText : boolean = false;
 	public var fitPadding : RectOffset = new RectOffset ();
+	public var editor : OGTextEditor;
 
 	@HideInInspector public var listening : boolean = false;
-	
+
 	private var currentPreset : RegExPreset = RegExPreset.None;
 
 
@@ -28,6 +29,8 @@ public class OGTextField extends OGWidget {
 	//////////////////
 	override function OnMouseDown () {
 		listening = true;
+
+		editor.cursorPos = Input.mousePosition;
 	}
 
 	override function OnMouseCancel () {
@@ -40,7 +43,7 @@ public class OGTextField extends OGWidget {
 	/////////////////
 	// Steal TextEditor functionality from OnGUI
 	public function OnGUI () {
-		if ( isDrawn && listening ) {
+		if ( isDrawn && listening && !editor.enabled ) {
 			GUI.SetNextControlName ( "ActiveTextField" );
 
 			var style : GUIStyle = new GUIStyle();
@@ -132,6 +135,10 @@ public class OGTextField extends OGWidget {
 				
 			}
 		}
+
+		if ( editor.enabled ) {
+			text = editor.Update ( text );
+		}
 	}
 
 
@@ -140,12 +147,15 @@ public class OGTextField extends OGWidget {
 	/////////////////
 	override function DrawSkin () {
 		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle, drawDepth, tint, clipTo );
+	
+		if ( listening && editor.enabled ) {
+			OGDrawHelper.DrawSprite ( editor.cursorRect, styles.thumb, drawDepth, tint, this );
+		}
 	}
 
 	override function DrawText () {
-		if ( !listening ) {
-			OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, tint, this );
-		
+		if ( !listening || editor.enabled ) {
+			OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, tint, this, editor );
 		}
 	}
 }
