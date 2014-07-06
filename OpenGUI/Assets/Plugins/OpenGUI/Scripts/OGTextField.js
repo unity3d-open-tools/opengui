@@ -149,7 +149,13 @@ public class OGTextField extends OGWidget {
 		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle, drawDepth, tint, clipTo );
 	
 		if ( listening && editor.enabled ) {
-			OGDrawHelper.DrawSprite ( editor.cursorRect, styles.thumb, drawDepth, tint, this );
+			var color : Color = tint;
+			
+			if ( editor.cursorIndex != editor.cursorSelectIndex ) {
+				color = new Color ( 1 - color.r, 1 - color.g, 1 - color.b, color.a );
+			}
+			
+			OGDrawHelper.DrawSprite ( editor.cursorRect, styles.thumb, drawDepth, color, this );
 		}
 	}
 

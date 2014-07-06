@@ -6,6 +6,7 @@ public class OGTextEditor {
 	public var enabled : boolean = true;
 	public var string : String;
 	public var cursorPos : Vector2;
+	public var cursorSelectPos : Vector2;
 	public var cursorSize : Vector2 = new Vector2 ( 2, 12 );
 	public var cursorRect : Rect;
 	public var cursorIndex : int;
@@ -15,52 +16,66 @@ public class OGTextEditor {
 
 	public function Backspace () {
 		if ( cursorIndex > 0 && string.Length > 0 ) {
-			cursorIndex--;
-
-			var before : String = "";
-			var after : String = "";
-		       
-			string.Substring ( 0, cursorIndex );
-			
-			if ( cursorSelectIndex < string.Length - 1 ) {	
-				after = string.Substring ( cursorSelectIndex, string.Length - 1 );
+			if ( cursorSelectIndex == cursorIndex ) {
+				cursorIndex--;
 			}
-
-			string = before + after;
+			
+			string = string.Remove ( cursorIndex, cursorSelectIndex - cursorIndex );
 
 			cursorSelectIndex = cursorIndex;
 		}
 	}
 	
-	public function AddText ( newText : String ) {
-		var before : String;
-		var after : String;
+	public function InsertText ( newText : String ) {
+		if ( cursorIndex != cursorSelectIndex ) {
+			Backspace ();
+		}
 		
-		if ( string.Length > 0 ) {
-			before = string.Substring ( 0, cursorIndex );
-			
-			if ( string.Length > 1 && cursorIndex < string.Length - 1 ) {
-				after = string.Substring ( cursorIndex, string.Length - 1 );
-			}
+		if ( cursorIndex < string.Length - 1 ) {
+			string.Insert ( cursorIndex, newText );
+		
+		} else {
+			string += newText;
+
 		}
 
-		string = before + newText + after;
-		
 		cursorIndex += newText.Length;
 		cursorSelectIndex = cursorIndex;
 	}
 	
 	public function MoveLeft () {
 		if ( cursorIndex > 0 ) {
-			cursorIndex--;
-			cursorSelectIndex = cursorIndex;
+			if ( !Input.GetKey ( KeyCode.LeftShift ) && !Input.GetKey ( KeyCode.RightShift ) ) {
+				if ( cursorIndex != cursorSelectIndex ) {
+					cursorSelectIndex = cursorIndex;
+				
+				} else {
+					cursorIndex--;
+					cursorSelectIndex = cursorIndex;
+				}
+
+			} else {
+				cursorIndex--;
+
+			}
 		}
 	}
 
 	public function MoveRight () {
-		if ( cursorIndex < string.Length - 1 ) {
-			cursorIndex++;
-			cursorSelectIndex = cursorIndex;
+		if ( cursorIndex < string.Length ) {
+			if ( !Input.GetKey ( KeyCode.LeftShift ) && !Input.GetKey ( KeyCode.RightShift ) ) {
+				if ( cursorIndex != cursorSelectIndex ) {
+					cursorIndex = cursorSelectIndex;
+				
+				} else {
+					cursorIndex++;
+					cursorSelectIndex = cursorIndex;
+				}
+
+			} else {
+				cursorSelectIndex++;
+
+			}
 		}
 	}
 
@@ -80,11 +95,12 @@ public class OGTextEditor {
 			MoveRight ();
 
 		} else if ( !String.IsNullOrEmpty ( Input.inputString ) ) {
-			AddText ( Input.inputString );
+			InsertText ( Input.inputString );
 
 		}
 
 		if ( cursorIndex != cursorSelectIndex ) {
+			cursorRect = new Rect ( cursorPos.x, cursorPos.y, cursorSelectPos.x - cursorPos.x, cursorSize.y );
 			
 		} else {
 			cursorRect = new Rect ( cursorPos.x, cursorPos.y, cursorSize.x, cursorSize.y );
@@ -421,9 +437,28 @@ public class OGDrawHelper {
 				}
 
 				// Set cursor position
-				if ( editor && editor.cursorIndex == g ) {
-					editor.cursorPos.x = gLeft;
-					editor.cursorPos.y = gBottom;
+				if ( editor ) {
+					if ( editor.cursorIndex == g ) {
+						editor.cursorPos.x = gLeft;
+						editor.cursorPos.y = gBottom;
+					
+					} else if ( editor.cursorIndex >= editor.string.Length && g == editor.string.Length - 1 ) {
+						editor.cursorPos.x = gRight;
+						editor.cursorPos.y = gBottom;
+
+					}
+					
+					
+					if ( editor.cursorSelectIndex == g ) {
+						editor.cursorSelectPos.x = gLeft;
+						editor.cursorSelectPos.y = gBottom;
+					
+					} else if ( editor.cursorSelectIndex >= editor.string.Length && g == editor.string.Length - 1 ) {
+						editor.cursorSelectPos.x = gRight;
+						editor.cursorSelectPos.y = gBottom;
+
+					}
+
 					editor.cursorSize.x = 1;
 					editor.cursorSize.y = style.fontSize;
 				}
