@@ -137,7 +137,7 @@ public class OGTextField extends OGWidget {
 		}
 
 		if ( editor.enabled ) {
-			text = editor.Update ( text );
+			text = editor.Update ( text, drawRct );
 		}
 	}
 
@@ -153,9 +153,15 @@ public class OGTextField extends OGWidget {
 			
 			if ( editor.cursorIndex != editor.cursorSelectIndex ) {
 				color = new Color ( 1 - color.r, 1 - color.g, 1 - color.b, color.a );
-			}
+				
+				for ( var i : int = 0; i < editor.selectionRects.Length; i++ ) {
+					OGDrawHelper.DrawSprite ( editor.selectionRects[i], styles.thumb, drawDepth, color, this );
+				}
 			
-			OGDrawHelper.DrawSprite ( editor.cursorRect, styles.thumb, drawDepth, color, this );
+			} else {
+				OGDrawHelper.DrawSprite ( editor.cursorRect, styles.thumb, drawDepth, color, this );
+			
+			}
 		}
 	}
 

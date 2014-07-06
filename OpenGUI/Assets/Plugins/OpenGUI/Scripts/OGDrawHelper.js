@@ -9,10 +9,23 @@ public class OGTextEditor {
 	public var cursorSelectPos : Vector2;
 	public var cursorSize : Vector2 = new Vector2 ( 2, 12 );
 	public var cursorRect : Rect;
+	public var selectionRects : Rect [] = new Rect[0];
 	public var cursorIndex : int;
 	public var cursorSelectIndex : int;
+	public var delayUntilRepeat : float = 0.25;
+	public var repeat : float = 0.025;
 	public var exitKey : KeyCode = KeyCode.Escape;
 	public var exitAction : System.Action;
+
+	private var inputTimer : float = 0;
+
+	private function get shiftPressed () : boolean {
+		return Input.GetKey ( KeyCode.LeftShift ) || Input.GetKey ( KeyCode.RightShift );
+	}
+
+	private function get arrowPressed () : boolean { 
+		return Input.GetKey ( KeyCode.LeftArrow ) || Input.GetKey ( KeyCode.DownArrow ) || Input.GetKey ( KeyCode.UpArrow ) || Input.GetKey ( KeyCode.RightArrow );
+	}
 
 	public function Backspace () {
 		if ( cursorIndex > 0 && string.Length > 0 ) {
@@ -27,6 +40,10 @@ public class OGTextEditor {
 	}
 	
 	public function InsertText ( newText : String ) {
+		if ( arrowPressed || String.IsNullOrEmpty ( newText ) ) {
+			return;
+		}
+		
 		if ( cursorIndex != cursorSelectIndex ) {
 			Backspace ();
 		}
@@ -45,7 +62,7 @@ public class OGTextEditor {
 	
 	public function MoveLeft () {
 		if ( cursorIndex > 0 ) {
-			if ( !Input.GetKey ( KeyCode.LeftShift ) && !Input.GetKey ( KeyCode.RightShift ) ) {
+			if ( !shiftPressed ) {
 				if ( cursorIndex != cursorSelectIndex ) {
 					cursorSelectIndex = cursorIndex;
 				
@@ -63,7 +80,7 @@ public class OGTextEditor {
 
 	public function MoveRight () {
 		if ( cursorIndex < string.Length ) {
-			if ( !Input.GetKey ( KeyCode.LeftShift ) && !Input.GetKey ( KeyCode.RightShift ) ) {
+			if ( !shiftPressed ) {
 				if ( cursorIndex != cursorSelectIndex ) {
 					cursorIndex = cursorSelectIndex;
 				
@@ -79,32 +96,79 @@ public class OGTextEditor {
 		}
 	}
 
-	public function Update ( text : String ) : String {
+	public function Update ( text : String, rect : Rect ) : String {
 		string = text;
 
+		// Actions
 		if ( exitAction && Input.GetKeyDown ( exitKey ) ) {
 			exitAction ();
 		
 		} else if ( Input.GetKeyDown ( KeyCode.Backspace ) ) {
 			Backspace ();
 
+		// Moving
 		} else if ( Input.GetKeyDown ( KeyCode.LeftArrow ) ) {
 			MoveLeft ();
 
+			inputTimer = delayUntilRepeat;
+
+		} else if ( Input.GetKey ( KeyCode.LeftArrow ) && inputTimer <= 0 ) {
+			MoveLeft ();
+			
+			inputTimer = repeat;
+		
 		} else if ( Input.GetKeyDown ( KeyCode.RightArrow ) ) {
 			MoveRight ();
 
+			inputTimer = delayUntilRepeat;
+
+		} else if ( Input.GetKey ( KeyCode.RightArrow ) && inputTimer <= 0 ) {
+			MoveRight ();
+			
+			inputTimer = repeat;
+
+		// Typing
 		} else if ( !String.IsNullOrEmpty ( Input.inputString ) ) {
 			InsertText ( Input.inputString );
 
 		}
 
 		if ( cursorIndex != cursorSelectIndex ) {
-			cursorRect = new Rect ( cursorPos.x, cursorPos.y, cursorSelectPos.x - cursorPos.x, cursorSize.y );
+			cursorRect = new Rect ( 0, 0, 0, 0 );
+			
+			var lines : int = ( cursorSelectPos.y - cursorPos.y ) / cursorSize.y;
+
+			lines++;
+
+			selectionRects = new Rect[lines];
+
+			for ( var i : int = 0; i < lines; i++ ) {
+				if ( i < 1 ) {
+					if ( lines > 1 ) {
+						selectionRects[i] = new Rect ( cursorPos.x, cursorPos.y, rect.xMax - cursorPos.x, cursorSize.y );
+					
+					} else {
+						selectionRects[i] = new Rect ( cursorPos.x, cursorPos.y, cursorSelectPos.x - cursorPos.x, cursorSize.y );
+
+					}
+
+				} else if ( i == lines ) {
+					selectionRects[i] = new Rect ( rect.x, cursorPos.y + ( i * cursorSize.y ), cursorSelectPos.x - rect.x, cursorSize.y );
+
+				} else {
+					selectionRects[i] = new Rect ( rect.x, cursorPos.y + ( i * cursorSize.y ), rect.width, cursorSize.y );
+
+				}
+			}
 			
 		} else {
 			cursorRect = new Rect ( cursorPos.x, cursorPos.y, cursorSize.x, cursorSize.y );
+			selectionRects = new Rect[0];
 
+		}
+
+		if ( inputTimer > 0 ) {
+			inputTimer -= Time.deltaTime;
 		}
 
 		return string;
@@ -220,6 +284,13 @@ public class OGDrawHelper {
 
 		// Check string
 		if ( String.IsNullOrEmpty ( string ) ) {
+			if ( editor ) {
+				editor.cursorIndex = 0;
+				editor.cursorSelectIndex = 0;
+				editor.cursorPos.x = rect.xMin;
+				editor.cursorPos.y = rect.yMin - style.fontSize;
+			}
+
 			return;
 		}
 
@@ -319,7 +390,7 @@ public class OGDrawHelper {
 		color.b *= tint.b;
 		color.a *= tint.a;
 		GL.Color ( color );
-		
+	
 		// Draw loop
 		while ( nextLineStart < string.Length && advance.y - style.padding.top > - ( rect.height - style.padding.top - style.padding.bottom ) ) {
 			
