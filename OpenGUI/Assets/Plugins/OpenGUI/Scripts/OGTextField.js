@@ -16,7 +16,6 @@ public class OGTextField extends OGWidget {
 	public var locked : boolean = false;
 	public var singleLine : boolean = false;
 	public var fitToText : boolean = false;
-	public var fitPadding : RectOffset = new RectOffset ();
 	public var editor : OGTextEditor;
 
 	@HideInInspector public var listening : boolean = false;
@@ -37,56 +36,12 @@ public class OGTextField extends OGWidget {
 		listening = false;
 	}
 
-
-	/////////////////
-	// OnGUI draw
-	/////////////////
-	// Steal TextEditor functionality from OnGUI
 	public function OnGUI () {
-		if ( isDrawn && listening && !editor.enabled ) {
-			GUI.SetNextControlName ( "ActiveTextField" );
-
-			var style : GUIStyle = new GUIStyle();
-			style.normal.textColor = currentStyle.text.fontColor;
-			style.font = currentStyle.text.font.dynamicFont;
-			style.fontSize = currentStyle.text.fontSize;
-			style.alignment = currentStyle.text.alignment;
-			style.wordWrap = currentStyle.text.wordWrap;
-			style.padding = currentStyle.text.padding;
-			style.padding.left += fitPadding.left;
-			style.padding.right += fitPadding.right;
-			style.padding.top += fitPadding.top;
-			style.padding.bottom += fitPadding.bottom;
-			style.clipping = TextClipping.Clip;
-
-			var c : Color = currentStyle.text.fontColor;
-			GUI.skin.settings.selectionColor = new Color ( 1.0 - c.r, 1.0 - c.g, 1.0 - c.b, c.a );
-
-			var invertedRct : Rect = drawRct;
-			invertedRct.y = Screen.height - invertedRct.y - invertedRct.height;
-			
-			if ( String.IsNullOrEmpty ( text ) ) {
-				text = "";
-			}
-
-			text = GUI.TextArea ( invertedRct, text, style );
-
-			if ( singleLine ) {
-				text = text.Replace("\n", "").Replace("\r", "");
-			}
-
-			var controlID : int = GUIUtility.GetControlID(drawRct.GetHashCode(), FocusType.Keyboard);
-			var editor : TextEditor = GUIUtility.GetStateObject(typeof(TextEditor), controlID -1 ) as TextEditor;
-	
-			if ( !String.IsNullOrEmpty ( regex ) && regex != "\\" && regexPreset != RegExPreset.None ) {
-				text = Regex.Replace ( text, "[" + regex + "]", "" );
-			}
-
-			GUI.FocusControl ( "ActiveTextField" );
+		if ( editor.enabled ) {
+			editor.Events ();
 		}	
 	}
 
-	
 	////////////////////
 	// Update
 	////////////////////
@@ -104,7 +59,18 @@ public class OGTextField extends OGWidget {
 		
 		if ( fitToText ) {
 			this.transform.localScale.x = OGDrawHelper.GetLabelWidth ( text, currentStyle.text );
+		}
 		
+		if ( String.IsNullOrEmpty ( text ) ) {
+			text = "";
+		}
+
+		if ( singleLine ) {
+			text = text.Replace("\n", "").Replace("\r", "");
+		}
+
+		if ( !String.IsNullOrEmpty ( regex ) && regex != "\\" && regexPreset != RegExPreset.None ) {
+			text = Regex.Replace ( text, "[" + regex + "]", "" );
 		}
 
 		// Styles
