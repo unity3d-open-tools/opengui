@@ -47,6 +47,6 @@ public class OGConsoleFeed extends OGWidget {
 	// Draw
 	//////////////////	
 	override function DrawText () {
-		OGDrawHelper.DrawLabel ( drawRct, text, styles.basic.text, fontSize, alignment, drawDepth, tint, clipTo );
+		OGDrawHelper.DrawLabel ( drawRct, text, styles.basic.text, fontSize, alignment, drawDepth, tint, clipTo, null );
 	}
 }
