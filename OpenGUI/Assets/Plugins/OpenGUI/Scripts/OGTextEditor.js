@@ -158,118 +158,128 @@ public class OGTextEditor {
 		}
 	}
 
-	public function Events () {
+	public function Update ( text : String, rect : Rect ) : String {
 		var e : Event = Event.current;
 
-		if ( !e.isKey ) { return; }
-
-		// Actions
-		if ( exitAction && exitKeyPressed ) {
-			exitAction ();
-		
-		} else if ( e.keyCode == KeyCode.Backspace ) {
-			Backspace ();
-			
-			inputTimer = delayUntilRepeat;
-		
-		} else if ( e.keyCode == KeyCode.Backspace && inputTimer <= 0 ) {
-			Backspace ();
-			
-			inputTimer = repeat;
-
-/*		} else if ( Input.GetKeyDown ( KeyCode.Delete ) ) {
-			Delete ();
-			
-			inputTimer = delayUntilRepeat;
-*/		
-		} else if ( e.keyCode == KeyCode.Delete && inputTimer <= 0 ) {
-			Delete ();
-			
-			inputTimer = repeat;
-
-/*		} else if ( Input.GetKeyDown ( KeyCode.Return ) || Input.GetKeyDown ( KeyCode.KeypadEnter ) ) {
-			InsertText ( "\n" );
-			
-			inputTimer = delayUntilRepeat;
-*/		
-		} else if ( ( e.keyCode == KeyCode.Return || e.keyCode == KeyCode.KeypadEnter ) && inputTimer <= 0 ) {
-			InsertText ( "\n" );
-			
-			inputTimer = repeat;
-
-		// Paste
-		} else if ( ctrlOrCmdPressed && e.keyCode == KeyCode.V && inputTimer <= 0 ) {
-			InsertText ( ClipboardHelper.GetClipboard () );
-			inputTimer = delayUntilRepeat;
-
-		// Copy
-		} else if ( ctrlOrCmdPressed && e.keyCode == KeyCode.C && inputTimer <= 0 ) {
-			var copyString : String = string.Substring ( cursorIndex, cursorSelectIndex - cursorIndex );
-
-			if ( !String.IsNullOrEmpty ( copyString ) ) {
-				ClipboardHelper.SetClipboard ( copyString );
-			}
-			inputTimer = delayUntilRepeat;
-		
-		// Cut	
-		} else if ( ctrlOrCmdPressed && e.keyCode == KeyCode.X && inputTimer <= 0 ) {
-			copyString = string.Substring ( cursorIndex, cursorSelectIndex - cursorIndex );
-
-			if ( !String.IsNullOrEmpty ( copyString ) ) {
-				ClipboardHelper.SetClipboard ( copyString );
+		// One-time		
+		if ( e.type == EventType.KeyDown ) {
+			// Actions
+			if ( e.keyCode == KeyCode.Backspace ) {
 				Backspace ();
+				
+				inputTimer = delayUntilRepeat;
+			
+			} else if ( Input.GetKeyDown ( KeyCode.Delete ) ) {
+				Delete ();
+				
+				inputTimer = delayUntilRepeat;
+			
+			} else if ( Input.GetKeyDown ( KeyCode.Return ) || Input.GetKeyDown ( KeyCode.KeypadEnter ) ) {
+				InsertText ( "\n" );
+				
+				inputTimer = delayUntilRepeat;
+			
+			// Paste
+			} else if ( ctrlOrCmdPressed && e.keyCode == KeyCode.V && inputTimer <= 0 ) {
+				InsertText ( ClipboardHelper.GetClipboard () );
+				inputTimer = delayUntilRepeat;
+
+			// Copy
+			} else if ( ctrlOrCmdPressed && e.keyCode == KeyCode.C && inputTimer <= 0 ) {
+				var copyString : String = string.Substring ( cursorIndex, cursorSelectIndex - cursorIndex );
+
+				if ( !String.IsNullOrEmpty ( copyString ) ) {
+					ClipboardHelper.SetClipboard ( copyString );
+				}
+				inputTimer = delayUntilRepeat;
+			
+			// Cut	
+			} else if ( ctrlOrCmdPressed && e.keyCode == KeyCode.X && inputTimer <= 0 ) {
+				copyString = string.Substring ( cursorIndex, cursorSelectIndex - cursorIndex );
+
+				if ( !String.IsNullOrEmpty ( copyString ) ) {
+					ClipboardHelper.SetClipboard ( copyString );
+					Backspace ();
+				}
+				inputTimer = delayUntilRepeat;
+
+			// Moving
+			} else if ( Input.GetKeyDown ( KeyCode.LeftArrow ) ) {
+				MoveLeft ();
+
+				inputTimer = delayUntilRepeat;
+	
+			} else if ( Input.GetKeyDown ( KeyCode.UpArrow ) ) {
+				MoveUp ();
+
+				inputTimer = delayUntilRepeat;
+	
+			} else if ( Input.GetKeyDown ( KeyCode.DownArrow ) ) {
+				MoveDown ();
+
+				inputTimer = delayUntilRepeat;
+	
+			} else if ( Input.GetKeyDown ( KeyCode.RightArrow ) ) {
+				MoveRight ();
+
+				inputTimer = delayUntilRepeat;
+	
+
+			} else if ( exitAction && exitKeyPressed ) {
+				exitAction ();
+			
+			// Typing
+			} else if ( e.character != null ) {
+				InsertText ( e.character + "" );
+				
+				inputTimer = delayUntilRepeat;
+
 			}
-			inputTimer = delayUntilRepeat;
-
-		// Moving
-/*		} else if ( Input.GetKeyDown ( KeyCode.LeftArrow ) ) {
-			MoveLeft ();
-
-			inputTimer = delayUntilRepeat;
-*/
-		} else if ( e.keyCode == KeyCode.LeftArrow && inputTimer <= 0 ) {
-			MoveLeft ();
-			
-			inputTimer = repeat;
 		
-/*		} else if ( Input.GetKeyDown ( KeyCode.UpArrow ) ) {
-			MoveUp ();
+		} else if ( false ) { // TODO: detect holding key
+			if ( e.keyCode == KeyCode.Backspace && inputTimer <= 0 ) {
+				Backspace ();
+				
+				inputTimer = repeat;
 
-			inputTimer = delayUntilRepeat;
-*/
-		} else if ( e.keyCode == KeyCode.UpArrow && inputTimer <= 0 ) {
-			MoveUp ();
+			} else if ( e.keyCode == KeyCode.Delete && inputTimer <= 0 ) {
+				Delete ();
+				
+				inputTimer = repeat;
+
+			} else if ( ( e.keyCode == KeyCode.Return || e.keyCode == KeyCode.KeypadEnter ) && inputTimer <= 0 ) {
+				InsertText ( "\n" );
+				
+				inputTimer = repeat;
+
+			} else if ( e.keyCode == KeyCode.LeftArrow && inputTimer <= 0 ) {
+				MoveLeft ();
+				
+				inputTimer = repeat;
 			
-			inputTimer = repeat;
-		
-/*		} else if ( Input.GetKeyDown ( KeyCode.DownArrow ) ) {
-			MoveDown ();
-
-			inputTimer = delayUntilRepeat;
-*/
-		} else if ( e.keyCode == KeyCode.DownArrow && inputTimer <= 0 ) {
-			MoveDown ();
+			} else if ( e.keyCode == KeyCode.UpArrow && inputTimer <= 0 ) {
+				MoveUp ();
+				
+				inputTimer = repeat;
 			
-			inputTimer = repeat;
-		
-	/*	} else if ( Input.GetKeyDown ( KeyCode.RightArrow ) ) {
-			MoveRight ();
-
-			inputTimer = delayUntilRepeat;
-*/
-		} else if ( e.keyCode == KeyCode.RightArrow && inputTimer <= 0 ) {
-			MoveRight ();
+			} else if ( e.keyCode == KeyCode.DownArrow && inputTimer <= 0 ) {
+				MoveDown ();
+				
+				inputTimer = repeat;
 			
-			inputTimer = repeat;
+			} else if ( e.keyCode == KeyCode.RightArrow && inputTimer <= 0 ) {
+				MoveRight ();
+				
+				inputTimer = repeat;
+			
+			} else if ( e.character != null ) {
+				InsertText ( e.character + "" );
+				
+				inputTimer = repeat;
 
-		// Typing
-		} else if ( !String.IsNullOrEmpty ( Input.inputString ) ) {
-			InsertText ( Input.inputString );
-
+			}
 		}
-	}
 
-	public function Update ( text : String, rect : Rect ) : String {
 		string = text;
 		
 		if ( cursorIndex != cursorSelectIndex ) {

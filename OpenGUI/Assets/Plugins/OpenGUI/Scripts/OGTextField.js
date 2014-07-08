@@ -37,8 +37,8 @@ public class OGTextField extends OGWidget {
 	}
 
 	public function OnGUI () {
-		if ( editor.enabled ) {
-			editor.Events ();
+		if ( editor.enabled && listening ) {
+			text = editor.Update ( text, drawRct );
 		}	
 	}
 
@@ -100,10 +100,6 @@ public class OGTextField extends OGWidget {
 				regex = "^0-9.";
 				
 			}
-		}
-
-		if ( editor.enabled ) {
-			text = editor.Update ( text, drawRct );
 		}
 	}
 
