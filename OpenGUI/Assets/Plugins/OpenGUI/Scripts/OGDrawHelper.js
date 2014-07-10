@@ -300,7 +300,7 @@ public class OGDrawHelper {
 				}
 
 				// Set cursor position
-				if ( editor ) {
+				if ( editor && !String.IsNullOrEmpty ( editor.string ) ) {
 					if ( editor.cursorIndex == g ) {
 						editor.cursorPos.x = gLeft;
 						editor.cursorPos.y = gBottom;

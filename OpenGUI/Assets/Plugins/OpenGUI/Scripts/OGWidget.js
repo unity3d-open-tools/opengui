@@ -163,7 +163,7 @@ public class OGWidget extends MonoBehaviour {
 			newPos.y += this.transform.lossyScale.y;
 		}
 
-		newPos.y = Screen.height - newPos.y;
+		newPos.y = root.screenHeight - newPos.y;
 		
 		return newPos;
 	}
@@ -181,15 +181,15 @@ public class OGWidget extends MonoBehaviour {
 		}
 		
 		if ( stretch.width == ScreenSize.ScreenWidth ) {
-			newScale.x = ( Screen.width * stretch.widthFactor ) + stretch.widthOffset;
+			newScale.x = ( root.screenWidth * stretch.widthFactor ) + stretch.widthOffset;
 		} else if ( stretch.width == ScreenSize.ScreenHeight ) {
-			newScale.x = ( Screen.height * stretch.widthFactor ) + stretch.widthOffset;
+			newScale.x = ( root.screenHeight * stretch.widthFactor ) + stretch.widthOffset;
 		}
 		
 		if ( stretch.height == ScreenSize.ScreenWidth ) {
-			newScale.y = ( Screen.width * stretch.heightFactor ) + stretch.heightOffset;
+			newScale.y = ( root.screenWidth * stretch.heightFactor ) + stretch.heightOffset;
 		} else if ( stretch.height == ScreenSize.ScreenHeight ) {
-			newScale.y = ( Screen.height * stretch.heightFactor ) + stretch.heightOffset;
+			newScale.y = ( root.screenHeight * stretch.heightFactor ) + stretch.heightOffset;
 		}
 		
 		if ( !scrollView ) {
@@ -211,17 +211,17 @@ public class OGWidget extends MonoBehaviour {
 		if ( anchor.x == RelativeX.Left ) {
 			newPos.x = anchor.xOffset;
 		} else if ( anchor.x == RelativeX.Center ) {
-			newPos.x = ( Screen.width / 2 ) + anchor.xOffset;
+			newPos.x = ( root.screenWidth / 2 ) + anchor.xOffset;
 		} else if ( anchor.x == RelativeX.Right ) {
-			newPos.x = Screen.width + anchor.xOffset;
+			newPos.x = root.screenWidth + anchor.xOffset;
 		}
 		
 		if ( anchor.y == RelativeY.Top ) {
 			newPos.y = anchor.yOffset;
 		} else if ( anchor.y == RelativeY.Center ) {
-			newPos.y = ( Screen.height / 2 ) + anchor.yOffset;
+			newPos.y = ( root.screenHeight / 2 ) + anchor.yOffset;
 		} else if ( anchor.y == RelativeY.Bottom ) {
-			newPos.y = Screen.height + anchor.yOffset;
+			newPos.y = root.screenHeight + anchor.yOffset;
 		}
 
 		this.transform.position = newPos;

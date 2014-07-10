@@ -23,6 +23,7 @@ class OGLine {
 class OGRoot extends MonoBehaviour {
 	public static var instance : OGRoot;
 
+	public var targetResolution : Vector2;
 	public var skin : OGSkin;
 	public var currentPage : OGPage;
 	public var lineMaterial : Material;
@@ -41,7 +42,42 @@ class OGRoot extends MonoBehaviour {
 		return instance;
 	}
 
+
+	public function get ratio () : Vector2 {
+		var result : Vector2 = Vector2.one;
+		
+		if ( targetResolution.x > 0 ) {
+			result.x = Screen.width / screenWidth;
+		}
+		
+		if ( targetResolution.y > 0 ) {
+			result.y = Screen.height / screenHeight;
+		}
+
+		return result;
+	}
 	
+	public function get screenWidth () : float {
+		if ( targetResolution.x > 0 ) {
+			return targetResolution.x;
+		
+		} else {
+			return Screen.width;
+
+		}
+	}
+	
+	public function get screenHeight () : float {
+		if ( targetResolution.y > 0 ) {
+			return targetResolution.y;
+		
+		} else {
+			return Screen.height;
+
+		}
+	}
+
+
 	//////////////////
 	// Page management
 	//////////////////
@@ -85,7 +121,14 @@ class OGRoot extends MonoBehaviour {
 			var w : OGWidget;
 			
 			GL.PushMatrix();
-			GL.LoadPixelMatrix ();
+			
+			if ( targetResolution.x > 0 && targetResolution.y > 0 ) {  
+				GL.LoadPixelMatrix ( 0, targetResolution.x, 0, targetResolution.y );
+			
+			} else {
+				GL.LoadPixelMatrix ();
+
+			}
 
 			// Draw skin
 			GL.Begin(GL.QUADS);
@@ -324,7 +367,7 @@ class OGRoot extends MonoBehaviour {
 			
 				if ( downWidget.isDraggable && downWidget.GetType() != typeof ( OGScrollView ) ) {
 					var mousePos : Vector3 = Input.mousePosition;
-					mousePos.y = Screen.height - mousePos.y;
+					mousePos.y = screenHeight - mousePos.y;
 
 					if ( downWidget.dragOffset == Vector3.zero ) {
 						if ( downWidget.resetAfterDrag ) {
@@ -357,7 +400,7 @@ class OGRoot extends MonoBehaviour {
 
 	private function FindMouseOverWidget ( e : Event ) : OGWidget {
 		for ( var i : int = widgets.Length - 1; i > 0; i-- ) {
-			if ( widgets[i].drawRct.Contains ( new Vector2 ( e.mousePosition.x, Screen.height - e.mousePosition.y ) ) ) {
+			if ( widgets[i].drawRct.Contains ( new Vector2 ( e.mousePosition.x, screenHeight - e.mousePosition.y ) ) ) {
 				return widgets[i];
 			}
 		}
@@ -388,9 +431,19 @@ class OGRoot extends MonoBehaviour {
 					var color : Color = Color.white;
 					
 					var revRect : Rect = w.drawRct;
-					revRect.y = Screen.height - revRect.y - revRect.height;
+					revRect.y = screenHeight - revRect.y - revRect.height;
 					
+					revRect.x *= ratio.x;
+					revRect.width *= ratio.x;
+					revRect.y *= ratio.y;
+					revRect.height *= ratio.y;
+
 					var pivotRect : Rect = new Rect ( w.transform.position.x - 2, w.transform.position.y - 2, 4, 4 );
+					
+					pivotRect.x *= ratio.x;
+					pivotRect.width *= ratio.x;
+					pivotRect.y *= ratio.y;
+					pivotRect.height *= ratio.y;
 				
 					var tex : Texture2D = new Texture2D ( 1, 1 );
 					tex.SetPixel ( 0, 0, color );
@@ -459,7 +512,7 @@ class OGRoot extends MonoBehaviour {
 	// Widget management
 	//////////////////
 	public function UpdateWidgets () {
-		screenRect = new Rect ( 0, Screen.width, 0, Screen.height );
+		screenRect = new Rect ( 0, screenWidth, 0, screenHeight );
 
 		if ( currentPage == null ) { return; }
 		
