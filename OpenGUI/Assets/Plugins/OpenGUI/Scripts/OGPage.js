@@ -10,7 +10,7 @@ public class OGPage extends MonoBehaviour {
 
 	public function UpdateStyles () {
 		for ( var w : OGWidget in this.transform.GetComponentsInChildren.<OGWidget>(true) ) {
-			w.styles.Refresh ( w.GetRoot().skin );
+			w.styles.Refresh ( w.root.skin );
 		}
 	}
 

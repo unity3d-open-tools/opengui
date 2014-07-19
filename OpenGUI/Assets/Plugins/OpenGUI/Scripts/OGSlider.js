@@ -33,11 +33,11 @@ public class OGSlider extends OGWidget {
 	}
 
 	override function OnMouseCancel () {
-		GetRoot().ReleaseWidget();
+		root.ReleaseWidget();
 	}
 	
 	override function OnMouseUp () {
-		GetRoot().ReleaseWidget();
+		root.ReleaseWidget();
 	}
 	
 

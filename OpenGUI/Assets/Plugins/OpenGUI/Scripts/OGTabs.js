@@ -205,7 +205,7 @@ public class OGTabs extends OGWidget {
 		leftNavDown = false;
 		rightNavDown = false;
 
-		GetRoot().ReleaseWidget();
+		root.ReleaseWidget();
 	}
 	
 

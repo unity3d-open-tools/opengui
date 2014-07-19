@@ -253,13 +253,13 @@ public class OGScrollView extends OGWidget {
 	override function OnMouseCancel () {
 		StartCoroutine ( SnapBack () );
 	
-		GetRoot().ReleaseWidget ();
+		root.ReleaseWidget ();
 	}
 
 	override function OnMouseUp () {
 		StartCoroutine ( SnapBack () );
 	
-		GetRoot().ReleaseWidget ();
+		root.ReleaseWidget ();
 	}
 
 	override function OnMouseOver () {

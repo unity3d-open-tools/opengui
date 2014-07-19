@@ -12,7 +12,7 @@ public class OGTickBox extends OGWidget {
 	////////////////	
 	override function OnMouseCancel () {
 		isDown = false;
-		GetRoot().ReleaseWidget ();
+		root.ReleaseWidget ();
 	}
 	
 	override function OnMouseDown () {

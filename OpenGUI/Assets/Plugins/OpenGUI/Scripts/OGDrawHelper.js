@@ -4,6 +4,7 @@ import System.Collections.Generic;
 
 public class OGDrawHelper {
 	private static var texSize : Vector2;
+	private static var root : OGRoot;
 
 
 	//////////////////
@@ -103,6 +104,12 @@ public class OGDrawHelper {
 	}
 	
 	public static function DrawLabel ( rect : Rect, string : String, style : OGTextStyle, intSize : int, alignment : TextAnchor, depth : float, tint : Color, clipping : OGWidget, editor : OGTextEditor ) {
+		// Check root
+		if ( root == null ) {
+			root = OGRoot.GetInstance ();
+			return;
+		}	
+		
 		// Check font
 		if ( style.font == null ) {
 			style.font = OGRoot.GetInstance().skin.fonts [ style.fontIndex ];
@@ -122,7 +129,7 @@ public class OGDrawHelper {
 		}
 
 		// Check screen
-		if ( rect.xMin > Screen.width || rect.xMax < 0 || rect.yMax < 0 || rect.yMin > Screen.height ) {
+		if ( rect.xMin > root.screenWidth || rect.xMax < 0 || rect.yMax < 0 || rect.yMin > root.screenHeight ) {
 			return;
 		}
 		
@@ -419,8 +426,13 @@ public class OGDrawHelper {
 	}	
 
 	public static function DrawSprite ( rect : Rect, uvRect : Rect, depth : float, color : Color, tint : Color, clipping : OGWidget ) {
+		if ( !root ) {
+			root = OGRoot.GetInstance();
+			return;
+		}
+		
 		// Check screen
-		if ( rect.xMin > Screen.width || rect.xMax < 0 || rect.yMax < 0 || rect.yMin > Screen.height ) {
+		if ( rect.xMin > root.screenWidth || rect.xMax < 0 || rect.yMax < 0 || rect.yMin > root.screenHeight ) {
 			return;
 		}
 

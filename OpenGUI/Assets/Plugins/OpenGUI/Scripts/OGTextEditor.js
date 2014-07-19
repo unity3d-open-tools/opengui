@@ -30,7 +30,7 @@ public class OGTextEditor {
 		}
 	}
 
-	public var enabled : boolean = true;
+	public var enabled : boolean = false;
 	public var string : String;
 	public var cursorPos : Vector2;
 	public var cursorSelectPos : Vector2;

@@ -72,7 +72,7 @@ class OGDropDown extends OGWidget {
 		isDown = false;
 		activeNestedMenu = -1;
 
-		GetRoot().ReleaseWidget ();
+		root.ReleaseWidget ();
 	}
 
 	// Menu item

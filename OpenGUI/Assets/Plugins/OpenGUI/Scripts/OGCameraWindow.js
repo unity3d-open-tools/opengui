@@ -8,7 +8,7 @@ class OGCameraWindow extends OGWidget {
 	override function UpdateWidget () {
 		if ( targetCamera ) {
 			if ( !rootCamera ) {
-				rootCamera = GetRoot().GetComponent(Camera);
+				rootCamera = root.GetComponent(Camera);
 			}
 
 			targetCamera.rect = new Rect ( drawRct.x / Screen.width, drawRct.y / Screen.height, drawRct.width / Screen.width, drawRct.height / Screen.height );

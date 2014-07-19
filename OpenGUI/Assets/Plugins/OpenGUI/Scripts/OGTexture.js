@@ -16,7 +16,7 @@ public class OGTexture extends OGWidget {
 		}
 	
 		if ( material == null ) {
-			material = new Material ( GetRoot().skin.atlas.shader );
+			material = new Material ( root.skin.atlas.shader );
 			return;
 		}
 
