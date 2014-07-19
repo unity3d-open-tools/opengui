@@ -16,6 +16,7 @@ public class OGTextField extends OGWidget {
 	public var locked : boolean = false;
 	public var singleLine : boolean = false;
 	public var fitToText : boolean = false;
+	public var hideText : boolean = false;
 	public var editor : OGTextEditor = new OGTextEditor ();
 
 	@HideInInspector public var listening : boolean = false;
@@ -165,7 +166,19 @@ public class OGTextField extends OGWidget {
 
 	override function DrawText () {
 		if ( !listening || editor.enabled ) {
-			OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, tint, this, editor );
+			if ( hideText ) {
+				var secure : String;
+
+				for ( var i : int = 0; i < text.Length; i++ ) {
+					secure += "*";
+				}
+
+				OGDrawHelper.DrawLabel ( drawRct, secure, currentStyle.text, drawDepth, tint, this, editor );
+			
+			} else {
+				OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, tint, this, editor );
+			
+			}
 		}
 	}
 }
