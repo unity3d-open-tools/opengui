@@ -6,7 +6,14 @@ public class OGCharacterInfo {
 	public var uv : Rect;
 	public var vert : Rect;
 	public var flipped : boolean;
-	public var carriageReturn : boolean;
+	
+	public function get carriageReturn () : boolean {
+		return index == "\n"[0];
+	}
+	
+	public function get space () : boolean {
+		return index == " "[0];
+	}
 }
 
 public class OGFontInfo {
@@ -50,10 +57,6 @@ public class OGFont extends MonoBehaviour {
 			ci.vert = s.FindProperty ( "m_CharacterRects.Array.data[" + i + "].vert" ).rectValue; 
 			ci.width = s.FindProperty ( "m_CharacterRects.Array.data[" + i + "].width" ).floatValue; 
 			ci.flipped = s.FindProperty ( "m_CharacterRects.Array.data[" + i + "].flipped" ).boolValue;
-
-			if ( ci.index == "\n"[0] ) {
-				ci.carriageReturn = true;
-			}
 
 			info.characterRects[i] = ci;
 		}

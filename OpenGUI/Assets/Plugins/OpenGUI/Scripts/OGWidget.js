@@ -334,6 +334,10 @@ public class OGWidget extends MonoBehaviour {
 	//////////////////
 	public function UpdateWidget () {} 
 	public function ApplyDefaultStyles () {
+		if ( !root ) {
+			root = OGRoot.GetInstance();
+		}
+		
 		var skin : OGSkin = root.skin;
 		
 		if ( !skin ) {

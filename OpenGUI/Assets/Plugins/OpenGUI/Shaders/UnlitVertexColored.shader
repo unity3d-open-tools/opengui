@@ -4,7 +4,7 @@
 	}
 
 	Category {
-		Lighting Off
+	 	Cull Off Lighting Off
 		Blend SrcAlpha OneMinusSrcAlpha
 		Tags { "Queue"="Geometry" }
 		

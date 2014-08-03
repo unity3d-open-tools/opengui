@@ -63,6 +63,123 @@ public class OGDrawHelper {
 	//////////////////
 	// Label
 	//////////////////
+	// Label info
+	public class LabelInfo {
+		public class LineInfo {
+			public var start : int;
+			public var end : int;
+			public var width : float;
+			public var height : float;
+
+			private var charArray : OGCharacterInfo [];
+			private var charList : List.< OGCharacterInfo > = new List.< OGCharacterInfo > ();
+			
+			public function get chars () : OGCharacterInfo[] {
+				if ( !charArray ) {
+					var supposedLength : int = end - start;
+					var actualLength : int = charList.Count - 1;
+
+					if ( actualLength > supposedLength ) {
+						for ( var i : int = actualLength; i > supposedLength; i-- ) {
+							charList.RemoveAt ( i );
+						}
+					}
+					
+					charArray = charList.ToArray ();
+				}
+
+				return charArray;
+			}
+				
+			function LineInfo ( s : int, h : float ) {
+				start = s;
+				height = h;
+			}
+
+			public function End ( e : int ) {
+				end = e;
+			}
+
+			public function AddChar ( info : OGCharacterInfo ) {
+				charList.Add ( info );
+			}
+		}
+
+		public var lines : LineInfo [];
+		public var height : float;
+		public var width : float;
+	
+		private var lineList : List.< LineInfo > = new List.< LineInfo > ();
+		private var lineHeight : float;
+		
+		private function NewLine ( i : int ) : LineInfo {
+			var newLine : LineInfo = new LineInfo ( i, lineHeight );
+			lineList.Add ( newLine );
+			height += lineHeight;
+			return newLine;
+		}
+
+		function LabelInfo ( string : String, style : OGTextStyle, size : float, rect : Rect ) {
+			lineHeight = style.font.info.lineSpacing * size;
+
+			var line : LineInfo = NewLine ( 0 );
+			var lastSpace : int;
+			var lineWidthAtLastSpace : float = 0;
+			var space : float = ( style.font.GetCharacterInfo ( " "[0] ).width * size );
+			
+			var right : float = rect.width - style.padding.right - style.padding.left;
+			var bottom : float = style.padding.bottom;
+			
+			for ( var c : int = 0; c < string.Length; c++ ) {
+				var info : OGCharacterInfo = style.font.GetCharacterInfo ( string[c] );
+				
+				// This character is a carriage return	
+				if ( string[c] == "\n"[0] ) {
+					line.End ( c );
+					line = NewLine ( line.end );
+				
+				// This character is a space
+				} else if ( info.space ) {
+					line.width += space;
+					lastSpace = c;
+					
+					// The line width has exceeded the border
+					if ( line.width >= right ) {
+						line.width = lineWidthAtLastSpace;
+						c = lastSpace == 0 ? c : lastSpace;
+						line.End ( c - 1 );
+						line = NewLine ( c + 1 );
+					
+					} else {
+						lineWidthAtLastSpace = line.width - space;
+						line.AddChar ( info );
+
+					}
+				
+				// This character is a regular glyph
+				} else {
+					line.width += info.width * size;
+				
+					// The line width has exceeded the border
+					if ( line.width >= right ) {
+						line.width = lineWidthAtLastSpace;
+						c = lastSpace == 0 ? c : lastSpace;
+						line.End ( c - 1 );
+						line = NewLine ( c + 1 );
+					
+					} else {
+						line.AddChar ( info );
+
+					}
+				}
+			}
+			
+			line.End ( c );
+
+			lines = lineList.ToArray ();
+		}
+	}
+	
 	// Get width
 	public static function GetLabelWidth ( string : String, style : OGTextStyle ) : float {
 		var width : float = style.padding.left + style.padding.right;
@@ -144,30 +261,26 @@ public class OGDrawHelper {
 		var size : float = ( intSize * 1.0 ) / style.font.size;
 		var atlasSize : Vector2 = style.font.atlasSize;
 		
-		// Bounds
-		var left : float = style.padding.left;
-		var right : float = rect.width - style.padding.right - style.padding.left;
-		var top : float = rect.height - style.padding.top;
-		var bottom : float = style.padding.bottom;
-		var middle : float = ( rect.height / 2 ) + ( ( style.font.info.lineSpacing * size ) / 2 );
-		var center : float = left + right / 2;
-		
 		// Positioning
 		var anchor : Vector2;
 		var space : float = ( style.font.GetCharacterInfo ( " "[0] ).width * size );
 		
 		// Line and progression management
 		var advance : Vector2;
-		var nextLineStart : int = 0;
-		var thisLineStart : int = 0;
-		var lastSpace : int = 0;
-		var lineWidth : float = 0;
-		var lineHeight : float = style.font.info.lineSpacing * size;
-		var emergencyBrake : int = 0;
 		var closestGlyphToCursor : Vector2;
 		
 		// Temp vars
 		var info : OGCharacterInfo;
+		var lineInfo : LabelInfo.LineInfo;
+		var labelInfo : LabelInfo = new LabelInfo ( string, style, size, rect );
+		
+		// Bounds
+		var left : float = style.padding.left;
+		var right : float = rect.width - style.padding.right - style.padding.left;
+		var top : float = rect.height - style.padding.top;
+		var bottom : float = style.padding.bottom + labelInfo.height;
+		var middle : float = rect.height / 2 + labelInfo.height / 2;
+		var center : float = rect.width / 2;
 
 		// Set anchor
 		switch ( alignment ) {
@@ -224,184 +337,142 @@ public class OGDrawHelper {
 		color.b *= tint.b;
 		color.a *= tint.a;
 		GL.Color ( color );
-	
+
 		// Draw loop
-		while ( nextLineStart < string.Length && advance.y - style.padding.top > - ( rect.height - style.padding.top - style.padding.bottom ) ) {
-			
-			// Get next line
-			lastSpace = 0;
-			lineWidth = 0;
-			thisLineStart = nextLineStart;
-
-			// ^ Parse remaining string, set start and end integers
-			for ( var c : int = thisLineStart; c < string.Length; c++ ) {
-				info = style.font.GetCharacterInfo ( string[c] );
+		for ( var l : int = 0; l < labelInfo.lines.Length; l++ ) {
+			if ( advance.y - style.padding.top > - ( rect.height - style.padding.top - style.padding.bottom ) ) {
+				lineInfo = labelInfo.lines[l];
 				
-				// This character is a carriage return	
-				if ( string[c] == "\n"[0] ) {
-					nextLineStart = c + 1;
-					break;
-				
-				// This character is a space
-				} else if ( string[c] == " "[0] ) {
-					lineWidth += space;
-					lastSpace = c;
-				
-				// This character is a regular glyph
-				} else if ( info ) {
-					lineWidth += info.width * size;
-				
-				}
-
-				// The line width has exceeded the border
-				if ( lineWidth >= right ) {
-					nextLineStart = lastSpace == 0 ? c : lastSpace + 1;
-					break;
-				}
-			}
-			
-			// The string has ended
-			if ( c >= string.Length - 1 ) {
-				nextLineStart = string.Length;
-			}
-
-			// Alignment advance adjustments
-			if ( anchor.x == center ) {
-				advance.x -= lineWidth / 2;
-			} else if ( anchor.x == right ) {
-				advance.x -= lineWidth;
-			}
-		
-			// Draw glyphs
-			for ( var g : int = thisLineStart; g < nextLineStart; g++ ) {
-				info = style.font.GetCharacterInfo ( string[g] );
-				
-				if ( info == null ) {
-					continue;
-				}
-
-				var vert : Rect = new Rect ( info.vert.x * size, info.vert.y * size, info.vert.width * size, info.vert.height * size );
-				var uv : Vector2[] = new Vector2[4];
-
-				if ( info.flipped ) {
-					uv[3] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
-					uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
-					uv[1] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y );
-					uv[0] = new Vector2 ( info.uv.x, info.uv.y );
-				} else {
-					uv[0] = new Vector2 ( info.uv.x, info.uv.y );
-					uv[1] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
-					uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
-					uv[3] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y );
-				}		
-
-				// Quad corners
-				var gLeft : float = anchor.x + vert.x + rect.x + advance.x;
-				var gRight : float = anchor.x + vert.x + rect.x + advance.x + vert.width;
-				var gBottom : float = anchor.y + vert.height + vert.y + rect.y + advance.y;
-				var gTop : float = anchor.y + vert.height + vert.y + rect.y + advance.y - vert.height;
-	
-				// If it's a space, set appropriate corners
-				if ( string[g] == " "[0] ) {
-					gRight += space;
-				}
-
-				// Set cursor position
-				if ( editor && !String.IsNullOrEmpty ( editor.string ) ) {
-					if ( editor.cursorIndex == g ) {
-						editor.cursorPos.x = gLeft;
-						editor.cursorPos.y = gBottom;
-					
-					} else if ( editor.cursorIndex >= editor.string.Length && g == editor.string.Length - 1 ) {
-						editor.cursorPos.x = gRight;
-						editor.cursorPos.y = gBottom;
-
-					}
-					
-					
-					if ( editor.cursorSelectIndex == g ) {
-						editor.cursorSelectPos.x = gLeft;
-						editor.cursorSelectPos.y = gBottom;
-					
-					} else if ( editor.cursorSelectIndex >= editor.string.Length && g == editor.string.Length - 1 ) {
-						editor.cursorSelectPos.x = gRight;
-						editor.cursorSelectPos.y = gBottom;
-
-					}
-
-					editor.cursorSize.x = 1;
-					editor.cursorSize.y = style.fontSize;
+				// Alignment advance adjustments
+				if ( anchor.x == center ) {
+					advance.x -= lineInfo.width / 2;
+				} else if ( anchor.x == right ) {
+					advance.x -= lineInfo.width;
 				}
 				
-				// If it's a space, continue the loop
-				if ( string[g] == " "[0] ) {
-					advance.x += space;
-					continue;
-				}
-			
-				// Advance regardless if the glyph is drawn or not	
-				advance.x += info.width * size;
-		
-				// Clipping
-				if ( clipping != null ) {
-					if ( gLeft < clipping.drawRct.xMin ) {
-						uv[0].x += ( clipping.drawRct.xMin - gLeft ) / atlasSize.x;
-						uv[1].x += ( clipping.drawRct.xMin - gLeft ) / atlasSize.x;
-						gLeft = clipping.drawRct.xMin;
-					}
+				// Draw glyphs
+				for ( var g : int = 0; g < lineInfo.chars.Length; g++ ) {
+					info = lineInfo.chars[g];
 					
-					if ( gRight > clipping.drawRct.xMax ) {
-						uv[2].x -= ( gRight - clipping.drawRct.xMax ) / atlasSize.x;
-						uv[3].x -= ( gRight - clipping.drawRct.xMax ) / atlasSize.x;
-						gRight = clipping.drawRct.xMax;
-					}
-					
-					if ( gBottom < clipping.drawRct.yMin ) {
-						uv[0].y += ( clipping.drawRct.yMin - gBottom ) / atlasSize.y;
-						uv[3].y += ( clipping.drawRct.yMin - gBottom ) / atlasSize.y;
-						gBottom = clipping.drawRct.yMin;
-					}
-					
-					if ( gTop > clipping.drawRct.yMax ) {
-						uv[1].y += ( gTop - clipping.drawRct.yMax ) / atlasSize.y;
-						uv[2].y += ( gTop - clipping.drawRct.yMax ) / atlasSize.y;
-						gTop = clipping.drawRct.yMax;
-					}
-
-					// If the sides overlap, the glyph shouldn't be drawn
-					if ( gLeft >= gRight || gBottom >= gTop ) {
+					if ( info == null ) {
 						continue;
 					}
+
+					var vert : Rect = new Rect ( info.vert.x * size, info.vert.y * size, info.vert.width * size, info.vert.height * size );
+					var uv : Vector2[] = new Vector2[4];
+
+					if ( info.flipped ) {
+						uv[3] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
+						uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
+						uv[1] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y );
+						uv[0] = new Vector2 ( info.uv.x, info.uv.y );
+					} else {
+						uv[0] = new Vector2 ( info.uv.x, info.uv.y );
+						uv[1] = new Vector2 ( info.uv.x, info.uv.y + info.uv.height );
+						uv[2] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y + info.uv.height );
+						uv[3] = new Vector2 ( info.uv.x + info.uv.width, info.uv.y );
+					}		
+
+					// Quad corners
+					var gLeft : float = anchor.x + vert.x + rect.x + advance.x;
+					var gRight : float = anchor.x + vert.x + rect.x + advance.x + vert.width;
+					var gBottom : float = anchor.y + vert.height + vert.y + rect.y + advance.y;
+					var gTop : float = anchor.y + vert.height + vert.y + rect.y + advance.y - vert.height;
+		
+					// If it's a space, set appropriate corners
+					if ( info.space ) {
+						gRight += space;
+					}
+
+					// Set cursor position
+					if ( editor && !String.IsNullOrEmpty ( editor.string ) ) {
+						if ( editor.cursorIndex == g ) {
+							editor.cursorPos.x = gLeft;
+							editor.cursorPos.y = gBottom;
+						
+						} else if ( editor.cursorIndex >= editor.string.Length && g == editor.string.Length - 1 ) {
+							editor.cursorPos.x = gRight;
+							editor.cursorPos.y = gBottom;
+
+						}
+						
+						
+						if ( editor.cursorSelectIndex == g ) {
+							editor.cursorSelectPos.x = gLeft;
+							editor.cursorSelectPos.y = gBottom;
+						
+						} else if ( editor.cursorSelectIndex >= editor.string.Length && g == editor.string.Length - 1 ) {
+							editor.cursorSelectPos.x = gRight;
+							editor.cursorSelectPos.y = gBottom;
+
+						}
+
+						editor.cursorSize.x = 1;
+						editor.cursorSize.y = style.fontSize;
+					}
+					
+					// If it's a space, continue the loop
+					if ( info.space ) {
+						advance.x += space;
+						continue;
+					}
+				
+					// Advance regardless if the glyph is drawn or not	
+					advance.x += info.width * size;
+			
+					// Clipping
+					if ( clipping != null ) {
+						if ( gLeft < clipping.drawRct.xMin ) {
+							uv[0].x += ( clipping.drawRct.xMin - gLeft ) / atlasSize.x;
+							uv[1].x += ( clipping.drawRct.xMin - gLeft ) / atlasSize.x;
+							gLeft = clipping.drawRct.xMin;
+						}
+						
+						if ( gRight > clipping.drawRct.xMax ) {
+							uv[2].x -= ( gRight - clipping.drawRct.xMax ) / atlasSize.x;
+							uv[3].x -= ( gRight - clipping.drawRct.xMax ) / atlasSize.x;
+							gRight = clipping.drawRct.xMax;
+						}
+						
+						if ( gBottom < clipping.drawRct.yMin ) {
+							uv[0].y += ( clipping.drawRct.yMin - gBottom ) / atlasSize.y;
+							uv[3].y += ( clipping.drawRct.yMin - gBottom ) / atlasSize.y;
+							gBottom = clipping.drawRct.yMin;
+						}
+						
+						if ( gTop > clipping.drawRct.yMax ) {
+							uv[1].y += ( gTop - clipping.drawRct.yMax ) / atlasSize.y;
+							uv[2].y += ( gTop - clipping.drawRct.yMax ) / atlasSize.y;
+							gTop = clipping.drawRct.yMax;
+						}
+
+						// If the sides overlap, the glyph shouldn't be drawn
+						if ( gLeft >= gRight || gBottom >= gTop ) {
+							continue;
+						}
+					}
+
+					// Bottom Left
+					GL.TexCoord2 ( uv[0].x, uv[0].y );
+					GL.Vertex3 ( gLeft, gBottom, depth );
+					
+					// Top left
+					GL.TexCoord2 ( uv[1].x, uv[1].y );
+					GL.Vertex3 ( gLeft, gTop, depth );
+
+					// Top right
+					GL.TexCoord2 ( uv[2].x, uv[2].y );
+					GL.Vertex3 ( gRight, gTop, depth );
+				
+					// Bottom right
+					GL.TexCoord2 ( uv[3].x, uv[3].y );
+					GL.Vertex3 ( gRight, gBottom, depth );
+
 				}
 
-				// Bottom Left
-				GL.TexCoord2 ( uv[0].x, uv[0].y );
-				GL.Vertex3 ( gLeft, gBottom, depth );
-				
-				// Top left
-				GL.TexCoord2 ( uv[1].x, uv[1].y );
-				GL.Vertex3 ( gLeft, gTop, depth );
-
-				// Top right
-				GL.TexCoord2 ( uv[2].x, uv[2].y );
-				GL.Vertex3 ( gRight, gTop, depth );
-			
-				// Bottom right
-				GL.TexCoord2 ( uv[3].x, uv[3].y );
-				GL.Vertex3 ( gRight, gBottom, depth );
-
-			}
-
-			// Next line
-			advance.y -= lineHeight;
-			advance.x = 0;
-
-			// Emergency
-			if ( emergencyBrake > 1000 ) {
-				Debug.Log ( "OGDrawHelper | Label exceeded 1000 lines!" );
-				return;
-			} else {
-				emergencyBrake++;
+				// Next line
+				advance.y -= lineInfo.height;
+				advance.x = 0;
 			}
 		}
 		

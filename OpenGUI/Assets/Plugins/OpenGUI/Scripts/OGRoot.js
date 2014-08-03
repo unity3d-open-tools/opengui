@@ -34,6 +34,7 @@ class OGRoot extends MonoBehaviour {
 	private var mouseOver : List.< OGWidget > = new List.< OGWidget > ();
 	private var screenRect : Rect;
 	private var guiTex : Texture2D;
+	private var cam : Camera;
 
 
 	//////////////////
@@ -257,6 +258,23 @@ class OGRoot extends MonoBehaviour {
 			instance = this;
 		}
 
+		if ( !cam ) {
+			cam = this.gameObject.GetComponent.< Camera > ();
+			
+			if ( !cam ) {
+				cam = this.gameObject.AddComponent.< Camera > ();
+			}
+		}
+
+		cam.orthographic = true;
+		cam.hideFlags = HideFlags.HideInInspector;
+		cam.cullingMask = 1 << this.gameObject.layer;
+		cam.clearFlags = CameraClearFlags.Depth;
+
+		if ( Camera.main ) {
+			cam.depth = Camera.main.depth + 5;
+		}
+
 		this.transform.localScale = Vector3.one;
 		this.transform.localPosition = Vector3.zero;
 		this.transform.localEulerAngles = Vector3.zero;
@@ -280,6 +298,8 @@ class OGRoot extends MonoBehaviour {
 		
 		// Force OGPage transformation
 		if ( currentPage ) {
+			currentPage.gameObject.layer = this.gameObject.layer;
+			
 			currentPage.transform.localScale = Vector3.one;
 			currentPage.transform.localPosition = Vector3.zero;
 			currentPage.transform.localEulerAngles = Vector3.zero;
@@ -552,6 +572,7 @@ class OGRoot extends MonoBehaviour {
 			}
 
 			w.root = this;
+			w.gameObject.layer = this.gameObject.layer;
 			w.UpdateWidget ();
 			w.Recalculate ();
 
