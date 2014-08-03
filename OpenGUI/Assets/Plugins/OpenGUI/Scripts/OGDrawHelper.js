@@ -108,9 +108,9 @@ public class OGDrawHelper {
 		public var lines : LineInfo [];
 		public var height : float;
 		public var width : float;
+		public var lineHeight : float;
 	
 		private var lineList : List.< LineInfo > = new List.< LineInfo > ();
-		private var lineHeight : float;
 		
 		private function NewLine ( i : int ) : LineInfo {
 			var newLine : LineInfo = new LineInfo ( i, lineHeight );
@@ -200,7 +200,7 @@ public class OGDrawHelper {
 			}
 		}
 
-		return width;
+		return width + style.padding.left + style.padding.right;
 	}
 	
 	// Draw
@@ -279,7 +279,7 @@ public class OGDrawHelper {
 		var right : float = rect.width - style.padding.right - style.padding.left;
 		var top : float = rect.height - style.padding.top;
 		var bottom : float = style.padding.bottom + labelInfo.height;
-		var middle : float = rect.height / 2 + labelInfo.height / 2;
+		var middle : float = rect.height / 2 + labelInfo.height / 2 + style.font.info.kerning;
 		var center : float = rect.width / 2;
 
 		// Set anchor

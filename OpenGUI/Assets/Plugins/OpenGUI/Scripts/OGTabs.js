@@ -105,22 +105,6 @@ public class OGTabs extends OGWidget {
 		}
 	}
 
-	private function GetLeftStyle () : OGStyle {
-		if ( leftNavDown ) {
-			return styles.active;
-		} else {
-			return styles.basic;
-		}
-	}
-	
-	private function GetRightStyle () : OGStyle {
-		if ( rightNavDown ) {
-			return styles.active;
-		} else {
-			return styles.basic;
-		}
-	}
-	
 
 	//////////////////
 	// Management
@@ -248,11 +232,11 @@ public class OGTabs extends OGWidget {
 		
 		if ( overflow ) {
 			if ( activeTab > 0 ) {
-				OGDrawHelper.DrawSlicedSprite ( GetLeftRect (), GetLeftStyle(), drawDepth, tint, clipTo );
+				OGDrawHelper.DrawSlicedSprite ( GetLeftRect (), styles.thumb, drawDepth, tint, clipTo );
 			}
 			
 			if ( activeTab < tabs.Count - 1 ) {
-				OGDrawHelper.DrawSlicedSprite ( GetRightRect (), GetRightStyle(), drawDepth, tint, clipTo );
+				OGDrawHelper.DrawSlicedSprite ( GetRightRect (), styles.thumb, drawDepth, tint, clipTo );
 			}
 		}
 	}
@@ -264,11 +248,11 @@ public class OGTabs extends OGWidget {
 		
 		if ( overflow ) {
 			if ( activeTab > 0 ) {
-				OGDrawHelper.DrawLabel ( GetLeftRect (), leftArrow, GetLeftStyle().text, drawDepth, tint, clipTo );
+				OGDrawHelper.DrawLabel ( GetLeftRect (), leftArrow, styles.thumb.text, drawDepth, tint, clipTo );
 			}
 
 			if ( activeTab < tabs.Count - 1 ) {
-				OGDrawHelper.DrawLabel ( GetRightRect (), rightArrow, GetRightStyle().text, drawDepth, tint, clipTo );
+				OGDrawHelper.DrawLabel ( GetRightRect (), rightArrow, styles.thumb.text, drawDepth, tint, clipTo );
 			}
 		}
 		
