@@ -4,14 +4,16 @@ public enum RelativeX {
 	None,
 	Left,
 	Center,
-	Right
+	Right,
+	Factor
 }
 	
 public enum RelativeY {
 	None,
 	Top,
 	Center,
-	Bottom
+	Bottom,
+	Factor
 }
 
 public enum ScreenSize {
@@ -45,9 +47,11 @@ public class OGWidget extends MonoBehaviour {
 	public class Anchor {		
 		public var x : RelativeX = RelativeX.None;
 		public var xOffset : float = 0.0;
-		
+		public var xFactor : float = 0.0;
+
 		public var y : RelativeY = RelativeY.None;
 		public var yOffset : float = 0.0;
+		public var yFactor : float = 0.0;
 	}
 
 	public var root : OGRoot;
@@ -232,6 +236,8 @@ public class OGWidget extends MonoBehaviour {
 			newPos.x = ( root.screenWidth / 2 ) + anchor.xOffset;
 		} else if ( anchor.x == RelativeX.Right ) {
 			newPos.x = root.screenWidth + anchor.xOffset;
+		} else if ( anchor.x == RelativeX.Factor ) {
+			newPos.x = root.screenWidth * anchor.xFactor;
 		}
 		
 		if ( anchor.y == RelativeY.Top ) {
@@ -240,6 +246,8 @@ public class OGWidget extends MonoBehaviour {
 			newPos.y = ( root.screenHeight / 2 ) + anchor.yOffset;
 		} else if ( anchor.y == RelativeY.Bottom ) {
 			newPos.y = root.screenHeight + anchor.yOffset;
+		} else if ( anchor.y == RelativeY.Factor ) {
+			newPos.y = root.screenHeight * anchor.yFactor;
 		}
 
 		this.transform.position = newPos;
@@ -247,37 +255,27 @@ public class OGWidget extends MonoBehaviour {
 	
 	// Pivot (based on object size)
 	private function CalcPivot () {
-		var scale : Vector2;
-		var scrollview : OGScrollView = this as OGScrollView; 
-		
-		if ( scrollview ) {
-			scale = scrollview.size;
-		} else {
-			scale.x = this.transform.lossyScale.x;
-			scale.y = this.transform.lossyScale.y;
-		}
-
 		switch ( pivot.y ) {
 			case RelativeY.Top: case RelativeY.None:
 				offset.y = 0;
 				break;
 								
 			case RelativeY.Center:
-				offset.y = -scale.y/2;
+				offset.y = -this.transform.lossyScale.y/2;
 				break;
 				
 			case RelativeY.Bottom:
-				offset.y = -scale.y;
+				offset.y = -this.transform.lossyScale.y;
 				break;
 		}
 		
 		switch ( pivot.x ) {	
 			case RelativeX.Right:
-				offset.x = -scale.x;
+				offset.x = -this.transform.lossyScale.x;
 				break;
 						
 			case RelativeX.Center:	
-				offset.x = -scale.x/2;
+				offset.x = -this.transform.lossyScale.x/2;
 				break;
 			
 			case RelativeX.Left: case RelativeX.None:
@@ -344,10 +342,6 @@ public class OGWidget extends MonoBehaviour {
 	//////////////////
 	public function UpdateWidget () {} 
 	public function ApplyDefaultStyles () {
-		if ( !root ) {
-			root = OGRoot.GetInstance();
-		}
-		
 		var skin : OGSkin = root.skin;
 		
 		if ( !skin ) {
