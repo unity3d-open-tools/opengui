@@ -9,10 +9,6 @@ public class OGLabel extends OGWidget {
 
 	@HideInInspector public var lineWidth : float = 0;
 	
-	private var lineHeight : float;
-	private var spacing : float;
-	private var oldString : String = "";
-
 
 	/////////////////
 	// Update

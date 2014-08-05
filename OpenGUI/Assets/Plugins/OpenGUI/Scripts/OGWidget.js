@@ -230,23 +230,27 @@ public class OGWidget extends MonoBehaviour {
 		
 		var newPos : Vector3 = this.transform.position;
 		
-		if ( anchor.x == RelativeX.Left ) {
-			newPos.x = anchor.xOffset;
-		} else if ( anchor.x == RelativeX.Center ) {
-			newPos.x = ( root.screenWidth / 2 ) + anchor.xOffset;
-		} else if ( anchor.x == RelativeX.Right ) {
-			newPos.x = root.screenWidth + anchor.xOffset;
-		} else if ( anchor.x == RelativeX.Factor ) {
+		if ( anchor.x != RelativeX.None ) {
+			if ( anchor.x == RelativeX.Left ) {
+				anchor.xFactor = 0;
+			} else if ( anchor.x == RelativeX.Center ) {
+				anchor.xFactor = 0.5;
+			} else if ( anchor.x == RelativeX.Right ) {
+				anchor.xFactor = 1;
+			}
+			
 			newPos.x = root.screenWidth * anchor.xFactor;
 		}
 		
-		if ( anchor.y == RelativeY.Top ) {
-			newPos.y = anchor.yOffset;
-		} else if ( anchor.y == RelativeY.Center ) {
-			newPos.y = ( root.screenHeight / 2 ) + anchor.yOffset;
-		} else if ( anchor.y == RelativeY.Bottom ) {
-			newPos.y = root.screenHeight + anchor.yOffset;
-		} else if ( anchor.y == RelativeY.Factor ) {
+		if ( anchor.y != RelativeY.None ) {
+			if ( anchor.y == RelativeY.Top ) {
+				anchor.yFactor = 0;
+			} else if ( anchor.y == RelativeY.Center ) {
+				anchor.yFactor = 0.5;
+			} else if ( anchor.y == RelativeY.Bottom ) {
+				anchor.yFactor = 1;
+			}
+			
 			newPos.y = root.screenHeight * anchor.yFactor;
 		}
 
