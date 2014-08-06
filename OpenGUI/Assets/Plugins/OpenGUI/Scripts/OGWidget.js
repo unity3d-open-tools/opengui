@@ -239,7 +239,7 @@ public class OGWidget extends MonoBehaviour {
 				anchor.xFactor = 1;
 			}
 			
-			newPos.x = root.screenWidth * anchor.xFactor;
+			newPos.x = (root.screenWidth * anchor.xFactor) + anchor.xOffset;
 		}
 		
 		if ( anchor.y != RelativeY.None ) {
@@ -251,7 +251,7 @@ public class OGWidget extends MonoBehaviour {
 				anchor.yFactor = 1;
 			}
 			
-			newPos.y = root.screenHeight * anchor.yFactor;
+			newPos.y = (root.screenHeight * anchor.yFactor) + anchor.yOffset;
 		}
 
 		this.transform.position = newPos;
