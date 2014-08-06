@@ -162,6 +162,7 @@ public class OGDrawHelper {
 		var thisLineStart : int = 0;
 		var lastSpace : int = 0;
 		var lineWidth : float = 0;
+		var lineWidthAtLastSpace : float = 0;
 		var lineHeight : float = style.font.info.lineSpacing * size;
 		var emergencyBrake : int = 0;
 		var closestGlyphToCursor : Vector2;
@@ -244,6 +245,7 @@ public class OGDrawHelper {
 				
 				// This character is a space
 				} else if ( string[c] == " "[0] ) {
+					lineWidthAtLastSpace = lineWidth;
 					lineWidth += space;
 					lastSpace = c;
 				
@@ -256,6 +258,7 @@ public class OGDrawHelper {
 				// The line width has exceeded the border
 				if ( lineWidth >= right ) {
 					nextLineStart = lastSpace == 0 ? c : lastSpace + 1;
+					lineWidth = lineWidthAtLastSpace;
 					break;
 				}
 			}
