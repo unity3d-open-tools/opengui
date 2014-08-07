@@ -266,8 +266,7 @@ class OGRoot extends MonoBehaviour {
 			}
 		}
 
-		cam.orthographic = true;
-		cam.hideFlags = HideFlags.HideInInspector;
+		cam.hideFlags = HideFlags.None;
 		cam.cullingMask = 1 << this.gameObject.layer;
 		cam.clearFlags = CameraClearFlags.Depth;
 

@@ -31,12 +31,12 @@ public enum ButtonAction {
 public class OGWidget extends MonoBehaviour {
 	public class Stretch {
 		public var width : ScreenSize = ScreenSize.None;
-		public var widthFactor : double = 1.0;
-		public var widthOffset : double = 0.0;
+		public var widthFactor : float = 1.0;
+		public var widthOffset : float = 0.0;
 		
 		public var height : ScreenSize = ScreenSize.None;
-		public var heightFactor : double = 1.0;
-		public var heightOffset : double = 0.0;
+		public var heightFactor : float = 1.0;
+		public var heightOffset : float = 0.0;
 	}
 	
 	public class Pivot {
@@ -46,12 +46,12 @@ public class OGWidget extends MonoBehaviour {
 	
 	public class Anchor {		
 		public var x : RelativeX = RelativeX.None;
-		public var xOffset : double = 0.0;
-		public var xFactor : double = 0.0;
+		public var xOffset : float = 0.0;
+		public var xFactor : float = 0.0;
 		
 		public var y : RelativeY = RelativeY.None;
-		public var yOffset : double = 0.0;
-		public var yFactor : double = 0.0;
+		public var yOffset : float = 0.0;
+		public var yFactor : float = 0.0;
 	}
 
 	public var root : OGRoot;

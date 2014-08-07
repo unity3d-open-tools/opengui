@@ -74,8 +74,6 @@ public class OGWidgetInspector extends Editor {
 					}	
 				}
 
-				EditorGUILayout.Space();
-				
 				EditorGUILayout.BeginHorizontal();
 
 				// Get defaults	
