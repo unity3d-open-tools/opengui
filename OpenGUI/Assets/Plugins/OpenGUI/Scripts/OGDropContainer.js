@@ -49,7 +49,7 @@ class OGDropContainer extends OGWidget {
 			
 		// Mouse
 		if ( Input.GetMouseButtonUp ( 0 ) || GetTouch () == TouchPhase.Ended ) {
-			if ( OGRoot.GetInstance().downWidget && CheckMouseOver() ) {
+			if ( OGRoot.GetInstance().downWidget && OGRoot.GetInstance().downWidget.isDraggable && CheckMouseOver() ) {
 				if ( containedObject ) {
 					Destroy ( containedObject.gameObject ); 
 				}
@@ -58,7 +58,7 @@ class OGDropContainer extends OGWidget {
 				containedObject.gameObject.name = containedObject.gameObject.name.Replace ( "(Clone)", "" );
 				containedObject.transform.parent = this.transform;
 				containedObject.transform.localScale = new Vector3 ( containedScale, containedScale, 1 );
-				containedObject.transform.localPosition = new Vector3 ( 0, 0, -1 );
+				containedObject.transform.localPosition = new Vector3 ( 1 - containedScale, 1 - containedScale, -1 );
 				containedObject.isSelectable = false;
 				containedObject.isDraggable = false;
 				
