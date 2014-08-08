@@ -31,7 +31,7 @@ public class OGTextEditor {
 	}
 
 	public var enabled : boolean = false;
-	public var string : String;
+	public var string : String = "";
 	public var cursorPos : Vector2;
 	public var cursorSelectPos : Vector2;
 	public var cursorSize : Vector2 = new Vector2 ( 2, 12 );
@@ -47,27 +47,23 @@ public class OGTextEditor {
 	private var clipboardHelper : ClipboardHelper;
 
 	private function get shiftPressed () : boolean {
-		var e : Event = Event.current;
-		return e.shift;
+		return Input.GetKey ( KeyCode.LeftShift ) || Input.GetKey ( KeyCode.RightShift );
 	}
 
 	private function get arrowPressed () : boolean { 
-		var e : Event = Event.current;
-		return e.isKey && e.keyCode == KeyCode.LeftArrow || e.keyCode == KeyCode.DownArrow || e.keyCode == KeyCode.UpArrow || e.keyCode == KeyCode.RightArrow;
+		return Input.GetKey ( KeyCode.LeftArrow ) || Input.GetKey ( KeyCode.DownArrow ) || Input.GetKey ( KeyCode.UpArrow ) || Input.GetKey ( KeyCode.RightArrow );
 	}
 
 	private function get ctrlOrCmdPressed () : boolean {
-		var e : Event = Event.current;
-		return e.command || e.control;
+		return Input.GetKey ( KeyCode.LeftControl ) || Input.GetKey ( KeyCode.LeftCommand ) || Input.GetKey ( KeyCode.RightControl ) || Input.GetKey ( KeyCode.RightCommand );
 	}
 
 	private function get exitKeyPressed () : boolean {
-		var e : Event = Event.current;
-		return e.isKey && e.keyCode == exitKey;
+		return Input.GetKey ( exitKey );
 	}
 
 	public function Backspace () {
-		if ( cursorIndex > 0 && string.Length > 0 ) {
+		if ( cursorIndex >= 0 && string.Length > 0 ) {
 			if ( cursorSelectIndex == cursorIndex ) {
 				cursorIndex--;
 			}
@@ -91,9 +87,7 @@ public class OGTextEditor {
 	}
 
 	public function InsertText ( newText : String ) {
-		var e : Event = Event.current;
-		
-		if ( e.keyCode == KeyCode.Backspace || e.keyCode == KeyCode.Delete || arrowPressed || String.IsNullOrEmpty ( newText ) ) {
+		if ( String.IsNullOrEmpty ( newText ) ) {
 			return;
 		}
 		
@@ -101,8 +95,10 @@ public class OGTextEditor {
 			Backspace ();
 		}
 		
-		if ( cursorIndex < string.Length - 1 ) {
-			string.Insert ( cursorIndex, newText );
+		if ( cursorIndex < string.Length ) {
+			var before : String = string.Substring ( 0, cursorIndex );
+			var after : String = string.Substring ( cursorIndex, string.Length - cursorIndex );
+			string = before + newText + after;
 		
 		} else {
 			string += newText;
@@ -158,59 +154,55 @@ public class OGTextEditor {
 	}
 
 	public function Update ( text : String, rect : Rect ) : String {
-		var e : Event = Event.current;
-
 		string = text;
 		
-		if ( e.type == EventType.KeyDown ) {
-			if ( e.keyCode == KeyCode.Backspace ) {
-				Backspace ();
-			
-			} else if ( Input.GetKeyDown ( KeyCode.Delete ) ) {
-				Delete ();
-			
-			// Select all
-			} else if ( ctrlOrCmdPressed && e.keyCode == KeyCode.A ) {
-				cursorIndex = 0;
-				cursorSelectIndex = string.Length;
+		if ( Input.GetKeyDown ( KeyCode.Backspace ) ) {
+			Backspace ();
+		
+		} else if ( Input.GetKeyDown ( KeyCode.Delete ) ) {
+			Delete ();
+		
+		// Select all
+		} else if ( ctrlOrCmdPressed && Input.GetKeyDown ( KeyCode.A ) ) {
+			cursorIndex = 0;
+			cursorSelectIndex = string.Length;
 
-			// Paste
-			} else if ( ctrlOrCmdPressed && e.keyCode == KeyCode.V ) {
-				InsertText ( ClipboardHelper.GetClipboard () );
+		// Paste
+		} else if ( ctrlOrCmdPressed && Input.GetKeyDown ( KeyCode.V ) ) {
+			InsertText ( ClipboardHelper.GetClipboard () );
 
-			// Copy
-			} else if ( ctrlOrCmdPressed && e.keyCode == KeyCode.C ) {
-				var copyString : String = string.Substring ( cursorIndex, cursorSelectIndex - cursorIndex );
+		// Copy
+		} else if ( ctrlOrCmdPressed && Input.GetKeyDown ( KeyCode.C ) ) {
+			var copyString : String = string.Substring ( cursorIndex, cursorSelectIndex - cursorIndex );
 
-				if ( !String.IsNullOrEmpty ( copyString ) ) {
-					ClipboardHelper.SetClipboard ( copyString );
-				}
-			
-			// Cut	
-			} else if ( ctrlOrCmdPressed && e.keyCode == KeyCode.X ) {
-				copyString = string.Substring ( cursorIndex, cursorSelectIndex - cursorIndex );
-
-				if ( !String.IsNullOrEmpty ( copyString ) ) {
-					ClipboardHelper.SetClipboard ( copyString );
-					Backspace ();
-				}
-
-			} else if ( e.keyCode == KeyCode.LeftArrow ) {
-				MoveLeft ();
-			
-			} else if ( e.keyCode == KeyCode.UpArrow ) {
-				MoveUp ();
-			
-			} else if ( e.keyCode == KeyCode.DownArrow ) {
-				MoveDown ();
-			
-			} else if ( e.keyCode == KeyCode.RightArrow ) {
-				MoveRight ();
-				
-			} else if ( !ctrlOrCmdPressed ) {
-				InsertText ( e.character + "" );
-				
+			if ( !String.IsNullOrEmpty ( copyString ) ) {
+				ClipboardHelper.SetClipboard ( copyString );
 			}
+		
+		// Cut	
+		} else if ( ctrlOrCmdPressed && Input.GetKeyDown ( KeyCode.X ) ) {
+			copyString = string.Substring ( cursorIndex, cursorSelectIndex - cursorIndex );
+
+			if ( !String.IsNullOrEmpty ( copyString ) ) {
+				ClipboardHelper.SetClipboard ( copyString );
+				Backspace ();
+			}
+
+		} else if ( Input.GetKeyDown ( KeyCode.LeftArrow ) ) {
+			MoveLeft ();
+		
+		} else if ( Input.GetKeyDown ( KeyCode.UpArrow ) ) {
+			MoveUp ();
+		
+		} else if ( Input.GetKeyDown ( KeyCode.DownArrow ) ) {
+			MoveDown ();
+		
+		} else if ( Input.GetKeyDown ( KeyCode.RightArrow ) ) {
+			MoveRight ();
+			
+		} else if ( !ctrlOrCmdPressed ) {
+			InsertText ( Input.inputString );
+			
 		}
 
 		if ( cursorIndex != cursorSelectIndex ) {

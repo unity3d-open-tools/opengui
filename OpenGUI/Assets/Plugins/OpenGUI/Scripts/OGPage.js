@@ -10,13 +10,21 @@ public class OGPage extends MonoBehaviour {
 
 	public function UpdateStyles () {
 		for ( var w : OGWidget in this.transform.GetComponentsInChildren.<OGWidget>(true) ) {
+			if ( !w.root ) {
+				w.root = OGRoot.GetInstance();
+			}
+
+			if ( !w.styles ) {
+				w.ApplyDefaultStyles ();
+			}
+			
 			w.styles.Refresh ( w.root.skin );
 		}
 	}
 
 	public function ResetStyles () {
 		for ( var w : OGWidget in this.transform.GetComponentsInChildren.<OGWidget>(true) ) {
-			OGRoot.GetInstance().skin.ApplyDefaultStyles ( w );
+			w.ApplyDefaultStyles ();
 		}	
 	}
 

@@ -17,7 +17,7 @@ public class OGTextField extends OGWidget {
 	public var singleLine : boolean = false;
 	public var fitToText : boolean = false;
 	public var hideText : boolean = false;
-	public var editor : OGTextEditor = new OGTextEditor ();
+	public var betaEditor : OGTextEditor = new OGTextEditor ();
 
 	@HideInInspector public var listening : boolean = false;
 
@@ -30,7 +30,13 @@ public class OGTextField extends OGWidget {
 	override function OnMouseDown () {
 		listening = true;
 
-		editor.cursorPos = Input.mousePosition;
+		betaEditor.cursorPos = Input.mousePosition;
+	}
+
+	override function OnMouseDrag () {
+		listening = true;
+		
+		betaEditor.cursorSelectPos = Input.mousePosition;
 	}
 
 	override function OnMouseCancel () {
@@ -39,10 +45,7 @@ public class OGTextField extends OGWidget {
 
 	public function OnGUI () {
 		if ( listening ) {
-			if ( editor.enabled ) {
-				text = editor.Update ( text, drawRct );
-			
-			} else {
+			if ( !betaEditor.enabled ) {
 				GUI.SetNextControlName ( "ActiveTextField" );
 				
 				var style : GUIStyle = new GUIStyle();
@@ -117,6 +120,10 @@ public class OGTextField extends OGWidget {
 			currentStyle = styles.basic;
 		}
 
+		if ( betaEditor.enabled ) {
+			text = betaEditor.Update ( text, drawRct );
+		}
+
 		// ^ Regex presets
 		if ( regexPreset != currentPreset ) {
 			currentPreset = regexPreset;
@@ -147,25 +154,25 @@ public class OGTextField extends OGWidget {
 	override function DrawSkin () {
 		OGDrawHelper.DrawSlicedSprite ( drawRct, currentStyle, drawDepth, tint, clipTo );
 	
-		if ( listening && editor.enabled ) {
+		if ( listening && betaEditor.enabled ) {
 			var color : Color = tint;
 			
-			if ( editor.cursorIndex != editor.cursorSelectIndex ) {
+			if ( betaEditor.cursorIndex != betaEditor.cursorSelectIndex ) {
 				color = new Color ( 1 - color.r, 1 - color.g, 1 - color.b, color.a );
 				
-				for ( var i : int = 0; i < editor.selectionRects.Length; i++ ) {
-					OGDrawHelper.DrawSprite ( editor.selectionRects[i], styles.thumb, drawDepth, color, this );
+				for ( var i : int = 0; i < betaEditor.selectionRects.Length; i++ ) {
+					OGDrawHelper.DrawSprite ( betaEditor.selectionRects[i], styles.thumb, drawDepth, color, this );
 				}
 			
 			} else {
-				OGDrawHelper.DrawSprite ( editor.cursorRect, styles.thumb, drawDepth, color, this );
+				OGDrawHelper.DrawSprite ( betaEditor.cursorRect, styles.thumb, drawDepth, color, this );
 			
 			}
 		}
 	}
 
 	override function DrawText () {
-		if ( !listening || editor.enabled ) {
+		if ( !listening || betaEditor.enabled ) {
 			if ( hideText ) {
 				var secure : String;
 
@@ -173,10 +180,10 @@ public class OGTextField extends OGWidget {
 					secure += "*";
 				}
 
-				OGDrawHelper.DrawLabel ( drawRct, secure, currentStyle.text, drawDepth, tint, this, editor );
+				OGDrawHelper.DrawLabel ( drawRct, secure, currentStyle.text, drawDepth, tint, this, betaEditor );
 			
 			} else {
-				OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, tint, this, editor );
+				OGDrawHelper.DrawLabel ( drawRct, text, currentStyle.text, drawDepth, tint, this, betaEditor );
 			
 			}
 		}
