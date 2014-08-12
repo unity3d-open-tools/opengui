@@ -25,7 +25,7 @@ class OGRoot extends MonoBehaviour {
 
 	public var targetResolution : Vector2;
 	public var skin : OGSkin;
-	public var currentPage : OGPage;
+	public var currentPages : OGPage [] = new OGPage [ 0 ];
 	public var lineMaterial : Material;
 	public var downWidget : OGWidget;	
 	public var isMouseOver : boolean = false;
@@ -44,6 +44,15 @@ class OGRoot extends MonoBehaviour {
 		return instance;
 	}
 
+	public function get currentPage () : OGPage {
+		if ( currentPages.Length > 0 ) {
+			return currentPages [ 0 ];	
+
+		} else {
+			return null;
+		
+		}
+	}
 
 	public function get ratio () : Vector2 {
 		var result : Vector2 = Vector2.one;
@@ -97,32 +106,88 @@ class OGRoot extends MonoBehaviour {
 	//////////////////
 	// Page management
 	//////////////////
-	public function SetCurrentPage ( page : OGPage ) {
-		currentPage = page;
+	public function RemoveFromCurrentPages ( page : OGPage ) {
+		var pages : List.< OGPage > = new List.< OGPage > ( currentPages );
 
+		pages.Remove ( page );
+
+		currentPages = pages.ToArray ();
+	}
+	
+	public function AddToCurrentPages ( page : OGPage ) {
+		var pages : List.< OGPage > = new List.< OGPage > ( currentPages );
+
+		pages.Add ( page );
+
+		currentPages = pages.ToArray ();
+	}
+	
+	public function SetCurrentPages ( pages : OGPage [] ) {
+		currentPages = pages;
+		
 		for ( var p : OGPage in this.GetComponentsInChildren.<OGPage>(true) ) {
-			p.gameObject.SetActive ( p == currentPage );
+			for ( var cp : OGPage in pages ) {	
+				if ( p == cp ) {
+					p.gameObject.SetActive ( true );
+					p.StartPage ();
+					p.UpdateStyles ();
+				
+				} else {
+					p.ExitPage ();
+					p.gameObject.SetActive ( false );
+				
+				}
+			}
 		}
 	}
 	
-	public function GoToPage ( pageName : String ) {
-		if ( currentPage != null ) {
-			currentPage.ExitPage ();
-			
-			currentPage.gameObject.SetActive ( false );
+	public function SetCurrentPage ( page : OGPage ) {
+	       	currentPages = [ page ];
+
+		for ( var p : OGPage in this.GetComponentsInChildren.<OGPage>(true) ) {
+			if ( p == page ) {
+				p.gameObject.SetActive ( true );
+				p.StartPage ();
+				p.UpdateStyles ();
+
+			} else {
+				p.ExitPage ();
+				p.gameObject.SetActive ( false );
+
+			}
 		}
+	}
+
+	public function GoToPages ( pageNames : String [] ) {
+		var pages : List.< OGPage > = new List.< OGPage > ();
 		
+		for ( var p : OGPage in currentPages ) {
+			p.ExitPage ();
+
+			p.gameObject.SetActive ( false );
+		}
+
+		for ( p in this.GetComponentsInChildren.<OGPage>(true) ) {
+			for ( var n : String in pageNames ) {	
+				if ( p.pageName == n ) {
+					pages.Add ( p );
+				}
+			}
+		}
+
+		SetCurrentPages ( pages.ToArray () );
+	}
+
+	public function GoToPage ( pageName : String ) {
 		for ( var p : OGPage in this.GetComponentsInChildren.<OGPage>(true) ) {
 			if ( p.pageName == pageName ) {
-				currentPage = p;
+				SetCurrentPage ( p );
 			}
 		}
 		
 		if ( currentPage != null ) {
 			currentPage.gameObject.SetActive ( true );
 		
-			currentPage.StartPage ();
-			currentPage.UpdateStyles ();
 		}
 	}
 
@@ -251,6 +316,21 @@ class OGRoot extends MonoBehaviour {
 	//////////////////
 	public function ReleaseWidget () {
 		downWidget = null;
+	}
+
+	private function GetCurrentWidgets () : OGWidget [] {
+		var list : List.< OGWidget > = new List.< OGWidget > ();
+
+		for ( var i : int = 0; i < currentPages.Length; i++ ) {
+			var page : OGPage = currentPages [ i ];
+			var ws : OGWidget [] = page.gameObject.GetComponentsInChildren.<OGWidget>();
+			
+			for ( var w : int = 0; w < ws.Length; w++ ) {
+				list.Add ( ws [ w ] );
+			}
+		}
+
+		return list.OrderByDescending ( function ( w:OGWidget ) w.transform.position.z ).ToArray ();
 	}
 
 	public function Update () {
@@ -550,7 +630,7 @@ class OGRoot extends MonoBehaviour {
 		mouseOver.Clear ();
 		
 		// Update widget lists	
-		widgets = currentPage.gameObject.GetComponentsInChildren.<OGWidget>().OrderByDescending(function(w:OGWidget) w.transform.position.z).ToArray();
+		widgets = GetCurrentWidgets ();
 
 		for ( var i : int = 0; i < widgets.Length; i++ ) {
 			var w : OGWidget = widgets[i];

@@ -24,18 +24,40 @@ public class OGPageInspector extends Editor {
 		GUI.backgroundColor = Color.green;
 		
 
-		if ( root.currentPage == page ) {
-			if ( GUILayout.Button ( "Update", GUILayout.Height(30) ) ) {
-				page.UpdateStyles (); 
+		for ( var p : OGPage in root.currentPages ) {
+			if ( p == page ) {
+				GUILayout.BeginHorizontal ();
+			       	
+				if ( GUILayout.Button ( "Update", GUILayout.Height(30) ) ) {
+					page.UpdateStyles (); 
+					GUI.backgroundColor = Color.white;
+				}
+				
+				if ( GUILayout.Button ( "-", GUILayout.Height ( 30 ), GUILayout.Width ( 40 ) ) ) {
+					OGRoot.GetInstance().RemoveFromCurrentPages ( page );
+					page.gameObject.SetActive ( false );	
+				}
+				
+				GUILayout.EndHorizontal ();
+				
+				return;
 			}
+		}
+	      
+		GUILayout.BeginHorizontal ();
 
-		} else {
-			if ( GUILayout.Button ( "Set current page", GUILayout.Height(30) ) ) {
-				OGRoot.GetInstance().SetCurrentPage ( page );
-				page.gameObject.SetActive ( true );	
-			}
-		}	
+		if ( GUILayout.Button ( "Set current page", GUILayout.Height ( 30 ) ) ) {
+			OGRoot.GetInstance().SetCurrentPage ( page );
+			page.gameObject.SetActive ( true );	
+		}
+		
+		if ( GUILayout.Button ( "+", GUILayout.Height ( 30 ), GUILayout.Width ( 40 ) ) ) {
+			OGRoot.GetInstance().AddToCurrentPages ( page );
+			page.gameObject.SetActive ( true );	
+		}
+
+		GUILayout.EndHorizontal ();
+
 		GUI.backgroundColor = Color.white;
-
 	}	
 }
