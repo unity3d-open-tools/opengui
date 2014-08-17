@@ -358,6 +358,9 @@ class OGRoot extends MonoBehaviour {
 		this.transform.localPosition = Vector3.zero;
 		this.transform.localEulerAngles = Vector3.zero;
 
+		// Dirty
+		UpdateWidgets ();
+
 		// Only update these when playing
 		if ( Application.isPlaying && currentPage != null ) {
 			// Current page
@@ -372,9 +375,6 @@ class OGRoot extends MonoBehaviour {
 			UpdateMouse ();	
 		}
 
-		// Dirty
-		UpdateWidgets ();
-		
 		// Force OGPage transformation
 		if ( currentPage ) {
 			currentPage.gameObject.layer = this.gameObject.layer;
