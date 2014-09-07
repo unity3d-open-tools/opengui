@@ -1,6 +1,12 @@
 ﻿#pragma strict
 
 public class OGSlider extends OGWidget {
+	public enum Orientation {
+		Horizontal,
+		Vertical
+	}
+		
+	public var orientation : Orientation;
 	public var sliderValue : float = 0;
 	public var sliderLabel : OGLabel;
 	public var backgroundHeight : float = 0.25;
@@ -12,11 +18,19 @@ public class OGSlider extends OGWidget {
 	// Rects
 	////////////////
 	private function GetThumbRect () : Rect {
-		return new Rect ( drawRct.x + ( sliderValue * drawRct.width ) - ( drawRct.height / 2 ), drawRct.y, drawRct.height, drawRct.height );
+		if ( orientation == Orientation.Horizontal ) {
+			return new Rect ( drawRct.x + ( sliderValue * drawRct.width ) - ( drawRct.height / 2 ), drawRct.y, drawRct.height, drawRct.height );
+		} else {
+			return new Rect ( drawRct.x, drawRct.y + ( sliderValue * drawRct.height ) - ( drawRct.width / 2 ), drawRct.width, drawRct.width );
+		}
 	}
 
 	private function GetBackgroundRect () : Rect {
-		return new Rect ( drawRct.x, drawRct.y + ( drawRct.height / 2 ) - ( ( drawRct.height * backgroundHeight ) / 2 ), drawRct.width, drawRct.height * backgroundHeight );
+		if ( orientation == Orientation.Horizontal ) {
+			return new Rect ( drawRct.x, drawRct.y + ( drawRct.height / 2 ) - ( ( drawRct.height * backgroundHeight ) / 2 ), drawRct.width, drawRct.height * backgroundHeight );
+		} else {
+			return new Rect ( drawRct.x + ( drawRct.width / 2 ) - ( ( drawRct.width * backgroundHeight ) / 2 ), drawRct.y, drawRct.width * backgroundHeight, drawRct.height );
+		}
 	}
 
 
@@ -25,7 +39,11 @@ public class OGSlider extends OGWidget {
 	////////////////
 	override function OnMouseDrag () {
 		if ( sliderValue >= 0 && sliderValue <= 1 ) {
-			sliderValue = ( Input.mousePosition.x - this.transform.position.x ) / this.transform.lossyScale.x;
+			if ( orientation == Orientation.Horizontal ) {
+				sliderValue = ( Input.mousePosition.x - drawRct.x ) / drawRct.width;
+			} else {
+				sliderValue = ( Input.mousePosition.y - drawRct.y ) / drawRct.height;
+			}
 		}
 	
 

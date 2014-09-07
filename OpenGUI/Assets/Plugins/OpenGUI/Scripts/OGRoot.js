@@ -635,7 +635,7 @@ class OGRoot extends MonoBehaviour {
 		for ( var i : int = 0; i < widgets.Length; i++ ) {
 			var w : OGWidget = widgets[i];
 
-			if ( w == null || !w.isDrawn ) { continue; }
+			if ( w == null || !w.isDrawn || w.isDisabled ) { continue; }
 
 			// Check mouse
 			if ( w.CheckMouseOver() ) 
