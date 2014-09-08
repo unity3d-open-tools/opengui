@@ -129,13 +129,18 @@ class OGRoot extends MonoBehaviour {
 			for ( var cp : OGPage in pages ) {	
 				if ( p == cp ) {
 					p.gameObject.SetActive ( true );
-					p.StartPage ();
 					p.UpdateStyles ();
-				
-				} else {
-					p.ExitPage ();
+					
+					if ( Application.isPlaying ) {
+						p.StartPage ();
+					}
+
+				} else if ( p.gameObject.activeSelf ) {
+					if ( Application.isPlaying ) {
+						p.ExitPage ();
+					}
+
 					p.gameObject.SetActive ( false );
-				
 				}
 			}
 		}
@@ -147,11 +152,17 @@ class OGRoot extends MonoBehaviour {
 		for ( var p : OGPage in this.GetComponentsInChildren.<OGPage>(true) ) {
 			if ( p == page ) {
 				p.gameObject.SetActive ( true );
-				p.StartPage ();
 				p.UpdateStyles ();
+				
+				if ( Application.isPlaying ) {
+					p.StartPage ();
+				}
 
-			} else {
-				p.ExitPage ();
+			} else if ( p.gameObject.activeSelf ) {
+				if ( Application.isPlaying ) {
+					p.ExitPage ();
+				}
+
 				p.gameObject.SetActive ( false );
 
 			}
