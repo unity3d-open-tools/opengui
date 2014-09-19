@@ -1,4 +1,4 @@
-﻿#pragma strict
+#pragma strict
 
 class OGButton extends OGWidget {
 	public var hiddenString : String;
@@ -16,7 +16,6 @@ class OGButton extends OGWidget {
 	public var imageOffset : Vector2 = Vector2.zero;
 	
 	private var isDown : boolean = false;
-
 	
 	////////////////////
 	// Rects
@@ -73,6 +72,17 @@ class OGButton extends OGWidget {
 		isDown = true;
 	}
 	
+	
+	function checkTouched():boolean
+    {
+        for( var i:int = 0; i < Input.touches.length; i++ )
+        {
+            var touch:Touch = Input.GetTouch(i);
+            var pos:Vector2 = new Vector2( touch.position.x * root.reverseRatio.x, touch.position.y * root.reverseRatio.y );
+            if( drawRct.Contains( pos ) ) { return true; }
+        }
+        return false;
+    }
 
 	////////////////////
 	// Update
@@ -92,6 +102,14 @@ class OGButton extends OGWidget {
 
 		// Mouse
 		mouseRct = drawRct;
+		
+		if( !isDown ) {
+            if( checkTouched() )
+                OnMouseDown();
+        }
+        else
+            if( !checkTouched() )
+                OnMouseUp();
 	}
 
 	
