@@ -29,6 +29,10 @@ public class OGTexture extends OGWidget {
 		var uvRct : Rect = drawCrd;
 
 		if ( clipTo ) {
+			if ( displayRct.xMin > clipTo.drawRct.xMax || displayRct.xMax < clipTo.drawRct.xMin || displayRct.yMax < clipTo.drawRct.yMin || displayRct.yMin > clipTo.drawRct.yMax ) {
+				return;
+			}
+
 			if ( clipTo.drawRct.xMin > displayRct.xMin ) {
 				uvRct.xMin = ( clipTo.drawRct.xMin - displayRct.xMin ) / this.transform.lossyScale.x;
 				displayRct.xMin = clipTo.drawRct.xMin;
