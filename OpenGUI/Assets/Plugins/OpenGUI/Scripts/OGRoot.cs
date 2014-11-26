@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+public delegate void OGDelegate ( params object[] parameters ); 
+
 [System.Serializable]
 public class OGLine {
 	public OGWidget start;
@@ -22,7 +24,6 @@ public class OGLine {
 
 [ExecuteInEditMode]
 public class OGRoot : MonoBehaviour {
-	public delegate void OGDelegate ( params object[] parameters ); 
 	
 	public static OGRoot instance;
 

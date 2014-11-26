@@ -7,7 +7,7 @@ public class OGButton : OGWidget {
 	public GameObject target = null;
 	public string message = "";
 	public string argument = "";
-	public OGRoot.OGDelegate func = null;
+	public OGDelegate func = null;
 	public System.Action action = null;
 	public System.Action< string > actionWithArgument = null;
 	public MonoBehaviour argumentSource = null;

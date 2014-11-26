@@ -10,8 +10,8 @@ public class OGListItem : OGWidget {
 	public string message;
 	public string hoverMessage;
 	public string argument;
-	public OGRoot.OGDelegate func;
-	public OGRoot.OGDelegate hoverFunc;
+	public OGDelegate func;
+	public OGDelegate hoverFunc;
 
 
 	//////////////////
